@@ -313,6 +313,8 @@ media/data/*.xls
 media/data/base/*.csv
 media/data/base/*.xlsx
 media/data/base/*.xls
+members_accounts.rst
+
 # exclude everything
 data_handler/PM_Model/modal_output_files/*.json
 
