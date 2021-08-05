@@ -1,0 +1,62 @@
+<!-- Modal -->
+<div class="modal fade" id="donerFilesModal" data-backdrop="static" tabindex="-1" role="dialog"
+  aria-labelledby="donerFilesModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="donerFilesModalLabel"><span class="u-b">Doner Data Files</span></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+
+
+        <!--begin::Portlet-->
+
+        <div class="kt-portlet">
+          <div class="kt-portlet__head position-relative">
+            <div class="kt-portlet__head-label">
+              <h3 class="kt-portlet__head-title" style="font-size: 1.4rem;font-weight: 550;">
+                Your Files
+              </h3>
+            </div>
+          </div>
+          <div class="kt-portlet__body">
+            <!-- Spinner  -->
+            <div id="donerFilesSpinner">
+              <div class="d-flex flex-column align-items-center justify-content-center">
+                <div class="row">
+                  <div class="spinner-border m-3 text-dark" style="width: 4rem; height: 4rem;" role="status">
+                    <span class="sr-only">Please Wait...</span>
+                  </div>
+                </div>
+                <div class="row">
+                  <strong style="font-size: 16px;" class="kt-font-dark">Please wait while grabbing your data files...</strong>
+                </div>
+              </div>
+            </div>
+            <!-- ./Spinner  -->
+
+            <!-- Files Tree -->
+            <div id="donerFilesTree" style="display: none;">
+              <div id="kt_tree_4" class="tree-demo">
+              </div>
+            </div>
+            <!-- ./Files Tree -->
+
+          </div>
+        </div>
+
+        <!--end::Portlet-->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal" style="width: 100px;">
+          <i class="fa fa-times"></i>
+        </button>
+
+      </div>
+    </div>
+  </div>
+</div>

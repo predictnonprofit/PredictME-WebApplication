@@ -1,0 +1,165 @@
+{% load reports_tags %}
+
+<section id="revenue-reports-wrapper">
+    <!-- Start Generic Filters -->
+        {% include 'reports_app/segments/generic_filters.html' %}
+    <!-- End Generic Filters -->
+
+    <!-- Start filter output area -->
+    <section class="flex-row-fluid ml-lg-8 mt-5" id="table-reports-output">
+        <div class="row">
+            <div class="col">
+                <div class="card card-custom">
+                    <div class="card-header">
+                        <div class="card-title">
+            <span class="card-icon">
+                <span class="svg-icon svg-icon-2x svg-icon-info"><!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\themes\metronic\theme\html\demo2\dist/../src/media/svg/icons\General\Update.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <rect x="0" y="0" width="24" height="24"/>
+                                <path d="M8.43296491,7.17429118 L9.40782327,7.85689436 C9.49616631,7.91875282 9.56214077,8.00751728 9.5959027,8.10994332 C9.68235021,8.37220548 9.53982427,8.65489052 9.27756211,8.74133803 L5.89079566,9.85769242 C5.84469033,9.87288977 5.79661753,9.8812917 5.74809064,9.88263369 C5.4720538,9.8902674 5.24209339,9.67268366 5.23445968,9.39664682 L5.13610134,5.83998177 C5.13313425,5.73269078 5.16477113,5.62729274 5.22633424,5.53937151 C5.384723,5.31316892 5.69649589,5.25819495 5.92269848,5.4165837 L6.72910242,5.98123382 C8.16546398,4.72182424 10.0239806,4 12,4 C16.418278,4 20,7.581722 20,12 C20,16.418278 16.418278,20 12,20 C7.581722,20 4,16.418278 4,12 L6,12 C6,15.3137085 8.6862915,18 12,18 C15.3137085,18 18,15.3137085 18,12 C18,8.6862915 15.3137085,6 12,6 C10.6885336,6 9.44767246,6.42282109 8.43296491,7.17429118 Z" fill="#000000" fill-rule="nonzero"/>
+                            </g>
+                        </svg><!--end::Svg Icon--></span>
+            </span>
+                            <h3 class="card-label">
+                                Revenues Report
+                            </h3>
+                        </div>
+                        <div class="card-toolbar">
+                            <!--begin::Dropdown-->
+                            <div class="dropdown dropdown-inline ">
+                                <button type="button" class="btn btn-light-primary font-weight-bolder dropdown-toggle"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+												<span class="svg-icon svg-icon-md">
+													<!--begin::Svg Icon | path:assets/media/svg/icons/Design/PenAndRuller.svg-->
+													<svg xmlns="http://www.w3.org/2000/svg"
+                                                         xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                         height="24px" viewBox="0 0 24 24" version="1.1">
+														<g stroke="none" stroke-width="1" fill="none"
+                                                           fill-rule="evenodd">
+															<rect x="0" y="0" width="24" height="24"></rect>
+															<path d="M3,16 L5,16 C5.55228475,16 6,15.5522847 6,15 C6,14.4477153 5.55228475,14 5,14 L3,14 L3,12 L5,12 C5.55228475,12 6,11.5522847 6,11 C6,10.4477153 5.55228475,10 5,10 L3,10 L3,8 L5,8 C5.55228475,8 6,7.55228475 6,7 C6,6.44771525 5.55228475,6 5,6 L3,6 L3,4 C3,3.44771525 3.44771525,3 4,3 L10,3 C10.5522847,3 11,3.44771525 11,4 L11,19 C11,19.5522847 10.5522847,20 10,20 L4,20 C3.44771525,20 3,19.5522847 3,19 L3,16 Z"
+                                                                  fill="#000000" opacity="0.3"></path>
+															<path d="M16,3 L19,3 C20.1045695,3 21,3.8954305 21,5 L21,15.2485298 C21,15.7329761 20.8241635,16.200956 20.5051534,16.565539 L17.8762883,19.5699562 C17.6944473,19.7777745 17.378566,19.7988332 17.1707477,19.6169922 C17.1540423,19.602375 17.1383289,19.5866616 17.1237117,19.5699562 L14.4948466,16.565539 C14.1758365,16.200956 14,15.7329761 14,15.2485298 L14,5 C14,3.8954305 14.8954305,3 16,3 Z"
+                                                                  fill="#000000"></path>
+														</g>
+													</svg>
+                                                    <!--end::Svg Icon-->
+												</span>Export
+                                </button>
+                                <!--begin::Dropdown Menu-->
+                                <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right" style="">
+                                    <!--begin::Navigation-->
+                                    <ul class="navi flex-column navi-hover py-2">
+                                        <li class="navi-header font-weight-bolder text-uppercase font-size-sm text-primary pb-2">
+                                            Choose an option:
+                                        </li>
+
+
+                                        <li class="navi-item">
+                                            <a href="#" class="navi-link">
+																<span class="navi-icon">
+																	<i class="la la-file-excel-o"></i>
+																</span>
+                                                <span class="navi-text">Excel</span>
+                                            </a>
+                                        </li>
+                                        <li class="navi-item">
+                                            <a href="#" class="navi-link">
+																<span class="navi-icon">
+																	<i class="la la-file-text-o"></i>
+																</span>
+                                                <span class="navi-text">CSV</span>
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                    <!--end::Navigation-->
+                                </div>
+                                <!--end::Dropdown Menu-->
+                            </div>
+                            <!--end::Dropdown-->
+
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <!-- Start Report Table -->
+                        <section id="users-reports-section" class="table-responsive-lg">
+                            <!-- Spinner -->
+                            {% include 'reports_app/segments/reports_spinner.html' %}
+                            <!-- Spinner -->
+                            <table class="table table-bordered table-hover" id='revenue-report-table'>
+                                <thead class="bg-primary-o-20">
+                                <tr>
+                                    <th width="10%">Full Name</th>
+                                    <th width="8%">Email</th>
+                                    <th width="7%">Payment Date</th>
+                                    <th width="7%">Plan</th>
+                                    <th width="5%">Amount</th>
+                                    <th width="7%">Addition Records</th>
+                                    <th width="7%">Amount Addition/Records</th>
+                                    <th width="7%">Total Amount</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                {% for trow in dummy_data %}
+
+                                    <tr>
+
+
+                                        <td>
+                                            {{trow.name}}
+                                        </td>
+                                        <td>
+                                            {{trow.email}}
+                                        </td>
+                                        <td>
+                                            {{trow.pay_date}}
+                                        </td>
+                                         <td>
+                                            {{trow.sub_plan}}
+                                        </td>
+
+                                         <td>
+                                            ${{trow.amount}}
+                                        </td>
+
+                                        <td>
+                                             {{trow.addition_records}}
+                                        </td>
+                                        <td>
+                                             ${{trow.amount_addition_records}}
+                                        </td>
+                                        <td>
+                                             <b>${{trow.total_amount}}</b>
+                                        </td>
+
+                                    </tr>
+                                {% empty %}
+                                    <p class="text-danger h2">Sorry, no members in this report.</p>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </section>
+                        <!-- End Report Table -->
+                    </div>
+                    <div class="card-footer d-flex justify-content-between" id="users-table-reports-footer">
+                        <button type="button" class="btn btn-outline-secondary font-weight-bold" id="previous-btn"
+                                data-toggle="tooltip" title="Previous">
+                            <i class="icon-xl la la-arrow-alt-circle-left"></i>
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary font-weight-bold" id="next-btn"
+                                data-toggle="tooltip" title="Next">
+                            <i class="icon-xl la la-arrow-alt-circle-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <!-- End filter output area -->
+
+
+
+</section>

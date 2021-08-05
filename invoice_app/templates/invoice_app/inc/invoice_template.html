@@ -1,0 +1,171 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.css' %}">
+    <title>
+        INVOICE
+    </title>
+
+    <!--begin::Page Custom Styles(used by this page) -->
+    <link href="{% static 'assets/plugins/global/plugins.bundle.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'assets/css/style.bundle.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'assets/css/pages/invoices/invoice-2.css' %}" rel="stylesheet" type="text/css"/>
+    <style>
+        .kt-invoice-2 .kt-invoice__head .kt-invoice__items .kt-invoice__item .kt-invoice__text {
+            font-size: 16px;
+        }
+
+        .kt-invoice-2 .kt-invoice__head .kt-invoice__items .kt-invoice__item .kt-invoice__subtitle {
+            font-size: 17px;
+        }
+
+        .kt-font-danger {
+            color: #fd397a !important;
+        }
+
+        .kt-invoice-2 .kt-invoice__body table thead tr th {
+            font-size: 16px;
+        }
+
+
+    </style>
+</head>
+<body>
+<!-- begin:: Content Head -->
+<div class="kt-subheader   kt-grid__item mb-3" id="kt_subheader">
+
+</div>
+
+<!-- end:: Content Head -->
+
+<!-- begin:: Content -->
+<div class="kt-container  kt-grid__item kt-grid__item--fluid">
+    <div class="kt-portlet">
+        <div class="kt-portlet__body kt-portlet__body--fit">
+            <div class="kt-invoice-2">
+                <div class="kt-invoice__head" style="padding-top: 30px">
+                    <div class="kt-invoice__container">
+                        <div class="kt-invoice__brand">
+                            <div></div>
+                            <h1 class="kt-invoice__title text-center" style="margin-top: 23px">Invoice</h1>
+                            <div href="#" class="kt-invoice__logo mt-0">
+                                <a href="mailto:contact@predictme.com"><img
+                                        src="{% static 'assets/media/logos/Predict_Me_Logo.png' %}"></a>
+                                <span class="kt-invoice__desc">
+																<span>contact@predictme.com</span>
+                                    <a href="https://www.predictme.com">https://www.predictme.com</a>
+															</span>
+                            </div>
+                        </div>
+                        <div class="kt-invoice__items ">
+                            <div class="kt-invoice__item ">
+                                <span class="kt-invoice__subtitle">INVOICE TO:</span>
+                                <span class="kt-invoice__text "><b>John Doe</b></span>
+                                <span class="kt-invoice__text ">Iris Watson, P.O. Box 283 8562 Fusce RD.<br>Fredrick Nebraska 20620</span>
+                            </div>
+
+                            <div class="kt-invoice__item text-center">
+                                <span class="kt-invoice__subtitle">INVOICE NO.</span>
+                                <span class="kt-invoice__text">GS 000014</span>
+                            </div>
+
+                            <div class="kt-invoice__item text-right">
+                                <span class="kt-invoice__subtitle">Invoice Date</span>
+                                <span class="kt-invoice__text"><b>May 03, 2020</b></span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="kt-invoice__body">
+                    <div class="kt-invoice__container">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+
+                                    <th>PLAN DESCRIPTION</th>
+                                    <th>RATE</th>
+                                    <th >TOTAL</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+
+                                    <td width="33%">
+                                        1. Plan Name: Strater Fundraising
+                                    </td>
+                                    <td width="33%">
+                                        $65.00
+                                    </td>
+                                    <td width="33%" class="kt-font-danger kt-font-lg ">
+                                        $65.00
+                                    </td>
+                                </tr>
+                               <tr>
+
+                                    <td width="33%">
+                                        2. Data Limit: 200
+                                    </td>
+                                    <td width="33%">
+                                        $0.25
+                                    </td>
+                                    <td class="kt-font-danger kt-font-lg " width="33%">
+                                        $50
+                                    </td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="kt-invoice__footer">
+                    <div class="kt-invoice__container">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>DUE DATE</th>
+
+                                    <th class="text-center">TOTAL AMOUNT</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                               <tr>
+                                    <td width="42%">
+                                        Apr 23 2020 <b>(after 10 days)</b>
+                                    </td>
+
+                                    <td width="20%" class="kt-font-danger kt-font-xl kt-font-boldest text-center">
+                                        $115.0
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="kt-invoice__actions">
+                    <div class="kt-invoice__container">
+                        <a href="" class="btn btn-label-brand btn-bold">Download
+                            Invoice
+                        </a>
+                        <a href="{% url 'invoice-print' %}" class="btn btn-brand btn-bold">Print Invoice
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- end:: Content -->
+
+<!--End::Row-->
+</body>
+</html>
+
+
+

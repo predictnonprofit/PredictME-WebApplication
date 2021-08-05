@@ -1,0 +1,181 @@
+{% extends 'dashboard/inc/master.html' %}
+
+{% load static %}
+
+{% block title %}
+Pending
+{% endblock title %}
+
+{% block customcss %}
+
+{% endblock customcss %}
+
+{% block pagename %}
+Pending Members
+{% endblock pagename %}
+
+
+{% block dashboard_content %}
+
+<div class="container">
+    <div class="alert alert-custom alert-white shadow fade show mb-5" role="alert">
+    <div class="alert-icon">
+        <i class="icon-xl la la-user-times"></i>
+    </div>
+    <div class="alert-text">Members accounts not active</div>
+
+</div>
+ <!--begin::Row-->
+
+ <div class="card card-custom">
+    <div class="card-header">
+     <div class="card-title">
+               <span class="card-icon">
+                <i class="icon-xl la la-user-alt-slash text-primary"></i>
+               </span>
+      <h3 class="card-label">
+        Pending Members
+      </h3>
+     </div>
+           <div class="card-toolbar">
+               <a href="#" class="btn btn-sm btn-light-success font-weight-bold" data-toggle="tooltip" title="Accept all members">
+                <i class="icon-xl la la-user-check"></i> Accept all
+               </a>
+               <a href="#" class="btn btn-sm ml-2 btn-light-danger font-weight-bold" data-toggle="tooltip" title="Refuse all members">
+                <i class="icon-xl la la-user-times"></i> Refuse all
+                </a>
+           </div>
+    </div>
+    <div class="card-body">
+           <div data-scroll="true" data-height="200">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="thead-light">
+                    <tr>
+                        <th>Email</th>
+                        <th>Full Name</th>
+                        <th>Register Date</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">
+                            wortmanj@optonline.net
+                        </th>
+                        <td>
+                            Donald Luna
+                        </td>
+                        <td>
+                            02/17/2020 03:55:41 PM
+                        </td>
+                        <td>
+                            <div class="btn-toolbar" role="toolbar" aria-label="...">
+                                <div class="btn-group mr-2" role="group" aria-label="...">
+                                    <button type="button" class="btn btn-success btn-sm" data-toggle="tooltip"
+                                            title="Accept the member">
+                                        <i class="la la-user-plus"></i>
+                                    </button>
+                                    <button type="button" data-placement="top" class="btn btn-danger btn-sm" data-toggle="tooltip"
+                                            title="Refuse the member, will send an email with refusing message">
+                                        <i class="la la-user-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            aardo@yahoo.com
+                        </th>
+                        <td>
+                            Payton Hensley
+                        </td>
+                        <td>
+                            01/07/2020 01:10:24 AM
+                        </td>
+                        <td>
+                            <div class="btn-toolbar" role="toolbar" aria-label="...">
+                                <div class="btn-group mr-2" role="group" aria-label="...">
+                                    <button type="button" class="btn btn-success btn-sm" data-toggle="tooltip"
+                                            title="Accept the member">
+                                        <i class="la la-user-plus"></i>
+                                    </button>
+                                    <button type="button" data-placement="top" class="btn btn-danger btn-sm" data-toggle="tooltip"
+                                            title="Refuse the member, will send an email with refusing message">
+                                        <i class="la la-user-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            jdhildeb@mac.com
+                        </th>
+                        <td>
+                            Valentino Diaz
+                        </td>
+                        <td>
+                            01/02/2020 10:50:39 PM
+                        </td>
+                        <td>
+                            <div class="btn-toolbar" role="toolbar" aria-label="...">
+                                <div class="btn-group mr-2" role="group" aria-label="...">
+                                    <button type="button" class="btn btn-success btn-sm" data-toggle="tooltip"
+                                            title="Accept the member">
+                                        <i class="la la-user-plus"></i>
+                                    </button>
+                                    <button type="button" data-placement="top" class="btn btn-danger btn-sm" data-toggle="tooltip"
+                                            title="Refuse the member, will send an email with refusing message">
+                                        <i class="la la-user-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            bmidd@gmail.com
+                        </th>
+                        <td>
+                            Zaria Estrada
+                        </td>
+                        <td>
+                            01/28/2020 11:32:41 PM
+                        </td>
+                        <td>
+                            <div class="btn-toolbar" role="toolbar" aria-label="...">
+                                <div class="btn-group mr-2" role="group" aria-label="...">
+                                    <button type="button" class="btn btn-success btn-sm" data-toggle="tooltip"
+                                            title="Accept the member">
+                                        <i class="la la-user-plus"></i>
+                                    </button>
+                                    <button type="button" data-placement="top" class="btn btn-danger btn-sm" data-toggle="tooltip"
+                                            title="Refuse the member, will send an email with refusing message">
+                                        <i class="la la-user-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+           </div>
+    </div>
+       <div class="card-footer d-flex justify-content-between">
+
+
+    </div>
+   </div>
+</div>
+
+
+<!--End::Row-->
+{% endblock dashboard_content%}
+
+{% block customjs %}
+
+
+{% endblock customjs %}

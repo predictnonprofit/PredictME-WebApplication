@@ -1,0 +1,167 @@
+{% extends 'dashboard/inc/master.html' %}
+
+{% load static %}
+
+{% block title %}
+{{ object.title }}
+{% endblock title %}
+
+{% block customcss %}
+<link rel="stylesheet" href="{% static 'dashboard/assets/css/lightbox.css' %}" />
+{% endblock customcss %}
+
+
+{% block dashboard_content %}
+
+<!--begin::Row-->
+<div class="container">
+    <div class="card card-custom gutter-b">
+        <div class="card-header">
+            <div class="card-title">
+                <h3 class="card-label">
+                    Crash Details
+                </h3>
+            </div>
+            <div class="card-toolbar">
+                <form class="form-inline" onsubmit="return false;">
+                    {% csrf_token %}
+                    <input type="hidden" id='crashReportID' value="{{ object.pk }}" />
+                    <select class="form-control form-control-sm mx-2" id="crashStatusSelect" name='crash_status'>
+                        {% for status in crash_status %}
+                            {% if status.0 == object.crash_status %}
+                            <option value="{{ status.0 }}" selected>{{ status.1 }}</option>
+                            {% else %}
+                            <option value="{{ status.0 }}">{{ status.1 }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                    <button type="button" class="btn btn-sm btn-light-success font-weight-bold" id="changeReportStatusBtn">
+                        Change
+                    </button>
+                </form>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-2">
+                    <b>Crash Title</b>
+                </div>
+                <div class="col-5">
+                    {{ object.title }}
+                </div>
+
+                <div class="col-2">
+                    <b>
+                        Member
+                    </b>
+                </div>
+                <div class="col">
+                    <a href="#">
+                        {{ object.member.full_name }}
+                    </a>
+                </div>
+            </div>
+
+            <div class="row my-8">
+                <div class="col-2">
+                    <b>Crash URL</b>
+                </div>
+                <div class="col-5">
+                    <a href="https://127.0.0.1:8000/data/url">
+                        {{ object.url }}
+                    </a>
+                </div>
+                <div class="col-2">
+                    <b>
+                        Solved
+                    </b>
+                </div>
+                <div class="col-2">
+                    {% if object.is_solved is True %}
+                    <span data-toggle="tooltip" title="Issue has been solved"
+                        class="label label-light-success label-lg label-pill label-inline mr-2 font-weight-bolder">
+                        Solved
+                    </span>
+                    {% else %}
+                    <span data-toggle="tooltip" title="Issue not solved yet"
+                        class="label label-light-danger label-lg label-pill label-inline mr-2 font-weight-bolder">
+                        Not solved
+                    </span>
+                    {% endif %}
+
+
+                </div>
+            </div>
+
+
+            <div class="row my-8">
+                <div class="col-2">
+                    <b>Description</b>
+                </div>
+                <div class="col">
+                    <article>
+                        <p>
+                            {{ object.description }}
+                        </p>
+                    </article>
+                </div>
+            </div>
+
+            <div class="row my-8">
+                <div class="col-2">
+                    <b>File Attachment</b>
+                </div>
+                <div class="col">
+                    {% if object.file_attachment %}
+                    <a href="{{ object.file_attachment.url }}" data-toggle='tooltip' title="Download attachment">
+                        <i class="flaticon2-download text-primary"></i>
+                    </a>
+                    {% else %}
+                        <p>
+                            No Attachment Available
+                        </p>
+                    {% endif %}
+                </div>
+
+                <div class="col-2">
+                    <b>
+                        Screenshot
+                    </b>
+                </div>
+
+                <div class="col">
+                    {% if object.screenshot %}
+                    <a data-lightbox="Image Name" data-title="{{ object.title|truncatechars:15 }}"
+                        href="{{ object.screenshot.url }}">
+                        <img src="{{ object.screenshot.url }}" alt="Bug image" width="300" height="300" />
+                    </a>
+                    {% else %}
+                    <p>
+                        No Screenshot Available
+                    </p>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!--End::Row-->
+{% endblock dashboard_content%}
+
+{% block customjs %}
+<script src="{% static 'dashboard/assets/js/lightbox.js' %}"></script>
+<script>
+    lightbox.option({
+        'resizeDuration': 300,
+        'wrapAround': true,
+        'maxWidth': 500,
+        'maxHeight': 500,
+        'positionFromTop': 150,
+    })
+</script>
+<script src="{% static 'dashboard/assets/js/apps/crash_reporting/api.js' %}"></script>
+<script src="{% static 'dashboard/assets/js/apps/crash_reporting/helpers.js' %}"></script>
+<script src="{% static 'dashboard/assets/js/apps/crash_reporting/crash_reporting.js' %}"></script>
+{% endblock customjs %}

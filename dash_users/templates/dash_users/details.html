@@ -1,0 +1,837 @@
+{% extends 'dashboard/inc/master.html' %}
+
+{% load static %}
+
+{% block title %}
+{{ object.full_name }}
+{% endblock title %}
+
+{% block customcss %}
+
+{% endblock customcss %}
+
+{% block pagename %}
+Member info
+{% endblock pagename %}
+
+
+{% block dashboard_content %}
+<!--begin::Row-->
+
+<div class="container-fluid">
+	<!--begin::Education-->
+	<div class="d-flex flex-row">
+		<!--begin::Aside-->
+		<div class="flex-row-auto offcanvas-mobile w-300px w-xl-325px" id="kt_profile_aside">
+			<!--begin::Nav Panel Widget 2-->
+			<div class="card card-custom gutter-b">
+				<!--begin::Body-->
+				<div class="card-body">
+					<!--begin::Wrapper-->
+					<div class="d-flex justify-content-between flex-column pt-4 h-100">
+						<!--begin::Container-->
+						<div class="pb-5">
+							<!--begin::Header-->
+							<div class="d-flex flex-column flex-center">
+								<!--begin::Username-->
+								<a href="javascript:void(0)" class="card-title font-weight-bolder text-dark-75 text-hover-primary font-size-h4 m-0 pt-7 pb-1">
+									{{ object.full_name }}
+								</a>
+								<!--end::Username-->
+								<!--begin::Info-->
+								<div class="font-weight-bold text-dark-50 font-size-sm pb-6">
+									{{ object.job_title }}
+								</div>
+								<!--end::Info-->
+							</div>
+							<!--end::Header-->
+							<!--begin::Body-->
+							<div class="pt-1">
+								<!--begin::Text-->
+								<!-- <p class="text-dark-75 font-weight-nirmal font-size-lg m-0 pb-7">Outlines keep you honest. If poorly thought-out metaphors driving or create keep structure</p> -->
+								<!--end::Text-->
+								<!--begin::Item-->
+								<div class="d-flex align-items-center pb-9">
+									<!--begin::Symbol-->
+									<div class="symbol symbol-45 symbol-light mr-4">
+										<span class="symbol-label">
+											{% if object.get_member_info_as_dict.membership == 'starter' %}
+											<!-- Start Starter Icon -->
+											<span class="svg-icon svg-icon-2x svg-icon-dark-50">
+												<!--begin::Svg Icon | path:assets/media/svg/icons/Home/Flower3.svg-->
+												<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+													<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+														<polygon points="0 0 24 0 24 24 0 24"></polygon>
+														<path d="M1.4152146,4.84010415 C11.1782334,10.3362599 14.7076452,16.4493804 12.0034499,23.1794656 C5.02500006,22.0396582 1.4955883,15.9265377 1.4152146,4.84010415 Z" fill="#000000" opacity="0.3"></path>
+														<path d="M22.5950046,4.84010415 C12.8319858,10.3362599 9.30257403,16.4493804 12.0067693,23.1794656 C18.9852192,22.0396582 22.5146309,15.9265377 22.5950046,4.84010415 Z" fill="#000000" opacity="0.3"></path>
+														<path d="M12.0002081,2 C6.29326368,11.6413199 6.29326368,18.7001435 12.0002081,23.1764706 C17.4738192,18.7001435 17.4738192,11.6413199 12.0002081,2 Z" fill="#000000" opacity="0.3"></path>
+													</g>
+												</svg>
+												<!--end::Svg Icon-->
+											</span>
+											<!-- End Starter Icon -->
+											{% elif object.get_member_info_as_dict.membership == 'professional' %}
+											<!-- Pro Icon -->
+											<span class="svg-icon svg-icon-2x svg-icon-dark-50">
+												<!--begin::Svg Icon | path:assets/media/svg/icons/Tools/Compass.svg-->
+												<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+													<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+														<rect x="0" y="0" width="24" height="24"></rect>
+														<path
+															d="M7.07744993,12.3040451 C7.72444571,13.0716094 8.54044565,13.6920474 9.46808594,14.1079953 L5,23 L4.5,18 L7.07744993,12.3040451 Z M14.5865511,14.2597864 C15.5319561,13.9019016 16.375416,13.3366121 17.0614026,12.6194459 L19.5,18 L19,23 L14.5865511,14.2597864 Z M12,3.55271368e-14 C12.8284271,3.53749572e-14 13.5,0.671572875 13.5,1.5 L13.5,4 L10.5,4 L10.5,1.5 C10.5,0.671572875 11.1715729,3.56793164e-14 12,3.55271368e-14 Z"
+															fill="#000000" opacity="0.3"></path>
+														<path
+															d="M12,10 C13.1045695,10 14,9.1045695 14,8 C14,6.8954305 13.1045695,6 12,6 C10.8954305,6 10,6.8954305 10,8 C10,9.1045695 10.8954305,10 12,10 Z M12,13 C9.23857625,13 7,10.7614237 7,8 C7,5.23857625 9.23857625,3 12,3 C14.7614237,3 17,5.23857625 17,8 C17,10.7614237 14.7614237,13 12,13 Z"
+															fill="#000000" fill-rule="nonzero"></path>
+													</g>
+												</svg>
+												<!--end::Svg Icon-->
+											</span>
+											<!-- Pro Icon -->
+											{% elif object.get_member_info_as_dict.membership == 'expert' %}
+											<!-- Expert Icon -->
+											<span class="svg-icon svg-icon-2x svg-icon-primary d-none membership-icon d-member-info-value" id='dMemberExpertIcon'>
+												<!--begin::Svg Icon | path:assets/media/svg/icons/Shopping/Cart2.svg-->
+												<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+													<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+														<rect x="0" y="0" width="24" height="24"></rect>
+														<path
+															d="M12,4.56204994 L7.76822128,9.6401844 C7.4146572,10.0644613 6.7840925,10.1217854 6.3598156,9.76822128 C5.9355387,9.4146572 5.87821464,8.7840925 6.23177872,8.3598156 L11.2317787,2.3598156 C11.6315738,1.88006147 12.3684262,1.88006147 12.7682213,2.3598156 L17.7682213,8.3598156 C18.1217854,8.7840925 18.0644613,9.4146572 17.6401844,9.76822128 C17.2159075,10.1217854 16.5853428,10.0644613 16.2317787,9.6401844 L12,4.56204994 Z"
+															fill="#000000" fill-rule="nonzero" opacity="0.3"></path>
+														<path
+															d="M3.28077641,9 L20.7192236,9 C21.2715083,9 21.7192236,9.44771525 21.7192236,10 C21.7192236,10.0817618 21.7091962,10.163215 21.6893661,10.2425356 L19.5680983,18.7276069 C19.234223,20.0631079 18.0342737,21 16.6576708,21 L7.34232922,21 C5.96572629,21 4.76577697,20.0631079 4.43190172,18.7276069 L2.31063391,10.2425356 C2.17668518,9.70674072 2.50244587,9.16380623 3.03824078,9.0298575 C3.11756139,9.01002735 3.1990146,9 3.28077641,9 Z M12,12 C11.4477153,12 11,12.4477153 11,13 L11,17 C11,17.5522847 11.4477153,18 12,18 C12.5522847,18 13,17.5522847 13,17 L13,13 C13,12.4477153 12.5522847,12 12,12 Z M6.96472382,12.1362967 C6.43125772,12.2792385 6.11467523,12.8275755 6.25761704,13.3610416 L7.29289322,17.2247449 C7.43583503,17.758211 7.98417199,18.0747935 8.51763809,17.9318517 C9.05110419,17.7889098 9.36768668,17.2405729 9.22474487,16.7071068 L8.18946869,12.8434035 C8.04652688,12.3099374 7.49818992,11.9933549 6.96472382,12.1362967 Z M17.0352762,12.1362967 C16.5018101,11.9933549 15.9534731,12.3099374 15.8105313,12.8434035 L14.7752551,16.7071068 C14.6323133,17.2405729 14.9488958,17.7889098 15.4823619,17.9318517 C16.015828,18.0747935 16.564165,17.758211 16.7071068,17.2247449 L17.742383,13.3610416 C17.8853248,12.8275755 17.5687423,12.2792385 17.0352762,12.1362967 Z"
+															fill="#000000"></path>
+													</g>
+												</svg>
+												<!--end::Svg Icon-->
+											</span>
+											<!-- Expert Icon -->
+											{% endif %}
+
+										</span>
+									</div>
+									<!--end::Symbol-->
+									<!--begin::Text-->
+									<div class="d-flex flex-column flex-grow-1">
+										<a href="javascript:void(0);" class="text-dark-75 text-hover-primary mb-1 font-size-lg font-weight-bolder">
+											{{ object.get_member_info_as_dict.membership|title }}
+										</a>
+										<span class="text-muted font-weight-bold">{{ object.get_member_info_as_dict.membership|title }} Fundraising</span>
+									</div>
+									<!--end::Text-->
+									<!--begin::label-->
+									<span class="font-weight-bolder label label-xl label-light-success label-inline px-3 py-5 min-w-45px" data-toggle='tooltip' title='{{ object.get_member_info_as_dict.range_label|title }} Subscription' data-placement='right'>
+										{{ object.get_member_info_as_dict.range_label.0|title }}
+									</span>
+									<!--end::label-->
+								</div>
+								<!--end::Item-->
+								<!--begin::Item-->
+								<div class="d-flex align-items-center pb-9">
+									<!--begin::Symbol-->
+									<div class="symbol symbol-45 symbol-light mr-4">
+										<span class="symbol-label">
+											<span class="svg-icon svg-icon-2x svg-icon-dark-50">
+												<!--begin::Svg Icon | path:assets/media/svg/icons/Layout/Layout-4-blocks.svg-->
+												<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+													<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+														<rect x="0" y="0" width="24" height="24"></rect>
+														<rect fill="#000000" x="4" y="4" width="7" height="7" rx="1.5"></rect>
+														<path
+															d="M5.5,13 L9.5,13 C10.3284271,13 11,13.6715729 11,14.5 L11,18.5 C11,19.3284271 10.3284271,20 9.5,20 L5.5,20 C4.67157288,20 4,19.3284271 4,18.5 L4,14.5 C4,13.6715729 4.67157288,13 5.5,13 Z M14.5,4 L18.5,4 C19.3284271,4 20,4.67157288 20,5.5 L20,9.5 C20,10.3284271 19.3284271,11 18.5,11 L14.5,11 C13.6715729,11 13,10.3284271 13,9.5 L13,5.5 C13,4.67157288 13.6715729,4 14.5,4 Z M14.5,13 L18.5,13 C19.3284271,13 20,13.6715729 20,14.5 L20,18.5 C20,19.3284271 19.3284271,20 18.5,20 L14.5,20 C13.6715729,20 13,19.3284271 13,18.5 L13,14.5 C13,13.6715729 13.6715729,13 14.5,13 Z"
+															fill="#000000" opacity="0.3"></path>
+													</g>
+												</svg>
+												<!--end::Svg Icon-->
+											</span>
+										</span>
+									</div>
+									<!--end::Symbol-->
+									<!--begin::Text-->
+									<div class="d-flex flex-column flex-grow-1">
+										<a href="javascript:void(0);" class="text-dark-75 text-hover-primary mb-1 font-size-lg font-weight-bolder">Run Modal</a>
+										<span class="text-muted font-weight-bold"> Run <b>{{ object.get_member_info_as_dict.run_modal_times }}</b> Times </span>
+									</div>
+									<!--end::Text-->
+									{% if object.get_member_info_as_dict.data_usage_per >= 0 and object.get_member_info_as_dict.data_usage_per <= 50 %}
+									<!--begin::label-->
+									<span class="font-weight-bolder label label-xl label-light-success label-inline px-3 py-5 min-w-45px" data-toggle='tooltip' data-html="true" title="<b>{{ object.get_member_info_as_dict.data_usage_per }} % used</b>"
+										data-placement='right'>
+										{{ object.get_member_info_as_dict.data_usage_per }}
+									</span>
+									<!--end::label-->
+									{% elif object.get_member_info_as_dict.data_usage_per > 50 and object.get_member_info_as_dict.data_usage_per <= 80 %}
+									<!--begin::label-->
+									<span class="font-weight-bolder label label-xl label-light-info label-inline px-3 py-5 min-w-45px" data-toggle='tooltip' data-html="true" title="<b>{{ object.get_member_info_as_dict.data_usage_per }} % used</b>"
+										data-placement='right'>
+										{{ object.get_member_info_as_dict.data_usage_per }}
+									</span>
+									<!--end::label-->
+									{% elif object.get_member_info_as_dict.data_usage_per > 80 and object.get_member_info_as_dict.data_usage_per <= 100 %}
+									<!--begin::label-->
+									<span class="font-weight-bolder label label-xl label-light-danger label-inline px-3 py-5 min-w-45px" data-toggle='tooltip' data-html="true" title="<b>{{ object.get_member_info_as_dict.data_usage_per }} % used</b>"
+										data-placement='right'>
+										{{ object.get_member_info_as_dict.data_usage_per }}
+									</span>
+									<!--end::label-->
+									{% endif %}
+								</div>
+								<!--end::Item-->
+								<!--begin::Item-->
+								<div class="d-flex align-items-center pb-9">
+									<!--begin::Symbol-->
+									<div class="symbol symbol-45 symbol-light mr-4">
+										<span class="symbol-label">
+											<span class="svg-icon svg-icon-2x svg-icon-dark-50">
+												<!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\legacy\metronic\theme\html\demo6\dist/../src/media/svg/icons\Shopping\Dollar.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+													width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+													<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+														<rect x="0" y="0" width="24" height="24" />
+														<rect fill="#000000" opacity="0.3" x="11.5" y="2" width="2" height="4" rx="1" />
+														<rect fill="#000000" opacity="0.3" x="11.5" y="16" width="2" height="5" rx="1" />
+														<path
+															d="M15.493,8.044 C15.2143319,7.68933156 14.8501689,7.40750104 14.4005,7.1985 C13.9508311,6.98949895 13.5170021,6.885 13.099,6.885 C12.8836656,6.885 12.6651678,6.90399981 12.4435,6.942 C12.2218322,6.98000019 12.0223342,7.05283279 11.845,7.1605 C11.6676658,7.2681672 11.5188339,7.40749914 11.3985,7.5785 C11.2781661,7.74950085 11.218,7.96799867 11.218,8.234 C11.218,8.46200114 11.2654995,8.65199924 11.3605,8.804 C11.4555005,8.95600076 11.5948324,9.08899943 11.7785,9.203 C11.9621676,9.31700057 12.1806654,9.42149952 12.434,9.5165 C12.6873346,9.61150047 12.9723317,9.70966616 13.289,9.811 C13.7450023,9.96300076 14.2199975,10.1308324 14.714,10.3145 C15.2080025,10.4981676 15.6576646,10.7419985 16.063,11.046 C16.4683354,11.3500015 16.8039987,11.7268311 17.07,12.1765 C17.3360013,12.6261689 17.469,13.1866633 17.469,13.858 C17.469,14.6306705 17.3265014,15.2988305 17.0415,15.8625 C16.7564986,16.4261695 16.3733357,16.8916648 15.892,17.259 C15.4106643,17.6263352 14.8596698,17.8986658 14.239,18.076 C13.6183302,18.2533342 12.97867,18.342 12.32,18.342 C11.3573285,18.342 10.4263378,18.1741683 9.527,17.8385 C8.62766217,17.5028317 7.88033631,17.0246698 7.285,16.404 L9.413,14.238 C9.74233498,14.6433354 10.176164,14.9821653 10.7145,15.2545 C11.252836,15.5268347 11.7879973,15.663 12.32,15.663 C12.5606679,15.663 12.7949989,15.6376669 13.023,15.587 C13.2510011,15.5363331 13.4504991,15.4540006 13.6215,15.34 C13.7925009,15.2259994 13.9286662,15.0740009 14.03,14.884 C14.1313338,14.693999 14.182,14.4660013 14.182,14.2 C14.182,13.9466654 14.1186673,13.7313342 13.992,13.554 C13.8653327,13.3766658 13.6848345,13.2151674 13.4505,13.0695 C13.2161655,12.9238326 12.9248351,12.7908339 12.5765,12.6705 C12.2281649,12.5501661 11.8323355,12.420334 11.389,12.281 C10.9583312,12.141666 10.5371687,11.9770009 10.1255,11.787 C9.71383127,11.596999 9.34650161,11.3531682 9.0235,11.0555 C8.70049838,10.7578318 8.44083431,10.3968355 8.2445,9.9725 C8.04816568,9.54816454 7.95,9.03200304 7.95,8.424 C7.95,7.67666293 8.10199848,7.03700266 8.406,6.505 C8.71000152,5.97299734 9.10899753,5.53600171 9.603,5.194 C10.0970025,4.85199829 10.6543302,4.60183412 11.275,4.4435 C11.8956698,4.28516587 12.5226635,4.206 13.156,4.206 C13.9160038,4.206 14.6918294,4.34533194 15.4835,4.624 C16.2751706,4.90266806 16.9686637,5.31433061 17.564,5.859 L15.493,8.044 Z"
+															fill="#000000" />
+													</g>
+												</svg>
+												<!--end::Svg Icon-->
+											</span>
+										</span>
+									</div>
+									<!--end::Symbol-->
+									<!--begin::Text-->
+									<div class="d-flex flex-column flex-grow-1">
+										<a href="javascript:void(0);" class="text-dark-75 text-hover-primary mb-1 font-size-lg font-weight-bolder">
+											{{ total_spent }}
+										</a>
+										<span class="text-muted font-weight-bold">
+											Total spent by the member
+										</span>
+									</div>
+									<!--end::Text-->
+									<!--begin::label-->
+									<span class="font-weight-bolder label label-xl label-light-info label-inline py-5 min-w-45px" data-toggle='tooltip' data-placement='right' title='Charges Total'>
+										{{ charges_sum }}
+									</span>
+									<!--end::label-->
+								</div>
+								<!--end::Item-->
+							</div>
+							<!--end::Body-->
+						</div>
+						<!--eng::Container-->
+						<!--begin::Footer-->
+						<div class="d-flex flex-center" id="kt_sticky_toolbar_chat_toggler_1" data-toggle="tooltip" title="" data-placement="right" data-original-title="Chat Example">
+							<button class="btn btn-primary font-weight-bolder font-size-sm py-3 px-14" data-toggle="modal" data-target="#kt_chat_modal">Write a Message</button>
+						</div>
+						<!--end::Footer-->
+					</div>
+					<!--end::Wrapper-->
+				</div>
+				<!--end::Body-->
+			</div>
+			<!--end::Nav Panel Widget 2-->
+		</div>
+		<!--end::Aside-->
+		<!--begin::Content-->
+		<div class="flex-row-fluid ml-lg-8">
+			<!--begin::Card-->
+			<div class="card card-custom gutter-bs">
+				<!--Begin::Header-->
+				<div class="card-header card-header-tabs-line">
+					<div class="card-toolbar">
+						<ul class="nav nav-tabs nav-tabs-space-lg nav-tabs-line nav-tabs-bold nav-tabs-line-3x" role="tablist">
+							<li class="nav-item mr-3">
+								<a class="nav-link active" data-toggle="tab" href="#kt_apps_contacts_view_tab_2">
+									<span class="nav-icon mr-2">
+										<span class="svg-icon mr-3">
+											<!--begin::Svg Icon | path:assets/media/svg/icons/Communication/Chat-check.svg-->
+											<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+												<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+													<rect x="0" y="0" width="24" height="24"></rect>
+													<path
+														d="M4.875,20.75 C4.63541667,20.75 4.39583333,20.6541667 4.20416667,20.4625 L2.2875,18.5458333 C1.90416667,18.1625 1.90416667,17.5875 2.2875,17.2041667 C2.67083333,16.8208333 3.29375,16.8208333 3.62916667,17.2041667 L4.875,18.45 L8.0375,15.2875 C8.42083333,14.9041667 8.99583333,14.9041667 9.37916667,15.2875 C9.7625,15.6708333 9.7625,16.2458333 9.37916667,16.6291667 L5.54583333,20.4625 C5.35416667,20.6541667 5.11458333,20.75 4.875,20.75 Z"
+														fill="#000000" fill-rule="nonzero" opacity="0.3"></path>
+													<path
+														d="M2,11.8650466 L2,6 C2,4.34314575 3.34314575,3 5,3 L19,3 C20.6568542,3 22,4.34314575 22,6 L22,15 C22,15.0032706 21.9999948,15.0065399 21.9999843,15.009808 L22.0249378,15 L22.0249378,19.5857864 C22.0249378,20.1380712 21.5772226,20.5857864 21.0249378,20.5857864 C20.7597213,20.5857864 20.5053674,20.4804296 20.317831,20.2928932 L18.0249378,18 L12.9835977,18 C12.7263047,14.0909841 9.47412135,11 5.5,11 C4.23590829,11 3.04485894,11.3127315 2,11.8650466 Z M6,7 C5.44771525,7 5,7.44771525 5,8 C5,8.55228475 5.44771525,9 6,9 L15,9 C15.5522847,9 16,8.55228475 16,8 C16,7.44771525 15.5522847,7 15,7 L6,7 Z"
+														fill="#000000"></path>
+												</g>
+											</svg>
+											<!--end::Svg Icon-->
+										</span>
+									</span>
+									<span class="nav-text font-weight-bold">Personal</span>
+								</a>
+							</li>
+							<li class="nav-item mr-3">
+								<a class="nav-link" data-toggle="tab" href="#kt_apps_contacts_view_tab_3">
+									<span class="nav-icon mr-2">
+										<span class="svg-icon mr-3">
+											<!--begin::Svg Icon | path:assets/media/svg/icons/Devices/Display1.svg-->
+											<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+												<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+													<rect x="0" y="0" width="24" height="24"></rect>
+													<path
+														d="M11,20 L11,17 C11,16.4477153 11.4477153,16 12,16 C12.5522847,16 13,16.4477153 13,17 L13,20 L15.5,20 C15.7761424,20 16,20.2238576 16,20.5 C16,20.7761424 15.7761424,21 15.5,21 L8.5,21 C8.22385763,21 8,20.7761424 8,20.5 C8,20.2238576 8.22385763,20 8.5,20 L11,20 Z"
+														fill="#000000" opacity="0.3"></path>
+													<path
+														d="M3,5 L21,5 C21.5522847,5 22,5.44771525 22,6 L22,16 C22,16.5522847 21.5522847,17 21,17 L3,17 C2.44771525,17 2,16.5522847 2,16 L2,6 C2,5.44771525 2.44771525,5 3,5 Z M4.5,8 C4.22385763,8 4,8.22385763 4,8.5 C4,8.77614237 4.22385763,9 4.5,9 L13.5,9 C13.7761424,9 14,8.77614237 14,8.5 C14,8.22385763 13.7761424,8 13.5,8 L4.5,8 Z M4.5,10 C4.22385763,10 4,10.2238576 4,10.5 C4,10.7761424 4.22385763,11 4.5,11 L7.5,11 C7.77614237,11 8,10.7761424 8,10.5 C8,10.2238576 7.77614237,10 7.5,10 L4.5,10 Z"
+														fill="#000000"></path>
+												</g>
+											</svg>
+											<!--end::Svg Icon-->
+										</span>
+									</span>
+									<span class="nav-text font-weight-bold">Activities</span>
+								</a>
+							</li>
+							<li class="nav-item mr-3">
+								<a class="nav-link" data-toggle="tab" href="#kt_apps_contacts_view_tab_4">
+									<span class="nav-icon mr-2">
+										<span class="svg-icon mr-3">
+											<!--begin::Svg Icon | path:assets/media/svg/icons/Home/Globe.svg-->
+											<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+												<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+													<rect x="0" y="0" width="24" height="24"></rect>
+													<path
+														d="M13,18.9450712 L13,20 L14,20 C15.1045695,20 16,20.8954305 16,22 L8,22 C8,20.8954305 8.8954305,20 10,20 L11,20 L11,18.9448245 C9.02872877,18.7261967 7.20827378,17.866394 5.79372555,16.5182701 L4.73856106,17.6741866 C4.36621808,18.0820826 3.73370941,18.110904 3.32581341,17.7385611 C2.9179174,17.3662181 2.88909597,16.7337094 3.26143894,16.3258134 L5.04940685,14.367122 C5.46150313,13.9156769 6.17860937,13.9363085 6.56406875,14.4106998 C7.88623094,16.037907 9.86320756,17 12,17 C15.8659932,17 19,13.8659932 19,10 C19,7.73468744 17.9175842,5.65198725 16.1214335,4.34123851 C15.6753081,4.01567657 15.5775721,3.39010038 15.903134,2.94397499 C16.228696,2.49784959 16.8542722,2.4001136 17.3003976,2.72567554 C19.6071362,4.40902808 21,7.08906798 21,10 C21,14.6325537 17.4999505,18.4476269 13,18.9450712 Z"
+														fill="#000000" fill-rule="nonzero"></path>
+													<circle fill="#000000" opacity="0.3" cx="12" cy="10" r="6"></circle>
+												</g>
+											</svg>
+											<!--end::Svg Icon-->
+										</span>
+									</span>
+									<span class="nav-text font-weight-bold">Settings</span>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" data-toggle="tab" href="#kt_apps_contacts_view_tab_1">
+									<span class="nav-icon mr-2">
+										<span class="svg-icon mr-3">
+											<!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\legacy\metronic\theme\html\demo6\dist/../src/media/svg/icons\Shopping\Chart-line1.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+												width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+												<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+													<rect x="0" y="0" width="24" height="24" />
+													<path d="M5,19 L20,19 C20.5522847,19 21,19.4477153 21,20 C21,20.5522847 20.5522847,21 20,21 L4,21 C3.44771525,21 3,20.5522847 3,20 L3,4 C3,3.44771525 3.44771525,3 4,3 C4.55228475,3 5,3.44771525 5,4 L5,19 Z" fill="#000000"
+														fill-rule="nonzero" />
+													<path
+														d="M8.7295372,14.6839411 C8.35180695,15.0868534 7.71897114,15.1072675 7.31605887,14.7295372 C6.9131466,14.3518069 6.89273254,13.7189711 7.2704628,13.3160589 L11.0204628,9.31605887 C11.3857725,8.92639521 11.9928179,8.89260288 12.3991193,9.23931335 L15.358855,11.7649545 L19.2151172,6.88035571 C19.5573373,6.44687693 20.1861655,6.37289714 20.6196443,6.71511723 C21.0531231,7.05733733 21.1271029,7.68616551 20.7848828,8.11964429 L16.2848828,13.8196443 C15.9333973,14.2648593 15.2823707,14.3288915 14.8508807,13.9606866 L11.8268294,11.3801628 L8.7295372,14.6839411 Z"
+														fill="#000000" fill-rule="nonzero" opacity="0.3" />
+												</g>
+											</svg>
+											<!--end::Svg Icon-->
+										</span>
+									</span>
+									<span class="nav-text font-weight-bold">Transactions</span>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<!--end::Header-->
+				<!--Begin::Body-->
+				<div class="card-body px-0">
+					<div class="tab-content pt-5">
+						<!--begin::Tab Content-->
+						<div class="tab-pane active" id="kt_apps_contacts_view_tab_2" role="tabpanel">
+							<form class="form">
+								<!-- Start Member Info -->
+
+								<div class="container">
+									<ul class="nav nav-pills" id="myTab" role="tablist">
+										<li class="nav-item">
+											<a class="nav-link active" data-toggle="tab" href="#member-info">Member</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" data-toggle="tab" href='#org-info'>Organization</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" data-toggle="tab" href='#password-tab'>Password</a>
+										</li>
+
+									</ul>
+									<div class="separator separator-dashed my-5"></div>
+								</div>
+								<div class="tab-content mt-5" id="myTabContent">
+									<!-- Start Member Tab -->
+									<div class="tab-pane fade active show" id="member-info" role="tabpanel" aria-labelledby="member-tab">
+
+										<div class="form-group row">
+											<label class="col-xl-3 col-lg-3 text-right col-form-label">First Name</label>
+											<div class="col-lg-9 col-xl-6">
+												<input class="form-control form-control-lg form-control-solid" type="text" value="{{ object.first_name }}" name="first_name">
+											</div>
+										</div>
+										<div class="form-group row">
+											<label class="col-xl-3 col-lg-3 text-right col-form-label">Last Name</label>
+											<div class="col-lg-9 col-xl-6">
+												<input class="form-control form-control-lg form-control-solid" type="text" value="{{ object.last_name }}" name="last_name">
+											</div>
+										</div>
+
+										<div class="form-group row">
+											<label class="col-xl-3 col-lg-3 text-right col-form-label">Email Address</label>
+											<div class="col-lg-9 col-xl-6">
+												<div class="input-group input-group-lg input-group-solid">
+													<div class="input-group-prepend">
+														<span class="input-group-text">
+															<i class="la la-at"></i>
+														</span>
+													</div>
+													<input type="text" class="form-control form-control-lg form-control-solid" name="email" value="{{ object.email }}" placeholder="Email"
+														style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA3ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDpiYmZkZTQxOS00ZGRkLWU5NDYtOWQ2MC05OGExNGJiMTA3N2YiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RDAyNDkwMkRDOTIyMTFFNkI0MzFGRTk2RjM1OTdENTciIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RDAyNDkwMkNDOTIyMTFFNkI0MzFGRTk2RjM1OTdENTciIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6OTU2NTE1NDItMmIzOC1kZjRkLTk0N2UtN2NjOTlmMjQ5ZGFjIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOmJiZmRlNDE5LTRkZGQtZTk0Ni05ZDYwLTk4YTE0YmIxMDc3ZiIv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&quot;) !important; background-repeat: no-repeat; background-size: 20px; background-position: 97% center; cursor: auto;"
+														data-temp-mail-org="0">
+												</div>
+											</div>
+										</div>
+										<div class="form-group row">
+											<label class="col-xl-3 col-lg-3 text-right col-form-label">Phone</label>
+											<div class="col-lg-9 col-xl-6">
+												<div class="input-group input-group-lg input-group-solid">
+													<div class="input-group-prepend">
+														<span class="input-group-text">
+															<i class="la la-phone"></i>
+														</span>
+													</div>
+													<input type="text" class="form-control form-control-lg form-control-solid" value="{{ object.phone }}" name="phone" placeholder="Phone">
+												</div>
+												<!-- <span class="form-text text-muted">We'll never share your email with anyone else.</span> -->
+											</div>
+										</div>
+										<div class="form-group row">
+											<label class="col-xl-3 col-lg-3 text-right col-form-label">
+												Country
+											</label>
+											<div class="col-lg-9 col-xl-6">
+												<select name="country" id="country" class="form-control form-control-solid">
+													{% for country in all_countries %}
+													{% if country.0 == object.country %}
+													<option value="{{ country.0 }}" selected>
+														{{ country.0 }}
+													</option>
+													{% else %}
+													<option value="{{ country.0 }}">
+														{{ country.0 }}
+													</option>
+													{% endif %}
+													{% endfor %}
+												</select>
+											</div>
+										</div>
+
+										<div class="form-group row">
+											<label class="col-xl-3 col-lg-3 text-right col-form-label">
+												State
+											</label>
+											<div class="col-lg-9 col-xl-6">
+												<select name="state" id="state" class="form-control form-control-solid">
+													{% for state in all_stats %}
+													{% if state.0 == object.state %}
+													<option value="{{ state.0 }}" selected>
+														{{ state.0 }}
+													</option>
+													{% else %}
+													<option value="{{ state.0 }}">
+														{{ state.0 }}
+													</option>
+													{% endif %}
+													{% endfor %}
+												</select>
+											</div>
+										</div>
+
+										<div class="form-group row">
+											<label class="col-xl-3 col-lg-3 col-form-label text-right">
+												Street Address
+											</label>
+											<div class="col-lg-9 col-xl-6">
+												<input class="form-control form-control-lg form-control-solid" type="text" name="street_address" value="{{ object.street_address }}">
+											</div>
+										</div>
+
+										<div class="form-group row">
+											<label class="col-xl-3 col-lg-3 col-form-label text-right">
+												Zip Code
+											</label>
+											<div class="col-lg-9 col-xl-6">
+												<input class="form-control form-control-lg form-control-solid" type="text" name="zip_code" value="{{ object.zip_code }}">
+											</div>
+										</div>
+
+
+									</div>
+									<!-- End Member Tab -->
+
+									<!-- Start Organization Tab -->
+									<div class="tab-pane fade" id="org-info" role="tabpanel" aria-labelledby="org-tab">
+
+										<!--begin::Form Group-->
+										<div class="form-group row">
+											<label class="col-xl-3 col-lg-3 col-form-label text-right">Organization
+												Name</label>
+											<div class="col-lg-9 col-xl-6">
+												<input class="form-control form-control-lg form-control-solid" type="text" value="{{ object.org_name }}" name="org_name">
+											</div>
+										</div>
+										<!--begin::Form Group-->
+										<div class="form-group row">
+											<label class="col-xl-3 col-lg-3 col-form-label text-right">Organization
+												Website</label>
+											<div class="col-lg-9 col-xl-6">
+												<input class="form-control form-control-lg form-control-solid" type="url" value="{{ object.org_website }}" name="org_website">
+											</div>
+										</div>
+										<!--begin::Form Group-->
+
+										<div class="form-group row">
+											<label class="col-xl-3 col-lg-3 col-form-label text-right">
+												Organization Type
+											</label>
+											<div class="col-lg-9 col-xl-6">
+												<select id="org_type" class="form-control form-control-solid" name="org_type">
+
+													{% for org_ty in org_types %}
+													{% if org_ty == object.org_type %}
+													<option value="{{ org_ty }}" selected>{{ org_ty }}
+													</option>
+													{% else %}
+													<option value="{{ org_ty }}">{{ org_ty }}</option>
+
+													{% endif %}
+													{% endfor %}
+
+
+												</select>
+												<input class="form-control mt-3 form-control-lg form-control-solid" type="text" value="{{ object.other_org_type }}" name="other_org_type" placeholder="Custom Organization Type" id='other_org_type' />
+
+											</div>
+
+										</div>
+
+										<!--begin::Form Group-->
+										<div class="form-group row">
+											<label class="col-xl-3 col-lg-3 col-form-label text-right">Annual
+												Revenue</label>
+											<div class="col-lg-9 col-xl-6">
+												<select class="form-control form-control-lg form-control-solid" id="annualRevenue" name="annualRevenue">
+													<option value=""></option>
+													{% for an_rev in annual_revenue %}
+													{% if an_rev == object.annual_revenue %}
+													<option value="{{ an_rev }}" selected>
+														{{ an_rev }}
+													</option>
+													{% else %}
+													<option value="{{ an_rev }}">{{ an_rev }}</option>
+													{% endif %}
+
+													{% endfor %}
+
+												</select>
+											</div>
+
+										</div>
+										<!--begin::Form Group-->
+										<div class="form-group row">
+											<label class="col-xl-3 col-lg-3 col-form-label text-right">Job
+												Title</label>
+											<div class="col-lg-9 col-xl-6">
+												<input class="form-control form-control-lg form-control-solid" type="text" value="{{ object.job_title }}" name="job_title">
+											</div>
+										</div>
+										<!--begin::Form Group-->
+
+										<!--begin::Form Group-->
+
+										<!--begin::Form Group-->
+										<div class="form-group row">
+											<label class="col-xl-3 col-lg-3 col-form-label text-right">Total
+												Staff</label>
+											<div class="col-lg-9 col-xl-6">
+												<input class="form-control form-control-lg form-control-solid" type="text" value="{{ object.total_staff }}" name="total_staff">
+											</div>
+										</div>
+										<div class="form-group row">
+											<label class="col-xl-3 col-lg-3 col-form-label text-right">Number
+												of
+												Volunteer</label>
+											<div class="col-lg-9 col-xl-6">
+												<input class="form-control form-control-lg form-control-solid" type="number" value="{{ object.num_of_volunteer }}" name="num_of_volunteer">
+											</div>
+										</div>
+										<div class="form-group row">
+											<label class="col-xl-3 col-lg-3 col-form-label text-right">Number
+												of
+												Board
+												Members</label>
+											<div class="col-lg-9 col-xl-6">
+												<input class="form-control form-control-lg form-control-solid" type="number" value="{{ object.num_of_board_members }}" name="num_of_board_members">
+											</div>
+										</div>
+									</div>
+									<!-- End Organization Tab -->
+
+									<!-- Start Password Tab -->
+									<div class="tab-pane fade" id="password-tab" role="tabpanel" aria-labelledby="password-tab">
+										<div class="container">
+											<div class="card-body pt-2">
+												<!--begin::Form-->
+												<form class="form" method="POST" id="change-password-form">
+													<input type="hidden" name="csrfmiddlewaretoken" value="nj4kZG9aXvfhFJYfKW6NohkKJQYIQxphveouxkpYSweyLV1DNHXyfye0yKsJlKEK">
+													<input type="hidden" name="form-name" value="change-password-form">
+													<!--begin::Alert-->
+													<div class="alert alert-custom alert-light-danger fade show mb-10" role="alert">
+														<div class="alert-icon">
+															<span class="svg-icon svg-icon-3x svg-icon-danger">
+																<!--begin::Svg Icon | path:assets/media/svg/icons/Code/Info-circle.svg-->
+																<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+																	<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+																		<rect x="0" y="0" width="24" height="24">
+																		</rect>
+																		<circle fill="#000000" opacity="0.3" cx="12" cy="12" r="10"></circle>
+																		<rect fill="#000000" x="11" y="10" width="2" height="7" rx="1"></rect>
+																		<rect fill="#000000" x="11" y="7" width="2" height="2" rx="1"></rect>
+																	</g>
+																</svg>
+																<!--end::Svg Icon-->
+															</span>
+														</div>
+														<div class="alert-text font-weight-bold">
+															<p>Password Requirements:</p>
+															<ul>
+																<li>Include at least 8 characters.</li>
+																<li>Include at least one letter and one number.</li>
+																<li>Include at least 1 uppercase letter, 1 lowercase
+																	letter, and 1 number.</li>
+															</ul>
+														</div>
+
+													</div>
+													<!--end::Alert-->
+													<div class="form-group row">
+														<label class="col-xl-3 col-lg-3 col-form-label text-alert">Current
+															Password</label>
+														<div class="col-lg-9 col-xl-6">
+															<input type="password" class="form-control form-control-lg form-control-solid mb-2" name="password" placeholder="Current password">
+														</div>
+													</div>
+													<div class="form-group row">
+														<label class="col-xl-3 col-lg-3 col-form-label text-alert">New
+															Password</label>
+														<div class="col-lg-9 col-xl-6">
+															<input type="password" class="form-control form-control-lg form-control-solid" name="new-password" placeholder="New password">
+														</div>
+													</div>
+													<div class="form-group row">
+														<label class="col-xl-3 col-lg-3 col-form-label text-alert">Verify
+															Password</label>
+														<div class="col-lg-9 col-xl-6">
+															<input type="password" class="form-control form-control-lg form-control-solid" name="verify-new-password" placeholder="Verify password">
+														</div>
+													</div>
+
+													<!--end::Form-->
+												</form>
+											</div>
+										</div>
+									</div>
+									<!-- End Password Tab -->
+								</div>
+								<!-- End Member Info -->
+
+
+
+
+								<!-- <div class="separator separator-dashed my-10"></div> -->
+
+
+							</form>
+						</div>
+						<!--end::Tab Content-->
+						<!--begin::Tab Content-->
+						<div class="tab-pane" id="kt_apps_contacts_view_tab_3" role="tabpanel">
+							<div class="container">
+								<form class="form">
+									<div class="table-responsive">
+			                <table class="table table-hover">
+			                    <thead class="thead-light">
+			                    <tr>
+			                        <th>Activity</th>
+			                        <th>IP</th>
+			                        <th>Action</th>
+			                        <th>Activity by</th>
+			                        <th>Date</th>
+			                    </tr>
+			                    </thead>
+			                    <tbody>
+			                    <tr>
+			                        <th scope="row">Add Invoice #2533</th>
+			                        <td>44.180.171.110</td>
+			                        <td>Edited</td>
+			                        <td>Buck Kinnear</td>
+			                        <td>Sat, 5 May 2005 12:12 PM</td>
+			                    </tr>
+			                    <tr>
+			                        <th scope="row">Send Invoice #55587</th>
+			                        <td>73.249.70.189</td>
+			                        <td>Email</td>
+			                        <td>Petey Cruiser</td>
+			                        <td>Sun, 14 Jun 2019 11:12 AM</td>
+			                    </tr>
+			                    <tr>
+			                        <th scope="row">Add New Member #99635</th>
+			                        <td>173.245.48.0</td>
+			                        <td>Add</td>
+			                        <td>Super Admin</td>
+			                        <td>Mon, 22 Jul 2010 08:12 AM</td>
+			                    </tr>
+			                    <tr>
+			                        <th scope="row">Delete Invoice #33698</th>
+			                        <td>131.0.72.0</td>
+			                        <td>Deleted</td>
+			                        <td>Super Admin</td>
+			                        <td>Fri, 24 Apr 2011 10:30 AM</td>
+			                    </tr>
+			                    <tr>
+			                        <th scope="row">Update Profile Picture #586247</th>
+			                        <td>103.31.4.0</td>
+			                        <td>Edited</td>
+			                        <td>Brock Lee</td>
+			                        <td>Thu, 14 May 2020 04:30 PM</td>
+			                    </tr>
+			                    <tr>
+			                        <th scope="row">Pay Subscription Fee #23363</th>
+			                        <td>108.162.192.0</td>
+			                        <td>Pay</td>
+			                        <td>Nick R. Bocker</td>
+			                        <td>Sun, 26 Aug 2020 08:44 PM</td>
+			                    </tr>
+			                    <tr>
+			                        <th scope="row">Edit Company Settings</th>
+			                        <td>238.252.76.37</td>
+			                        <td>Edited</td>
+			                        <td>Super Admin</td>
+			                        <td>Tue, 11 Mar 2020 11:00 AM</td>
+			                    </tr>
+			                    <tr>
+			                        <th scope="row">Login to account #253993</th>
+			                        <td>147.45.139.119</td>
+			                        <td>Login</td>
+			                        <td>Greta Life</td>
+			                        <td>Sat, 30 Jun 2019 10:26 PM</td>
+			                    </tr>
+			                    <tr>
+			                        <th scope="row">Send Message #5666</th>
+			                        <td>23.127.178.123</td>
+			                        <td>Send</td>
+			                        <td>Shonda Leer</td>
+			                        <td>Mon, 22 Jun 2019 11:00 AM</td>
+			                    </tr>
+			                    <tr>
+			                        <th scope="row">Register New User #225710</th>
+			                        <td>151.93.1.164</td>
+			                        <td>Register</td>
+			                        <td>Bob Frapples</td>
+			                        <td>Fri, 16 Feb 2019 03:22 AM</td>
+			                    </tr>
+			                    </tbody>
+			                </table>
+			            </div>
+								</form>
+
+							</div>
+						</div>
+						<!--end::Tab Content-->
+						<!--begin::Tab Content-->
+						<div class="tab-pane" id="kt_apps_contacts_view_tab_4" role="tabpanel">
+							<div class="container">
+								<form class="form">
+									Settings tab
+								</form>
+
+							</div>
+						</div>
+						<!--end::Tab Content-->
+						<!--begin::Tab Content-->
+						<div class="tab-pane" id="kt_apps_contacts_view_tab_1" role="tabpanel">
+							<div class="container">
+								<form class="form">
+									Transactions tab
+								</form>
+
+							</div>
+						</div>
+						<!--end::Tab Content-->
+					</div>
+				</div>
+				<!--end::Body-->
+			</div>
+			<!--end::Card-->
+		</div>
+		<!--end::Content-->
+	</div>
+	<!--end::Education-->
+</div>
+
+
+<!--End::Row-->
+{% endblock dashboard_content%}
+
+{% block customjs %}
+<!--begin::Page Scripts(used by this page)-->
+<script src="{% static 'dashboard/assets/js/pages/widgets.js' %}"></script>
+<script src="{% static 'dashboard/assets/js/pages/custom/education/student/profile.js' %}"></script>
+<!--end::Page Scripts-->
+<script>
+	$('#country').select2({
+		placeholder: "Select a country",
+		width: "100%",
+		height: "20%"
+	});
+	$('#state').select2({
+		placeholder: "Select a state",
+		width: "100%"
+	});
+	$('#org_type').select2({
+		placeholder: "Select an organization type",
+		width: "100%"
+	});
+	$(document).ready(function() {
+		// here to handle organization type
+		const orgType = $("#org_type");
+		const otherOrgType = $("#other_org_type");
+		if (orgType.val() === 'Other') {
+			otherOrgType.removeClass("disabled not-allowed-cursor text-muted").removeAttr("disabled");
+		} else {
+			otherOrgType.addClass("disabled not-allowed-cursor text-muted").attr("disabled", "disabled");
+		}
+		orgType.on("change", (event) => {
+			if (orgType.val() === 'Other') {
+				otherOrgType.removeClass("disabled not-allowed-cursor text-muted").removeAttr(
+					"disabled");
+			} else {
+				otherOrgType.addClass("disabled not-allowed-cursor text-muted").attr("disabled", true)
+					.attr("placeholder", "Select your organization type");
+			}
+		});
+
+		// here to handle the country and stats inputs
+		const country = $("#country");
+		const state = $("#state");
+		if (country.val() === 'United States') {
+			state.removeClass("disabled not-allowed-cursor").removeAttr("disabled");
+		} else {
+			state.addClass("disabled not-allowed-cursor").attr("disabled", true).val("");
+		}
+		country.on('change', (event) => {
+			if (country.val() === 'United States') {
+				state.removeClass("disabled not-allowed-cursor").removeAttr("disabled");
+			} else {
+				state.addClass("disabled not-allowed-cursor").attr("disabled", true);
+			}
+		});
+
+	}); // end of document ready
+</script>
+
+{% endblock customjs %}

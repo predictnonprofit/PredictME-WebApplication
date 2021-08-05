@@ -1,0 +1,723 @@
+{% extends 'users/inc/master.html' %}
+{% load static %}
+
+{% block title %}
+  Register New Member
+{% endblock title %}
+
+{% block customcss %}
+
+{% endblock customcss %}
+
+
+
+{% block auth_content %}
+
+<!--begin::Content-->
+<div
+  class="login-content flex-row-fluid d-flex flex-column justify-content-center position-relative overflow-hidden p-7 "
+  style="max-width: 100% !important;">
+  <!--begin::Content body-->
+  <div class="d-flex flex-column-fluid flex-center">
+    <!--begin::Signup-->
+    <div class="login-form login-signup d-block" style="max-width: 100% !important;">
+      <form class="form" method="POST" id="kt_login_signup_form" action="{% url 'register' %}">
+        {% csrf_token %}
+        <div class="card-header py-1">
+          <div class="card-title">
+            <h3 class="card-label">
+              Sign Up
+              <small>Enter your details to create your account</small>
+            </h3>
+          </div>
+        </div>
+        <div class="card-body">
+
+          <div class="row">
+            <div class="col-lg">
+              <h3 class="font-size-lg text-dark font-weight-bold mb-6">Personal</h3>
+              <div class="mb-15">
+                <div class="form-group row">
+                  <label class="col-lg-3 col-form-label text-lg-right">First Name *</label>
+                  <div class="col-lg-6">
+                    <input class="form-control form-control-solid h-auto" type="text" placeholder="First Name"
+                      name="first_name" autocomplete="off" />
+                    {% include "users/inc/display_errors.html" with errors=input_errors.first_name %}
+
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-lg-3 col-form-label text-lg-right">Last Name *</label>
+                  <div class="col-lg-6">
+                    <input class="form-control form-control-solid h-auto " type="text" placeholder="Last Name"
+                      name="last_name" autocomplete="off" />
+                    {% include "users/inc/display_errors.html" with errors=input_errors.last_name %}
+
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-lg-3 col-form-label text-lg-right">Email Address *</label>
+                  <div class="col-lg-6">
+                    <input class="form-control form-control-solid h-auto " type="email" placeholder="Email Address"
+                      name="email" autocomplete="off" />
+                    {% include "users/inc/display_errors.html" with errors=input_errors.email %}
+
+                  </div>
+                </div>
+              </div>
+
+              <h3 class="font-size-lg text-dark font-weight-bold mb-6">Address</h3>
+              <div class="mb-3">
+                <div class="form-group row">
+                  <label class="col-lg-3 col-form-label text-lg-right">Phone *</label>
+                  <div class="col-lg-6">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <i class="icon-sm fas fa-plus"></i>
+                        </span>
+                      </div>
+                      <input class="form-control form-control-solid h-auto" type="text" placeholder="Phone number"
+                        name="phone" autocomplete="off" />
+                    </div>
+                    {% include "users/inc/display_errors.html" with errors=input_errors.phone %}
+
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-lg-3 col-form-label text-lg-right">Country *</label>
+                  <div class="col-lg-6">
+                    <div class="input-group">
+                      <select name="country" id="country" class="form-control form-control-solid h-auto ">
+                        <option value="United States" selected="selected">United States</option>
+                        <option value="Afganistan">Afghanistan</option>
+                        <option value="Albania">Albania</option>
+                        <option value="Algeria">Algeria</option>
+                        <option value="American Samoa">American Samoa</option>
+                        <option value="Andorra">Andorra</option>
+                        <option value="Angola">Angola</option>
+                        <option value="Anguilla">Anguilla</option>
+                        <option value="Antigua & Barbuda">Antigua & Barbuda</option>
+                        <option value="Argentina">Argentina</option>
+                        <option value="Armenia">Armenia</option>
+                        <option value="Aruba">Aruba</option>
+                        <option value="Australia">Australia</option>
+                        <option value="Austria">Austria</option>
+                        <option value="Azerbaijan">Azerbaijan</option>
+                        <option value="Bahamas">Bahamas</option>
+                        <option value="Bahrain">Bahrain</option>
+                        <option value="Bangladesh">Bangladesh</option>
+                        <option value="Barbados">Barbados</option>
+                        <option value="Belarus">Belarus</option>
+                        <option value="Belgium">Belgium</option>
+                        <option value="Belize">Belize</option>
+                        <option value="Benin">Benin</option>
+                        <option value="Bermuda">Bermuda</option>
+                        <option value="Bhutan">Bhutan</option>
+                        <option value="Bolivia">Bolivia</option>
+                        <option value="Bonaire">Bonaire</option>
+                        <option value="Bosnia & Herzegovina">Bosnia & Herzegovina</option>
+                        <option value="Botswana">Botswana</option>
+                        <option value="Brazil">Brazil</option>
+                        <option value="British Indian Ocean Ter">British Indian Ocean Ter
+                        </option>
+                        <option value="Brunei">Brunei</option>
+                        <option value="Bulgaria">Bulgaria</option>
+                        <option value="Burkina Faso">Burkina Faso</option>
+                        <option value="Burundi">Burundi</option>
+                        <option value="Cambodia">Cambodia</option>
+                        <option value="Cameroon">Cameroon</option>
+                        <option value="Canada">Canada</option>
+                        <option value="Canary Islands">Canary Islands</option>
+                        <option value="Cape Verde">Cape Verde</option>
+                        <option value="Cayman Islands">Cayman Islands</option>
+                        <option value="Central African Republic">Central African Republic
+                        </option>
+                        <option value="Chad">Chad</option>
+                        <option value="Channel Islands">Channel Islands</option>
+                        <option value="Chile">Chile</option>
+                        <option value="China">China</option>
+                        <option value="Christmas Island">Christmas Island</option>
+                        <option value="Cocos Island">Cocos Island</option>
+                        <option value="Colombia">Colombia</option>
+                        <option value="Comoros">Comoros</option>
+                        <option value="Congo">Congo</option>
+                        <option value="Cook Islands">Cook Islands</option>
+                        <option value="Costa Rica">Costa Rica</option>
+                        <option value="Cote DIvoire">Cote DIvoire</option>
+                        <option value="Croatia">Croatia</option>
+                        <option value="Cuba">Cuba</option>
+                        <option value="Curaco">Curacao</option>
+                        <option value="Cyprus">Cyprus</option>
+                        <option value="Czech Republic">Czech Republic</option>
+                        <option value="Denmark">Denmark</option>
+                        <option value="Djibouti">Djibouti</option>
+                        <option value="Dominica">Dominica</option>
+                        <option value="Dominican Republic">Dominican Republic</option>
+                        <option value="East Timor">East Timor</option>
+                        <option value="Ecuador">Ecuador</option>
+                        <option value="Egypt">Egypt</option>
+                        <option value="El Salvador">El Salvador</option>
+                        <option value="Equatorial Guinea">Equatorial Guinea</option>
+                        <option value="Eritrea">Eritrea</option>
+                        <option value="Estonia">Estonia</option>
+                        <option value="Ethiopia">Ethiopia</option>
+                        <option value="Falkland Islands">Falkland Islands</option>
+                        <option value="Faroe Islands">Faroe Islands</option>
+                        <option value="Fiji">Fiji</option>
+                        <option value="Finland">Finland</option>
+                        <option value="France">France</option>
+                        <option value="French Guiana">French Guiana</option>
+                        <option value="French Polynesia">French Polynesia</option>
+                        <option value="French Southern Ter">French Southern Ter</option>
+                        <option value="Gabon">Gabon</option>
+                        <option value="Gambia">Gambia</option>
+                        <option value="Georgia">Georgia</option>
+                        <option value="Germany">Germany</option>
+                        <option value="Ghana">Ghana</option>
+                        <option value="Gibraltar">Gibraltar</option>
+                        <option value="Great Britain">Great Britain</option>
+                        <option value="Greece">Greece</option>
+                        <option value="Greenland">Greenland</option>
+                        <option value="Grenada">Grenada</option>
+                        <option value="Guadeloupe">Guadeloupe</option>
+                        <option value="Guam">Guam</option>
+                        <option value="Guatemala">Guatemala</option>
+                        <option value="Guinea">Guinea</option>
+                        <option value="Guyana">Guyana</option>
+                        <option value="Haiti">Haiti</option>
+                        <option value="Hawaii">Hawaii</option>
+                        <option value="Honduras">Honduras</option>
+                        <option value="Hong Kong">Hong Kong</option>
+                        <option value="Hungary">Hungary</option>
+                        <option value="Iceland">Iceland</option>
+                        <option value="Indonesia">Indonesia</option>
+                        <option value="India">India</option>
+                        <option value="Iran">Iran</option>
+                        <option value="Iraq">Iraq</option>
+                        <option value="Ireland">Ireland</option>
+                        <option value="Isle of Man">Isle of Man</option>
+                        <option value="Israel">Israel</option>
+                        <option value="Italy">Italy</option>
+                        <option value="Jamaica">Jamaica</option>
+                        <option value="Japan">Japan</option>
+                        <option value="Jordan">Jordan</option>
+                        <option value="Kazakhstan">Kazakhstan</option>
+                        <option value="Kenya">Kenya</option>
+                        <option value="Kiribati">Kiribati</option>
+                        <option value="Korea North">Korea North</option>
+                        <option value="Korea Sout">Korea South</option>
+                        <option value="Kuwait">Kuwait</option>
+                        <option value="Kyrgyzstan">Kyrgyzstan</option>
+                        <option value="Laos">Laos</option>
+                        <option value="Latvia">Latvia</option>
+                        <option value="Lebanon">Lebanon</option>
+                        <option value="Lesotho">Lesotho</option>
+                        <option value="Liberia">Liberia</option>
+                        <option value="Libya">Libya</option>
+                        <option value="Liechtenstein">Liechtenstein</option>
+                        <option value="Lithuania">Lithuania</option>
+                        <option value="Luxembourg">Luxembourg</option>
+                        <option value="Macau">Macau</option>
+                        <option value="Macedonia">Macedonia</option>
+                        <option value="Madagascar">Madagascar</option>
+                        <option value="Malaysia">Malaysia</option>
+                        <option value="Malawi">Malawi</option>
+                        <option value="Maldives">Maldives</option>
+                        <option value="Mali">Mali</option>
+                        <option value="Malta">Malta</option>
+                        <option value="Marshall Islands">Marshall Islands</option>
+                        <option value="Martinique">Martinique</option>
+                        <option value="Mauritania">Mauritania</option>
+                        <option value="Mauritius">Mauritius</option>
+                        <option value="Mayotte">Mayotte</option>
+                        <option value="Mexico">Mexico</option>
+                        <option value="Midway Islands">Midway Islands</option>
+                        <option value="Moldova">Moldova</option>
+                        <option value="Monaco">Monaco</option>
+                        <option value="Mongolia">Mongolia</option>
+                        <option value="Montserrat">Montserrat</option>
+                        <option value="Morocco">Morocco</option>
+                        <option value="Mozambique">Mozambique</option>
+                        <option value="Myanmar">Myanmar</option>
+                        <option value="Nambia">Nambia</option>
+                        <option value="Nauru">Nauru</option>
+                        <option value="Nepal">Nepal</option>
+                        <option value="Netherland Antilles">Netherland Antilles</option>
+                        <option value="Netherlands">Netherlands (Holland, Europe)</option>
+                        <option value="Nevis">Nevis</option>
+                        <option value="New Caledonia">New Caledonia</option>
+                        <option value="New Zealand">New Zealand</option>
+                        <option value="Nicaragua">Nicaragua</option>
+                        <option value="Niger">Niger</option>
+                        <option value="Nigeria">Nigeria</option>
+                        <option value="Niue">Niue</option>
+                        <option value="Norfolk Island">Norfolk Island</option>
+                        <option value="Norway">Norway</option>
+                        <option value="Oman">Oman</option>
+                        <option value="Pakistan">Pakistan</option>
+                        <option value="Palau Island">Palau Island</option>
+                        <option value="Palestine">Palestine</option>
+                        <option value="Panama">Panama</option>
+                        <option value="Papua New Guinea">Papua New Guinea</option>
+                        <option value="Paraguay">Paraguay</option>
+                        <option value="Peru">Peru</option>
+                        <option value="Phillipines">Philippines</option>
+                        <option value="Pitcairn Island">Pitcairn Island</option>
+                        <option value="Poland">Poland</option>
+                        <option value="Portugal">Portugal</option>
+                        <option value="Puerto Rico">Puerto Rico</option>
+                        <option value="Qatar">Qatar</option>
+                        <option value="Republic of Montenegro">Republic of Montenegro</option>
+                        <option value="Republic of Serbia">Republic of Serbia</option>
+                        <option value="Reunion">Reunion</option>
+                        <option value="Romania">Romania</option>
+                        <option value="Russia">Russia</option>
+                        <option value="Rwanda">Rwanda</option>
+                        <option value="St Barthelemy">St Barthelemy</option>
+                        <option value="St Eustatius">St Eustatius</option>
+                        <option value="St Helena">St Helena</option>
+                        <option value="St Kitts-Nevis">St Kitts-Nevis</option>
+                        <option value="St Lucia">St Lucia</option>
+                        <option value="St Maarten">St Maarten</option>
+                        <option value="St Pierre & Miquelon">St Pierre & Miquelon</option>
+                        <option value="St Vincent & Grenadines">St Vincent & Grenadines</option>
+                        <option value="Saipan">Saipan</option>
+                        <option value="Samoa">Samoa</option>
+                        <option value="Samoa American">Samoa American</option>
+                        <option value="San Marino">San Marino</option>
+                        <option value="Sao Tome & Principe">Sao Tome & Principe</option>
+                        <option value="Saudi Arabia">Saudi Arabia</option>
+                        <option value="Senegal">Senegal</option>
+                        <option value="Seychelles">Seychelles</option>
+                        <option value="Sierra Leone">Sierra Leone</option>
+                        <option value="Singapore">Singapore</option>
+                        <option value="Slovakia">Slovakia</option>
+                        <option value="Slovenia">Slovenia</option>
+                        <option value="Solomon Islands">Solomon Islands</option>
+                        <option value="Somalia">Somalia</option>
+                        <option value="South Africa">South Africa</option>
+                        <option value="Spain">Spain</option>
+                        <option value="Sri Lanka">Sri Lanka</option>
+                        <option value="Sudan">Sudan</option>
+                        <option value="Suriname">Suriname</option>
+                        <option value="Swaziland">Swaziland</option>
+                        <option value="Sweden">Sweden</option>
+                        <option value="Switzerland">Switzerland</option>
+                        <option value="Syria">Syria</option>
+                        <option value="Tahiti">Tahiti</option>
+                        <option value="Taiwan">Taiwan</option>
+                        <option value="Tajikistan">Tajikistan</option>
+                        <option value="Tanzania">Tanzania</option>
+                        <option value="Thailand">Thailand</option>
+                        <option value="Togo">Togo</option>
+                        <option value="Tokelau">Tokelau</option>
+                        <option value="Tonga">Tonga</option>
+                        <option value="Trinidad & Tobago">Trinidad & Tobago</option>
+                        <option value="Tunisia">Tunisia</option>
+                        <option value="Turkey">Turkey</option>
+                        <option value="Turkmenistan">Turkmenistan</option>
+                        <option value="Turks & Caicos Is">Turks & Caicos Is</option>
+                        <option value="Tuvalu">Tuvalu</option>
+                        <option value="Uganda">Uganda</option>
+                        <option value="United Kingdom">United Kingdom</option>
+                        <option value="Ukraine">Ukraine</option>
+                        <option value="United Arab Erimates">United Arab Emirates</option>
+                        <option value="United States of America">United States of America
+                        </option>
+                        <option value="Uraguay">Uruguay</option>
+                        <option value="Uzbekistan">Uzbekistan</option>
+                        <option value="Vanuatu">Vanuatu</option>
+                        <option value="Vatican City State">Vatican City State</option>
+                        <option value="Venezuela">Venezuela</option>
+                        <option value="Vietnam">Vietnam</option>
+                        <option value="Virgin Islands (Brit)">Virgin Islands (Brit)</option>
+                        <option value="Virgin Islands (USA)">Virgin Islands (USA)</option>
+                        <option value="Wake Island">Wake Island</option>
+                        <option value="Wallis & Futana Is">Wallis & Futana Is</option>
+                        <option value="Yemen">Yemen</option>
+                        <option value="Zaire">Zaire</option>
+                        <option value="Zambia">Zambia</option>
+                        <option value="Zimbabwe">Zimbabwe</option>
+                      </select>
+                      {% include "users/inc/display_errors.html" with errors=input_errors.country %}
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-lg-3 col-form-label text-lg-right">State *</label>
+                  <div class="col-lg-6">
+                    <div class="input-group">
+                      <select class="form-control form-control-solid" name="state" id="state">
+                        <option value="0" selected disabled hidden>Choose State *</option>
+                        <option value="Alabama">Alabama</option>
+                        <option value="Alaska">Alaska</option>
+                        <option value="Arizona">Arizona</option>
+                        <option value="Arkansas">Arkansas</option>
+                        <option value="California">California</option>
+                        <option value="Colorado">Colorado</option>
+                        <option value="Connecticut">Connecticut</option>
+                        <option value="Delaware">Delaware</option>
+                        <option value="District of Columbia">District of Columbia</option>
+                        <option value="Florida">Florida</option>
+                        <option value="Georgia">Georgia</option>
+                        <option value="Guam">Guam</option>
+                        <option value="Hawaii">Hawaii</option>
+                        <option value="Idaho">Idaho</option>
+                        <option value="Illinois">Illinois</option>
+                        <option value="Indiana">Indiana</option>
+                        <option value="Iowa">Iowa</option>
+                        <option value="Kansas">Kansas</option>
+                        <option value="Kentucky">Kentucky</option>
+                        <option value="Louisiana">Louisiana</option>
+                        <option value="Maine">Maine</option>
+                        <option value="Maryland">Maryland</option>
+                        <option value="Massachusetts">Massachusetts</option>
+                        <option value="Michigan">Michigan</option>
+                        <option value="Minnesota">Minnesota</option>
+                        <option value="Mississippi">Mississippi</option>
+                        <option value="Missouri">Missouri</option>
+                        <option value="Montana">Montana</option>
+                        <option value="Nebraska">Nebraska</option>
+                        <option value="Nevada">Nevada</option>
+                        <option value="New Hampshire">New Hampshire</option>
+                        <option value="New Jersey">New Jersey</option>
+                        <option value="New Mexico">New Mexico</option>
+                        <option value="New York">New York</option>
+                        <option value="North Carolina">North Carolina</option>
+                        <option value="North Dakota">North Dakota</option>
+                        <option value="Northern Marianas Islands">Northern Marianas Islands
+                        </option>
+                        <option value="Ohio">Ohio</option>
+                        <option value="Oklahoma">Oklahoma</option>
+                        <option value="Oregon">Oregon</option>
+                        <option value="Pennsylvania">Pennsylvania</option>
+                        <option value="Puerto Rico">Puerto Rico</option>
+                        <option value="Rhode Island">Rhode Island</option>
+                        <option value="South Carolina">South Carolina</option>
+                        <option value="South Dakota">South Dakota</option>
+                        <option value="Tennessee">Tennessee</option>
+                        <option value="Texas">Texas</option>
+                        <option value="Utah">Utah</option>
+                        <option value="Vermont">Vermont</option>
+                        <option value="Virginia">Virginia</option>
+                        <option value="Virgin Islands">Virgin Islands</option>
+                        <option value="Washington">Washington</option>
+                        <option value="West Virginia">West Virginia</option>
+                        <option value="Wisconsin">Wisconsin</option>
+                        <option value="Wyoming">Wyoming</option>
+                      </select>
+                      {% include "users/inc/display_errors.html" with errors=input_errors.state %}
+                      {% include "users/inc/display_errors.html" with errors=input_errors.state %}
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-lg-3 col-form-label text-lg-right">City *</label>
+                  <div class="col-lg-6">
+                    <div class="input-group">
+                      <input class="form-control form-control-solid h-auto" type="text" placeholder="City" name="city"
+                        autocomplete="off" />
+                      {% include "users/inc/display_errors.html" with errors=input_errors.city %}
+
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group row align-items-center">
+                  <label class="col-lg-3 col-form-label  text-lg-right">Street Address *</label>
+                  <div class="col-lg-6">
+                    <input class="form-control form-control-solid h-auto" type="tex" placeholder="Street Address"
+                      name="street_address" autocomplete="off" />
+                    {% include "users/inc/display_errors.html" with errors=input_errors.street_address %}
+                  </div>
+                </div>
+                <div class="form-group row align-items-center">
+                  <label class="col-lg-3 col-form-label  text-lg-right">Zip Code *</label>
+                  <div class="col-lg-6">
+                    <input class="form-control form-control-solid h-auto" type="text" placeholder="Zip Code" name="zip"
+                      autocomplete="off" />
+
+                    {% include "users/inc/display_errors.html" with errors=input_errors.zip %}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg">
+              <h3 class="font-size-lg text-dark font-weight-bold mb-6">Organization</h3>
+              <div class="mb-15">
+                <div class="form-group row">
+                  <label class="col-lg-3 col-form-label text-lg-right">Type *</label>
+                  <div class="col-lg-6">
+                    <select name="org_type" id="org_type" class="form-control">
+                      <option selected disabled>Organization Type *</option>
+                      <option value="Higher Education">Higher Education</option>
+                      <option value="Arts and Culture">Arts and Culture</option>
+                      <option value="Other Education">Other Education</option>
+                      <option value="Health related">Health related</option>
+                      <option value="Hospitals and Primary Care">Hospitals and Primary Care
+                      </option>
+                      <option value="Human and Social Services">Human and Social Services
+                      </option>
+                      <option value="Environment">Environment</option>
+                      <option value="Animal">Animal</option>
+                      <option value="International">International</option>
+                      <option value="Religion">Religion related</option>
+                      <option value="Other">
+                        <b>Other (Enter it manually)</b>
+                      </option>
+                    </select>
+                    {% include "users/inc/display_errors.html" with errors=input_errors.org_type %}
+                    <input class="form-control d-none mt-2" type="text" value="{{ input_data.other_org_type }}"
+                      placeholder="Other Organization Type" name="other_org_type" autocomplete="off"
+                      id="other_org_type">
+                    {% include "users/inc/display_errors.html" with errors=input_errors.other_org_type %}
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-lg-3 col-form-label text-lg-right">Name *</label>
+                  <div class="col-lg-6">
+                    <input class="form-control form-control-solid" type="text" placeholder="Organization Name *"
+                      name="org_name" autocomplete="off" value="{{ input_data.org_name }}">
+                    {% include "users/inc/display_errors.html" with errors=input_errors.org_name %}
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-lg-3 col-form-label text-lg-right">Website *</label>
+                  <div class="col-lg-6">
+                    <input class="form-control form-control-solid" type="text" placeholder="Organization Website"
+                      name="org_website" autocomplete="off" value="{{ input_data.org_website }}">
+                    {% include "users/inc/display_errors.html" with errors=input_errors.org_website %}
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-lg-3 col-form-label text-lg-right">Job Title *</label>
+                  <div class="col-lg-6">
+                    <input class="form-control form-control-solid h-auto " type="text" placeholder="Job Title"
+                      name="job_title" autocomplete="off" />
+                    {% include "users/inc/display_errors.html" with errors=input_errors.job_title %}
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-lg-3 col-form-label text-lg-right">Annual Revenue *</label>
+                  <div class="col-lg-6">
+                    <select class="form-control form-control-solid " id="annualRevenue" name="annual_revenue">
+                      <option selected disabled>Annual Revenue</option>
+                      <option value="$5,000 - $50,000">$5,000 - $50,000</option>
+                      <option value="$50,000 - $100,000">$50,000 - $100,000</option>
+                      <option value="$100,000 - $250,000">$100,000 - $250,000</option>
+                      <option value="$250,000 - $500,000">$250,000 - $500,000</option>
+                      <option value="$500,000 - $1 million">$500,000 - $1 million</option>
+                      <option value="$1 million - $5 million">$1 million - $5 million</option>
+                      <option value="$5 million - $10 million">$5 million - $10 million</option>
+                      <option value="$10 million or more">$10 million or more</option>
+
+                    </select>
+
+                    {% include "users/inc/display_errors.html" with errors=input_errors.annual_revenue %}
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-lg-3 col-form-label text-lg-right">Total Staff *</label>
+                  <div class="col-lg-6">
+                    <input class="form-control form-control-solid h-auto" type="number" placeholder="Total Staff"
+                      name="total_staff" autocomplete="off" />
+                    {% include "users/inc/display_errors.html" with errors=input_errors.total_staff %}
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-lg-3 col-form-label text-lg-right">Number of Volunteer</label>
+                  <div class="col-lg-6">
+                    <input class="form-control form-control-solid h-auto" type="number"
+                      placeholder="Number of Volunteer" name="number_volunteer" autocomplete="off" />
+                    {% include "users/inc/display_errors.html" with errors=input_errors.number_volunteer %}
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-lg-3 col-form-label text-lg-right">Number of Board Members</label>
+                  <div class="col-lg-6">
+                    <input class="form-control form-control-solid h-auto" type="number"
+                      placeholder="Number of Board Members" name="number_board_members" autocomplete="off" />
+                    {% include "users/inc/display_errors.html" with errors=input_errors.number_board_members %}
+                  </div>
+                </div>
+              </div>
+
+              <h3 class="font-size-lg text-dark font-weight-bold mb-6">Accept Terms *</h3>
+              <div class="mb-3">
+                <div class="form-group row">
+                  <div class="col">
+
+                    <label class="checkbox checkbox-primary">
+                      <input type="checkbox" value="1" name="accepted_privacy_terms">Accepts &nbsp; <a
+                        href="{% url 'privacy-policy' %}" target="_blank">Privacy Terms</a> * &nbsp;
+                      <span></span>
+                    </label>
+                    {% include "users/inc/display_errors.html" with errors=input_errors.accepted_privacy_terms %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="card-footer">
+          <div class="row">
+            <div class="col-lg-9">
+              <button type="submit" class="btn btn-success mr-2" disabled id="register_btn">Submit</button>
+              <button type="reset" class="btn btn-secondary" id="kt_login_signup_cancel">Cancel</button>
+            </div>
+            <div class="col-lg-3 text-right">
+              <a href="{% url 'login' %}" class="btn btn-link h6 font-weight-bolder">
+                Already has an account, Login
+              </a>
+            </div>
+          </div>
+        </div>
+      </form>
+
+    </div>
+    <!--end::Signup-->
+    <!--begin::Forgot-->
+    <div class="login-form login-forgot">
+      <!--begin::Form-->
+      <form class="form" novalidate="novalidate" id="kt_login_forgot_form">
+        <!--begin::Title-->
+        <div class="pb-13 pt-lg-0 pt-5">
+          <h3 class="font-weight-bolder text-dark font-size-h4 font-size-h1-lg">Forgotten Password ?</h3>
+          <p class="text-muted font-weight-bold font-size-h4">Enter your email to reset your password</p>
+        </div>
+        <!--end::Title-->
+        <!--begin::Form group-->
+        <div class="form-group">
+          <input class="form-control form-control-solid h-auto py-7 px-6 rounded-lg font-size-h6" type="email"
+            placeholder="Email" name="email" autocomplete="off" />
+        </div>
+        <!--end::Form group-->
+        <!--begin::Form group-->
+        <div class="form-group d-flex flex-wrap pb-lg-0">
+          <button type="button" id="kt_login_forgot_submit"
+            class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-4">Submit</button>
+          <button type="button" id="kt_login_forgot_cancel"
+            class="btn btn-light-primary font-weight-bolder font-size-h6 px-8 py-4 my-3">Cancel</button>
+        </div>
+        <!--end::Form group-->
+      </form>
+      <!--end::Form-->
+    </div>
+    <!--end::Forgot-->
+  </div>
+  <!--end::Content body-->
+  <!--begin::Content footer-->
+  <div class="d-flex justify-content-lg-start justify-content-center align-items-end py-7 py-lg-0 mx-auto">
+    <a href="{% url 'terms' %}" class="text-primary font-weight-bolder font-size-h5">Terms</a>
+    <a href="{% url 'pricing' %}" class="text-primary ml-10 font-weight-bolder font-size-h5">Plans</a>
+    <a href="{% url 'contact' %}" class="text-primary ml-10 font-weight-bolder font-size-h5">Contact Us</a>
+  </div>
+  <!--end::Content footer-->
+</div>
+<!--end::Content-->
+{% endblock auth_content%}
+
+
+{% block customjs %}
+
+<script>
+  function sortSelectOptions(selector, skip_first) {
+    // this function to sort alphabetical the organization type
+    var options = (skip_first) ? $(selector + ' option:not(:first)') : $(selector + ' option');
+    var arr = options.map(function (_, o) {
+      return {
+        t: $(o).text(),
+        v: o.value,
+        s: $(o).prop('selected')
+      };
+    }).get();
+    arr.sort(function (o1, o2) {
+      var t1 = o1.t.toLowerCase(),
+        t2 = o2.t.toLowerCase();
+      return t1 > t2 ? 1 : t1 < t2 ? -1 : 0;
+    });
+    options.each(function (i, o) {
+      o.value = arr[i].v;
+      $(o).text(arr[i].t);
+      if (arr[i].s) {
+        $(o).attr('selected', 'selected').prop('selected', true);
+      } else {
+        $(o).removeAttr('selected');
+        $(o).prop('selected', false);
+      }
+    });
+  }
+
+  $(document).ready(function () {
+    // $("#org_type").append($("#org_type option").remove().sort(function (a, b) {
+    //     var at = $(a).text(), bt = $(b).text();
+    //     return (at > bt) ? 1 : ((at < bt) ? -1 : 0);
+    // }));
+    $('#country').select2({
+      placeholder: "Select a country",
+      width: "100%",
+      height: "20%"
+    });
+    $('#state').select2({
+      placeholder: "Select a state",
+      width: "100%"
+    });
+    $('#org_type').select2({
+      placeholder: "Select an organization type",
+      width: "100%"
+    });
+
+    sortSelectOptions('#org_type', true);
+
+    // this when user choose the country select menu
+    $('#country').on('change', function () {
+      let cntSlc = $("#country");
+      let state = $("#state");
+      let city = $("#city");
+      if ((cntSlc.val() === "United States") || (cntSlc.val() === "United States of America")) {
+        state.removeAttr("disabled");
+        city.removeAttr("disabled");
+        state.parent('div').removeClass("hide-element");
+        city.parent('div').removeClass("hide-element");
+      } else {
+        // disable the unwanted controls
+        state.attr("disabled", "disabled");
+        city.attr("disabled", "disabled");
+        state.parent('div').addClass("hide-element");
+        city.parent('div').addClass("hide-element");
+        // state.setAttribute("disabled", "disabled")
+      }
+    });
+
+    // this if user choose the other org type option
+    $("#org_type").on('change', function () {
+      let orgType = $("#org_type");
+      let otherOrgType = $("#other_org_type");
+      if (orgType.val() === "Other") {
+        otherOrgType.removeClass("d-none");
+      } else {
+        otherOrgType.addClass("d-none");
+      }
+    });
+
+    // disable register button by default if the new user not check the accept privacy terms
+    // and does not enter all valid data
+    $('#kt_login_signup_form :checkbox').change(function () {
+      // this will contain a reference to the checkbox
+      if (this.checked) {
+        // the checkbox is now checked
+        $('#register_btn').removeAttr('disabled');
+      } else {
+        // the checkbox is now no longer checked
+        $('#register_btn').attr("disabled", "disabled");
+      }
+    });
+  })
+</script>
+<!--./Custom js-->
+
+
+{% endblock customjs %}

@@ -1,0 +1,201 @@
+{% extends 'dashboard/inc/master.html' %}
+
+{% load static %}
+{% load reports_tags %}
+
+{% block title %}
+{% if title %}
+Reports - {{ title }}
+{% else %}
+Reports Section
+{% endif %}
+{% endblock title %}
+
+{% block customcss %}
+<!--begin::Page Vendors Styles(used by this page)-->
+
+<style>
+    @media only screen and (max-width: 600px) {
+        .select2-container {
+            width: 270px !important;
+        }
+    }
+</style>
+{% endblock customcss %}
+
+{% block pagename %}
+List of reports
+{% endblock pagename %}
+
+
+{% block dashboard_content %}
+<!--begin::Row-->
+<!-- Start top filter select -->
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="flex-row-fluid ml-lg-8">
+                <div class="card card-custom">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span class="card-icon">
+                                <i class="icon-lg la la-chart-bar text-dark"></i>
+                            </span>
+                            <h3 class="card-label">
+                                Choose the report type
+                            </h3>
+                        </div>
+
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-10 col-md-4 col-sm-4">
+                                <form method="POST" class="form">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <select class="form-control m-0 " id="filterTypeSelect">
+                                                <option></option>
+                                                <optgroup label="Users">
+                                                    <option value="users">Report on all users</option>
+                                                    <option value="users-status">Users Status</option>
+                                                </optgroup>
+                                                <optgroup label="Sales/Revenue">
+                                                    <!-- <option value="profit-share">
+                                                            Profit share by subscription plan
+                                                        </option> -->
+                                                    <option value="revenues">Report on revenue change</option>
+                                                </optgroup>
+                                                <optgroup label="Data Usage">
+                                                    <option value="data-usage">Data Limit/Records usage</option>
+                                                    <option value="extra-records">
+                                                        Additional Fee Per Extra Data/Record usage
+                                                    </option>
+                                                </optgroup>
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-4">
+                                <div class="input-group-append">
+                                    <button data-toggle="tooltip" id="reportsFilterBtn" title="Filter"
+                                        class="btn btn-secondary" type="button">
+                                        <i class="icon-md la la-filter"></i>
+
+                                    </button>
+                                </div>
+
+                            </div>
+                            <div class="ol-lg-1 col-md-1 col-sm-4">
+                                <button data-toggle="tooltip" id="resetReportsFilterBtn" title="Reset Filter"
+                                    class="btn btn-light-danger font-weight-bold ml-2" type="button">
+                                    <i class="icon-md la la-minus-circle"></i>
+
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="row">
+        <div class="col">
+
+            <!--Start Reports content wrapper-->
+            <section id="reports-content-wrapper">
+                {% if request.path|slice_url_path == 'users' %}
+                <!-- Start users reports segments -->
+                {% include 'reports_app/inc/users_reports.html' with dummy_data=dummy_data filter_columns=filter_columns %}
+                <!-- End users reports segments -->
+                {% elif request.path|slice_url_path == 'data-usage' %}
+                <!-- Start data usage reports segments -->
+                {% include 'reports_app/inc/data_usage_reports.html' %}
+                <!-- End data usage reports segments -->
+                {% elif request.path|slice_url_path == 'extra-records' %}
+                <!-- Start data usage reports segments -->
+                {% include 'reports_app/inc/extra_records_reports.html' %}
+                <!-- End data usage reports segments -->
+                {% elif request.path|slice_url_path == 'revenues' %}
+                <!-- Start revenues reports segments -->
+                {% include 'reports_app/inc/revenues_reports.html' %}
+                <!-- End revenues reports segments -->
+                {% elif request.path|slice_url_path == 'users-status' %}
+                <!-- Start Users Status reports segments -->
+                {% include 'reports_app/inc/users_status_reports.html' %}
+                <!-- End Users Status reports segments -->
+                {% endif %}
+
+                <!-- Start Default no filter -->
+                <section id="no-filter-option" style="display: none" class="flex-row-fluid ml-lg-8 mt-5">
+                    <div class="card card-custom gutter-b">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <h3 class="card-label">
+
+                                </h3>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <p class="h1 text-dark text-center">
+                                Select filter type
+                            </p>
+                        </div>
+                    </div>
+                </section>
+                <!-- End Default no filter -->
+
+            </section>
+            <!--End Reports content wrapper-->
+        </div>
+    </div>
+</div>
+<!-- End top filter select -->
+
+
+<!--End::Row-->
+{% endblock dashboard_content %}
+
+{% block customjs %}
+<!--begin::Page Scripts(used by this page)-->
+<script src="{% static 'dashboard/assets/js/pages/crud/forms/widgets/select2.js' %}"></script>
+<script src="{% static 'dashboard/assets/js/pages/crud/forms/widgets/bootstrap-datepicker.js' %}"></script>
+
+<script>
+    // nested
+    $('#gen-filter-state').select2({
+        placeholder: "Select state"
+    });
+    $('#gen-filter-users-country').select2({
+        placeholder: "Select country"
+    });
+
+
+
+
+</script>
+<!--begin::Page Scripts(used by this page)-->
+<script src="{% static 'assets/js/custom/djangocookie.js' %}" type="text/javascript"></script>
+<script src="{% static 'dashboard/assets/js/apps/reports_app/helpers.js' %}"></script>
+<script src="{% static 'dashboard/assets/js/apps/reports_app/apis.js' %}"></script>
+<script src="{% static 'dashboard/assets/js/helpers/countries.js' %}"></script>
+
+<script src="{% static 'dashboard/assets/js/apps/reports_app/reports_filters/FilterGenerator.js' %}"></script>
+<script src="{% static 'dashboard/assets/js/apps/reports_app/reports.js' %}"></script>
+<script src="{% static 'dashboard/assets/js/apps/reports_app/reports_generators.js' %}"></script>
+
+<!-- Reports Filter Widgets -->
+<script src="{% static 'dashboard/assets/js/apps/reports_app/reports_filters/generic_filters.js' %}"></script>
+<script src="{% static 'dashboard/assets/js/apps/reports_app/reports_filters/all_users_reports_filters.js' %}"></script>
+
+<!--end::Page Scripts-->
+
+
+{% endblock customjs %}

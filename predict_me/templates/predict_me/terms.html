@@ -1,0 +1,112 @@
+{% extends "predict_me/inc/master.html" %}
+{% load static %}
+
+{% block title %}
+Terms and Condition
+{% endblock title %}
+
+{% block customcss %}
+<link href="{% static 'assets/css/pages/support-center/license.css' %}" rel="stylesheet" type="text/css"/>
+{% endblock customcss %}
+
+{% block content %}
+<!-- begin:: Content -->
+<div class="kt-container  kt-grid__item kt-grid__item--fluid">
+
+    <div class="kt-body kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-grid--stretch" id="kt_body">
+        <div class="kt-content  kt-content--fit-top  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor"
+             id="kt_content">
+
+            <!-- begin:: Content -->
+
+            <!-- begin:: hero -->
+            <div class="kt-sc-license" style="background-image: url({% static 'assets/media/bg/bg-2.jpg' %});">
+                <div class="kt-container ">
+                    <div class="kt-sc__top">
+                        <h3 class="kt-sc__title text-uppercase">
+                            Terms and Condition
+                        </h3>
+                        <div class="kt-sc__nav">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- end:: hero -->
+            <div class="kt-negative-spacing--7"></div>
+
+            <!-- begin:: infobox -->
+            <div class="kt-grid__item">
+                <div class="kt-container ">
+                    <div class="kt-portlet">
+                        <div class="kt-portlet__body">
+                            <div class="kt-infobox">
+                                <div class="kt-infobox__body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <h3>
+                                                Predict Me Website Terms of Use
+                                            </h3><span class="text-muted">Last revised on: December 4, 2019</span>
+                                            <br/><br/>
+                                            <section>
+                                                <article>
+                                                    <p class="lead">
+                                                        The website located at www.Predict Me.com (the “<b>Site</b>”) is
+                                                        a
+                                                        copyrighted work belonging to Predict Me LLC (“<b>Predict Me</b>”,
+                                                        “<b>us</b>”, “<b>our</b>”, and “<b>we</b>”). Certain features of
+                                                        the Site may be
+                                                        subject to additional guidelines, terms, or rules, which will be
+                                                        posted on the Site in connection with such features. All such
+                                                        additional terms, guidelines, and rules are incorporated by
+                                                        reference into these Terms.
+                                                    </p>
+                                                    <br/>
+                                                    <p class="lead">
+                                                        These Terms of Use (these “<b>Terms</b>”) set forth the legally
+                                                        binding
+                                                        terms and conditions that govern your use of the Site.By
+                                                        accessing or using the Site, you are accepting these Terms (on
+                                                        behalf of yourself or the entity that you represent), and you
+                                                        represent and warrant that you have the right, authority, and
+                                                        capacity to enter into these Terms (on behalf of yourself or the
+                                                        entity that you represent). you may not access or use the Site
+                                                        or accept the Terms if you are not at least 18 years old.If you
+                                                        do not agree with all of the provisions of these Terms, do not
+                                                        access and/or use the Site.
+                                                    </p>
+                                                    <br/>
+                                                    <p class="lead">
+                                                        These terms require the use of arbitration (Section 10.2) on an
+                                                        individual basis to resolve disputes, rather than jury trials or
+                                                        class actions, and also limit the remedies available to you in
+                                                        the event of a dispute.
+                                                    </p>
+                                                    <br/>
+                                                </article>
+                                            </section>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- end:: infobox -->
+
+
+            <!-- end:: Content -->
+        </div>
+    </div>
+
+    <!--end::Portlet-->
+</div>
+
+<!-- end:: Content -->
+
+
+{% include "predict_me/inc/payment_terms.html" %}
+{% endblock content %}

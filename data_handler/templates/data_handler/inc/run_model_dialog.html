@@ -1,0 +1,100 @@
+<!-- Modal -->
+<div class="modal fade" id="runModelModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
+    aria-labelledby="runModelLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header text-center d-block">
+                <h5 class="modal-title" id="runModelLabel">
+                    Setting up the dashboard and generating out files. Please wait a few seconds. Good luck!
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class='row'>
+                        <div class='col-6'>
+                            <div class="card card0 border-0">
+                                <div id='dhModalPleaseWait'>
+                                    <h5>
+                                        Please Wait...
+                                    </h5>
+                                </div>
+                                <div class="dh-wrapper py-5">
+                                    <ul class="StepProgress"></ul>
+                                </div>
+                                <br />
+
+                            </div>
+                        </div>
+
+                        <div class="col">
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+
+                                    <tr class="border-top">
+                                        <td width="50%">
+                                            <strong>
+                                                Threshold used:
+                                            </strong>
+                                        </td>
+                                        <td class="text-center">
+                                            <span id='thresholdVal'
+                                                class="label label-inline label-xl label-light-primary font-weight-bolder">
+                                                0
+                                            </span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td width="50%">
+                                            <strong>
+                                                F-1 Score
+                                            </strong>
+                                        </td>
+                                        <td class="text-center">
+                                            <span id='f1ScoreVal'
+                                                class="label label-inline label-xl label-light-primary font-weight-bolder">
+                                                0
+                                            </span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td width="50%">
+                                            <strong>
+                                                Donors Predicted
+                                            </strong>
+                                        </td>
+                                        <td class="text-center">
+                                            <span id='donorPredictedStatsVal'
+                                                class="label label-inline label-xl label-light-primary font-weight-bolder">
+                                                0
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- Start Alert Run complete -->
+                    <div class="alert alert-custom alert-light-success fade show mb-5 mt-2" style="display: none;" id='dhRunModelAlert'
+                        role="alert">
+                        <div class="alert-icon">
+                            <i class="flaticon2-check-mark"></i>
+                        </div>
+                        <div class="alert-text">
+                            <strong>
+                                Modal run successfully!
+                            </strong>
+                        </div>
+                    </div>
+                    <!-- End Alert Run complete -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

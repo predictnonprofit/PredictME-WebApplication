@@ -1,0 +1,237 @@
+{% extends "predict_me/inc/master.html" %}
+{% load static %}
+
+{% block title %}
+PM Model
+{% endblock title %}
+
+{% block customcss %}
+<link href="{% static 'assets/css/pages/support-center/license.css' %}" rel="stylesheet" type="text/css"/>
+{% endblock customcss %}
+
+{% block content %}
+<!-- begin:: Content -->
+<div class="kt-container  kt-grid__item kt-grid__item--fluid">
+
+    <div class="kt-body kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-grid--stretch" id="kt_body">
+        <div class="kt-content  kt-content--fit-top  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor"
+             id="kt_content">
+
+            <!-- begin:: Content -->
+
+            <!-- begin:: hero -->
+            <div class="kt-sc-license" style="background-image: url({% static 'assets/media/bg/bg-2.jpg' %});">
+                <div class="kt-container ">
+                    <div class="kt-sc__top">
+                        <h3 class="kt-sc__title">
+                            Let data drive your funding!
+                        </h3>
+                        <div class="kt-sc__nav">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- end:: hero -->
+            <div class="kt-negative-spacing--7"></div>
+
+            <!-- begin:: infobox -->
+            <div class="kt-grid__item">
+                <div class="kt-container ">
+                    <div class="kt-portlet">
+                        <div class="kt-portlet__body">
+                            <div class="kt-infobox">
+                                <div class="kt-infobox__body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <h3>How Predict Me Works</h3><br/><br/>
+                                            <section>
+                                                <article>
+                                                    <p class="lead">
+                                                        Your organization is not any other typical nonprofit – we
+                                                        understand that your needs are unique! At Predict Me, we are
+                                                        proud to offer top technology for nonprofits and NGOs.
+                                                    </p>
+
+                                                    <p class="lead">
+                                                        Our predictive modeling application uses 10 best statistical
+                                                        classification methods, including Random Forest Classifier and
+                                                        Logistic Regression. These methods were chosen based on the
+                                                        performance of their statistical tests and accuracies.
+                                                    </p>
+
+                                                    <p class="lead">
+                                                        Our main goal at Predict Me is to create a solution where you
+                                                        can upload a dataset of donors and non-donors and receive your
+                                                        prediction in an instant! We are here to maximize your potential
+                                                        – we will help you strengthen your strategy, discover the best
+                                                        practices, implement solutions to enhance efficiency and
+                                                        engagement!
+                                                    </p>
+
+                                                    <p class="lead">
+                                                        Once you upload your data, Predict Me will pre-process the
+                                                        dataset and train multiple different classification
+                                                        algorithms/models on your data. After the processing, you will
+                                                        be able to download the dataset alongside a report that can be
+                                                        used for your next fundraising campaign. The report includes the
+                                                        likelihood probabilities of donating.
+                                                    </p>
+
+                                                    <div class="kt-section">
+                                                        <div class="kt-section__title">
+                                                            Steps Involved in Our Predictive Modeling
+                                                        </div>
+                                                        <div class="kt-section__content">
+                                                            <p>
+                                                            <h4>A. What You Need to Do </h4>
+                                                            </p>
+                                                            <p class="ml-4 lead">
+                                                                Upload your donor file, and then relax…we will do
+                                                                everything else for you!
+                                                            </p>
+
+                                                            <div class="kt-portlet__body">
+                                                                <div class="row">
+                                                                    <div class="col-xl-1">
+                                                                    </div>
+                                                                    <div class="col-xl-10">
+                                                                        <div class="kt-timeline-v1">
+                                                                            <div class="kt-timeline-v1__items">
+                                                                                <div class="kt-timeline-v1__marker"></div>
+                                                                                <div class="kt-timeline-v1__item kt-timeline-v1__item--left kt-timeline-v1__item--first">
+                                                                                    <div class="kt-timeline-v1__item-circle">
+                                                                                        <div class="kt-bg-danger"></div>
+                                                                                    </div>
+                                                                                    <div class="kt-timeline-v1__item-content">
+                                                                                        <div class="kt-timeline-v1__item-title">
+                                                                                            <b>1. Data cleansing and
+                                                                                                validation of the input
+                                                                                                data file </b>
+                                                                                        </div>
+                                                                                        <div class="kt-timeline-v1__item-body">
+
+
+                                                                                        </div>
+
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="kt-timeline-v1__item kt-timeline-v1__item--right">
+                                                                                    <div class="kt-timeline-v1__item-circle">
+                                                                                        <div class="kt-bg-danger"></div>
+                                                                                    </div>
+                                                                                    <div class="kt-timeline-v1__item-content">
+                                                                                        <div class="kt-timeline-v1__item-title">
+                                                                                            <b>2. Identification of
+                                                                                                textual data and
+                                                                                                categorical columns </b>
+                                                                                        </div>
+                                                                                        <div class="kt-timeline-v1__item-body">
+
+                                                                                        </div>
+
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="kt-timeline-v1__item kt-timeline-v1__item--left">
+                                                                                    <div class="kt-timeline-v1__item-circle">
+                                                                                        <div class="kt-bg-danger"></div>
+                                                                                    </div>
+
+                                                                                    <div class="kt-timeline-v1__item-content">
+                                                                                        <div class="kt-timeline-v1__item-title">
+                                                                                            <b>3. Feature importance
+                                                                                                calculation </b>
+                                                                                        </div>
+                                                                                        <div class="kt-timeline-v1__item-body kt-padding-t-10 kt-padding-b-10">
+
+                                                                                        </div>
+
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="kt-timeline-v1__item kt-timeline-v1__item--right">
+                                                                                    <div class="kt-timeline-v1__item-circle">
+                                                                                        <div class="kt-bg-danger"></div>
+                                                                                    </div>
+                                                                                    <div class="kt-timeline-v1__item-content">
+                                                                                        <div class="kt-timeline-v1__item-title">
+                                                                                            <b>4. Testing and training
+                                                                                                input data for
+                                                                                                statistical
+                                                                                                classification
+                                                                                                methods </b>
+                                                                                        </div>
+                                                                                        <div class="kt-timeline-v1__item-body">
+
+                                                                                        </div>
+
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="kt-timeline-v1__item kt-timeline-v1__item--left">
+                                                                                    <div class="kt-timeline-v1__item-circle">
+                                                                                        <div class="kt-bg-danger"></div>
+                                                                                    </div>
+
+                                                                                    <div class="kt-timeline-v1__item-content">
+                                                                                        <div class="kt-timeline-v1__item-title">
+                                                                                            <b>5. Deploying predictive
+                                                                                                results and executing
+                                                                                                insights</b>
+                                                                                        </div>
+                                                                                        <div class="kt-timeline-v1__item-body kt-padding-t-10 kt-padding-b-10">
+
+                                                                                        </div>
+
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <div class="col-xl-1">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <p>
+                                                            <h4>B. What You Receive </h4>
+                                                            </p>
+                                                            <p class="ml-4 lead">
+                                                                Your data alongside a detailed prediction report
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <br/>
+                                                    <div class="kt-section">
+                                                        <div class="kt-section__title">
+                                                            <h5 class="font-italic font-weight-bold">
+                                                                Experience the power of Predict Me today!
+                                                            </h5>
+                                                        </div>
+
+
+                                                    </div>
+                                                </article>
+                                            </section>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- end:: infobox -->
+
+
+            <!-- end:: Content -->
+        </div>
+    </div>
+
+    <!--end::Portlet-->
+</div>
+
+<!-- end:: Content -->
+
+{% endblock content %}

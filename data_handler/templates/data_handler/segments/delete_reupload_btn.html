@@ -1,0 +1,15 @@
+{% if is_btn_block %}
+<div class="my-5">
+  <button type="button" style="display: none;"
+    class="btn dhInput btn-block btn-light-danger font-weight-bolder deleteTheProcessDataHandlerBtn text-uppercase px-9 py-4 not-allowed" data-toggle='tooltip'
+    title="be careful!">
+    Delete file and Re-upload
+  </button>
+</div>
+{% else %}
+<button type="button" style="display: none;"
+  class="btn dhInput btn-light-danger font-weight-bolder deleteTheProcessDataHandlerBtn text-uppercase px-9 py-4 not-allowed" style="margin-bottom: 1.75rem;"
+  data-toggle='tooltip' title="be careful!">
+  Delete file and Re-upload
+</button>
+{% endif %}

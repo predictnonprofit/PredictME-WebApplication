@@ -1,0 +1,64 @@
+<!-- Modal-->
+<div class="modal " id="recordsCountModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
+    aria-labelledby="recordsCountModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="recordsCountModalLabel">Please wait while counting your records</h5>
+
+            </div>
+            <div class="modal-body">
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-7">
+                            <!-- <p class="text-center h6 mt-1 mb-4">
+                                Counting your records in data file, Please wait..
+                            </p> -->
+
+                            <p id="progressRecords" class="h5 ">
+                                <span>
+                                    Your subscription plan include
+                                </span>
+                                <b
+                                    class="text-success p-1 bg-success-o-50">{{get_all_member_info.DATA_HANDLER.allowed_records_count}}</b>
+                            </p>
+
+                        </div>
+                        <div class="col">
+                            <p id="currentRowCounter" class=" h5">
+                                <b class="p-1"></b>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mt-2">
+                            <p class="h5 text-danger text-center" id="progressWarnText" style="display: none;">
+                                <b>Your data limit exceeds your subscription plan</b>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row h-100">
+                        <div class="col mt-3">
+
+                            <div class="progress font-weight-bold" style="height: 30px; font-size: 12px;">
+                                <div id="recordsCounterProgressBar" class="progress-bar bg-success " role="progressbar"
+                                    style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="0">
+                                    <small
+                                        class="justify-content-center d-flex position-absolute w-100 text-dark h6"></small>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="useSubPlanBtn" style="display: none;"
+                    class="btn btn-light-primary font-weight-bold">Use Subscription Plan</button>
+                <button type="button" id="nextProgressBtnModal" style="display: none;"
+                    class="btn btn-primary font-weight-bold">Next</button>
+            </div>
+        </div>
+    </div>
+</div>

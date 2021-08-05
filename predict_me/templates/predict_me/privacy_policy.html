@@ -1,0 +1,102 @@
+{% extends "predict_me/inc/master.html" %}
+{% load static %}
+
+{% block title %}
+Privacy Policy
+{% endblock title %}
+
+{% block customcss %}
+<link href="{% static 'assets/css/pages/support-center/license.css' %}" rel="stylesheet" type="text/css"/>
+{% endblock customcss %}
+
+{% block content %}
+<!-- begin:: Content -->
+<div class="kt-container  kt-grid__item kt-grid__item--fluid">
+
+    <div class="kt-body kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-grid--stretch" id="kt_body">
+        <div class="kt-content  kt-content--fit-top  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor"
+             id="kt_content">
+
+            <!-- begin:: Content -->
+
+            <!-- begin:: hero -->
+            <div class="kt-sc-license" style="background-image: url({% static 'assets/media/bg/bg-2.jpg' %});">
+                <div class="kt-container ">
+                    <div class="kt-sc__top">
+                        <h3 class="kt-sc__title text-uppercase">
+                            Privacy Policy
+                        </h3>
+                        <div class="kt-sc__nav">
+                            <a href="#" class="kt-link kt-link--light kt-font-bold">Help Center</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- end:: hero -->
+            <div class="kt-negative-spacing--7"></div>
+
+            <!-- begin:: infobox -->
+            <div class="kt-grid__item">
+                <div class="kt-container ">
+                    <div class="kt-portlet">
+                        <div class="kt-portlet__body">
+                            <div class="kt-infobox">
+                                <div class="kt-infobox__body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <h3>
+                                                Predict Me LLC Privacy Policy
+                                            </h3><span class="text-muted">Last revised on: December 4, 2019</span>
+                                            <br/><br/>
+                                            <section>
+                                                <article>
+                                                    <p class="lead">
+                                                        Predict Me LLC respects the privacy of every visitor to our websites and every user of our mobile apps (referred to herein as the “Sites”). Your privacy is a priority, and we go to great lengths to protect it. We know you care about your information and we want you to be fully informed about our practices.
+                                                    </p>
+
+                                                    <p class="lead">
+                                                        This privacy policy (“Policy”) describes how Predict Me LLC and its related companies collect, use and share personal data of users of this website,
+                                                        <a href="www.Predict Me.com">www.Predict Me.com</a> and our mobile apps. This Policy also applies to any of our other websites/apps that post this Policy.
+                                                    </p>
+
+                                                    <p class="lead">
+                                                        Please take a moment to read this Policy which explains how we collect, use, disclose and transfer the personal information that you provide to us on our websites or mobile applications, when you visit our site.
+                                                    </p>
+
+                                                    <p class="lead">
+                                                        This Policy may be changed or updated from time to time. By visiting our siteor using our mobile app and providing us with your personal data, you acknowledge and agree that your personal data may be processed for the purposes identified in this Policy.
+                                                    </p>
+
+                                                    <p class="lead">
+                                                        You can find out more about Predict Me and the Terms of Use for using our site or using our mobile appat
+                                                        <a href="{% url 'terms' %}">http://127.0.0.1:8000/terms</a>.
+                                                    </p>
+
+
+                                                </article>
+                                            </section>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- end:: infobox -->
+
+
+            <!-- end:: Content -->
+        </div>
+    </div>
+
+    <!--end::Portlet-->
+</div>
+
+<!-- end:: Content -->
+
+
+{% include "predict_me/inc/payment_terms.html" %}
+{% endblock content %}

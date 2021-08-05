@@ -1,0 +1,165 @@
+{% load reports_tags %}
+<!--Start Filter options-->
+<section id="generic-filters-reports-table" class="flex-row-fluid ml-lg-8 mt-5 ">
+  <div class="row">
+    <div class="col">
+
+      <div class="card card-custom mx-auto">
+        <div class="card-header card-header-tabs-line">
+          <div class="card-title">
+            <h3 class="card-label" id="filter-title">Filters</h3>
+          </div>
+
+        </div>
+        <div class="card-body" id="generic-filters-wrapper">
+          <!-- Start Filter Form-->
+          <section class="my-5" id="generic-form-section">
+            <!-- End Generic filters dualbox -->
+            <div class="row">
+              <div class="col-lg-4">
+                <!--begin::Card-->
+                <div class="card  card-custom card-stretch gutter-b border">
+                  <!--begin::header-->
+                  <div class="card-header " style="min-height: 50px;">
+                    <h3 class="card-title font-weight-bolder text-primary">Filter Name</h3>
+
+                  </div>
+                  <!--end::header-->
+                  <!--begin::Body-->
+                  <div class="card-body text-left p-0">
+                    <!--begin::Item-->
+                    <div class="d-flex align-items-center mb-1 w-auto">
+                      <!--begin::Text-->
+                      <div class="d-flex flex-column flex-grow-1 filter-name-item-wrapper ">
+                        <ul class="list-group" style="border-radius: 0;" id="leftFiltersUL">
+
+                          {% for fCol in filter_columns %}
+                          <li class="list-group-item generic-filter-li-item py-0" data-filter-name="{{fCol.filter_name}}" data-id="{{forloop.counter}}" data-report-section-name="{{fCol.report_section}}" data-input-id="li_{{fCol.input_name}}" data-has-options="{{fCol.has_options}}">
+                            <span class="generic-filter-item">
+                              {{fCol.filter_name}}
+                            </span>
+
+                            <span class="generic-report-type">
+                              {{fCol.report_type}}
+                            </span>
+                          </li>
+                          {% endfor %}
+                        </ul>
+                      </div>
+                      <!--end::Text-->
+                    </div>
+                    <!--end::Item-->
+
+                  </div>
+                  <!--end::Body-->
+
+
+                </div>
+                <!--end::Card-->
+              </div>
+              <div class="col-lg-4">
+                <!--begin::Card-->
+                <div class="card  card-custom card-stretch gutter-b border">
+                  <!--begin::header-->
+                  <div class="card-header mb-4 " style="min-height: 50px;">
+                    <h3 class="card-title font-weight-bolder text-primary">Filter Options</h3>
+                  </div>
+                  <!--end::header-->
+                  <!--begin::Body-->
+                  <div class="card-body text-left p-0">
+                    <!--begin::Item-->
+                    <div class="d-flex align-items-center mb-1 w-auto">
+                      <!--begin::Text-->
+                      <div class="d-flex flex-column flex-grow-1 filter-name-item-wrapper" id="filterOptionsWrapper">
+                        <div id="filterOptionsBlock" class="filter-options-block my-5 text-center px-3">
+                          <h4>
+                            Please Select filters from filter on right
+                          </h4>
+                          <div class="loader-filter-options" style="display: none;">
+                              <h4>Loading...</h4>
+                            </div>
+                        </div>
+                      </div>
+                      <!--end::Text-->
+                    </div>
+                    <!--end::Item-->
+
+                  </div>
+                  <!--end::Body-->
+                  <!-- begin::Footer -->
+                  <!-- <div class="card-footer d-flex justify-content-between">
+                    <span data-toggle="tooltip" title="Cancel">
+                      <button id="middleDeselectFilterOptionBtn" type="button" class="btn btn-light-danger font-weight-bold mr-2 font-weight-bold ">
+                        <i class="icon-xl la la-long-arrow-left"></i>
+                      </button>
+                    </span>
+                    <span data-toggle="tooltip" title="Choose">
+                      <button disabled id="middleSelectFilterOptionBtn" type="button" class="btn btn-light-primary font-weight-bold disabled">
+                        <i class="icon-xl la la-long-arrow-right"></i>
+                      </button>
+                    </span>
+                  </div> -->
+                  <!-- begin::Footer -->
+                </div>
+                <!--end::Card-->
+              </div>
+              <div class="col-lg-4">
+                <!--begin::Card-->
+                <div class="card  card-custom card-stretch gutter-b border">
+                  <!--begin::header-->
+                  <div class="card-header" style="min-height: 50px;">
+                    <h3 class="card-title font-weight-bolder text-primary">Selected Filters</h3>
+                  </div>
+                  <!--end::header-->
+                  <!--begin::Body-->
+                  <div class="card-body text-left p-0">
+                    <!--begin::Item-->
+                    <div class="d-flex align-items-center mb-1 w-auto">
+                      <!--begin::Text-->
+                      <div class="d-flex flex-column flex-grow-1 filter-name-item-wrapper" id="selectedFiltersWrapper">
+                        <ul id="deselectedFilterUL" class="list-group" style="border-radius: 0;">
+
+                        </ul>
+                      </div>
+                      <!--end::Text-->
+                    </div>
+                    <!--end::Item-->
+
+                  </div>
+                  <!--end::Body-->
+                  <!-- begin::Footer -->
+                  <div class="card-footer d-flex justify-content-between">
+                    <button type="button" id="genericResetFilterBtn" class="btn btn-light-danger font-weight-bold mr-2 font-weight-bold ">
+                      Reset
+                    </button>
+                    <button class="btn btn-primary btn-primary-icon" type="button" id="members-submit-filter-btn">
+                      <span>
+                        <i class="la la-search"></i>
+                        <span>Result</span>
+                      </span>
+                    </button>
+                  </div>
+                  <!-- begin::Footer -->
+                </div>
+                <!--end::Card-->
+              </div>
+            </div>
+            <!-- End Generic filters dualbox -->
+          </section>
+          <!-- End Filter Form-->
+          <!-- Start Filter separator-->
+          <div class="separator separator-solid separator-border-4"></div>
+          <!-- Start Filter separator-->
+          <!-- Start Custom Filter Form-->
+          <section class="my-5" id="custom-form-section">
+
+          <!-- End Custom Filter Form-->
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</section>
+<!--End Filter options-->

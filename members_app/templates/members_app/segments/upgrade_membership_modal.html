@@ -1,0 +1,69 @@
+<!-- Start Modal-->
+<div class="modal fade" id="upgradeMembershipModal" data-backdrop="static" tabindex="-1" role="dialog"
+  aria-labelledby="upgradeMembershipModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="upgradeMembershipModalLabel">Choose payment method</h5>
+      </div>
+      <div class="modal-body">
+        <div class="globalContent">
+          <form method="POST" id='change-stripe-card-form' action="{% url 'membership-change-stripe-card' %}">
+            {% csrf_token %}
+            <section class="container">
+              <div class="form-group row">
+                <div class="col-4">
+                  <label for="card-element">
+                    Credit or debit card
+                  </label>
+                </div>
+                <div class="col-7">
+                  <label class="checkbox checkbox-rounded">
+                    <input type="checkbox" name="old-stripe-card" id='oldStripeCardCheckbox'
+                      class="data-handler-stripe-charge-form" />
+                    <span></span> &nbsp; <b class="font-weight-normal position-relative" style="top: 1px;"
+                      data-toggle='tooltip' title="Use your old stripe card that saved while registration process">Use
+                      default
+                      stripe card <small class="text-muted position-relative"
+                        style="top: 1px;">************{{ get_stripe_details.last4 }}</small></b>
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <!-- Start Stripe Input -->
+                <div class="col">
+                  <label for="card-element">
+                    New Card Number
+                  </label>
+                  <div>
+                    <div id="change-card-card-element">
+                      <!-- A Stripe Element will be inserted here. -->
+                    </div>
+                    <!-- Used to display form errors. -->
+                    <div id="change-card-errors" role="alert"></div>
+                  </div>
+                </div>
+                <!-- End Stripe Input -->
+
+              </div>
+
+
+
+            </section>
+
+
+        </div>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary font-weight-bold">Save changes</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- End Modal-->

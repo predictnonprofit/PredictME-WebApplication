@@ -1,0 +1,59 @@
+.hero {
+  /* Sizing */
+  /* width: 99.4vw;*/
+  height: 100vh;
+  overflow: hidden;
+  /* Flexbox stuff */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  /* Text styles */
+  text-align: center;
+  color: white; /* ADD THIS LINE */
+  
+  /* Background styles */
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.hero h1 {
+  /* Text styles */
+  font-size: 2.5em;
+  
+  /* Margins */
+  margin-top: 0;
+  margin-bottom: 0.5em;
+}
+
+.hero .btn {
+  /* Positioning and sizing */
+  display: inline-block;
+  width: 250px;
+
+  /* Padding and margins */
+  padding: 0.5em;
+  margin-top: 50px;
+  margin-left: 5px;
+  margin-right: 5px;
+
+  /* Text styles */
+  /*color: white; !* CHANGE THIS LINE *!*/
+  text-decoration: none;
+  font-size: 1.3em;
+
+  /* Border styles */
+  /*border: 2px solid white; !* CHANGE THIS LINE *!*/
+  /*border-radius: 20px;*/
+}
+
+/*.hero .btn:hover{*/
+/*  color: #FFF;*/
+/*  background-color: #000;*/
+/*}*/
+
+.hero .hero-inner{
+  width: 100%;
+}

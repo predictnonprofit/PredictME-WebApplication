@@ -1,0 +1,141 @@
+{% load socialaccount %}
+<div class="modal fade" id="donerUploadFormModal" tabindex="-1" data-backdrop="static" role="dialog"
+    aria-labelledby="donerUploadFormModalLaber" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Upload Your Data File</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="kt-portlet">
+                    <div class="kt-portlet__head">
+                        <div class="kt-portlet__head-label">
+                            <h3 class="kt-portlet__head-title">
+                                Choose your method
+                            </h3>
+                        </div>
+                    </div>
+
+                    <!--begin::Form-->
+                    <form class="kt-form" enctype="multipart/form-data" method="PUT" id="uploadDataFileForm">
+                        {% csrf_token %}
+                        <div class="kt-portlet__body">
+
+                            <div class="form-group row mb-0">
+                                <div class="col">
+
+                                    <ul class="nav nav-tabs nav-tabs-line nav-fill justify-content-center">
+                                        <li class="nav-item active">
+                                            <a class="nav-link" data-toggle="tab" href="#upload_data_pane">
+                                                <span class="nav-icon"><i
+                                                        class="icon-xl fas fa-file-upload text-success"></i></span>
+                                                <span class="nav-text">Upload</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link " data-toggle="tab" href="#dropbox_tab_pane">
+                                                <span class="nav-icon"><i style="color: #0060FF;"
+                                                        class="icon-xl fab fa-dropbox"></i></span>
+                                                <span class="nav-text">Dropbox</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#google_drive_pane">
+                                                <span class="nav-icon"><i style="color: #FFD04B;"
+                                                        class="icon-xl fab fa-google-drive"></i></span>
+                                                <span class="nav-text">Google Drive</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#onedrive_tab_pane">
+                                                <span class="nav-icon"><i style="color: #2778D3;"
+                                                        class="icon-xl fas fa-cloud"></i></span>
+                                                <span class="nav-text">OneDrive</span>
+                                            </a>
+                                        </li>
+
+
+
+                                    </ul>
+                                    <div class="tab-content mt-5" id="dataHandlerUploadTabContent">
+
+                                        <div class="tab-pane fade show active" id="upload_data_pane" role="tabpanel"
+                                            aria-labelledby="upload_data_pane">
+
+                                            <div class="form-group">
+
+                                                <!-- <label>File Browser</label> -->
+                                                <div></div>
+                                                <div class="custom-file">
+                                                    <input type="file" class="custom-file-input" id="donerFile"
+                                                        name="doner_file" required accept=".xlsx, .csv" />
+                                                    <label class="custom-file-label" for="donerFile">Choose file</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group ">
+                                                <div class="alert alert-secondary" role="alert">
+                                                    <div class="alert-icon"><i
+                                                            class="flaticon-warning kt-font-brand"></i></div>
+                                                    <div class="alert-text">
+                                                        Allowed Files (csv, xlsx)
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade " id="dropbox_tab_pane" role="tabpanel"
+                                            aria-labelledby="dropbox_tab_pane">
+                                            <button type="button" class="btn btn-primary border-0 btn-block"
+                                                style="background-color: #0060FF;">
+                                                <i class="icon-xl fab fa-dropbox"></i> Browse
+                                            </button>
+                                        </div>
+                                        <div class="tab-pane fade" id="google_drive_pane" role="tabpanel"
+                                            aria-labelledby="google_drive_pane">
+                                            <a target="_blank"
+                                                href="{% provider_login_url 'google' process="connect" %}"
+                                                class="btn btn-primary border-0 btn-block"
+                                                style="background-color: #1FA463;">
+                                                <i class="icon-xl fab fa-google-drive"></i> Browse
+                                            </a>
+
+                                        </div>
+                                        <div class="tab-pane fade" id="onedrive_tab_pane" role="tabpanel"
+                                            aria-labelledby="onedrive_tab_pane">
+                                            <button type="button" class="btn btn-primary border-0 btn-block"
+                                                style="background-color: #2778D3;">
+                                                <i class="icon-xl fas fa-cloud"></i> Browse
+                                            </button>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" style="width: 100px;" class="btn btn-danger" data-dismiss="modal"
+                    data-toggle="tooltip" title="Cancel and close">
+                    <i class="la la-close"></i>
+                </button>
+                &nbsp;
+                <button type="submit" id="uploadDataFileBtn" class="btn btn-primary disabled" disabled="disabled" style="width: 100px;"
+                    data-toggle="tooltip" title="Upload!">
+                    <i class="la la-upload"></i>
+                </button>
+                </form>
+                <!--end::Form-->
+            </div>
+        </div>
+    </div>
+</div>

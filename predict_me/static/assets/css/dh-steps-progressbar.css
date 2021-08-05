@@ -1,0 +1,123 @@
+.dh-wrapper {
+  /* width: 300px;
+  min-width: 300px; */
+  font-size: 14px;
+  /* border-right: 1px solid #ccc; */
+  min-width: auto;
+  overflow-y: auto;
+  height: 200px;
+}
+
+
+.StepProgress {
+  position: relative;
+  padding-left: 45px;
+  list-style: none;
+}
+
+.StepProgress .StepProgress-item {
+  /* transition: 0.1s all ease-in-out; */
+}
+
+.StepProgress::before {
+  display: inline-block;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 20px;
+  width: 10px;
+  height: 100%;
+  border-left: 2px solid #ccc;
+}
+
+.StepProgress-item {
+  position: relative;
+  counter-increment: list;
+}
+
+.StepProgress-item:not(:last-child) {
+  padding-bottom: 20px;
+}
+
+.StepProgress-item::before {
+  display: inline-block;
+  content: "";
+  position: absolute;
+  left: -28px;
+  /* top: 10px; */
+  height: 100%;
+  width: 10px;
+}
+
+.StepProgress-item::after {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: -37px;
+  width: 12px;
+  height: 12px;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  background-color: #fff;
+}
+
+.StepProgress-item.is-done::before {
+  /* border-left: 2px solid green; */
+}
+
+.StepProgress-item.is-done::after {
+  content: "✔";
+  font-size: 10px;
+  color: #fff;
+  text-align: center;
+}
+
+.StepProgress-item.current::before {
+  /* border-left: 2px solid green; */
+  border-left: 2px solid #6993FF !important;
+}
+
+.StepProgress-item.current::after {
+  content: counter(list);
+  padding-top: 1px;
+  width: 25px;
+  height: 25px;
+  top: -4px;
+  left: -37px;
+  font-size: 14px;
+  text-align: center;
+  color: #6993FF !important;
+  border: 2px solid #6993FF !important;
+  background-color: white;
+}
+
+.StepProgress strong {
+  display: block;
+}
+
+.StepProgress-item.is-done {
+  color: #7E8299 !important;
+  text-decoration: line-through;
+  /* transition: 0.5s all ease-in-out; */
+}
+
+.StepProgress-item.is-done::before {
+  left: 20px;
+}
+
+.StepProgress-item.is-done::after {
+  content: "✔";
+  font-size: 12px;
+  color: #7E8299 !important;
+  text-align: center;
+  border: 2px solid #D1D3E0 !important;
+  background-color: #D1D3E0 !important;
+  width: 25px;
+  height: 25px;
+}
+
+
+div#dhModalPleaseWait {
+  transition: 0.5s all ease-in-out;
+}

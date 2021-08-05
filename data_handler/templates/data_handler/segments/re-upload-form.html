@@ -1,0 +1,66 @@
+
+<div class="card card-custom gutter-b">
+    <div class="card-header">
+        <div class="card-title">
+            <form method="PUT" onsubmit="return false;">
+                {% csrf_token %}
+                <h3 class="card-label">
+                    Re-upload your data file for <input class="" type="text" id="rename-session-input"
+                                                        value="{{ session_info.data_handler_session_label }}"/>
+                    <button id="rename-session-btn" class="btn btn-sm btn-primary" type="button">
+                        Rename
+                    </button>
+
+                </h3>
+            </form>
+
+        </div>
+    </div>
+    <div class="card-body">
+        <div id="semitransparent" class="text-center bg-gray-200">
+            <h2 class="font-weight-bolder my-15 mx-auto" style="color: #000000;">
+                Pleas read <span class='text-danger cursor-pointer btn-link h2'
+                                 data-target='#instructionsModal'
+                                 data-toggle="modal"><b>Donor File Upload Instructions</b></span>
+                and
+                accept the terms to re-upload file for the current session.
+            </h2>
+        </div>
+        <div id="upload-div">
+            <form class="kt-form " enctype="multipart/form-data" method="POST"
+                  id="uploadDataFileForm">
+                {% csrf_token %}
+                <div class="form-group row">
+                    <label class="col-2 col-form-label">Rename Session</label>
+                    <div class="col-10">
+                        <input class="form-control" type="text" id="session-name"
+                               value="{{ session_info.data_handler_session_label }}">
+                    </div>
+                </div>
+                <div class="form-group">
+
+                    <!-- <label>File Browser</label> -->
+                    <div></div>
+                    <div class="custom-file">
+                        <input disabled type="file" class="custom-file-input" id="donerFile"
+                               name="donor_file"
+                               required
+                               accept=".xlsx, .csv"/>
+                        <label class="custom-file-label" for="donerFile">Choose file</label>
+                    </div>
+                </div>
+
+        </div>
+    </div>
+    <div class="card-footer">
+        <div class="form-group">
+            <button type="submit" id="uploadDataFileBtn" class="btn btn-primary btn-lg btn-block disabled"
+                    data-toggle="tooltip" disabled="disabled"
+                    title="Upload!">
+                <i class="la la-upload"></i>
+            </button>
+        </div>
+
+        </form>
+    </div>
+</div>

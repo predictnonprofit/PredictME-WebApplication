@@ -1,0 +1,128 @@
+{% extends 'dashboard/inc/master.html' %}
+
+{% load static %}
+
+{% block title %}
+Activities
+{% endblock title %}
+
+{% block customcss %}
+
+{% endblock customcss %}
+
+{% block pagename %}
+Members Activities
+{% endblock pagename %}
+
+
+{% block dashboard_content %}
+
+
+<!--begin::Row-->
+<div class="container">
+    <div class="card card-custom gutter-b">
+        <div class="card-header">
+            <div class="card-title">
+                <h3 class="card-label">
+                    Activities
+                    <small>Members Actions</small>
+                </h3>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="thead-light">
+                    <tr>
+                        <th>Activity</th>
+                        <th>IP</th>
+                        <th>Action</th>
+                        <th>Activity by</th>
+                        <th>Date</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">Add Invoice #2533</th>
+                        <td>44.180.171.110</td>
+                        <td>Edited</td>
+                        <td>Buck Kinnear</td>
+                        <td>Sat, 5 May 2005 12:12 PM</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Send Invoice #55587</th>
+                        <td>73.249.70.189</td>
+                        <td>Email</td>
+                        <td>Petey Cruiser</td>
+                        <td>Sun, 14 Jun 2019 11:12 AM</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Add New Member #99635</th>
+                        <td>173.245.48.0</td>
+                        <td>Add</td>
+                        <td>Super Admin</td>
+                        <td>Mon, 22 Jul 2010 08:12 AM</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Delete Invoice #33698</th>
+                        <td>131.0.72.0</td>
+                        <td>Deleted</td>
+                        <td>Super Admin</td>
+                        <td>Fri, 24 Apr 2011 10:30 AM</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Update Profile Picture #586247</th>
+                        <td>103.31.4.0</td>
+                        <td>Edited</td>
+                        <td>Brock Lee</td>
+                        <td>Thu, 14 May 2020 04:30 PM</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Pay Subscription Fee #23363</th>
+                        <td>108.162.192.0</td>
+                        <td>Pay</td>
+                        <td>Nick R. Bocker</td>
+                        <td>Sun, 26 Aug 2020 08:44 PM</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Edit Company Settings</th>
+                        <td>238.252.76.37</td>
+                        <td>Edited</td>
+                        <td>Super Admin</td>
+                        <td>Tue, 11 Mar 2020 11:00 AM</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Login to account #253993</th>
+                        <td>147.45.139.119</td>
+                        <td>Login</td>
+                        <td>Greta Life</td>
+                        <td>Sat, 30 Jun 2019 10:26 PM</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Send Message #5666</th>
+                        <td>23.127.178.123</td>
+                        <td>Send</td>
+                        <td>Shonda Leer</td>
+                        <td>Mon, 22 Jun 2019 11:00 AM</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Register New User #225710</th>
+                        <td>151.93.1.164</td>
+                        <td>Register</td>
+                        <td>Bob Frapples</td>
+                        <td>Fri, 16 Feb 2019 03:22 AM</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--End::Row-->
+{% endblock dashboard_content%}
+
+{% block customjs %}
+
+
+{% endblock customjs %}

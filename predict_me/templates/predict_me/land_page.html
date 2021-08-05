@@ -1,0 +1,154 @@
+{% extends "predict_me/inc/master.html" %}
+{% load static %}
+
+{% block title %}
+Predict ME
+{% endblock title %}
+
+{% block customcss %}
+
+<link href="{% static 'assets/css/landing.css' %}" rel="stylesheet" type="text/css" />
+<style>
+    .ftco-blocks-cover-1 .ftco-service-image-1 {
+        margin-top: -70px;
+        position: static;
+    }
+
+    .ftco-cover-1 {
+        background-size: cover;
+        background-position: top center;
+        background-repeat: no-repeat;
+
+    }
+
+    .ftco-cover-1,
+    .ftco-cover-1 .container>.row {
+        height: 100vh;
+        min-height: 600px;
+    }
+
+    .ftco-cover-1>.container {
+        position: relative;
+    }
+
+    .ftco-cover-1.overlay {
+        position: relative;
+    }
+
+    .ftco-cover-1.overlay:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        opacity: .5;
+        background: #000;
+    }
+
+    .ftco-cover-1.overlay h1 {
+        color: #fff;
+        font-size: 3rem;
+    }
+
+    .ftco-cover-1.overlay p,
+    #land-page-items ul li {
+        color: #fff;
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+
+    .ftco-cover-1.overlay p a {
+        color: #fff;
+        text-decoration: underline;
+        font-weight: 700;
+    }
+
+    .ftco-cover-1.overlay p a:hover {
+        text-decoration: none;
+    }
+
+    .ftco-cover-1.overlay form .form-control,
+    .ftco-cover-1.overlay form .btn {
+        height: 55px;
+        border-radius: 4px;
+    }
+
+    .ftco-cover-1.overlay form .form-control {
+        padding-left: 20px;
+        padding-right: 20px;
+        border-color: transparent;
+        margin-right: 10px;
+    }
+
+    .ftco-cover-1.overlay form .btn {
+        border-color: transparent;
+    }
+</style>
+{% endblock customcss %}
+
+{% block content %}
+<!-- begin:: Content -->
+
+
+<!-- begin:: Content -->
+
+<!-- begin:: Hero -->
+<div class="ftco-blocks-cover-1">
+    <div class="ftco-cover-1 overlay"
+        style="background-image: linear-gradient(rgba(0, 0, 0, 0.4),rgba(0, 0, 0, 0.4)), url({% static 'assets/media/about/Landing Page Image.jpg' %})">
+        <div class="container">
+            <div class="row align-items-center justify-content-center animated fadeInDownBig">
+                <div class="col-lg-8 text-center">
+                    <h1>Predict ME</h1>
+                    <div id="land-page-items">
+                        <ul class="list-unstyled">
+                            <li>Improve your effectiveness, reduce costs, and increase donor through Predict Me.</li>
+                            <li>Predictive analytics to power your fundraising!</li>
+                            <li>Ask with confidence and quicker with Predict Me!</li>
+                        </ul>
+                    </div>
+                    <section class="text-center">
+                        {% if request.user.is_authenticated %}
+                            {% if request.user.is_superuser %}
+                                <a class="btn btn-light btn-elevate-hover btn-pill w-25" href="{% url 'dashboard-home' %}">
+                                    Go To Dashboard
+                                </a>
+                            {% else %}
+                                <a href="{% url 'profile-overview' %}" class="btn btn-light btn-elevate-hover btn-pill w-25">
+                                    Go To Your Profile
+                                </a>
+                            {% endif %}
+                        
+                        {% else %}
+                        <a href="{% url 'register' %}" class="btn btn-light btn-elevate-hover btn-pill mr-1">
+                            Create an Account
+                        </>
+                        <a href="{% url 'login' %}" class="btn btn-light btn-elevate-hover btn-pill">
+                            Login Account
+                        </a>
+                        {% endif %}
+                        
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- end:: Hero -->
+
+
+<!-- begin:: infobox -->
+
+
+<!-- end:: infobox -->
+
+
+<!-- end:: Content -->
+
+
+{% include "predict_me/inc/payment_terms.html" %}
+{% endblock content %}

@@ -1,0 +1,56 @@
+<div class="card card-custom gutter-b">
+    <div class="card-header">
+      <div class="card-title">
+        <h3 class="card-label">
+          Run The modal
+            {# {{session_info}} #}
+        </h3>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="container">
+        <section id='validateDataAlert' style="display: none;">
+          <div class="alert alert-custom alert-notice alert-light-success fade show" role="alert">
+            <div class="alert-icon"><i class="flaticon-check"></i></div>
+            <div class="alert-text font-weight-bolder h4 pt-2">
+              All Your Data are valid, you can run the model
+            </div>
+
+          </div>
+          <p class="text-center my-10">
+            <!--begin::Button-->
+            <button style="border-radius: 0;" type="button" id="run-modal-btn" class="btn p-5 btn-success mx-2 font-weight-bolder ">
+              <i class="icon-lg fas fa-cogs"></i>
+              Run Predictive Model
+            </button>
+            <!--end::Button-->
+          </p>
+        </section>
+
+
+        <section id='notValidateDataAlert' style="display: none;">
+          <div class="alert alert-custom alert-notice alert-light-warning fade show" role="alert">
+            <div class="alert-icon"><i class="flaticon-warning"></i></div>
+            <div class="alert-text font-weight-bolder pt-2 h4">You cant run the model until validate all data
+              types
+              errors!
+            </div>
+
+          </div>
+          <p class="text-center my-10">
+            <!--begin::Button-->
+            <span data-toggle='tooltip' title="Unable to run the model">
+              <button style="border-radius: 0;cursor: not-allowed" class="btn disabled p-5 btn-success mx-2 font-weight-bolder" disabled>
+                <i class="icon-lg fas fa-cogs"></i>
+                  Run Predictive Model
+              </button>
+            </span>
+
+            <!--end::Button-->
+          </p>
+        </section>
+
+
+      </div>
+    </div>
+  </div>

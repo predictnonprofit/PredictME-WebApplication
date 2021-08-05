@@ -1,0 +1,845 @@
+{% extends 'members_app/inc/master.html' %}
+{% load static %}
+{% load data_handler_tags %}
+
+{% block title %}
+Account Settings
+{% endblock title %}
+
+{% block customcss %}
+<!--begin::Page Custom Styles(used by this page)-->
+<link href="{% static 'assets/css/custom/members_app/account_settings_wizard.css' %}" rel="stylesheet"
+    type="text/css" />
+<link rel="stylesheet" href="{% static 'assets/css/stripe-checkout.css' %}" type="text/css" />
+<link rel="stylesheet" href="{% static 'assets/css/stripe_upgrade_membership_modal.css' %}" type="text/css" />
+
+{% endblock customcss %}
+
+{% block pagename %}
+Account Settings
+{% endblock pagename %}
+
+
+{% block content %}
+
+
+<!-- begin:: Content -->
+<div class="d-flex flex-column-fluid">
+    <!--begin::Container-->
+    <div class="container">
+        <div class="card card-custom card-transparent">
+            <div class="card-body p-0">
+                <!--begin: Wizard-->
+                <div class="wizard wizard-4" id="account_settings_wizard" data-wizard-state="between"
+                    data-wizard-clickable="true">
+                    <!--begin: Wizard Nav-->
+                    <div class="wizard-nav">
+                        <div class="wizard-steps">
+                            <!--begin::Wizard Step 1 Nav-->
+                            <div class="wizard-step hideWizard" data-wizard-type="step" data-wizard-state="done">
+                                <div class="wizard-wrapper">
+                                    <div class="wizard-number">1</div>
+                                    <div class="wizard-label">
+                                        <div class="wizard-title">Account</div>
+                                        <div class="wizard-desc">Account management</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end::Wizard Step 1 Nav-->
+                            <!--begin::Wizard Step 2 Nav-->
+                            <div class="wizard-step hideWizard" data-wizard-type="step" data-wizard-state="done">
+                                <div class="wizard-wrapper">
+                                    <div class="wizard-number">2</div>
+                                    <div class="wizard-label">
+                                        <div class="wizard-title">Password</div>
+                                        <div class="wizard-desc">Change your password</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end::Wizard Step 2 Nav-->
+                            <!--begin::Wizard Step 3 Nav-->
+                            <div class="wizard-step hideWizard" data-wizard-type="step" data-wizard-state="current">
+                                <div class="wizard-wrapper">
+                                    <div class="wizard-number">3</div>
+                                    <div class="wizard-label">
+                                        <div class="wizard-title">Payment</div>
+                                        <div class="wizard-desc">Add Payment Options</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end::Wizard Step 3 Nav-->
+                            <!--begin::Wizard Step 4 Nav-->
+                            <div class="wizard-step" id='activityStep' data-wizard-type="step"
+                                data-wizard-state="pending">
+                                <div class="wizard-wrapper">
+                                    <div class="wizard-number">4</div>
+                                    <div class="wizard-label">
+                                        <div class="wizard-title">Activity</div>
+                                        <div class="wizard-desc">Account activities</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end::Wizard Step 4 Nav-->
+                        </div>
+                    </div>
+                    <!--end: Wizard Nav-->
+                    <!--begin: Wizard Body-->
+                    <div class="card card-custom card-shadowless rounded-top-0">
+                        <div class="card-body pt-2 p-0">
+                            <div class="row justify-content-center py-5 px-8 py-lg-5 px-lg-10">
+                                <div class="col-xl-12 col-xxl-11">
+                                    <!--begin: Wizard Form-->
+                                    <form method="POST"
+                                        class="form mt-0 mt-lg-5 fv-plugins-bootstrap fv-plugins-framework"
+                                        id="kt_form">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="form-name" value="contact-org-form" />
+                                        <!--begin: Wizard Step 1-->
+                                        <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
+                                            <!-- Start Personal information inputs -->
+
+                                            <!-- Start Tabs -->
+
+                                            <ul class="nav nav-tabs nav-tabs-line nav-bold">
+                                                <li class="nav-item">
+                                                    <a class="nav-link active" data-toggle="tab"
+                                                        href="#member_info_tab_pane" style="font-size: 15px;">
+                                                        Member
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" data-toggle="tab" href="#org_info_tab_pane"
+                                                        style="font-size: 15px;">
+                                                        Organization
+                                                    </a>
+                                                </li>
+
+                                            </ul>
+                                            <div class="tab-content" id="myTabContent">
+                                                <div class="tab-pane fade show active" id="member_info_tab_pane"
+                                                    role="tabpanel" aria-labelledby="member_info_tab_pane">
+                                                    <br />
+                                                    <fieldset>
+                                                        <div class="form-group row">
+                                                            <label
+                                                                class="col-xl-3 col-lg-3 col-form-label text-right">First
+                                                                Name</label>
+                                                            <div class="col-lg-9 col-xl-6">
+                                                                <input
+                                                                    class="form-control form-control-lg form-control-solid"
+                                                                    name="first-name" type="text"
+                                                                    value="{{ member.first_name }}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label
+                                                                class="col-xl-3 col-lg-3 col-form-label text-right">Last
+                                                                Name</label>
+                                                            <div class="col-lg-9 col-xl-6">
+                                                                <input
+                                                                    class="form-control form-control-lg form-control-solid"
+                                                                    type="text" name="last-name"
+                                                                    value="{{ member.last_name }}">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group row">
+                                                            <label
+                                                                class="col-xl-3 col-lg-3 col-form-label text-right">Email
+                                                                Address</label>
+                                                            <div class="col-lg-9 col-xl-6">
+                                                                <div
+                                                                    class="input-group input-group-lg input-group-solid">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text">
+                                                                            <i class="la la-at"></i>
+                                                                        </span>
+                                                                    </div>
+                                                                    <input type="email"
+                                                                        class="form-control form-control-lg form-control-solid"
+                                                                        name="email" value="{{ member.email }}"
+                                                                        placeholder="Email Address">
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label
+                                                                class="col-xl-3 col-lg-3 col-form-label text-right">Contact
+                                                                Phone</label>
+                                                            <div class="col-lg-9 col-xl-6">
+                                                                <div
+                                                                    class="input-group input-group-lg input-group-solid">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text">
+                                                                            <i class="la la-phone"></i>
+                                                                        </span>
+                                                                    </div>
+                                                                    <input type="text"
+                                                                        class="form-control form-control-lg form-control-solid"
+                                                                        name="phone" value="{{ member.phone }}"
+                                                                        placeholder="Phone">
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group row">
+                                                            <label class="col-xl-3 col-lg-3 col-form-label text-right">
+                                                                Country
+                                                            </label>
+                                                            <div class="col-lg-9 col-xl-6">
+                                                                <select name="country" id="country"
+                                                                    class="form-control form-control-solid">
+                                                                    {% for country in all_countries %}
+                                                                    {% if country.0 == member.country %}
+                                                                    <option value="{{ country.0 }}" selected>
+                                                                        {{ country.0 }}
+                                                                    </option>
+                                                                    {% else %}
+                                                                    <option value="{{ country.0 }}">
+                                                                        {{ country.0 }}
+                                                                    </option>
+                                                                    {% endif %}
+                                                                    {% endfor %}
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <!-- Check if state exists -->
+                                                        <div class="form-group row">
+                                                            <label class="col-xl-3 col-lg-3 col-form-label text-right">
+                                                                State
+                                                            </label>
+                                                            <div class="col-lg-9 col-xl-6">
+                                                                <select name="state" id="state"
+                                                                    class="form-control form-control-solid">
+                                                                    {% for state in all_stats %}
+                                                                    {% if state.0 == member.state %}
+                                                                    <option value="{{ state.0 }}" selected>
+                                                                        {{ state.0 }}
+                                                                    </option>
+                                                                    {% else %}
+                                                                    <option value="{{ state.0 }}">
+                                                                        {{ state.0 }}
+                                                                    </option>
+                                                                    {% endif %}
+                                                                    {% endfor %}
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group row">
+                                                            <label class="col-xl-3 col-lg-3 col-form-label text-right">
+                                                                Street Address
+                                                            </label>
+                                                            <div class="col-lg-9 col-xl-6">
+                                                                <input
+                                                                    class="form-control form-control-lg form-control-solid"
+                                                                    type="text" name="street_address"
+                                                                    value="{{ member.street_address }}">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group row">
+                                                            <label class="col-xl-3 col-lg-3 col-form-label text-right">
+                                                                Zip Code
+                                                            </label>
+                                                            <div class="col-lg-9 col-xl-6">
+                                                                <input
+                                                                    class="form-control form-control-lg form-control-solid"
+                                                                    type="text" name="zip_code"
+                                                                    value="{{ member.zip_code }}">
+                                                            </div>
+                                                        </div>
+
+                                                    </fieldset>
+
+                                                </div>
+                                                <div class="tab-pane fade" id="org_info_tab_pane" role="tabpanel"
+                                                    aria-labelledby="org_info_tab_pane">
+                                                    <br />
+                                                    <fieldset>
+
+                                                        <!--begin::Form Group-->
+                                                        <div class="form-group row">
+                                                            <label
+                                                                class="col-xl-3 col-lg-3 col-form-label text-right">Organization
+                                                                Name</label>
+                                                            <div class="col-lg-9 col-xl-6">
+                                                                <input
+                                                                    class="form-control form-control-lg form-control-solid"
+                                                                    type="text" value="{{ member.org_name }}"
+                                                                    name="org_name">
+                                                            </div>
+                                                        </div>
+                                                        <!--begin::Form Group-->
+                                                        <div class="form-group row">
+                                                            <label
+                                                                class="col-xl-3 col-lg-3 col-form-label text-right">Organization
+                                                                Website</label>
+                                                            <div class="col-lg-9 col-xl-6">
+                                                                <input
+                                                                    class="form-control form-control-lg form-control-solid"
+                                                                    type="url" value="{{ member.org_website }}"
+                                                                    name="org_website">
+                                                            </div>
+                                                        </div>
+                                                        <!--begin::Form Group-->
+
+                                                        <div class="form-group row">
+                                                            <label class="col-xl-3 col-lg-3 col-form-label text-right">
+                                                                Organization Type
+                                                            </label>
+                                                            <div class="col-lg-9 col-xl-6">
+                                                                <select id="org_type"
+                                                                    class="form-control form-control-solid"
+                                                                    name="org_type">
+
+                                                                    {% for org_ty in org_types %}
+                                                                    {% if org_ty == member.org_type %}
+                                                                    <option value="{{ org_ty }}" selected>{{ org_ty }}
+                                                                    </option>
+                                                                    {% else %}
+                                                                    <option value="{{ org_ty }}">{{ org_ty }}</option>
+
+                                                                    {% endif %}
+                                                                    {% endfor %}
+
+
+                                                                </select>
+                                                                <input
+                                                                    class="form-control mt-3 form-control-lg form-control-solid"
+                                                                    type="text" value="{{ member.other_org_type }}"
+                                                                    name="other_org_type"
+                                                                    placeholder="Custom Organization Type"
+                                                                    id='other_org_type' />
+
+                                                            </div>
+
+                                                        </div>
+
+                                                        <!--begin::Form Group-->
+                                                        <div class="form-group row">
+                                                            <label
+                                                                class="col-xl-3 col-lg-3 col-form-label text-right">Annual
+                                                                Revenue</label>
+                                                            <div class="col-lg-9 col-xl-6">
+                                                                <select
+                                                                    class="form-control form-control-lg form-control-solid"
+                                                                    id="annualRevenue" name="annualRevenue">
+                                                                    <option value=""></option>
+                                                                    {% for an_rev in annual_revenue %}
+                                                                    {% if an_rev == member.annual_revenue %}
+                                                                    <option value="{{ an_rev }}" selected>
+                                                                        {{ an_rev }}
+                                                                    </option>
+                                                                    {% else %}
+                                                                    <option value="{{ an_rev }}">{{ an_rev }}</option>
+                                                                    {% endif %}
+
+                                                                    {% endfor %}
+
+                                                                </select>
+                                                            </div>
+
+                                                        </div>
+                                                        <!--begin::Form Group-->
+                                                        <div class="form-group row">
+                                                            <label
+                                                                class="col-xl-3 col-lg-3 col-form-label text-right">Job
+                                                                Title</label>
+                                                            <div class="col-lg-9 col-xl-6">
+                                                                <input
+                                                                    class="form-control form-control-lg form-control-solid"
+                                                                    type="text" value="{{ member.job_title }}"
+                                                                    name="job_title">
+                                                            </div>
+                                                        </div>
+                                                        <!--begin::Form Group-->
+
+                                                        <!--begin::Form Group-->
+
+                                                        <!--begin::Form Group-->
+                                                        <div class="form-group row">
+                                                            <label
+                                                                class="col-xl-3 col-lg-3 col-form-label text-right">Total
+                                                                Staff</label>
+                                                            <div class="col-lg-9 col-xl-6">
+                                                                <input
+                                                                    class="form-control form-control-lg form-control-solid"
+                                                                    type="text" value="{{ member.total_staff }}"
+                                                                    name="total_staff">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label
+                                                                class="col-xl-3 col-lg-3 col-form-label text-right">Number
+                                                                of
+                                                                Volunteer</label>
+                                                            <div class="col-lg-9 col-xl-6">
+                                                                <input
+                                                                    class="form-control form-control-lg form-control-solid"
+                                                                    type="number" value="{{ member.num_of_volunteer }}"
+                                                                    name="num_of_volunteer">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label
+                                                                class="col-xl-3 col-lg-3 col-form-label text-right">Number
+                                                                of
+                                                                Board
+                                                                Members</label>
+                                                            <div class="col-lg-9 col-xl-6">
+                                                                <input
+                                                                    class="form-control form-control-lg form-control-solid"
+                                                                    type="number"
+                                                                    value="{{ member.num_of_board_members }}"
+                                                                    name="num_of_board_members">
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+
+                                            </div>
+                                            <!-- End Tabs -->
+                                            <!-- End Personal information inputs -->
+
+                                            <div class="card-footer text-right">
+                                                <button type="submit" class="btn btn-light-primary mr-2">Save</button>
+                                            </div>
+                                    </form>
+                                </div>
+                                <!--end: Wizard Step 1-->
+                                <!--begin: Wizard Step 2-->
+                                <div class="pb-5" data-wizard-type="step-content">
+                                    <div class="card-body pt-2">
+                                        <!--begin::Form-->
+                                        <form class="form" method="POST" id="change-password-form">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="form-name" value="change-password-form" />
+                                            <!--begin::Alert-->
+                                            <div class="alert alert-custom alert-light-danger fade show mb-10"
+                                                role="alert">
+                                                <div class="alert-icon">
+                                                    <span class="svg-icon svg-icon-3x svg-icon-danger">
+                                                        <!--begin::Svg Icon | path:assets/media/svg/icons/Code/Info-circle.svg-->
+                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                            height="24px" viewBox="0 0 24 24" version="1.1">
+                                                            <g stroke="none" stroke-width="1" fill="none"
+                                                                fill-rule="evenodd">
+                                                                <rect x="0" y="0" width="24" height="24">
+                                                                </rect>
+                                                                <circle fill="#000000" opacity="0.3" cx="12" cy="12"
+                                                                    r="10"></circle>
+                                                                <rect fill="#000000" x="11" y="10" width="2" height="7"
+                                                                    rx="1"></rect>
+                                                                <rect fill="#000000" x="11" y="7" width="2" height="2"
+                                                                    rx="1"></rect>
+                                                            </g>
+                                                        </svg>
+                                                        <!--end::Svg Icon-->
+                                                    </span>
+                                                </div>
+                                                <div class="alert-text font-weight-bold">
+                                                    <p>Password Requirements:</p>
+                                                    <ul>
+                                                        <li>Include at least 8 characters.</li>
+                                                        <li>Include at least one letter and one number.</li>
+                                                        <li>Include at least 1 uppercase letter, 1 lowercase
+                                                            letter, and 1 number.</li>
+                                                    </ul>
+                                                </div>
+
+                                            </div>
+                                            <!--end::Alert-->
+                                            <div class="form-group row">
+                                                <label class="col-xl-3 col-lg-3 col-form-label text-alert">Current
+                                                    Password</label>
+                                                <div class="col-lg-9 col-xl-6">
+                                                    <input type="password"
+                                                        class="form-control form-control-lg form-control-solid mb-2"
+                                                        name="password" placeholder="Current password">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-xl-3 col-lg-3 col-form-label text-alert">New
+                                                    Password</label>
+                                                <div class="col-lg-9 col-xl-6">
+                                                    <input type="password"
+                                                        class="form-control form-control-lg form-control-solid"
+                                                        name="new-password" placeholder="New password">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-xl-3 col-lg-3 col-form-label text-alert">Verify
+                                                    Password</label>
+                                                <div class="col-lg-9 col-xl-6">
+                                                    <input type="password"
+                                                        class="form-control form-control-lg form-control-solid"
+                                                        name="verify-new-password" placeholder="Verify password">
+                                                </div>
+                                            </div>
+
+                                            <!--end::Form-->
+                                    </div>
+                                    <div class="card-footer text-right">
+                                        <button type="submit" class="btn btn-light-primary mr-2">Save</button>
+                                    </div>
+                                    </form>
+                                </div>
+                                <!--end: Wizard Step 2-->
+                                <!--begin: Wizard Step 3-->
+                                <div class="pb-5" data-wizard-type="step-content">
+                                    <script src="https://js.stripe.com/v3/" data-key="{{stripe_key}}"></script>
+                                    <div class="card-body pt-2 pb-0">
+                                        <form method="POST" id="update-payment-form"
+                                            action="{% url 'membership-account-update-stripe' %}">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="form-name" value="stripe-form" />
+                                            <fieldset>
+                                                <legend>Payment Information</legend>
+                                                {% if has_connection is not None %}
+                                                <div class="form-group">
+                                                    <label>Name</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend"><span
+                                                                class="input-group-text"><i
+                                                                    class="la la-user"></i></span>
+                                                        </div>
+                                                        <input type="text" value="{{ stripe_name }}" name="full_name"
+                                                            class="form-control" placeholder="Full Name">
+                                                    </div>
+                                                    <span class="form-text text-muted">The customer’s full name or
+                                                        business name on stripe.</span>
+                                                </div>
+                                                {% else %}
+                                                <div class="form-group">
+                                                    <label>Name</label>
+                                                    <div class="input-group" data-toggle="tooltip" title="Not Allowed!">
+                                                        <div class="input-group-prepend"><span
+                                                                class="input-group-text not-allowed-cursor"><i
+                                                                    class="la la-user not-allowed-cursor"></i></span>
+                                                        </div>
+                                                        <input type="text" value="No Internet Connection" disabled
+                                                            readonly name="full_name"
+                                                            class="form-control not-allowed-cursor bg-gray-100"
+                                                            placeholder="Full Name" />
+                                                    </div>
+                                                    <span class="form-text text-muted">
+                                                        The customer’s business name on stripe.
+                                                    </span>
+                                                </div>
+                                                {% endif %}
+
+                                                {% if has_connection is not None %}
+                                                <div class="form-group row">
+                                                    <div class="col">
+                                                        <label class="mb-4 font-weight-bolder" for="card-element">
+                                                            Credit or debit card
+                                                        </label>
+                                                        <div class="pl-5">
+                                                            <div id="card-element">
+                                                                <!-- A Stripe Element will be inserted here. -->
+                                                            </div>
+                                                            <span class="d-inline-block my-3 text-muted"
+                                                                style="font-weight: 600;">
+                                                                ************{{last4}}
+                                                            </span>
+                                                            <!-- Used to display form errors. -->
+                                                            <div id="card-errors" role="alert"></div>
+                                                        </div>
+                                                        <!-- <div class="separator separator-solid mb-5"></div> -->
+                                                    </div>
+                                                </div>
+                                                {% else %}
+                                                <div class="form-group">
+                                                    <label class="mb-4 font-weight-bolder" for="card-element">
+                                                        Credit or debit card
+                                                    </label>
+                                                    <div class="input-group" data-toggle="tooltip" title="Not Allowed!">
+                                                        <div class="input-group-prepend"><span
+                                                                class="input-group-text not-allowed-cursor">
+                                                                <i
+                                                                    class="icon-xl la la-credit-card not-allowed-cursor"></i>
+                                                            </span>
+                                                        </div>
+                                                        <input type="text" value="No Internet Connection" disabled
+                                                            readonly name="full_name"
+                                                            class="form-control not-allowed-cursor bg-gray-100"
+                                                            placeholder="Credit Card Number" />
+                                                    </div>
+                                                    <span class="form-text text-muted">
+                                                        Stripe Credit Card Number
+                                                    </span>
+                                                </div>
+                                                {% endif %}
+
+
+
+                                            </fieldset>
+                                    </div>
+                                    <fieldset>
+                                        {# start update stripe button #}
+                                        <div class="card-footer border-top-0">
+                                            <div class="row form-group">
+                                                <div class="col text-right">
+                                                    <button type="submit"
+                                                        class="btn btn-light-primary mr-2">Update</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {# end update stripe button #}
+                                        </form>
+                                    </fieldset>
+                                    <!-- <div class="separator separator-solid mb-5"></div> -->
+                                    <!-- Start Upgrade Membership block -->
+                                    {% include "members_app/segments/upgrade_membership.html" %}
+                                    <!-- End Upgrade Membership block -->
+
+
+                                </div>
+                                <!--end: Wizard Step 3-->
+                                <!--begin: Wizard Step 4-->
+                                <div class="pb-5" data-wizard-type="step-content">
+                                    <!--begin::Section-->
+                                    <!--begin::Form-->
+                                    <form class="form" method="POST" id="account-activity-form">
+                                        {% csrf_token %}
+                                        <!--begin::Card-->
+                                        <div class="card card-custom p-0">
+
+                                            <div class="card-body pt-2">
+                                                <fieldset class="form-group row">
+                                                    <legend class="mb-3">Transactions</legend>
+                                                    <div class="col-lg-4">
+                                                        <label>Start Date: </label>
+                                                        <div class="input-group date">
+                                                            <input type="text" class="form-control activity-datepicker"
+                                                                id="trans-start-date" readonly="readonly"
+                                                                placeholder="Select date" name="trans_start_date" />
+                                                            <div class="input-group-append">
+                                                                <span class="input-group-text">
+                                                                    <i class="la la-calendar-check-o"></i>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <span class="form-text text-muted">Start date of the
+                                                            transactions</span>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <label>End Date:</label>
+                                                        <div class="input-group date">
+                                                            <input type="text" class="form-control activity-datepicker"
+                                                                id="trans-end-date" readonly="readonly"
+                                                                placeholder="Select date" name="trans_end_date" />
+                                                            <div class="input-group-append">
+                                                                <span class="input-group-text">
+                                                                    <i class="la la-calendar-check-o"></i>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <span class="form-text text-muted">End date of the
+                                                            transactions</span>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <div class="my-9 text-center">
+                                                            <button type="button" id='downloadTransactionsBtn'
+                                                                class="btn btn-light-success font-weight-bold mr-2">
+                                                                Download Transactions
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                                <hr />
+                                                <fieldset class="form-group row">
+                                                    <legend class="mb-4">Invoices</legend>
+                                                    <div class="col-lg-4">
+                                                        <label>Start Date: </label>
+                                                        <div class="input-group date">
+                                                            <input type="text"
+                                                                class="form-control activity-datepicker invoice-member-input"
+                                                                id="invoice-start-date" data-name='start-date'
+                                                                readonly="readonly" placeholder="Select date"
+                                                                name="invoice_start_date" />
+                                                            <div class="input-group-append">
+                                                                <span class="input-group-text">
+                                                                    <i class="la la-calendar-check-o"></i>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <span class="form-text text-muted">Start date of the
+                                                            invoice</span>
+                                                    </div>
+
+                                                    <div class="col-lg-4">
+
+                                                        <label>End Date: </label>
+                                                        <div class="input-group date">
+                                                            <input type="text"
+                                                                class="form-control activity-datepicker invoice-member-input"
+                                                                id="invoice-end-date" data-name='end-date'
+                                                                readonly="readonly" placeholder="Select date"
+                                                                name="invoice_end_date" />
+                                                            <div class="input-group-append">
+                                                                <span class="input-group-text">
+                                                                    <i class="la la-calendar-check-o"></i>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <span class="form-text text-muted">End date of the
+                                                            invoice</span>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <div class="my-9 text-center">
+                                                            <button id='downloadInvoicesBtn' type='button'
+                                                                class="btn btn-light-success font-weight-bold mr-2">
+                                                                Download Invoices
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+
+                                        </div>
+                                    </form>
+                                    <!--end::Form-->
+                                    <!--end::Section-->
+                                </div>
+                                <!--end: Wizard Step 4-->
+
+                                <!--end: Wizard Form-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--end: Wizard Bpdy-->
+            </div>
+            <!--end: Wizard-->
+
+            <!-- Start Invoices table list -->
+            <div class="container pl-0 position-relative" id="invoicesListContainer">
+                <section id="invoicesListTableWrapper">
+                    {% include "members_app/segments/invoices_list.html" %}
+                </section>
+            </div>
+            <!-- End Invoices table list -->
+
+            <!-- Start Transactions table list -->
+            <div class="container pl-0 position-relative" id="transactionsListContainer">
+                <section id="transactionsListTableWrapper">
+                    {% include "members_app/segments/transactions_list.html" %}
+                </section>
+            </div>
+            <!-- End Transactions table list -->
+        </div>
+    </div>
+
+</div>
+<!--end::Container-->
+</div>
+
+<!-- end:: Content -->
+
+
+{% endblock content%}
+
+{% block customjs %}
+<script src="https://js.stripe.com/v3/"></script>
+<script src="{% static 'assets/js/custom/djangocookie.js' %}" type="text/javascript"></script>
+<script src="{% static 'assets/js/custom/members_app/stripe-update.js' %}"></script>
+<script src="{% static 'assets/js/custom/members_app/member_wizard.js' %}" type="text/javascript"></script>
+<script src="{% static 'assets/js/custom/members_app/stripe_upgrade_membership.js' %}" type="text/javascript"></script>
+<script src="{% static 'assets/js/pages/custom/profile/profile.js' %}"></script>
+<!--begin::Page Scripts(used by this page)-->
+<script src="{% static 'assets/js/pages/crud/forms/widgets/bootstrap-datepicker.js' %}"></script>
+<script>
+    var arrows;
+    if (KTUtil.isRTL()) {
+        arrows = {
+            leftArrow: '<i class="la la-angle-right"></i>',
+            rightArrow: '<i class="la la-angle-left"></i>'
+        }
+    } else {
+        arrows = {
+            leftArrow: '<i class="la la-angle-left"></i>',
+            rightArrow: '<i class="la la-angle-right"></i>'
+        }
+    }
+    // input group layout
+    $('.activity-datepicker').datepicker({
+        rtl: KTUtil.isRTL(),
+        todayHighlight: true,
+        orientation: "bottom left",
+        templates: arrows,
+        autoclose: true
+    });
+    $('#country').select2({
+        placeholder: "Select a country",
+        width: "100%",
+        height: "20%"
+    });
+    $('#state').select2({
+        placeholder: "Select a state",
+        width: "100%"
+    });
+    $('#org_type').select2({
+        placeholder: "Select an organization type",
+        width: "100%"
+    });
+    $(document).ready(function () {
+        // here to handle organization type
+        const orgType = $("#org_type");
+        const otherOrgType = $("#other_org_type");
+        if (orgType.val() === 'Other') {
+            otherOrgType.removeClass("disabled not-allowed-cursor text-muted").removeAttr("disabled");
+        } else {
+            otherOrgType.addClass("disabled not-allowed-cursor text-muted").attr("disabled", "disabled");
+        }
+        orgType.on("change", (event) => {
+            if (orgType.val() === 'Other') {
+                otherOrgType.removeClass("disabled not-allowed-cursor text-muted").removeAttr(
+                    "disabled");
+            } else {
+                otherOrgType.addClass("disabled not-allowed-cursor text-muted").attr("disabled", true)
+                    .attr("placeholder", "Select your organization type");
+            }
+        });
+
+        // here to handle the country and stats inputs
+        const country = $("#country");
+        const state = $("#state");
+        if (country.val() === 'United States') {
+            state.removeClass("disabled not-allowed-cursor").removeAttr("disabled");
+        } else {
+            state.addClass("disabled not-allowed-cursor").attr("disabled", true).val("");
+        }
+        country.on('change', (event) => {
+            if (country.val() === 'United States') {
+                state.removeClass("disabled not-allowed-cursor").removeAttr("disabled");
+            } else {
+                state.addClass("disabled not-allowed-cursor").attr("disabled", true);
+            }
+        });
+
+        const activityStep = $("#activityStep");
+        activityStep.on("click", (event) => {
+            const invoicesListTableWrapper = $("#invoicesListTableWrapper");
+            // check if the step is activity step
+            //if (invoicesListTableWrapper.is(':hidden')) {
+            //  invoicesListTableWrapper.show();
+            //}
+        });
+
+        const hideWizard = $(".hideWizard");
+        hideWizard.on('click', (event) => {
+            const invoicesListTableWrapper = $("#invoicesListTableWrapper");
+            const transactionsListTableWrapper = $("#transactionsListTableWrapper");
+            // check if the step is activity step
+            invoicesListTableWrapper.hide();
+            transactionsListTableWrapper.hide();
+        });
+
+    }); // end of document ready
+</script>
+{% endblock customjs %}

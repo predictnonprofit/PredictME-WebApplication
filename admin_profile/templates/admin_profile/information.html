@@ -1,0 +1,297 @@
+{% extends 'dashboard/inc/master.html' %}
+{% load static %}
+
+{% block title %}
+Information - Admin Profile
+{% endblock title %}
+
+{% block customcss %}
+
+{% endblock customcss %}
+
+
+{% block dashboard_content %}
+
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <!--begin::Subheader-->
+    <div class="subheader py-2 py-lg-4 subheader-transparent" id="kt_subheader">
+        <div class="container d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+            <!--begin::Info-->
+            <div class="d-flex align-items-center flex-wrap mr-1">
+                <!--begin::Mobile Toggle-->
+                <button class="burger-icon burger-icon-left mr-4 d-inline-block d-lg-none"
+                        id="kt_subheader_mobile_toggle">
+                    <span></span>
+                </button>
+                <!--end::Mobile Toggle-->
+                <!--begin::Page Heading-->
+                <div class="d-flex align-items-baseline flex-wrap mr-5">
+                    <!--begin::Page Title-->
+                    <h5 class="text-dark font-weight-bold my-1 mr-5">Profile 1</h5>
+                    <!--end::Page Title-->
+                    <!--begin::Breadcrumb-->
+                    <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
+                        <li class="breadcrumb-item">
+                            <a href="" class="text-muted">Apps</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="" class="text-muted">Profile</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="" class="text-muted">Profile 1</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="" class="text-muted">Overview</a>
+                        </li>
+                    </ul>
+                    <!--end::Breadcrumb-->
+                </div>
+                <!--end::Page Heading-->
+            </div>
+            <!--end::Info-->
+            <!--begin::Toolbar-->
+            <div class="d-flex align-items-center">
+                <!--begin::Actions-->
+                <a href="#" class="btn btn-light font-weight-bold btn-sm">Actions</a>
+                <!--end::Actions-->
+                <!--begin::Dropdown-->
+                <div class="dropdown dropdown-inline" data-toggle="tooltip" title="" data-placement="left"
+                     data-original-title="Quick actions">
+                    <a href="#" class="btn btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											<span class="svg-icon svg-icon-success svg-icon-2x">
+												<!--begin::Svg Icon | path:assets/media/svg/icons/Files/File-plus.svg-->
+												<svg xmlns="http://www.w3.org/2000/svg"
+                                                     xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                     height="24px" viewBox="0 0 24 24" version="1.1">
+													<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+														<polygon points="0 0 24 0 24 24 0 24"></polygon>
+														<path d="M5.85714286,2 L13.7364114,2 C14.0910962,2 14.4343066,2.12568431 14.7051108,2.35473959 L19.4686994,6.3839416 C19.8056532,6.66894833 20,7.08787823 20,7.52920201 L20,20.0833333 C20,21.8738751 19.9795521,22 18.1428571,22 L5.85714286,22 C4.02044787,22 4,21.8738751 4,20.0833333 L4,3.91666667 C4,2.12612489 4.02044787,2 5.85714286,2 Z"
+                                                              fill="#000000" fill-rule="nonzero" opacity="0.3"></path>
+														<path d="M11,14 L9,14 C8.44771525,14 8,13.5522847 8,13 C8,12.4477153 8.44771525,12 9,12 L11,12 L11,10 C11,9.44771525 11.4477153,9 12,9 C12.5522847,9 13,9.44771525 13,10 L13,12 L15,12 C15.5522847,12 16,12.4477153 16,13 C16,13.5522847 15.5522847,14 15,14 L13,14 L13,16 C13,16.5522847 12.5522847,17 12,17 C11.4477153,17 11,16.5522847 11,16 L11,14 Z"
+                                                              fill="#000000"></path>
+													</g>
+												</svg>
+                                                <!--end::Svg Icon-->
+											</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-md dropdown-menu-right p-0 m-0">
+                        <!--begin::Navigation-->
+                        <ul class="navi navi-hover">
+                            <li class="navi-header font-weight-bold py-4">
+                                <span class="font-size-lg">Choose Label:</span>
+                                <i class="flaticon2-information icon-md text-muted" data-toggle="tooltip"
+                                   data-placement="right" title="" data-original-title="Click to learn more..."></i>
+                            </li>
+                            <li class="navi-separator mb-3 opacity-70"></li>
+                            <li class="navi-item">
+                                <a href="#" class="navi-link">
+														<span class="navi-text">
+															<span class="label label-xl label-inline label-light-success">Customer</span>
+														</span>
+                                </a>
+                            </li>
+                            <li class="navi-item">
+                                <a href="#" class="navi-link">
+														<span class="navi-text">
+															<span class="label label-xl label-inline label-light-danger">Partner</span>
+														</span>
+                                </a>
+                            </li>
+                            <li class="navi-item">
+                                <a href="#" class="navi-link">
+														<span class="navi-text">
+															<span class="label label-xl label-inline label-light-warning">Suplier</span>
+														</span>
+                                </a>
+                            </li>
+                            <li class="navi-item">
+                                <a href="#" class="navi-link">
+														<span class="navi-text">
+															<span class="label label-xl label-inline label-light-primary">Member</span>
+														</span>
+                                </a>
+                            </li>
+                            <li class="navi-item">
+                                <a href="#" class="navi-link">
+														<span class="navi-text">
+															<span class="label label-xl label-inline label-light-dark">Staff</span>
+														</span>
+                                </a>
+                            </li>
+                            <li class="navi-separator mt-3 opacity-70"></li>
+                            <li class="navi-footer py-4">
+                                <a class="btn btn-clean font-weight-bold btn-sm" href="#">
+                                    <i class="ki ki-plus icon-sm"></i>Add new</a>
+                            </li>
+                        </ul>
+                        <!--end::Navigation-->
+                    </div>
+                </div>
+                <!--end::Dropdown-->
+            </div>
+            <!--end::Toolbar-->
+        </div>
+    </div>
+    <!--end::Subheader-->
+    <!--begin::Entry-->
+    <div class="d-flex flex-column-fluid">
+        <!--begin::Container-->
+        <div class="container-fluid">
+            <!--begin::Profile Overview-->
+            <div class="d-flex flex-row">
+                <!--begin::Aside-->
+                {% include 'admin_profile/inc/left_side_bar.html' %}
+                <!--end::Aside-->
+                <!--begin::Content-->
+                    <div class="flex-row-fluid ml-lg-8">
+    <!--begin::Card-->
+    <div class="card card-custom">
+        <!--begin::Header-->
+        <div class="card-header py-3">
+            <div class="card-title align-items-start flex-column">
+                <h3 class="card-label font-weight-bolder text-dark">Account Information</h3>
+                <span class="text-muted font-weight-bold font-size-sm mt-1">Change your account settings</span>
+            </div>
+            <div class="card-toolbar">
+                <button type="reset" class="btn btn-success mr-2">Save Changes</button>
+                <button type="reset" class="btn btn-secondary">Cancel</button>
+            </div>
+        </div>
+        <!--end::Header-->
+        <!--begin::Form-->
+        <form class="form">
+            <div class="card-body">
+                <!--begin::Heading-->
+                <div class="row">
+                    <label class="col-xl-3"></label>
+                    <div class="col-lg-9 col-xl-6">
+                        <!-- <h5 class="font-weight-bold mb-6">Account:</h5> -->
+                    </div>
+                </div>
+                <!--begin::Form Group-->
+                <div class="form-group row">
+                    <label class="col-xl-3 col-lg-3 col-form-label">Organization
+                        Name</label>
+                    <div class="col-lg-9 col-xl-6">
+                        <input class="form-control form-control-lg form-control-solid" type="text" value="{{ member.org_name }}">
+                    </div>
+                </div>
+                <!--begin::Form Group-->
+                <div class="form-group row">
+                    <label class="col-xl-3 col-lg-3 col-form-label">Organization
+                        Website</label>
+                    <div class="col-lg-9 col-xl-6">
+                        <input class="form-control form-control-lg form-control-solid" type="url" value="{{ member.org_website }}">
+                    </div>
+                </div>
+                <!--begin::Form Group-->
+                <div class="form-group row">
+                    <label class="col-xl-3 col-lg-3 col-form-label">Organization
+                        Type</label>
+                    <div class="col-lg-9 col-xl-6">
+                        <input list="orgList" id="organizationType"
+                               name="organizationType"
+                               class="form-control form-control-lg form-control-solid">
+                        <datalist id="orgList">
+                            <option value="Club">Higher Education</option>
+                            <option value="Church">Other Education</option>
+                            <option value="Health">Health related</option>
+                            <option value="Hospitals and Primary Care">Hospitals and
+                                Primary Care
+                            </option>
+                            <option value="Human and Social Services">Human and Social
+                                Services
+                            </option>
+                            <option value="Environment">Environment</option>
+                            <option value="Animal">Animal</option>
+                            <option value="International">International</option>
+                            <option value="Religion">Religion related</option>
+                        </datalist>
+                    </div>
+
+                </div>
+                <!--begin::Form Group-->
+                <div class="form-group row">
+                    <label class="col-xl-3 col-lg-3 col-form-label">Annual
+                        Revenue</label>
+                    <div class="col-lg-9 col-xl-6">
+                        <select class="form-control form-control-lg form-control-solid" id="annualRevenue">
+                            <option value=""></option>
+                            <option value="">$5,000 - $50,000</option>
+                            <option value="">$50,000 - $100,000</option>
+                            <option value="">$100,000 - $250,000</option>
+                            <option value="">$250,000 - $500,000</option>
+                            <option value="">$500,000 - $1 million</option>
+                            <option value="">$1 million - $5 million</option>
+                            <option value="">$5 million - $10 million</option>
+                            <option value="">$10 million or more</option>
+
+                        </select>
+                    </div>
+
+                </div>
+                <!--begin::Form Group-->
+                <div class="form-group row">
+                    <label class="col-xl-3 col-lg-3 col-form-label">Job Title</label>
+                    <div class="col-lg-9 col-xl-6">
+                        <input class="form-control form-control-lg form-control-solid" type="text" value="{{ member.job_title }}">
+                    </div>
+                </div>
+                <!--begin::Form Group-->
+                <div class="separator separator-dashed my-5"></div>
+                <!--begin::Form Group-->
+
+                <!--begin::Form Group-->
+                <div class="form-group row">
+                    <label class="col-xl-3 col-lg-3 col-form-label">Total Staff</label>
+                    <div class="col-lg-9 col-xl-6">
+                        <input class="form-control form-control-lg form-control-solid" type="text" value="{{ member.total_staff }}">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-xl-3 col-lg-3 col-form-label">Number of
+                        Volunteer</label>
+                    <div class="col-lg-9 col-xl-6">
+                        <input class="form-control form-control-lg form-control-solid" type="number" value="{{ member.num_of_volunteer }}">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-xl-3 col-lg-3 col-form-label">Number of Board
+                        Members</label>
+                    <div class="col-lg-9 col-xl-6">
+                        <input class="form-control form-control-lg form-control-solid" type="number" value="{{ member.num_of_board_members }}">
+                    </div>
+                </div>
+                <!--begin::Form Group-->
+                <div class="form-group row">
+                    <label class="col-xl-3 col-lg-3 col-form-label text-danger">Delete my account</label>
+                    <div class="col-lg-9 col-xl-6">
+                        <span data-toggle="tooltip" title="Deactivate your account, please tell us why" data-placement="right">
+                            <button type="button" class="btn btn-light-danger font-weight-bold btn-sm">
+                                <i class="icon-xl la la-trash"></i> Delete your account ?
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!--end::Form-->
+    </div>
+    <!--end::Card-->
+</div>
+                <!--end::Content-->
+            </div>
+            <!--end::Profile Overview-->
+        </div>
+        <!--end::Container-->
+    </div>
+    <!--end::Entry-->
+</div>
+
+{% endblock dashboard_content%}
+
+
+{% block customjs %}
+
+<script src="{% static 'dashboard/assets/js/pages/custom/user/profile.js' %}" type="text/javascript"></script>
+{% endblock customjs %}

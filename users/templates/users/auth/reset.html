@@ -1,0 +1,67 @@
+{% extends 'users/inc/master.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block title %}
+Reset Password
+{% endblock title %}
+
+{% block customcss %}
+
+{% endblock customcss %}
+
+
+
+{% block auth_content %}
+<!--begin::Content-->
+<div class="login-content flex-row-fluid d-flex flex-column justify-content-center position-relative overflow-hidden p-7 "
+    style="max-width: 100% !important;">
+    <!--begin::Content body-->
+    <div class="d-flex flex-column-fluid flex-center">
+        <div class="login-form login-forgot d-block">
+            <!--begin::Form-->
+            <form class="form fv-plugins-bootstrap fv-plugins-framework" method="POST">
+                {% csrf_token %}
+                <!--begin::Title-->
+                <div class="pb-13 pt-lg-0 pt-5">
+                    <h3 class="font-weight-bolder text-dark font-size-h4 font-size-h1-lg">Forgotten Password ?</h3>
+                    <p class="text-muted font-weight-bold font-size-h4">Enter your email to reset your password</p>
+                </div>
+                <!--end::Title-->
+                <!--begin::Form group-->
+                <div class="form-group fv-plugins-icon-container">
+                    {% render_field form.email class+="form-control form-control-solid h-auto py-6 px-6 rounded-lg font-size-h6" placeholder="Email Address" %}
+                    <div class="fv-plugins-message-container"></div>
+                </div>
+                <!--end::Form group-->
+                <!--begin::Form group-->
+                <div class="form-group d-flex flex-wrap pb-lg-0">
+                    <button type="submit" id="kt_login_forgot_submit"
+                        class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-4">Submit</button>
+                    <button type="button" id="kt_login_forgot_cancel"
+                        class="btn btn-light-primary font-weight-bolder font-size-h6 px-8 py-4 my-3">Cancel</button>
+                </div>
+                <!--end::Form group-->
+                <div></div>
+            </form>
+            <!--end::Form-->
+        </div>
+    </div>
+    <!--end::Content body-->
+    <!--begin::Content footer-->
+    <div class="d-flex justify-content-lg-start justify-content-center align-items-end py-7 py-lg-0 mx-auto">
+        <a href="{% url 'terms' %}" class="text-primary font-weight-bolder font-size-h5">Terms</a>
+        <a href="{% url 'pricing' %}" class="text-primary ml-10 font-weight-bolder font-size-h5">Plans</a>
+        <a href="{% url 'contact' %}" class="text-primary ml-10 font-weight-bolder font-size-h5">Contact Us</a>
+    </div>
+    <!--end::Content footer-->
+</div>
+<!--end::Content-->
+{% endblock auth_content%}
+
+
+{% block customjs %}
+
+
+
+
+{% endblock customjs %}

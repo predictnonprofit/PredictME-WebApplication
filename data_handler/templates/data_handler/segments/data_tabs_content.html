@@ -1,0 +1,146 @@
+{% load socialaccount %}
+<!-- Run Model Modal   -->
+{% include "data_handler/inc/run_model_dialog.html" %}
+<!-- ./Run Model Modal  -->
+<div class="card card-custom gutter-b">
+
+  <div class="card-body">
+    <!-- Start Tabs (<ul>) -->
+    <ul class="nav nav-tabs nav-tabs-line justify-content-center nav-bolder border-bottom-0" id="wrapper-ul">
+      <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" data-section-name="upload" href="#upload-file-tab">1.
+          Re-Upload
+        </a>
+      </li>
+      <li class="nav-item">
+        {% if session_info.is_validate_data is True %}
+          <a class="nav-link" data-toggle="tab" data-section-name="pick_columns" href="#pick-columns-tab">2.Pick Columns <span class='tabValidLabel' data-toggle='tooltip' title="your data seems ok to run"></span></a>
+        {% else %}
+            <a class="nav-link" data-toggle="tab" data-section-name="pick_columns" href="#pick-columns-tab">2.Pick Columns <span class='tabNoValidLabel' data-toggle='tooltip' title="some data not valid"></span></a>
+        {% endif %}
+      </li>
+      <li class="nav-item">
+        {% if session_info.is_validate_data is True %}
+          <a class="nav-link" data-toggle="tab" data-section-name="data_process" href="#data-process-tab">3.Data Processing <span class='tabValidLabel' data-toggle='tooltip' title="your data seems ok to run"></span></a>
+        {% else %}
+            <a class="nav-link" data-toggle="tab" data-section-name="data_process" href="#data-process-tab">3.Data Processing <span class='tabNoValidLabel' data-toggle='tooltip' title="some data not valid"></span></a>
+        {% endif %}
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " data-toggle="tab" href="#run-predictive-modal-tab" data-section-name="run_modal" tabindex="-1">4. Execute Model</a>
+      </li>
+    </ul>
+    <!-- End Tabs (<ul>) -->
+
+
+  </div>
+</div>
+
+<!-- Start Tabs Wrapper Content -->
+<div class="tab-content mt-10 h-auto" id="wrapper-content">
+  {# Start Upload tab #}
+  <div class="tab-pane fade active show position-relative" id="upload-file-tab" role="tabpanel" aria-labelledby="upload-file-tab">
+    <!-- Start Re-upload Form -->
+    {% include 'data_handler/segments/re-upload-form.html' %}
+    <!-- End Re-upload Form -->
+  </div>
+  {# End Upload tab #}
+
+  {# Start Pick column Tab #}
+  <div class="tab-pane fade" id="pick-columns-tab" role="tabpanel" aria-labelledby="pick-columns-tab">
+    <!-- Start Pick Columns -->
+    {% include 'data_handler/segments/pick_columns_tab.html' %}
+    <!-- End Pick Columns -->
+
+  </div>
+  {# End Pick column Tab #}
+
+  {# Start The Data table Tab #}
+  <div class="tab-pane fade" id="data-process-tab" role="tabpanel" aria-labelledby="data-process-tab">
+
+    <div class="alert alert-custom alert-notice alert-light-success fade show mb-5 mx-5" role="alert">
+      <div class="alert-icon">
+        <span class="label label-xl label-success mr-2">{{ session_info.all_records_count }}</span>
+      </div>
+      <div class="alert-text" id="records-count-alert">
+        <b>{{ session_info.all_records_count }}</b>
+        of
+        <b>{{ get_data_handler_obj.allowed_records_count }}</b>
+        record(s) have been used
+      </div>
+
+    </div>
+    <!-- Start Data Table -->
+    {% include 'data_handler/segments/data_table.html' %}
+    <!-- End Data Table -->
+  </div>
+  {# End The Data table Tab #}
+
+  {# Start Run modal tab #}
+  <div class="tab-pane fade" id="run-predictive-modal-tab" role="tabpanel" aria-labelledby="run-predictive-modal-tab">
+
+
+    <div class="card card-custom gutter-b">
+      <div class="card-header">
+        <div class="card-title">
+          <h3 class="card-label">
+            Run The modal
+
+          </h3>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="container">
+
+          {# Check if the user has no valid data #}
+          {% if session_info.is_validate_data is True %}
+            <section id='checkIfModelRun'>
+              <div class="alert alert-custom alert-notice alert-light-success fade show" role="alert">
+                <div class="alert-icon"><i class="flaticon-check"></i></div>
+                <div class="alert-text font-weight-bolder h4 pt-2">
+                  All Your Data are valid, you can run the model
+                </div>
+
+              </div>
+              <p class="text-center my-10">
+                <!--begin::Button-->
+                <button style="border-radius: 0;" type="button" id="run-modal-btn" class="btn p-5 btn-success mx-2 font-weight-bolder ">
+                  <i class="icon-lg fas fa-cogs"></i>
+                  Run Predictive Model
+                </button>
+                <!--end::Button-->
+              </p>
+            </section>
+          {% else %}
+              <section id='checkIfModelRun'>
+                <div class="alert alert-custom alert-notice alert-light-warning fade show" role="alert">
+                  <div class="alert-icon"><i class="flaticon-warning"></i></div>
+                  <div class="alert-text font-weight-bolder pt-2 h4">You cant run the model until validate all data
+                    types
+                    errors!
+                  </div>
+
+                </div>
+                <p class="text-center my-10">
+                  <!--begin::Button-->
+                  <span data-toggle='tooltip' title="Unable to run the model">
+                    <button style="border-radius: 0;cursor: not-allowed" class="btn disabled p-5 btn-success mx-2 font-weight-bolder" disabled>
+                      <i class="icon-lg fas fa-cogs"></i>
+                        Run Predictive Model
+                    </button>
+                  </span>
+
+                  <!--end::Button-->
+                </p>
+              </section>
+          {% endif  %}
+
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+  {# End Run modal tab #}
+</div>
+<!-- End Tabs Wrapper Content -->

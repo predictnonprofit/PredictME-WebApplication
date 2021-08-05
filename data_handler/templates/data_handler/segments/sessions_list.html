@@ -1,0 +1,108 @@
+<div class="card card-custom">
+
+    <div class="card-header">
+        <div class="card-title">
+            <span class="card-icon">
+                <i class="icon-lg text-dark-50 flaticon-list-2"></i>
+            </span>
+            <h3 class="card-label">
+                List of all sessions
+                <small>all your previous sessions</small>
+            </h3>
+        </div>
+        <div class="card-toolbar">
+            <button type="button" data-toggle="modal" data-target="#uploadFileModal"
+                    class="btn btn-sm btn-success font-weight-bold">
+                <i class="icon-lg la la-upload"></i> Upload
+            </button>
+        </div>
+    </div>
+    <div class="card-body">
+
+        <section id="sessions-table-list">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Session Name</th>
+                        <th>File Name</th>
+                        <th>Records Used</th>
+                        <th>Upload Time</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for m_session in member_sessions %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'data-handler-session-details' m_session.pk %}">{{ m_session.data_handler_session_label }}</a>
+                            </td>
+                            <td>
+                                {{ m_session.file_name }}
+                            </td>
+                            <td class="px-12">
+                                {{ m_session.all_records_count }}
+                            </td>
+                            <td>
+                                {{ m_session.upload_date }}
+                            </td>
+
+                            <td>
+                                {% if m_session.is_process_complete is True %}
+                                    <span class="label label-inline label-light-success font-weight-bold">
+                                        Run
+                                    </span>
+                                {% else %}
+                                    <span class="label label-inline label-light-info font-weight-bold">
+                                    Not run
+                                    </span>
+                                {% endif %}
+
+                            </td>
+
+                            <td>
+                                <div class="btn-toolbar" role="toolbar" aria-label="Edit Data">
+                                    <div class="btn-group mr-2" role="group" aria-label="actions">
+                                        <a href="{% url 'data-handler-session-details' m_session.pk %}"
+                                           class="btn btn-outline-secondary btn-icon btn-sm"
+                                           data-toggle="tooltip" title="edit session">
+                                            <i class="icon-md la la-edit"></i>
+                                        </a>
+                                        <button type="button" class="btn btn-danger btn-icon btn-sm delete-data-session"
+                                                data-session-id="{{ m_session.pk }}" data-toggle="tooltip"
+                                                title="delete session">
+                                            <i class="la la-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </td>
+
+
+                        </tr>
+                    {% endfor %}
+
+
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+
+    </div>
+    <div class="card-footer d-flex justify-content-end">
+        <span data-toggle="tooltip" title="be careful!!">
+            <form method="PUT">
+                {% csrf_token %}
+                <button type="button" class="btn btn-outline-danger font-weight-bold" id="deleteAllSessionsBtn"
+                        data-session-id="all">
+            Delete all SESSIONS
+        </button>
+            </form>
+        </span>
+
+
+    </div>
+</div>

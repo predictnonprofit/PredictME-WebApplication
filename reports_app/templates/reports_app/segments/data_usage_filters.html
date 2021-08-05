@@ -1,0 +1,38 @@
+<form id="data-usage-filter-form" class="kt-form">
+    {{ csrf }}
+    <div class="row mb-8">
+        <div class="col-lg-3 mb-lg-0 mb-6">
+            <label class="checkbox checkbox-rounded my-1">Run Date:
+                <input class="lbl-reports-filter-display" type="checkbox"
+                       data-col-name="reg-date">
+                <span class="ml-1"></span>
+            </label>
+            <div class="input-daterange input-group" id="run-date-filter-datepicker">
+                <input type="text" class="form-control datePickerInputs reports-filter-input" name="data-run-filter-start"
+                       id="data-run-filter-start">
+                <div class="input-group-append">
+                            <span class="input-group-text">
+                                <i class="la la-ellipsis-h"></i>
+                            </span>
+                </div>
+                <input type="text" class="form-control datePickerInputs reports-filter-input" name="data-run-filter-end"
+                       id="data-run-filter-end">
+            </div>
+        </div>
+
+        <div class="col-lg-3 mb-lg-0 mb-6">
+            <label class="checkbox checkbox-rounded my-1">Records Used *:
+                <input class="lbl-reports-filter-display" type="checkbox"
+                       data-col-name="records-used">
+                <span class="ml-1"></span>
+            </label>
+            <select class="form-control reports-filter-input" id="records-used" name="records_used">
+                <option value="all-records-used">All</option>
+                <option value="less_50">Less than 50%</option>
+                <option value="more_50">More than 50%</option>
+
+            </select>
+
+        </div>
+    </div>
+</form>

@@ -1,0 +1,1635 @@
+{% extends "predict_me/inc/master.html" %}
+{% load static %}
+
+{% block title %}
+FAQs
+{% endblock title %}
+
+{% block customcss %}
+<link href="{% static 'assets/css/pages/support-center/faq-1.css' %}" rel="stylesheet" type="text/css"/>
+{% endblock customcss %}
+
+{% block content %}
+<div class="kt-body kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-grid--stretch" id="kt_body">
+    <div class="kt-content  kt-content--fit-top  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor"
+         id="kt_content">
+
+        <!-- begin:: Content -->
+
+        <!-- begin:: Hero -->
+        <div class="kt-sc-faq" style="background-image: url({% static 'assets/media/bg/bg-9.jpg' %})">
+            <div class="kt-container ">
+                <div class="kt-sc__top">
+                    <h3 class="kt-sc__title">
+                        Common Q&A
+                    </h3>
+                    <div class="kt-sc__nav">
+                        <a href="#" class="kt-link kt-font-bold">Help Center</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- end:: Hero -->
+        <div class="kt-negative-spacing--7"></div>
+
+        <!-- begin:: Section -->
+        <div class="kt-container ">
+            <div class="kt-portlet">
+                <div class="kt-portlet__body">
+                    <div class="kt-infobox">
+                        <div class="kt-infobox__body">
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <ul class="kt-nav kt-nav--bold kt-nav--md-space kt-nav--v4" id="tabsList"
+                                        role="tablist">
+                                        <li class="kt-nav__item">
+                                            <a class="kt-nav__link " data-toggle="tab" href="#v-about_predict_me">About
+                                                Predict Me</a>
+                                        </li>
+
+                                        <li class="kt-nav__item">
+                                            <a class="kt-nav__link" data-toggle="tab"
+                                               href="#v-profile_setup">Profile Setup</a>
+                                        </li>
+
+                                        <li class="kt-nav__item">
+                                            <a class="kt-nav__link" data-toggle="tab"
+                                               href="#v-update_information">Update Information</a>
+                                        </li>
+
+                                        <li class="kt-nav__item">
+                                            <a class="kt-nav__link" data-toggle="tab"
+                                               href="#v-login_info">Login Information</a>
+                                        </li>
+
+                                        <li class="kt-nav__item">
+                                            <a class="kt-nav__link" data-toggle="tab"
+                                               href="#v-website_trouble">Website Troubleshoot</a>
+                                        </li>
+
+                                        <li class="kt-nav__item">
+                                            <a class="kt-nav__link" id="v-pills-refund-tab" data-toggle="tab"
+                                               href="#v-refund">Billing/Refund</a>
+                                        </li>
+
+                                        <li class="kt-nav__item">
+                                            <a class="kt-nav__link" id="v-pills-contacting-tab" data-toggle="tab"
+                                               href="#v-contacting">Contacting us</a>
+                                        </li>
+                                        <li class="kt-nav__item">
+                                            <a class="kt-nav__link" id="v-pills-predict_model-tab" data-toggle="tab"
+                                               href="#v-predict_model">Prior Running the Prediction Model</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-lg-9">
+
+                                    <!--begin::Accordion-->
+                                    <div class="tab-content" id="v-pills-tabContent">
+                                        <div class="tab-pane fade show active" id="v-about_predict_me">
+                                            <div class="accordion accordion-light  accordion-svg-icon" id="faq">
+                                                <div class="card">
+                                                    <div class="card-header" id="faqHeading1">
+                                                        <div class="card-title" data-toggle="collapse"
+                                                             data-target="#faq1" aria-expanded="false"
+                                                             aria-controls="faq1">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                                 height="24px" viewBox="0 0 24 24" version="1.1"
+                                                                 class="kt-svg-icon">
+                                                                <g stroke="none" stroke-width="1" fill="none"
+                                                                   fill-rule="evenodd">
+                                                                    <polygon points="0 0 24 0 24 24 0 24"/>
+                                                                    <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z"
+                                                                          fill="#000000" fill-rule="nonzero"/>
+                                                                    <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z"
+                                                                          fill="#000000" fill-rule="nonzero"
+                                                                          opacity="0.3"
+                                                                          transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "/>
+                                                                </g>
+                                                            </svg>
+                                                            What is Predict Me?
+                                                        </div>
+                                                    </div>
+                                                    <div id="faq1" class="collapse show" aria-labelledby="faqHeading1"
+                                                         data-parent="#faq">
+                                                        <div class="card-body">
+                                                            Predict Me is focused on providing individual donation
+                                                            prediction based on the historical data. Predict Me goal is
+                                                            to analyze historical individual donor giving trends,
+                                                            demographic pattern, educational level and other important
+                                                            variables using Machine Learning and Predictive Modeling
+                                                            techniques to increase the likelihood of future donations
+                                                            for nonprofit organizations. Any nonprofit that accepts
+                                                            individual donations and has an individual as a donor can
+                                                            use this tool to predict donors who will donate in the
+                                                            future.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card-header" id="faqHeading2">
+                                                        <div class="card-title collapsed" data-toggle="collapse"
+                                                             data-target="#faq2" aria-expanded="false"
+                                                             aria-controls="faq2">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                                 height="24px" viewBox="0 0 24 24" version="1.1"
+                                                                 class="kt-svg-icon">
+                                                                <g stroke="none" stroke-width="1" fill="none"
+                                                                   fill-rule="evenodd">
+                                                                    <polygon points="0 0 24 0 24 24 0 24"/>
+                                                                    <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z"
+                                                                          fill="#000000" fill-rule="nonzero"/>
+                                                                    <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z"
+                                                                          fill="#000000" fill-rule="nonzero"
+                                                                          opacity="0.3"
+                                                                          transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "/>
+                                                                </g>
+                                                            </svg>
+                                                            How do you help?
+                                                        </div>
+                                                    </div>
+                                                    <div id="faq2" class="collapse" aria-labelledby="faqHeading2"
+                                                         data-parent="#faq">
+                                                        <div class="card-body">
+                                                            PM aim to create a solution where an end-user can upload a
+                                                            dataset of donors and non-donors, and our application
+                                                            pre-process the dataset, and then train multiple different
+                                                            classification algorithms/models on that data. These models
+                                                            then can be used to predict past and new records of donors,
+                                                            provided that the record is in the same setting or format as
+                                                            the initial dataset was. For example, if the dataset
+                                                            provided by the user had two columns named, ‘Age’, ‘Donation
+                                                            Value’, then the record passed into the model/code for
+                                                            prediction should also contain this information.
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="card">
+                                                    <div class="card-header" id="faqHeading3">
+                                                        <div class="card-title collapsed" data-toggle="collapse"
+                                                             data-target="#faq3" aria-expanded="false"
+                                                             aria-controls="faq3">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                                 height="24px" viewBox="0 0 24 24" version="1.1"
+                                                                 class="kt-svg-icon">
+                                                                <g stroke="none" stroke-width="1" fill="none"
+                                                                   fill-rule="evenodd">
+                                                                    <polygon points="0 0 24 0 24 24 0 24"/>
+                                                                    <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z"
+                                                                          fill="#000000" fill-rule="nonzero"/>
+                                                                    <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z"
+                                                                          fill="#000000" fill-rule="nonzero"
+                                                                          opacity="0.3"
+                                                                          transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "/>
+                                                                </g>
+                                                            </svg>
+                                                            Can Predictive Modeling drive funding?
+                                                        </div>
+                                                    </div>
+                                                    <div id="faq3" class="collapse" aria-labelledby="faqHeading3"
+                                                         data-parent="#faq">
+                                                        <div class="card-body">
+                                                            Organization, no matter big or small are always on the hunt
+                                                            to figure out the best way to achieve their fundraising
+                                                            goals in a very cost-efficient manner. Contacting the right
+                                                            donor, frequency of contact, how much to ask to achieve the
+                                                            fundraising goals are some of the aspects that is made
+                                                            easier with the help of Predict Me. Donors are like a
+                                                            customer to a business. They can be a loyal and repetitive
+                                                            donor or a onetime donor, they could provide funding either
+                                                            big or small. Based on the accurate modeling, Predict Me
+                                                            will be able to understand donor’s behavior using the exact
+                                                            same methodologies a for profit uses to track their
+                                                            customer’s behavior.
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="card">
+                                                    <div class="card-header" id="faqHeading4">
+                                                        <div class="card-title collapsed" data-toggle="collapse"
+                                                             data-target="#faq4" aria-expanded="false"
+                                                             aria-controls="faq4">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                                 height="24px" viewBox="0 0 24 24" version="1.1"
+                                                                 class="kt-svg-icon">
+                                                                <g stroke="none" stroke-width="1" fill="none"
+                                                                   fill-rule="evenodd">
+                                                                    <polygon points="0 0 24 0 24 24 0 24"/>
+                                                                    <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z"
+                                                                          fill="#000000" fill-rule="nonzero"/>
+                                                                    <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z"
+                                                                          fill="#000000" fill-rule="nonzero"
+                                                                          opacity="0.3"
+                                                                          transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "/>
+                                                                </g>
+                                                            </svg>
+                                                            What is your pricing?
+                                                        </div>
+                                                    </div>
+                                                    <div id="faq4" class="collapse" aria-labelledby="faqHeading4"
+                                                         data-parent="#faq">
+                                                        <div class="card-body">
+                                                            To learn more about our value-add features and pricing,
+                                                            please visit
+                                                            <a href="http://www.Predict Me.com/Pricing">www.Predict
+                                                                Me.com/Pricing</a>.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="tab-pane fade " id="v-profile_setup">
+                                            <div class="accordion accordion-light accordion-svg-icon"
+                                                 id="accordionExample7">
+                                                <div class="card">
+                                                    <div class="card-header" id="heading7">
+                                                        <div class="card-title" data-toggle="collapse"
+                                                             data-target="#collapseOne7" aria-expanded="false"
+                                                             aria-controls="collapseOne7">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                                 height="24px" viewBox="0 0 24 24" version="1.1"
+                                                                 class="kt-svg-icon">
+                                                                <g stroke="none" stroke-width="1" fill="none"
+                                                                   fill-rule="evenodd">
+                                                                    <polygon points="0 0 24 0 24 24 0 24"/>
+                                                                    <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z"
+                                                                          fill="#000000" fill-rule="nonzero"/>
+                                                                    <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z"
+                                                                          fill="#000000" fill-rule="nonzero"
+                                                                          opacity="0.3"
+                                                                          transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "/>
+                                                                </g>
+                                                            </svg>
+                                                            Do I have to have a Predict Me Profile?
+                                                        </div>
+                                                    </div>
+                                                    <div id="collapseOne7" class="collapse show"
+                                                         aria-labelledby="headingOne7" data-parent="#accordionExample7">
+                                                        <div class="card-body">
+                                                            Yes. Every user must have a profile on Predict Me. You can
+                                                            edit and change your user profile as you deem appropriate.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card-header" id="headingOne7">
+                                                        <div class="card-title" data-toggle="collapse"
+                                                             data-target="#collapseOne8" aria-expanded="false"
+                                                             aria-controls="collapseOne8">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                                 height="24px" viewBox="0 0 24 24" version="1.1"
+                                                                 class="kt-svg-icon">
+                                                                <g stroke="none" stroke-width="1" fill="none"
+                                                                   fill-rule="evenodd">
+                                                                    <polygon points="0 0 24 0 24 24 0 24"/>
+                                                                    <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z"
+                                                                          fill="#000000" fill-rule="nonzero"/>
+                                                                    <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z"
+                                                                          fill="#000000" fill-rule="nonzero"
+                                                                          opacity="0.3"
+                                                                          transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "/>
+                                                                </g>
+                                                            </svg>
+                                                            How do I sign up for Predict Me?
+                                                        </div>
+                                                    </div>
+                                                    <div id="collapseOne8" class="collapse show"
+                                                         aria-labelledby="headingOne7" data-parent="#accordionExample7">
+                                                        <div class="card-body">
+                                                            It’s simple. Visit <a href="www.PredictMe.com">www.PredictMe.com</a>
+                                                            and create an account. We will send you an email requiring
+                                                            you to verify your account.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card-header" id="heading8">
+                                                        <div class="card-title" data-toggle="collapse"
+                                                             href="#collapse7" aria-expanded="false"
+                                                             aria-controls="collapseOne7">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                                 height="24px" viewBox="0 0 24 24" version="1.1"
+                                                                 class="kt-svg-icon">
+                                                                <g stroke="none" stroke-width="1" fill="none"
+                                                                   fill-rule="evenodd">
+                                                                    <polygon points="0 0 24 0 24 24 0 24"/>
+                                                                    <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z"
+                                                                          fill="#000000" fill-rule="nonzero"/>
+                                                                    <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z"
+                                                                          fill="#000000" fill-rule="nonzero"
+                                                                          opacity="0.3"
+                                                                          transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "/>
+                                                                </g>
+                                                            </svg>
+                                                            Logging in vs. signing up: what’s the difference?
+                                                        </div>
+                                                    </div>
+                                                    <div id="collapse7" class="collapse show"
+                                                         aria-labelledby="headingOne7" data-parent="#accordionExample7">
+                                                        <div class="card-body">
+                                                            If you don’t have an account on Predict Me, we will require
+                                                            you to register/create an account. (Visit <a href="www.PredictMe.com">www.PredictMe.com</a>
+                                                            to create an account)
+                                                            If you have an existing account on Predict Me, you only need
+                                                            to login in to access your account (To log in, enter your
+                                                            email address and password).
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="tab-pane fade" id="v-update_information">
+                                            <div class="accordion accordion-light accordion-svg-icon"
+                                                 id="accordionExample8">
+                                                <div class="card">
+                                                    <div class="card-header" id="heading9">
+                                                        <div class="card-title" data-toggle="collapse"
+                                                             data-target="#collapse8" aria-expanded="false"
+                                                             aria-controls="collapseOne7">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                                 height="24px" viewBox="0 0 24 24" version="1.1"
+                                                                 class="kt-svg-icon">
+                                                                <g stroke="none" stroke-width="1" fill="none"
+                                                                   fill-rule="evenodd">
+                                                                    <polygon points="0 0 24 0 24 24 0 24"/>
+                                                                    <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z"
+                                                                          fill="#000000" fill-rule="nonzero"/>
+                                                                    <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z"
+                                                                          fill="#000000" fill-rule="nonzero"
+                                                                          opacity="0.3"
+                                                                          transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "/>
+                                                                </g>
+                                                            </svg>
+                                                            How do I update information on my organizational profile?
+                                                        </div>
+                                                    </div>
+                                                    <div id="collapse8" class="collapse show"
+                                                         aria-labelledby="headingOne7" data-parent="#accordionExample7">
+                                                        <div class="card-body">
+                                                            To update information in your organizational profile, please
+                                                            visit:
+                                                            <a href="http://www.Predict Me.com">www.Predict Me.com</a>
+                                                            You will need to enter your email address and password to
+                                                            sign in. When you have signed in, you will be able to:
+                                                            • Update and Edit Profile (Update your contents, programs,
+                                                            password and stats)
+                                                            • Edit Billing Information (Add, edit or delete credit
+                                                            card/payment information)
+                                                            To update the information, select the appropriate selection
+                                                            and update as necessary.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card-header" id="heading10">
+                                                        <div class="card-title" data-toggle="collapse"
+                                                             data-target="#collapse9" aria-expanded="false"
+                                                             aria-controls="collapseOne8">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                                 height="24px" viewBox="0 0 24 24" version="1.1"
+                                                                 class="kt-svg-icon">
+                                                                <g stroke="none" stroke-width="1" fill="none"
+                                                                   fill-rule="evenodd">
+                                                                    <polygon points="0 0 24 0 24 24 0 24"/>
+                                                                    <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z"
+                                                                          fill="#000000" fill-rule="nonzero"/>
+                                                                    <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z"
+                                                                          fill="#000000" fill-rule="nonzero"
+                                                                          opacity="0.3"
+                                                                          transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "/>
+                                                                </g>
+                                                            </svg>
+                                                            Can I change my email address, phone number and other
+                                                            details online?
+                                                        </div>
+                                                    </div>
+                                                    <div id="collapse9" class="collapse show"
+                                                         aria-labelledby="headingOne7" data-parent="#accordionExample7">
+                                                        <div class="card-body">
+                                                            Yes, you can change your email address, phone number, and
+                                                            other details, as well as your organization’s program level
+                                                            information and your bank information online. To update any
+                                                            of this information, log in to your account by going to
+                                                            <a href="http://www.PredictMe.com">www.PredictMe.com</a> and
+                                                            sign in. Once you are in your
+                                                            organizational profile, click on the link that says "Update
+                                                            Your Information".
+                                                            Don’t have Predict Me profile? Register now by going to
+                                                            <a href="http://www.PredictMe.com">www.PredictMe.com</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card-header" id="heading11">
+                                                        <div class="card-title" data-toggle="collapse"
+                                                             href="#collapse10" aria-expanded="false"
+                                                             aria-controls="collapseOne7">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                                 height="24px" viewBox="0 0 24 24" version="1.1"
+                                                                 class="kt-svg-icon">
+                                                                <g stroke="none" stroke-width="1" fill="none"
+                                                                   fill-rule="evenodd">
+                                                                    <polygon points="0 0 24 0 24 24 0 24"/>
+                                                                    <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z"
+                                                                          fill="#000000" fill-rule="nonzero"/>
+                                                                    <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z"
+                                                                          fill="#000000" fill-rule="nonzero"
+                                                                          opacity="0.3"
+                                                                          transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "/>
+                                                                </g>
+                                                            </svg>
+                                                            Can I save results and reports pages in CSV and PDF?
+                                                        </div>
+                                                    </div>
+                                                    <div id="collapse10" class="collapse show"
+                                                         aria-labelledby="headingOne7" data-parent="#accordionExample7">
+                                                        <div class="card-body">
+                                                            Yes. After model is run, you can download your predicted
+                                                            data into CSV file, download model summary in pdf and there
+                                                            is a function for PDF creation to create PDF files of your
+                                                            reports/dashboard.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="tab-pane fade" id="v-login_info">
+                                            <div class="accordion accordion-light accordion-svg-icon"
+                                                 id="accordionExample8">
+                                                <div class="card">
+                                                    <div class="card-header" id="heading12">
+                                                        <div class="card-title" data-toggle="collapse"
+                                                             data-target="#collapse11" aria-expanded="false"
+                                                             aria-controls="collapseOne7">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                                 height="24px" viewBox="0 0 24 24" version="1.1"
+                                                                 class="kt-svg-icon">
+                                                                <g stroke="none" stroke-width="1" fill="none"
+                                                                   fill-rule="evenodd">
+                                                                    <polygon points="0 0 24 0 24 24 0 24"/>
+                                                                    <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z"
+                                                                          fill="#000000" fill-rule="nonzero"/>
+                                                                    <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z"
+                                                                          fill="#000000" fill-rule="nonzero"
+                                                                          opacity="0.3"
+                                                                          transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "/>
+                                                                </g>
+                                                            </svg>
+                                                            How do I change my password?
+                                                        </div>
+                                                    </div>
+                                                    <div id="collapse11" class="collapse show"
+                                                         aria-labelledby="headingOne7" data-parent="#accordionExample7">
+                                                        <div class="card-body">
+                                                            If you wish to change your password, please follow these
+                                                            steps:
+                                                            1. When you are singed in, hold the cursor over your name at
+                                                            the top right corner of any Predict Me page to see the
+                                                            account menu.
+                                                            2. Select My Organization Profile.
+                                                            3. Click account setting and update your password.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card-header" id="heading12">
+                                                        <div class="card-title" data-toggle="collapse"
+                                                             data-target="#collapse12" aria-expanded="false"
+                                                             aria-controls="collapseOne8">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                                 height="24px" viewBox="0 0 24 24" version="1.1"
+                                                                 class="kt-svg-icon">
+                                                                <g stroke="none" stroke-width="1" fill="none"
+                                                                   fill-rule="evenodd">
+                                                                    <polygon points="0 0 24 0 24 24 0 24"/>
+                                                                    <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z"
+                                                                          fill="#000000" fill-rule="nonzero"/>
+                                                                    <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z"
+                                                                          fill="#000000" fill-rule="nonzero"
+                                                                          opacity="0.3"
+                                                                          transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "/>
+                                                                </g>
+                                                            </svg>
+                                                            I forgot or never received my username and/or password. How
+                                                            can I get it?
+                                                        </div>
+                                                    </div>
+                                                    <div id="collapse12" class="collapse show"
+                                                         aria-labelledby="headingOne7" data-parent="#accordionExample7">
+                                                        <div class="card-body">
+                                                            To retrieve your username or password please follow these
+                                                            steps:
+                                                            1. Go to <a href="http://www.PredictMe.com">http://www.PredictMe.com</a>.
+                                                            2. Go to the login/sign up page.
+                                                            3. Click forgot password.
+                                                            4. Enter the email address associated with your Predict Me
+                                                            account and click send.
+                                                            You'll receive an email with your username and instructions
+                                                            to reset your password. For security, the link to reset your
+                                                            password will expire in 2 hours.
+                                                            If you do not receive the email from Predict Me within 2
+                                                            hours, please check your spam and junk folders.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card-header" id="heading11">
+                                                        <div class="card-title" data-toggle="collapse"
+                                                             href="#collapse13" aria-expanded="false"
+                                                             aria-controls="collapseOne7">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                                 height="24px" viewBox="0 0 24 24" version="1.1"
+                                                                 class="kt-svg-icon">
+                                                                <g stroke="none" stroke-width="1" fill="none"
+                                                                   fill-rule="evenodd">
+                                                                    <polygon points="0 0 24 0 24 24 0 24"/>
+                                                                    <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z"
+                                                                          fill="#000000" fill-rule="nonzero"/>
+                                                                    <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z"
+                                                                          fill="#000000" fill-rule="nonzero"
+                                                                          opacity="0.3"
+                                                                          transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "/>
+                                                                </g>
+                                                            </svg>
+                                                            I can’t remember my username, what should I do?
+                                                        </div>
+                                                    </div>
+                                                    <div id="collapse13" class="collapse show"
+                                                         aria-labelledby="headingOne7" data-parent="#accordionExample7">
+                                                        <div class="card-body">
+                                                            Please go to <a href="">www.Predict Me.com</a> to recover
+                                                            your username by
+                                                            entering your email address. If you can't remember your
+                                                            email address, contact us by filling out the Contact Us
+                                                            form, and we will get back to you within 48 hours. If your
+                                                            organization provides your access to Predict Me, contact
+                                                            your account administrator or the person who opened Predict
+                                                            Me account.
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="card">
+                                                    <div class="card-header" id="heading11">
+                                                        <div class="card-title" data-toggle="collapse"
+                                                             href="#collapse14" aria-expanded="false"
+                                                             aria-controls="collapseOne7">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                                 height="24px" viewBox="0 0 24 24" version="1.1"
+                                                                 class="kt-svg-icon">
+                                                                <g stroke="none" stroke-width="1" fill="none"
+                                                                   fill-rule="evenodd">
+                                                                    <polygon points="0 0 24 0 24 24 0 24"/>
+                                                                    <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z"
+                                                                          fill="#000000" fill-rule="nonzero"/>
+                                                                    <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z"
+                                                                          fill="#000000" fill-rule="nonzero"
+                                                                          opacity="0.3"
+                                                                          transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "/>
+                                                                </g>
+                                                            </svg>
+                                                            I submitted a request to reset my password, but I didn’t
+                                                            receive an email with instructions. What should I do?
+                                                        </div>
+                                                    </div>
+                                                    <div id="collapse14" class="collapse show"
+                                                         aria-labelledby="headingOne7" data-parent="#accordionExample7">
+                                                        <div class="card-body">
+                                                            Check your junk and spam folders for a message from <a
+                                                                href="mailto:support@Predict Me.com.">support@Predict
+                                                            Me.com.</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="card">
+                                                    <div class="card-header" id="heading11">
+                                                        <div class="card-title" data-toggle="collapse"
+                                                             href="#collapse15" aria-expanded="false"
+                                                             aria-controls="collapseOne7">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                                 height="24px" viewBox="0 0 24 24" version="1.1"
+                                                                 class="kt-svg-icon">
+                                                                <g stroke="none" stroke-width="1" fill="none"
+                                                                   fill-rule="evenodd">
+                                                                    <polygon points="0 0 24 0 24 24 0 24"/>
+                                                                    <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z"
+                                                                          fill="#000000" fill-rule="nonzero"/>
+                                                                    <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z"
+                                                                          fill="#000000" fill-rule="nonzero"
+                                                                          opacity="0.3"
+                                                                          transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "/>
+                                                                </g>
+                                                            </svg>
+                                                            What are the passwords requirements for Predict Me?
+                                                        </div>
+                                                    </div>
+                                                    <div id="collapse15" class="collapse show"
+                                                         aria-labelledby="headingOne7" data-parent="#accordionExample7">
+                                                        <div class="card-body">
+                                                            Predict Me works to protect your security and privacy with
+                                                            strong password requirements. Your Predict Me password must:<br/>
+                                                            1. Include at least six characters.<br/>
+                                                            2. Include at least one letter and one number. <br/>
+                                                            3. Not repeat the same character more than two times in a
+                                                            row.<br/>
+                                                            4. Not include white spaces.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card-header" id="heading11">
+                                                        <div class="card-title" data-toggle="collapse"
+                                                             href="#collapse16" aria-expanded="false"
+                                                             aria-controls="collapseOne7">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                                 height="24px" viewBox="0 0 24 24" version="1.1"
+                                                                 class="kt-svg-icon">
+                                                                <g stroke="none" stroke-width="1" fill="none"
+                                                                   fill-rule="evenodd">
+                                                                    <polygon points="0 0 24 0 24 24 0 24"/>
+                                                                    <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z"
+                                                                          fill="#000000" fill-rule="nonzero"/>
+                                                                    <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z"
+                                                                          fill="#000000" fill-rule="nonzero"
+                                                                          opacity="0.3"
+                                                                          transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "/>
+                                                                </g>
+                                                            </svg>
+                                                            Why did I receive a confirmation email from Predict Me?
+                                                        </div>
+                                                    </div>
+                                                    <div id="collapse16" class="collapse show"
+                                                         aria-labelledby="headingOne7" data-parent="#accordionExample7">
+                                                        <div class="card-body">
+                                                            When you sign up for a Predict Me account, we will send you
+                                                            a confirmation email. This way we can make sure that you own
+                                                            the email address connected to your account. To confirm
+                                                            this, all you need to do is click on the link in the email.
+                                                            If you didn't sign up for a Predict Me account and received
+                                                            a confirmation email in error, you can deactivate the
+                                                            account in question by clicking the link at the bottom of
+                                                            the email.
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="card">
+                                                    <div class="card-header" id="heading11">
+                                                        <div class="card-title" data-toggle="collapse"
+                                                             href="#collapse17" aria-expanded="false"
+                                                             aria-controls="collapseOne7">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                                 height="24px" viewBox="0 0 24 24" version="1.1"
+                                                                 class="kt-svg-icon">
+                                                                <g stroke="none" stroke-width="1" fill="none"
+                                                                   fill-rule="evenodd">
+                                                                    <polygon points="0 0 24 0 24 24 0 24"/>
+                                                                    <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z"
+                                                                          fill="#000000" fill-rule="nonzero"/>
+                                                                    <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z"
+                                                                          fill="#000000" fill-rule="nonzero"
+                                                                          opacity="0.3"
+                                                                          transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "/>
+                                                                </g>
+                                                            </svg>
+                                                            I accidentally signed up using the wrong email address. How
+                                                            can I fix this?
+                                                        </div>
+                                                    </div>
+                                                    <div id="collapse17" class="collapse show"
+                                                         aria-labelledby="headingOne7" data-parent="#accordionExample7">
+                                                        <div class="card-body">
+                                                            To correct your email address, please log in and click
+                                                            “Update/Change Email Address” at the top of your
+                                                            organizational profile. Enter your correct email address and
+                                                            click “update email.” We will then send a confirmation email
+                                                            to your new email address. Click the confirmation link in
+                                                            that email to confirm your account.
+                                                            Note: When you confirm the new email address, we will
+                                                            replace the incorrect address you originally used to set up
+                                                            the account.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="tab-pane fade" id="v-website_trouble" role="tabpanel">
+                                            <div class="accordion accordion-light accordion-svg-icon"
+                                                 id="accordionExample8">
+                                                <div class="card">
+                                                    <div class="card-header" id="heading13">
+                                                        <div class="card-title" data-toggle="collapse"
+                                                             data-target="#collapse18" aria-expanded="false"
+                                                             aria-controls="collapseOne7">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                                 height="24px" viewBox="0 0 24 24" version="1.1"
+                                                                 class="kt-svg-icon">
+                                                                <g stroke="none" stroke-width="1" fill="none"
+                                                                   fill-rule="evenodd">
+                                                                    <polygon points="0 0 24 0 24 24 0 24"/>
+                                                                    <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z"
+                                                                          fill="#000000" fill-rule="nonzero"/>
+                                                                    <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z"
+                                                                          fill="#000000" fill-rule="nonzero"
+                                                                          opacity="0.3"
+                                                                          transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "/>
+                                                                </g>
+                                                            </svg>
+                                                            I received an error message.
+                                                        </div>
+                                                    </div>
+                                                    <div id="collapse18" class="collapse show"
+                                                         aria-labelledby="headingOne7" data-parent="#accordionExample7">
+                                                        <div class="card-body">
+                                                            We require that your browser accept cookies in order to log
+                                                            in. Please enable your browser’s cookies and then close and
+                                                            restart your browser to log in. Once you allow sites to
+                                                            accept cookies, close and restart your browser. If you still
+                                                            receive the error message, check the clock on your computer.
+                                                            Make sure the date and time are correct, and then log in
+                                                            again. This should resolve the problem.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card-header" id="heading12">
+                                                        <div class="card-title" data-toggle="collapse"
+                                                             data-target="#collapse19" aria-expanded="false"
+                                                             aria-controls="collapseOne8">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                                 height="24px" viewBox="0 0 24 24" version="1.1"
+                                                                 class="kt-svg-icon">
+                                                                <g stroke="none" stroke-width="1" fill="none"
+                                                                   fill-rule="evenodd">
+                                                                    <polygon points="0 0 24 0 24 24 0 24"/>
+                                                                    <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z"
+                                                                          fill="#000000" fill-rule="nonzero"/>
+                                                                    <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z"
+                                                                          fill="#000000" fill-rule="nonzero"
+                                                                          opacity="0.3"
+                                                                          transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "/>
+                                                                </g>
+                                                            </svg>
+                                                            I never received my Predict Me sign up confirmation email.
+                                                            What should I do?
+                                                        </div>
+                                                    </div>
+                                                    <div id="collapse19" class="collapse show"
+                                                         aria-labelledby="headingOne7" data-parent="#accordionExample7">
+                                                        <div class="card-body">
+                                                            It is possible that your email server may have blocked the
+                                                            confirmation email. If you are in a corporate environment
+                                                            and don't have the ability to check email in a spam folder,
+                                                            check with your administrator to see if the confirmation can
+                                                            be resent.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card-header" id="heading11">
+                                                        <div class="card-title" data-toggle="collapse"
+                                                             href="#collapse20" aria-expanded="false"
+                                                             aria-controls="collapseOne7">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                                 height="24px" viewBox="0 0 24 24" version="1.1"
+                                                                 class="kt-svg-icon">
+                                                                <g stroke="none" stroke-width="1" fill="none"
+                                                                   fill-rule="evenodd">
+                                                                    <polygon points="0 0 24 0 24 24 0 24"/>
+                                                                    <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z"
+                                                                          fill="#000000" fill-rule="nonzero"/>
+                                                                    <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z"
+                                                                          fill="#000000" fill-rule="nonzero"
+                                                                          opacity="0.3"
+                                                                          transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "/>
+                                                                </g>
+                                                            </svg>
+                                                            Do I need any special equipment or software to create a
+                                                            Predict Me profile?
+                                                        </div>
+                                                    </div>
+                                                    <div id="collapse20" class="collapse show"
+                                                         aria-labelledby="headingOne7" data-parent="#accordionExample7">
+                                                        <div class="card-body">
+                                                            If you are able to view this page, you have all the
+                                                            equipment and software needed to create your organizational
+                                                            profile.
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="card">
+                                                    <div class="card-header" id="heading11">
+                                                        <div class="card-title" data-toggle="collapse"
+                                                             href="#collapse21" aria-expanded="false">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                                 height="24px" viewBox="0 0 24 24" version="1.1"
+                                                                 class="kt-svg-icon">
+                                                                <g stroke="none" stroke-width="1" fill="none"
+                                                                   fill-rule="evenodd">
+                                                                    <polygon points="0 0 24 0 24 24 0 24"/>
+                                                                    <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z"
+                                                                          fill="#000000" fill-rule="nonzero"/>
+                                                                    <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z"
+                                                                          fill="#000000" fill-rule="nonzero"
+                                                                          opacity="0.3"
+                                                                          transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "/>
+                                                                </g>
+                                                            </svg>
+                                                            How reliable are the servers?
+                                                        </div>
+                                                    </div>
+                                                    <div id="collapse21" class="collapse show"
+                                                         aria-labelledby="headingOne7" data-parent="#accordionExample7">
+                                                        <div class="card-body">
+                                                            Predict Me uses Amazon Web Services (AWS) servers, which are
+                                                            highly regarded for their power, redundancy and uptime.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="tab-pane fade" id="v-refund">
+                                            <div class="accordion accordion-light accordion-svg-icon"
+                                                 id="accordionExample8">
+                                                <div class="card">
+                                                    <div class="card-header" id="heading11">
+                                                        <div class="card-title" data-toggle="collapse"
+                                                             href="#collapse22" aria-expanded="false"
+                                                             aria-controls="collapseOne7">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                                 height="24px" viewBox="0 0 24 24" version="1.1"
+                                                                 class="kt-svg-icon">
+                                                                <g stroke="none" stroke-width="1" fill="none"
+                                                                   fill-rule="evenodd">
+                                                                    <polygon points="0 0 24 0 24 24 0 24"/>
+                                                                    <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z"
+                                                                          fill="#000000" fill-rule="nonzero"/>
+                                                                    <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z"
+                                                                          fill="#000000" fill-rule="nonzero"
+                                                                          opacity="0.3"
+                                                                          transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "/>
+                                                                </g>
+                                                            </svg>
+                                                            What payment methods can I use on Predict Me?
+                                                        </div>
+                                                    </div>
+                                                    <div id="collapse22" class="collapse show"
+                                                         aria-labelledby="headingOne7" data-parent="#accordionExample7">
+                                                        <div class="card-body">
+                                                            We welcome Visa, MasterCard, American Express, Discover and
+                                                            PayPal for different payment methods.
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="card">
+                                                    <div class="card-header" id="heading11">
+                                                        <div class="card-title" data-toggle="collapse"
+                                                             href="#collapse23" aria-expanded="false"
+                                                             aria-controls="collapseOne7">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                                 height="24px" viewBox="0 0 24 24" version="1.1"
+                                                                 class="kt-svg-icon">
+                                                                <g stroke="none" stroke-width="1" fill="none"
+                                                                   fill-rule="evenodd">
+                                                                    <polygon points="0 0 24 0 24 24 0 24"/>
+                                                                    <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z"
+                                                                          fill="#000000" fill-rule="nonzero"/>
+                                                                    <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z"
+                                                                          fill="#000000" fill-rule="nonzero"
+                                                                          opacity="0.3"
+                                                                          transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "/>
+                                                                </g>
+                                                            </svg>
+                                                            My Predict Me membership is about to expire. What should I
+                                                            do?
+                                                        </div>
+                                                    </div>
+                                                    <div id="collapse23" class="collapse show"
+                                                         aria-labelledby="headingOne7" data-parent="#accordionExample7">
+                                                        <div class="card-body">
+                                                            When your Predict Me membership is close to its expiration
+                                                            date, we'll send you a friendly email reminder. Predict Me
+                                                            memberships are set to renew automatically, so unless you
+                                                            have disabled auto-renewal in your Account Settings, you
+                                                            won’t need to do anything to enjoy another year of powerful
+                                                            features.
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="card">
+                                                    <div class="card-header" id="heading11">
+                                                        <div class="card-title" data-toggle="collapse"
+                                                             href="#collapse24" aria-expanded="false"
+                                                             aria-controls="collapseOne7">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                                 height="24px" viewBox="0 0 24 24" version="1.1"
+                                                                 class="kt-svg-icon">
+                                                                <g stroke="none" stroke-width="1" fill="none"
+                                                                   fill-rule="evenodd">
+                                                                    <polygon points="0 0 24 0 24 24 0 24"/>
+                                                                    <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z"
+                                                                          fill="#000000" fill-rule="nonzero"/>
+                                                                    <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z"
+                                                                          fill="#000000" fill-rule="nonzero"
+                                                                          opacity="0.3"
+                                                                          transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "/>
+                                                                </g>
+                                                            </svg>
+                                                            How can I get a copy of my payment receipt?
+                                                        </div>
+                                                    </div>
+                                                    <div id="collapse24" class="collapse show"
+                                                         aria-labelledby="headingOne7" data-parent="#accordionExample7">
+                                                        <div class="card-body">
+                                                            To view your billing history or print a receipt, please
+                                                            follow these steps:
+                                                            1. Once you are logged into <a href="">www.Predict
+                                                            Me.com</a>, go to
+                                                            account settings on top on your organizational profile.
+                                                            2. Select “Account + Billing.”
+                                                            3. Scroll down to Payment history and receipts.
+                                                            4. Your account billing history will be displayed.
+                                                            5. Select “View Receipt” for the payment you wish to view or
+                                                            print.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card-header" id="heading11">
+                                                        <div class="card-title" data-toggle="collapse"
+                                                             href="#collapse25" aria-expanded="false"
+                                                             aria-controls="collapseOne7">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                                 height="24px" viewBox="0 0 24 24" version="1.1"
+                                                                 class="kt-svg-icon">
+                                                                <g stroke="none" stroke-width="1" fill="none"
+                                                                   fill-rule="evenodd">
+                                                                    <polygon points="0 0 24 0 24 24 0 24"/>
+                                                                    <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z"
+                                                                          fill="#000000" fill-rule="nonzero"/>
+                                                                    <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z"
+                                                                          fill="#000000" fill-rule="nonzero"
+                                                                          opacity="0.3"
+                                                                          transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "/>
+                                                                </g>
+                                                            </svg>
+                                                            What is your cancellation policy? Can I cancel anytime or am
+                                                            I locked in for a certain amount of time?
+                                                        </div>
+                                                    </div>
+                                                    <div id="collapse25" class="collapse show"
+                                                         aria-labelledby="headingOne7" data-parent="#accordionExample7">
+                                                        <div class="card-body">
+                                                            Yes, you can cancel your membership at any time. You will
+                                                            have access to the membership until the end of your billing
+                                                            cycle at which time your membership will not renew. When you
+                                                            are ready to reactivate your membership, just go to
+                                                            www.Predict Me.com, sign in and it will prompt you to
+                                                            reactive your membership.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card-header" id="heading11">
+                                                        <div class="card-title" data-toggle="collapse"
+                                                             href="#collapse26" aria-expanded="false"
+                                                             aria-controls="collapseOne7">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                                 height="24px" viewBox="0 0 24 24" version="1.1"
+                                                                 class="kt-svg-icon">
+                                                                <g stroke="none" stroke-width="1" fill="none"
+                                                                   fill-rule="evenodd">
+                                                                    <polygon points="0 0 24 0 24 24 0 24"/>
+                                                                    <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z"
+                                                                          fill="#000000" fill-rule="nonzero"/>
+                                                                    <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z"
+                                                                          fill="#000000" fill-rule="nonzero"
+                                                                          opacity="0.3"
+                                                                          transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "/>
+                                                                </g>
+                                                            </svg>
+                                                            How do I update my credit card and/or billing information?
+                                                        </div>
+                                                    </div>
+                                                    <div id="collapse26" class="collapse show"
+                                                         aria-labelledby="headingOne7" data-parent="#accordionExample7">
+                                                        <div class="card-body">
+                                                            To change/update your billing address or credit card
+                                                            information, please follow these steps:
+                                                            1. Once you are logged into www.Predict Me.com and in your
+                                                            organization’s page, click on account menu at the top.
+                                                            2. Select “Account + Billing.”
+                                                            3. In the Billing Information section, select “Edit.”
+                                                            4. Enter your new information in the appropriate fields.
+                                                            5. Select “Save” to confirm changes.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="tab-pane fade" id="v-contacting">
+                                            <div class="accordion accordion-light accordion-svg-icon"
+                                                 id="accordionExample8">
+
+                                                <div class="card">
+                                                    <div class="card-header" id="heading11">
+                                                        <div class="card-title" data-toggle="collapse"
+                                                             href="#collapse27" aria-expanded="false"
+                                                             aria-controls="collapseOne7">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                                 height="24px" viewBox="0 0 24 24" version="1.1"
+                                                                 class="kt-svg-icon">
+                                                                <g stroke="none" stroke-width="1" fill="none"
+                                                                   fill-rule="evenodd">
+                                                                    <polygon points="0 0 24 0 24 24 0 24"/>
+                                                                    <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z"
+                                                                          fill="#000000" fill-rule="nonzero"/>
+                                                                    <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z"
+                                                                          fill="#000000" fill-rule="nonzero"
+                                                                          opacity="0.3"
+                                                                          transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "/>
+                                                                </g>
+                                                            </svg>
+                                                            Why doesn’t Predict Me offer phone support?
+                                                        </div>
+                                                    </div>
+                                                    <div id="collapse27" class="collapse show"
+                                                         aria-labelledby="headingOne7" data-parent="#accordionExample7">
+                                                        <div class="card-body">
+                                                            Predict Me wants to make sure all small and mid-sized
+                                                            nonprofits can afford our tool to promote their great work
+                                                            in the community. Focusing on email and FAQs support allows
+                                                            us to efficiently serve our members, while keeping costs
+                                                            down, which is one of the reasons why Predict Me is so
+                                                            inexpensive.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card-header" id="heading11">
+                                                        <div class="card-title" data-toggle="collapse"
+                                                             href="#collapse28" aria-expanded="false"
+                                                             aria-controls="collapseOne7">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                                 height="24px" viewBox="0 0 24 24" version="1.1"
+                                                                 class="kt-svg-icon">
+                                                                <g stroke="none" stroke-width="1" fill="none"
+                                                                   fill-rule="evenodd">
+                                                                    <polygon points="0 0 24 0 24 24 0 24"/>
+                                                                    <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z"
+                                                                          fill="#000000" fill-rule="nonzero"/>
+                                                                    <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z"
+                                                                          fill="#000000" fill-rule="nonzero"
+                                                                          opacity="0.3"
+                                                                          transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "/>
+                                                                </g>
+                                                            </svg>
+                                                            I have a question that was not answered in the FAQs. What
+                                                            should I do?
+                                                        </div>
+                                                    </div>
+                                                    <div id="collapse28" class="collapse show"
+                                                         aria-labelledby="headingOne7" data-parent="#accordionExample7">
+                                                        <div class="card-body">
+                                                            If you have a question that was not answered here, please
+                                                            send us your question via our Contact Form and we will get
+                                                            back to you as soon as possible.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card-header" id="heading11">
+                                                        <div class="card-title" data-toggle="collapse"
+                                                             href="#collapse29" aria-expanded="false"
+                                                             aria-controls="collapseOne7">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                                 height="24px" viewBox="0 0 24 24" version="1.1"
+                                                                 class="kt-svg-icon">
+                                                                <g stroke="none" stroke-width="1" fill="none"
+                                                                   fill-rule="evenodd">
+                                                                    <polygon points="0 0 24 0 24 24 0 24"/>
+                                                                    <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z"
+                                                                          fill="#000000" fill-rule="nonzero"/>
+                                                                    <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z"
+                                                                          fill="#000000" fill-rule="nonzero"
+                                                                          opacity="0.3"
+                                                                          transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "/>
+                                                                </g>
+                                                            </svg>
+                                                            When I contact Predict Me, how long will it take for me to
+                                                            get a response?
+                                                        </div>
+                                                    </div>
+                                                    <div id="collapse29" class="collapse show"
+                                                         aria-labelledby="headingOne7" data-parent="#accordionExample7">
+                                                        <div class="card-body">
+                                                            Predict Me's caring and knowledgeable Support Team provides
+                                                            fast, friendly help via email, Monday morning through Friday
+                                                            evening (Eastern Time).
+                                                            TIP: You must contact us from the email address associated
+                                                            with your membership account to receive priority support.
+                                                            Reaching out through our Contact Form ensures that we will
+                                                            respond as quickly as possible.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="tab-pane fade" id="v-predict_model">
+                                            <div class="accordion accordion-light accordion-svg-icon"
+                                                 id="accordionExample9">
+                                                <div class="card">
+                                                    <div class="card-header" id="heading11">
+                                                        <div class="card-title" data-toggle="collapse"
+                                                             href="#collapse30" aria-expanded="false">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                                 height="24px" viewBox="0 0 24 24" version="1.1"
+                                                                 class="kt-svg-icon">
+                                                                <g stroke="none" stroke-width="1" fill="none"
+                                                                   fill-rule="evenodd">
+                                                                    <polygon points="0 0 24 0 24 24 0 24"/>
+                                                                    <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z"
+                                                                          fill="#000000" fill-rule="nonzero"/>
+                                                                    <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z"
+                                                                          fill="#000000" fill-rule="nonzero"
+                                                                          opacity="0.3"
+                                                                          transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "/>
+                                                                </g>
+                                                            </svg>
+                                                            Is there a minimum number of records required to run donor
+                                                            predictions?
+                                                        </div>
+                                                    </div>
+                                                    <div id="collapse30" class="collapse show"
+                                                         aria-labelledby="headingOne7" data-parent="#accordionExample7">
+                                                        <div class="card-body">
+                                                            Yes, based on the subscription plan you choose, we will be
+                                                            required to upload donor data file to meet the number of
+                                                            records requirement.
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="card">
+                                                    <div class="card-header" id="heading11">
+                                                        <div class="card-title" data-toggle="collapse"
+                                                             href="#collapse31" aria-expanded="false">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                                 height="24px" viewBox="0 0 24 24" version="1.1"
+                                                                 class="kt-svg-icon">
+                                                                <g stroke="none" stroke-width="1" fill="none"
+                                                                   fill-rule="evenodd">
+                                                                    <polygon points="0 0 24 0 24 24 0 24"/>
+                                                                    <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z"
+                                                                          fill="#000000" fill-rule="nonzero"/>
+                                                                    <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z"
+                                                                          fill="#000000" fill-rule="nonzero"
+                                                                          opacity="0.3"
+                                                                          transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "/>
+                                                                </g>
+                                                            </svg>
+                                                            Will I know how many records have been uploaded before I run
+                                                            the predictive model?
+                                                        </div>
+                                                    </div>
+                                                    <div id="collapse31" class="collapse show"
+                                                         aria-labelledby="headingOne7" data-parent="#accordionExample7">
+                                                        <div class="card-body">
+                                                            Yes. Our data handler will count the records prior to
+                                                            running the model. It is predicated upon type of
+                                                            subscription plan you choose. Once the upload process is
+                                                            complete, you will be notified with the number of records in
+                                                            the file. You will have the opportunity to correct the file,
+                                                            make changes prior to running the model.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card-header" id="heading11">
+                                                        <div class="card-title" data-toggle="collapse"
+                                                             href="#collapse32" aria-expanded="false">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                                 height="24px" viewBox="0 0 24 24" version="1.1"
+                                                                 class="kt-svg-icon">
+                                                                <g stroke="none" stroke-width="1" fill="none"
+                                                                   fill-rule="evenodd">
+                                                                    <polygon points="0 0 24 0 24 24 0 24"/>
+                                                                    <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z"
+                                                                          fill="#000000" fill-rule="nonzero"/>
+                                                                    <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z"
+                                                                          fill="#000000" fill-rule="nonzero"
+                                                                          opacity="0.3"
+                                                                          transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "/>
+                                                                </g>
+                                                            </svg>
+                                                            What will I see as an output of the predictions made on my
+                                                            donor data file?
+                                                        </div>
+                                                    </div>
+                                                    <div id="collapse32" class="collapse show"
+                                                         aria-labelledby="headingOne7" data-parent="#accordionExample7">
+                                                        <div class="card-body">
+                                                            You will find few things in addition to an output file:
+                                                            <ol type="a">
+                                                                <li>You will be able to download your donor data file
+                                                                    with the new predictions details in the CSV format.
+                                                                    This will include model name and scores for each
+                                                                    record.
+                                                                </li>
+                                                                <li>You will be able to download your model fit
+                                                                    evaluation results in the PDF format.
+                                                                </li>
+                                                                <li>You will be able to view your dashboard that will
+                                                                    help you explain your data, predictions, features
+                                                                    that were important to predict and many other
+                                                                    important metrics.
+                                                                </li>
+                                                            </ol>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card-header" id="heading11">
+                                                        <div class="card-title" data-toggle="collapse"
+                                                             href="#collapse33" aria-expanded="false">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                                 height="24px" viewBox="0 0 24 24" version="1.1"
+                                                                 class="kt-svg-icon">
+                                                                <g stroke="none" stroke-width="1" fill="none"
+                                                                   fill-rule="evenodd">
+                                                                    <polygon points="0 0 24 0 24 24 0 24"/>
+                                                                    <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z"
+                                                                          fill="#000000" fill-rule="nonzero"/>
+                                                                    <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z"
+                                                                          fill="#000000" fill-rule="nonzero"
+                                                                          opacity="0.3"
+                                                                          transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "/>
+                                                                </g>
+                                                            </svg>
+                                                            How does monthly subscription and data limit work?
+                                                        </div>
+                                                    </div>
+                                                    <div id="collapse33" class="collapse show"
+                                                         aria-labelledby="headingOne7" data-parent="#accordionExample7">
+                                                        <div class="card-body">
+                                                            Your monthly subscription cycle starts from the day you
+                                                            start your plan and ends after 30 days. It will auto renew
+                                                            after 30 days. During the 30 days period, you can either use
+                                                            all your data limit on the day you sign up to run your
+                                                            predictive model or use the data in batches until you hit
+                                                            your data limit. For example, you start your subscription
+                                                            model on January 1st and you selected 200 data limits per
+                                                            month. Based on the data limit, you can run the entire data
+                                                            (total of 200) on the day you sign up or within 30 days or
+                                                            you could run them in batches. For example, you could run
+                                                            first 50 data records on the 1st day and 100 data records on
+                                                            the 5th day and remainder 50 data records on the 30th day.
+                                                            It really depends on how you use it.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card-header" id="heading11">
+                                                        <div class="card-title" data-toggle="collapse"
+                                                             href="#collapse34" aria-expanded="false">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                                 height="24px" viewBox="0 0 24 24" version="1.1"
+                                                                 class="kt-svg-icon">
+                                                                <g stroke="none" stroke-width="1" fill="none"
+                                                                   fill-rule="evenodd">
+                                                                    <polygon points="0 0 24 0 24 24 0 24"/>
+                                                                    <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z"
+                                                                          fill="#000000" fill-rule="nonzero"/>
+                                                                    <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z"
+                                                                          fill="#000000" fill-rule="nonzero"
+                                                                          opacity="0.3"
+                                                                          transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "/>
+                                                                </g>
+                                                            </svg>
+                                                            Will my un-used data limit carry over to the next month?
+                                                        </div>
+                                                    </div>
+                                                    <div id="collapse34" class="collapse show"
+                                                         aria-labelledby="headingOne7" data-parent="#accordionExample7">
+                                                        <div class="card-body">
+                                                            No. You will have to ensure to use and run all your data
+                                                            limit within that 30 days period. If you continue to have
+                                                            your monthly subscription plan, your data limit will auto
+                                                            reset. If you have any unused data, you will not be able to
+                                                            carry that over to the next cycle.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card-header" id="heading11">
+                                                        <div class="card-title" data-toggle="collapse"
+                                                             href="#collapse35" aria-expanded="false">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                                 height="24px" viewBox="0 0 24 24" version="1.1"
+                                                                 class="kt-svg-icon">
+                                                                <g stroke="none" stroke-width="1" fill="none"
+                                                                   fill-rule="evenodd">
+                                                                    <polygon points="0 0 24 0 24 24 0 24"/>
+                                                                    <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z"
+                                                                          fill="#000000" fill-rule="nonzero"/>
+                                                                    <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z"
+                                                                          fill="#000000" fill-rule="nonzero"
+                                                                          opacity="0.3"
+                                                                          transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "/>
+                                                                </g>
+                                                            </svg>
+                                                            Will I get refund for my un-used data limit that cost me
+                                                            dollar per record?
+                                                        </div>
+                                                    </div>
+                                                    <div id="collapse35" class="collapse show"
+                                                         aria-labelledby="headingOne7" data-parent="#accordionExample7">
+                                                        <div class="card-body">
+                                                            No. There is no refund policy for unused data. We highly
+                                                            recommend you use and run all your data limit within that 30
+                                                            days period to maximize your return on investment. Please
+                                                            refer to our Refund Policy and Payment Terms (hyperlink this
+                                                            to Payment terms from FAQ) here.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card-header" id="heading11">
+                                                        <div class="card-title" data-toggle="collapse"
+                                                             href="#collapse36" aria-expanded="false">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                                 height="24px" viewBox="0 0 24 24" version="1.1"
+                                                                 class="kt-svg-icon">
+                                                                <g stroke="none" stroke-width="1" fill="none"
+                                                                   fill-rule="evenodd">
+                                                                    <polygon points="0 0 24 0 24 24 0 24"/>
+                                                                    <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z"
+                                                                          fill="#000000" fill-rule="nonzero"/>
+                                                                    <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z"
+                                                                          fill="#000000" fill-rule="nonzero"
+                                                                          opacity="0.3"
+                                                                          transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "/>
+                                                                </g>
+                                                            </svg>
+                                                            I just used up all my data limit before 30 days period. I
+                                                            need to run predict model on a new donor file. What should I
+                                                            do? Wil I be charged again for the new file?
+                                                        </div>
+                                                    </div>
+                                                    <div id="collapse36" class="collapse show"
+                                                         aria-labelledby="headingOne7" data-parent="#accordionExample7">
+                                                        <div class="card-body">
+                                                            It’s simple and Yes! No matter which subscription plan you
+                                                            already have, you have two options.
+                                                            <b>Option 1</b>: Wait until the next monthly cycle to start
+                                                            and use the new donor file to run the prediction model in
+                                                            the next cycle.
+                                                            <b>Option 2</b>: Use custom cost option to run a new donor
+                                                            file. For example, if you used all your 200 data limits and
+                                                            you want to run the new file, simply upload the file, choose
+                                                            the one-time option and run the model. Just a reminder that
+                                                            this option pricing is different than your monthly plan.
+                                                            Follow the process. Good luck!
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card-header" id="heading11">
+                                                        <div class="card-title" data-toggle="collapse"
+                                                             href="#collapse37" aria-expanded="false">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                                 height="24px" viewBox="0 0 24 24" version="1.1"
+                                                                 class="kt-svg-icon">
+                                                                <g stroke="none" stroke-width="1" fill="none"
+                                                                   fill-rule="evenodd">
+                                                                    <polygon points="0 0 24 0 24 24 0 24"/>
+                                                                    <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z"
+                                                                          fill="#000000" fill-rule="nonzero"/>
+                                                                    <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z"
+                                                                          fill="#000000" fill-rule="nonzero"
+                                                                          opacity="0.3"
+                                                                          transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "/>
+                                                                </g>
+                                                            </svg>
+                                                            What is the cost to run “one-time” option?
+                                                        </div>
+                                                    </div>
+                                                    <div id="collapse37" class="collapse show"
+                                                         aria-labelledby="headingOne7" data-parent="#accordionExample7">
+                                                        <div class="card-body">
+                                                            There are two types of cost for the “one-time” option. The
+                                                            cost to run one-time model is $500 which will give you all 5
+                                                            best fit models and cost per record is $2. For example, if
+                                                            your new file has 1,000 records, it will be charged as
+                                                            follows.
+                                                            Model Cost: $500
+                                                            Cost Per Record: $2
+                                                            Total Cost $2,500 ($500 + $2 X 1,000 records)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card-header" id="heading11">
+                                                        <div class="card-title" data-toggle="collapse"
+                                                             href="#collapse38" aria-expanded="false">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                                 height="24px" viewBox="0 0 24 24" version="1.1"
+                                                                 class="kt-svg-icon">
+                                                                <g stroke="none" stroke-width="1" fill="none"
+                                                                   fill-rule="evenodd">
+                                                                    <polygon points="0 0 24 0 24 24 0 24"/>
+                                                                    <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z"
+                                                                          fill="#000000" fill-rule="nonzero"/>
+                                                                    <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z"
+                                                                          fill="#000000" fill-rule="nonzero"
+                                                                          opacity="0.3"
+                                                                          transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "/>
+                                                                </g>
+                                                            </svg>
+                                                            Will this one-time model cost change anything on my monthly
+                                                            subscription plan?
+                                                        </div>
+                                                    </div>
+                                                    <div id="collapse38" class="collapse show"
+                                                         aria-labelledby="headingOne7" data-parent="#accordionExample7">
+                                                        <div class="card-body">
+                                                            No. Your monthly subscription plan will remain unchanged
+                                                            will still be active. Since this is run on a “one-time”
+                                                            basis, it won’t have any changes on your regular plan. This
+                                                            is only done when required and will be charged separately.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card-header" id="heading11">
+                                                        <div class="card-title" data-toggle="collapse"
+                                                             href="#collapse39" aria-expanded="false">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                                 height="24px" viewBox="0 0 24 24" version="1.1"
+                                                                 class="kt-svg-icon">
+                                                                <g stroke="none" stroke-width="1" fill="none"
+                                                                   fill-rule="evenodd">
+                                                                    <polygon points="0 0 24 0 24 24 0 24"/>
+                                                                    <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z"
+                                                                          fill="#000000" fill-rule="nonzero"/>
+                                                                    <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z"
+                                                                          fill="#000000" fill-rule="nonzero"
+                                                                          opacity="0.3"
+                                                                          transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "/>
+                                                                </g>
+                                                            </svg>
+                                                            Will I have access to my results and profiles even though my
+                                                            subscription ended?
+                                                        </div>
+                                                    </div>
+                                                    <div id="collapse39" class="collapse show"
+                                                         aria-labelledby="headingOne7" data-parent="#accordionExample7">
+                                                        <div class="card-body">
+                                                            No. Your donor prediction results and profiles will only
+                                                            remain active until the valid subscription period. If your
+                                                            subscription ended or you cancelled, you will have to renew
+                                                            your subscription to gain access to the results and profile.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card-header" id="heading11">
+                                                        <div class="card-title" data-toggle="collapse"
+                                                             href="#collapse40" aria-expanded="false">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                                 height="24px" viewBox="0 0 24 24" version="1.1"
+                                                                 class="kt-svg-icon">
+                                                                <g stroke="none" stroke-width="1" fill="none"
+                                                                   fill-rule="evenodd">
+                                                                    <polygon points="0 0 24 0 24 24 0 24"/>
+                                                                    <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z"
+                                                                          fill="#000000" fill-rule="nonzero"/>
+                                                                    <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z"
+                                                                          fill="#000000" fill-rule="nonzero"
+                                                                          opacity="0.3"
+                                                                          transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "/>
+                                                                </g>
+                                                            </svg>
+                                                            Is my donor data secure?
+                                                        </div>
+                                                    </div>
+                                                    <div id="collapse40" class="collapse show"
+                                                         aria-labelledby="headingOne7" data-parent="#accordionExample7">
+                                                        <div class="card-body">
+                                                            Yes. Predict Me takes privacy and security very seriously.
+                                                            Our online platform uses AWS and undergoes regular internal
+                                                            and external security testing to ensure that all donor data
+                                                            is secure.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card-header" id="heading11">
+                                                        <div class="card-title" data-toggle="collapse"
+                                                             href="#collapse41" aria-expanded="false">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                                 height="24px" viewBox="0 0 24 24" version="1.1"
+                                                                 class="kt-svg-icon">
+                                                                <g stroke="none" stroke-width="1" fill="none"
+                                                                   fill-rule="evenodd">
+                                                                    <polygon points="0 0 24 0 24 24 0 24"/>
+                                                                    <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z"
+                                                                          fill="#000000" fill-rule="nonzero"/>
+                                                                    <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z"
+                                                                          fill="#000000" fill-rule="nonzero"
+                                                                          opacity="0.3"
+                                                                          transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "/>
+                                                                </g>
+                                                            </svg>
+                                                            What if I still have questions?
+                                                        </div>
+                                                    </div>
+                                                    <div id="collapse41" class="collapse show"
+                                                         aria-labelledby="headingOne7" data-parent="#accordionExample7">
+                                                        <div class="card-body">
+                                                            Please refer to our Common Questions (hyperlink) and if your
+                                                            question is not answered there, please use our contact us
+                                                            form to send us your questions.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+
+                                    <!--end::Accordion-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- end:: Section -->
+
+
+        <!-- end:: Content -->
+    </div>
+</div>
+
+{% endblock content %}

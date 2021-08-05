@@ -1,0 +1,342 @@
+{% load static %}
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+<!--begin::Head-->
+
+<head>
+	<base href="">
+	<meta charset="utf-8" />
+	<title>
+		{% block title %}
+		PredictME | Dashboard
+		{% endblock title %}
+
+	</title>
+	<meta name="description" content="Updates and statistics" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<!--begin::Fonts-->
+	<!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" /> -->
+	<link
+		href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap"
+		rel="stylesheet">
+	<!-- Custom Css style -->
+	{% block customcss %} {% endblock customcss %}
+	<!--end::Fonts-->
+	<!--begin::Page Vendors Styles(used by this page)-->
+	<link href="{% static 'dashboard/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css' %}" rel="stylesheet"
+		type="text/css" />
+	<!--end::Page Vendors Styles-->
+	<!--begin::Global Theme Styles(used by all pages)-->
+	<link href="{% static 'dashboard/assets/plugins/global/plugins.bundle.css' %}" rel="stylesheet" type="text/css" />
+	<link href="{% static 'dashboard/assets/plugins/custom/prismjs/prismjs.bundle.css' %}" rel="stylesheet"
+		type="text/css" />
+	<link href="{% static 'dashboard/assets/css/style.bundle.css' %}" rel="stylesheet" type="text/css" />
+	<link href="{% static 'dashboard/assets/css/countrySelect.css' %}" rel="stylesheet" type="text/css" />
+
+	<!--end::Global Theme Styles-->
+	<!--begin::Layout Themes(used by all pages)-->
+	<!--end::Layout Themes-->
+
+	<link rel="icon" type="image/png" href="{% static 'assets/media/logos/Predict Me Fav.png' %}" />
+	<!-- Custom Style -->
+	<link rel="stylesheet" href="{% static 'assets/css/mycolors.css' %}">
+	<link rel="stylesheet" href="{% static 'assets/css/custom/protip.min.css' %}">
+
+</head>
+<!--end::Head-->
+
+<!--[if lt IE 7]>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a>
+    to improve your experience.</p>
+<![endif]-->
+
+<!--begin::Body-->
+
+<body id="kt_body" class="header-fixed header-mobile-fixed sidebar-enabled page-loading">
+	<!--begin::Main-->
+	<!--begin::Header Mobile-->
+	<div id="kt_header_mobile" class="header-mobile header-mobile-fixed">
+		<!--begin::Logo-->
+		<a href="/">
+			<img alt="Logo" src="{% static 'assets/media/logos/Predict Me Fav.png' %}"
+				class="logo-default max-h-30px" />
+		</a>
+		<!--end::Logo-->
+		<!--begin::Toolbar-->
+		<div class="d-flex align-items-center">
+			<button class="btn p-0 burger-icon burger-icon-left" id="kt_header_mobile_toggle">
+				<span></span>
+			</button>
+			<button class="btn btn-hover-text-primary p-0 ml-5" id="kt_sidebar_mobile_toggle">
+				<span class="svg-icon svg-icon-xl">
+					<!--begin::Svg Icon | path:assets/media/svg/icons/Design/Substract.svg-->
+					<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+						height="24px" viewBox="0 0 24 24" version="1.1">
+						<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+							<rect x="0" y="0" width="24" height="24" />
+							<path
+								d="M6,9 L6,15 C6,16.6568542 7.34314575,18 9,18 L15,18 L15,18.8181818 C15,20.2324881 14.2324881,21 12.8181818,21 L5.18181818,21 C3.76751186,21 3,20.2324881 3,18.8181818 L3,11.1818182 C3,9.76751186 3.76751186,9 5.18181818,9 L6,9 Z"
+								fill="#000000" fill-rule="nonzero" />
+							<path
+								d="M10.1818182,4 L17.8181818,4 C19.2324881,4 20,4.76751186 20,6.18181818 L20,13.8181818 C20,15.2324881 19.2324881,16 17.8181818,16 L10.1818182,16 C8.76751186,16 8,15.2324881 8,13.8181818 L8,6.18181818 C8,4.76751186 8.76751186,4 10.1818182,4 Z"
+								fill="#000000" opacity="0.3" />
+						</g>
+					</svg>
+					<!--end::Svg Icon-->
+				</span>
+			</button>
+			<button class="btn btn-hover-text-primary p-0 ml-2" id="kt_aside_mobile_toggle">
+				<span class="svg-icon svg-icon-xl">
+					<!--begin::Svg Icon | path:assets/media/svg/icons/General/User.svg-->
+					<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+						height="24px" viewBox="0 0 24 24" version="1.1">
+						<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+							<polygon points="0 0 24 0 24 24 0 24" />
+							<path
+								d="M12,11 C9.790861,11 8,9.209139 8,7 C8,4.790861 9.790861,3 12,3 C14.209139,3 16,4.790861 16,7 C16,9.209139 14.209139,11 12,11 Z"
+								fill="#000000" fill-rule="nonzero" opacity="0.3" />
+							<path
+								d="M3.00065168,20.1992055 C3.38825852,15.4265159 7.26191235,13 11.9833413,13 C16.7712164,13 20.7048837,15.2931929 20.9979143,20.2 C21.0095879,20.3954741 20.9979143,21 20.2466999,21 C16.541124,21 11.0347247,21 3.72750223,21 C3.47671215,21 2.97953825,20.45918 3.00065168,20.1992055 Z"
+								fill="#000000" fill-rule="nonzero" />
+						</g>
+					</svg>
+					<!--end::Svg Icon-->
+				</span>
+			</button>
+		</div>
+		<!--end::Toolbar-->
+	</div>
+	<!--end::Header Mobile-->
+	<div class="d-flex flex-column flex-root">
+		<!--begin::Page-->
+		<div class="d-flex flex-row flex-column-fluid page">
+			<!--begin::Aside-->
+			{% include 'dashboard/segments/left_side_bar.html' %}
+			<!--end::Aside-->
+			<!--begin::Wrapper-->
+			<div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper">
+				<!--begin::Header-->
+				<div id="kt_header" class="header header-fixed">
+					<!--begin::Header Wrapper-->
+					<div class="header-wrapper rounded-top-xl d-flex flex-grow-1 align-items-center">
+						<!--begin::Container-->
+						<div
+							class="container-fluid d-flex align-items-center justify-content-end justify-content-lg-between flex-wrap">
+							<!--begin::Menu Wrapper-->
+							<div class="header-menu-wrapper header-menu-wrapper-left py-lg-2"
+								id="kt_header_menu_wrapper">
+								<!--begin::Menu-->
+								{% include 'dashboard/segments/top_navbar.html' %}
+								<!--end::Menu-->
+							</div>
+							<!--end::Menu Wrapper-->
+							<!--begin::Toolbar-->
+
+							<!--end::Toolbar-->
+						</div>
+						<!--end::Container-->
+					</div>
+					<!--end::Header Wrapper-->
+				</div>
+				<!--end::Header-->
+				<!--begin::Content-->
+				<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+					{# Start Flash Messages #}
+						{% include 'predict_me/inc/messages.html' %}
+					{# End Flash Messages #}
+					<div class="d-flex flex-column-fluid">
+						{% block dashboard_content %}
+						{% endblock dashboard_content %}
+					</div>
+
+				</div>
+				<!--end::Content-->
+				<!--begin::Footer-->
+				<div class="footer bg-white py-4 d-flex flex-lg-column" id="kt_footer">
+					<!--begin::Container-->
+					<div class="container d-flex flex-column flex-md-row align-items-center justify-content-between">
+						<!--begin::Copyright-->
+						<div class="text-dark order-2 order-md-1">
+							<span class="text-muted font-weight-bold mr-2">2020©</span>
+							<a href="/" target="_blank" class="text-dark-75 text-hover-primary">PredictME</a>
+						</div>
+						<!--end::Copyright-->
+						<!--begin::Nav-->
+						<div class="nav nav-dark order-1 order-md-2">
+
+
+							<a href="{% url 'about' %}" target="_blank" class="nav-link pr-3 pl-0">About</a>
+							<a href="{% url 'contact' %}" target="_blank" class="nav-link pr-3 pl-0">Contact</a>
+							<a href="{% url 'terms' %}" target="_blank" class="nav-link px-3">Terms</a>
+							<a href="{% url 'privacy-policy' %}" target="_blank" class="nav-link pl-3 pr-0">Privacy
+								Policy</a>
+						</div>
+						<!--end::Nav-->
+					</div>
+					<!--end::Container-->
+				</div>
+				<!--end::Footer-->
+			</div>
+			<!--end::Wrapper-->
+			<!--begin::Aside Secondary-->
+			{% include 'dashboard/segments/right_side_bar.html' %}
+			<!--end::Aside Secondary-->
+		</div>
+		<!--end::Page-->
+	</div>
+	<!--end::Main-->
+
+	<!-- Start The panels -->
+	{% include 'dashboard/segments/quick_panels.html' %}
+	<!-- End The panels -->
+
+
+	<!--begin::Scrolltop-->
+	<div id="kt_scrolltop" class="scrolltop">
+		<span class="svg-icon">
+			<!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Up-2.svg-->
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+				height="24px" viewBox="0 0 24 24" version="1.1">
+				<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+					<polygon points="0 0 24 0 24 24 0 24" />
+					<rect fill="#000000" opacity="0.3" x="11" y="10" width="2" height="10" rx="1" />
+					<path
+						d="M6.70710678,12.7071068 C6.31658249,13.0976311 5.68341751,13.0976311 5.29289322,12.7071068 C4.90236893,12.3165825 4.90236893,11.6834175 5.29289322,11.2928932 L11.2928932,5.29289322 C11.6714722,4.91431428 12.2810586,4.90106866 12.6757246,5.26284586 L18.6757246,10.7628459 C19.0828436,11.1360383 19.1103465,11.7686056 18.7371541,12.1757246 C18.3639617,12.5828436 17.7313944,12.6103465 17.3242754,12.2371541 L12.0300757,7.38413782 L6.70710678,12.7071068 Z"
+						fill="#000000" fill-rule="nonzero" />
+				</g>
+			</svg>
+			<!--end::Svg Icon-->
+		</span>
+	</div>
+	<!--end::Scrolltop-->
+
+
+	{# Start Crash modal #}
+	{% include 'crash_reporting/segments/crash_modal.html' %}
+	{# End Crash modal #}
+	<!--<script src="https://js.stripe.com/v3/"></script>-->
+	<script>
+		var HOST_URL = "https://keenthemes.com/metronic/tools/preview";
+	</script>
+	<!--begin::Global Config(global config for global JS scripts)-->
+	<!--begin::Global Config(global config for global JS scripts)-->
+	<script>
+		var KTAppSettings = {
+			"breakpoints": {
+				"sm": 576,
+				"md": 768,
+				"lg": 992,
+				"xl": 1200,
+				"xxl": 1200
+			},
+			"colors": {
+				"theme": {
+					"base": {
+						"white": "#ffffff",
+						"primary": "#8950FC",
+						"secondary": "#E5EAEE",
+						"success": "#1BC5BD",
+						"info": "#8950FC",
+						"warning": "#FFA800",
+						"danger": "#F64E60",
+						"light": "#F3F6F9",
+						"dark": "#212121"
+					},
+					"light": {
+						"white": "#ffffff",
+						"primary": "#E1E9FF",
+						"secondary": "#ECF0F3",
+						"success": "#C9F7F5",
+						"info": "#EEE5FF",
+						"warning": "#FFF4DE",
+						"danger": "#FFE2E5",
+						"light": "#F3F6F9",
+						"dark": "#D6D6E0"
+					},
+					"inverse": {
+						"white": "#ffffff",
+						"primary": "#ffffff",
+						"secondary": "#212121",
+						"success": "#ffffff",
+						"info": "#ffffff",
+						"warning": "#ffffff",
+						"danger": "#ffffff",
+						"light": "#464E5F",
+						"dark": "#ffffff"
+					}
+				},
+				"gray": {
+					"gray-100": "#F3F6F9",
+					"gray-200": "#ECF0F3",
+					"gray-300": "#E5EAEE",
+					"gray-400": "#D6D6E0",
+					"gray-500": "#B5B5C3",
+					"gray-600": "#80808F",
+					"gray-700": "#464E5F",
+					"gray-800": "#1B283F",
+					"gray-900": "#212121"
+				}
+			},
+			"font-family": "Poppins"
+		};
+	</script>
+	<!--end::Global Config-->
+	<!--begin::Global Theme Bundle(used by all pages)-->
+	<script src="{% static 'assets/js/custom/djangocookie.js' %}" type="text/javascript"></script>
+	<script src="{% static 'dashboard/assets/plugins/global/plugins.bundle.js' %}"></script>
+	<script src="{% static 'dashboard/assets/plugins/custom/prismjs/prismjs.bundle.js' %}"></script>
+	<script src="{% static 'dashboard/assets/js/scripts.bundle.js' %}"></script>
+	<script src="{% static 'assets/js/lodash.js' %}"></script>
+
+	<!--end::Global Theme Bundle-->
+	<!--begin::Page Vendors(used by this page)-->
+	<script src="{% static 'dashboard/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js' %}"></script>
+
+	<!--end::Page Vendors-->
+	<!--begin::Page Scripts(used by this page)-->
+	<script src="{% static 'dashboard/assets/js/apps/dashboard/widgets.js' %}"></script>
+	<script src="{% static 'assets/js/custom/bootbox/bootbox.min.js' %}"></script>
+	<script src="{% static 'assets/js/custom/bootbox/bootbox.all.min.js' %}"></script>
+	<script src="{% static 'assets/js/custom/library/protip.min.js' %}" type="text/javascript"></script>
+	<script src="{% static 'dashboard/assets/js/countrySelect.js' %}"></script>
+
+	<script>
+		$(document).ready(function () {
+			$('[data-toggle="popover"]').popover();
+			// Autosize the textarea
+			autosize(document.querySelectorAll('textarea'));
+			$('[data-toggle="tooltip"]').tooltip();
+			$('.datepicker').datepicker();
+			// codes works on all bootstrap modal windows in application
+			//reset the bootstrap modal when it gets closed and open it fresh again
+			$('.modal').on('hidden.bs.modal', function (e) {
+				$(this).removeData();
+			});
+			$.protip();
+			// Changed trigger from hover to click
+			$('.datePickerInputs').datepicker({
+				autoclose: true,
+				todayHighlight: true,
+				// datesDisabled: ['06/06/2020', '06/21/2020'],
+
+			});
+
+		});
+	</script>
+	<script src="{% static 'assets/js/custom/general/utils.js' %}"></script>
+	{% block customjs %} {% endblock customjs %}
+	<!--end::Page Scripts-->
+</body>
+<!--end::Body-->
+
+</body>
+
+</html>

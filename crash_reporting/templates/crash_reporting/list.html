@@ -1,0 +1,104 @@
+{% extends 'dashboard/inc/master.html' %}
+{% load crash_report_tags %}
+{% load static %}
+
+{% block title %}
+Bugs & Crashes
+{% endblock title %}
+
+{% block customcss %}
+
+{% endblock customcss %}
+
+
+{% block dashboard_content %}
+
+
+<!--begin::Row-->
+<div class="container">
+    <div class="card card-custom gutter-b">
+        <div class="card-header">
+            <div class="card-title">
+                <h3 class="card-label">
+                    Crashes
+                    <small>List of all bugs and crashes in the project</small>
+                </h3>
+            </div>
+        </div>
+        <div class="card-body">
+
+            <div class="table-responsive">
+                {% if object_list %}
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">Member</th>
+                            <th scope="col" width="15%">Title</th>
+                            <th scope="col">URL</th>
+                            <th scope="col" width="12%">Seen</th>
+                            <th scope="col" style="min-width: 110px; width: 110px;">Status</th>
+                            <th scope="col" style="min-width: 110px; width: 110px;">Date</th>
+                            <th scope="col">Solved</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for crash in object_list %}
+                        <tr>
+                            <td>
+                                {{ crash.member }}
+                            </td>
+                            <td>
+                                <a href="{% url 'crashes-details-url' crash.pk %}">
+                                    {{ crash.title|truncatechars:20 }}
+                                </a>
+                            </td>
+                            <td>
+                                <b>
+                                    {{ crash.url }}
+                                </b>
+                            </td>
+                            <td>
+                                {{ crash.is_seen|get_is_seen|safe|escape }}
+
+                            </td>
+                            <td>
+                                {{ crash.crash_status|get_status|safe|escape }}
+                            </td>
+                            <td>
+                                {{ crash.created_date }}
+                            </td>
+                            <td>
+                                {{ crash.is_solved|get_is_solved|safe|escape }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+                {% else %}
+                <div class="alert alert-custom alert-light-info fade show mb-5" role="alert">
+                    <div class="alert-icon">
+                        <i class="flaticon-warning"></i>
+                    </div>
+                    <div class="alert-text">
+                        No crash reports!
+                    </div>
+
+                </div>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--End::Row-->
+{% endblock dashboard_content%}
+
+{% block customjs %}
+
+<script src="{% static 'dashboard/assets/js/apps/crash_reporting/api.js' %}"></script>
+<script src="{% static 'dashboard/assets/js/apps/crash_reporting/helpers.js' %}"></script>
+<script src="{% static 'dashboard/assets/js/apps/crash_reporting/crash_reporting.js' %}"></script>
+
+{% endblock customjs %}

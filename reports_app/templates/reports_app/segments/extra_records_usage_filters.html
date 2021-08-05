@@ -1,0 +1,38 @@
+<form id="data-usage-filter-form">
+    {{ csrf }}
+    <div class="row mb-8">
+        <div class="col-lg-3 mb-lg-0 mb-6">
+            <label class="checkbox checkbox-rounded my-1">Pay Date:
+                <input class="lbl-reports-filter-display" type="checkbox"
+                       data-col-name="reg-date">
+                <span class="ml-1"></span>
+            </label>
+            <div class="input-daterange input-group">
+                <input type="text" class="form-control datePickerInputs reports-filter-input" name="pay-filter-start"
+                       id="pay-filter-start">
+                <div class="input-group-append">
+                            <span class="input-group-text">
+                                <i class="la la-ellipsis-h"></i>
+                            </span>
+                </div>
+                <input type="text" class="form-control datePickerInputs reports-filter-input" name="pay-filter-end"
+                       id="pay-filter-end">
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 mb-lg-0 mb-6">
+            <label class="checkbox checkbox-rounded my-1">Paid *:
+                <input class="lbl-reports-filter-display" type="checkbox"
+                       data-col-name="extra-rows-paid">
+                <span class="ml-1"></span>
+            </label>
+            <select class="form-control reports-filter-input" id="paid-amount" name="paid_amount">
+                <option value="all-paid">All</option>
+                <option value="less_100">Less than $100</option>
+                <option value="more_100">More than $100</option>
+            </select>
+
+        </div>
+    </div>
+</form>

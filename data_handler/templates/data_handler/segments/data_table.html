@@ -1,0 +1,170 @@
+<section id="tab-data-table-section" class="position-relative">
+
+    <!-- Start no file uploaded element  -->
+    <div id='noFileUploadedElement' style="display: none;">
+
+        <div class="container">
+            <div class="alert alert-custom alert-outline-warning fade show mb-5" role="alert">
+                <div class="alert-icon"><i class="flaticon-warning"></i></div>
+                <div class="alert-text font-weight-bolder">
+                    You did not upload any data file yet!, Please upload one.
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <!-- End no file uploaded element -->
+
+    <div class="card card-custom" id="data-handler-table-wrapper">
+        <div class="card-header ribbon ribbon-clip ribbon-right px-3">
+            <div class="ribbon-target" style="top: 0px;">
+                <span class="ribbon-inner"></span>
+
+                <div class="dropdown dropleft dropdown-inline" id="data-table-options-dropdown" data-toggle="tooltip"
+                    title="Export Data">
+                    <button type="button" class="btn btn-outline-primary btn-icon" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        <i class="ki ki-bold-more-hor text-white icon-md"></i>
+                    </button>
+                    <div class="dropdown-menu" style="z-index: auto !important;" aria-labelledby="dataHandlerActions">
+
+                        <a href="#" data-type='xlsx'
+                            class="btn font-weight-bolder border-0 dropdown-item data-table-action-item export-data-file-btn">
+                            <i class="fas fa-file-excel text-success d-inline-block  position-relative"
+                                style="top: 1px"></i>
+                            Excel
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" data-type='csv'
+                            class="btn font-weight-bolder border-0 dropdown-item data-table-action-item export-data-file-btn">
+                            <i class="fas fa-file-csv text-dark d-inline-block position-relative" style="top: 1px"></i>
+                            CSV
+                        </a>
+
+
+
+
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="container">
+                <div class="d-flex justify-content-between pr-20">
+                    <div class="p-2 bd-highlight">
+                        <div class="row">
+                            <div class="col">
+                                <button type="button" data-toggle="tooltip" title="Undo last change"
+                                    class="btn btn-link disabled" disabled='disabled' style="cursor: not-allowed;"
+                                    id="undoBtn">
+                                    <i class="la la-undo-alt" style="color: unset;"></i>
+                                </button>
+                            </div>
+                            <div class="col">
+
+                                <span class="d-inline-block" data-toggle="tooltip" title="reset table view">
+                                    <button type="button" class="btn btn-link" disabled="disabled"
+                                        style="pointer-events: none;" id="resetSortTableBtn">
+                                        Reset
+                                    </button>
+                                </span>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-2 bg-highlight">
+                        <button type="button" class="btn btn-success font-weight-bolder" data-toggle="tooltip"
+                            title="Save changes" id="save-data-table-changes-btn2">
+                            Save Changes
+                        </button>
+                    </div>
+                    <div class="pt-3 bd-highlight">
+                        <form method="POST" id="data-table-search-form">
+                            {% csrf_token %}
+                            <div class="form-group row">
+                                <label class="col-3 col-form-label font-weight-normal"
+                                    style="font-size: 13px !important;">Search</label>
+                                <div class="col-9">
+                                    <input type="search" id="searchQuery" class="form-control"
+                                        placeholder="Search for...">
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            <!--begin: Datatable-->
+            <section id="donorDataTable" style="overflow:auto; height:auto;">
+                <div id="save-row-loader" class="position-relative text-center mx-auto"
+                    style="z-index: 1; display: none;">
+                    <div class=" w-25  position-absolute" style="left: 38%;">
+                        <div class="card card-custom gutter-b border " style="background-color: #EEF0F8;">
+
+                            <div class="card-body ">
+                                <h4>Please wait...</h4>
+                                <div class="spinner spinner-track spinner-dark spinner-lg mt-7" style="left: 45%;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <section id="dataListTable" class="table-responsive" style="transition: all 0.5s ease-out;">
+                    <div class="container position-relative" id="loadingDataSpinner">
+                        <div class="row justify-content-center">
+                            <div class="col-1 text-center">
+                                <div class="position-absolute" style="top: 120px;">
+                                    <div class="spinner spinner-primary spinner-lg"></div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <form method="POST" id="dataFileTableForm" onsubmit="return false;">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col">
+                                <div id="dataTableWrapper" class="position-relative tableFixHead">
+                                    <table id="data_handler_table" class="table">
+
+
+                                        <thead class='thead-light mb-2'>
+                                            <div id="no-data-watermark" style="display: none;">
+                                                <p class="text-danger">
+                                                    NO RECORDS TO DISPLAY!!
+                                                </p>
+                                            </div>
+                                            <tr></tr>
+                                        </thead>
+
+                                        <tbody id="data_handler_body">
+                                            <tr></tr>
+                                        </tbody>
+
+                                        <tfoot>
+                                            <tr>
+
+                                            </tr>
+                                        </tfoot>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </section>
+                <!--end: Datatable-->
+            </section>
+        </div>
+        <div class="card-footer pr-1">
+            {% include "data_handler/segments/data_handler_pagination.html" %}
+        </div>
+    </div>
+
+</section>

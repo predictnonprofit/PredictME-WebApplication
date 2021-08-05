@@ -1,0 +1,97 @@
+{% extends 'dashboard/inc/master.html' %}
+
+{% load static %}
+
+{% block title %}
+Details
+{% endblock title %}
+
+{% block customcss %}
+
+{% endblock customcss %}
+
+{% block pagename %}
+Member Name data file
+{% endblock pagename %}
+
+
+{% block content %}
+<!--begin::Row-->
+
+<div class="card card-custom">
+    <div class="card-header">
+        <div class="card-title">
+
+            <h3 class="card-label">
+                Data File
+            </h3>
+        </div>
+        <div class="card-toolbar">
+            <a href="#" class="btn btn-sm btn-light-primary font-weight-bold">
+                <i class="flaticon2-cube"></i> Settings
+            </a>
+        </div>
+    </div>
+    <div class="card-body">
+        <div data-scroll="true" data-height="200">
+            <div class="table-responsive">
+
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">First</th>
+                        <th scope="col">Last</th>
+                        <th scope="col">Status</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Nick</td>
+                        <td>Stone</td>
+                        <td>
+                <span class="label label-inline label-light-primary font-weight-bold">
+                    Pending
+                </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Ana</td>
+                        <td>Jacobs</td>
+                        <td>
+                <span class="label label-inline label-light-success font-weight-bold">
+                    Approved
+                </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Larry</td>
+                        <td>Pettis</td>
+                        <td>
+                <span class="label label-inline label-light-danger font-weight-bold">
+                    New
+                </span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer d-flex justify-content-between">
+        <a href="#" class="btn btn-light-primary font-weight-bold">Manage</a>
+        <a href="#" class="btn btn-outline-secondary font-weight-bold">Learn more</a>
+    </div>
+</div>
+
+
+<!--End::Row-->
+{% endblock content%}
+
+{% block customjs %}
+
+
+{% endblock customjs %}

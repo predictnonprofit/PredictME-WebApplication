@@ -1,0 +1,123 @@
+{% extends 'members_app/inc/master.html' %}
+{% load static %}
+
+{% block title %}
+Run Model History
+{% endblock title %}
+
+{% block pagename %}
+Run Model History
+{% endblock pagename %}
+
+{% block content %}
+
+
+
+
+<!--begin::Content-->
+
+<div class="flex-row-fluid ml-lg-8">
+  <!--begin::Card-->
+  <div class="card card-custom card-stretch">
+    <!--begin::Header-->
+    <div class="card-header py-3">
+      <div class="card-title">
+        <h3 class="card-label font-weight-bolder text-dark">Model Run History</h3>
+      </div>
+      <div class="card-toolbar">
+        <form action="{% url 'data-handler-user-delete-session-history' %}" method='POST' class="deleteSessionHistoryForm" data-is-all-form="1">
+          {% csrf_token %}
+          <input type="hidden" name="is-all" value="1" />
+          <button type="submit" data-toggle="tooltip" title="Delete All Sessions!, be careful"
+            class="btn btn-danger">Delete All Session</button>
+        </form>
+      </div>
+    </div>
+    <!--end::Header-->
+    <!--begin::Body-->
+    <div class="card-body">
+      <fieldset>
+        <!--begin::Table run history sessions-->
+        <div class="table-responsive">
+          <table class="table table-head-custom table-vertical-center" id="3">
+            <thead>
+              <tr class="text-uppercase">
+                <th class="pl-0" style="min-width: 200px">Model Name</th>
+                <th class="pl-0" style="min-width: 200px">Model Run Date</th>
+                <th class="pr-0 text-center">Download files</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for his in object_list %}
+              {% if his.session_id.is_run_model is True %}
+              <tr>
+                <td class="pl-0">
+                  <a href="{% url 'data-handler-user-session-details' his.session_id.run_history.get.pk %}"
+                    class="text-dark-75 font-weight-bolder text-hover-primary font-size-lg">
+                    {{his.session_name}}
+                  </a>
+                </td>
+                <td class="pl-0">
+                  <p class="text-dark-75 font-weight-bolder text-hover-primary font-size-lg">
+                    {{his.run_date}}
+                  </p>
+                </td>
+                <td class="pr-0 text-right">
+                  {# Start check if the model has ran for the session #}
+                  {% if his.session_id.is_run_model is False %}
+                  <a href="{% url 'data-handler-edit-session' pk=his.session_id.pk %}"
+                    class="btn btn-light-info btn-sm mx-1" data-toggle='tooltip' title="Edit Session">
+                    <i class="la la-edit"></i>
+                  </a>
+                  {% endif %}
+                  {# End check if the model has ran for the session #}
+
+                  <a href="{% url 'data-handler-download-pdf-report' report_type='pdf' run_history_id=his.pk %}"
+                    class="btn btn-light-danger btn-sm" data-toggle='tooltip' title="Download model output as PDF">
+                    <i class="la la-file-pdf-o"></i>
+                  </a>
+                  <a href="{% url 'data-handler-download-pdf-report' report_type='csv' run_history_id=his.pk %}"
+                    class="btn btn-light-success btn-sm mx-1" data-toggle='tooltip'
+                    title="Download model output as CSV">
+                    <i class="la la-file-csv"></i>
+                  </a>
+                  &nbsp;
+                  <form method="POST" class="d-inline deleteSessionHistoryForm" data-is-all-form="0" action="{% url 'data-handler-user-delete-session-history' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name='session_id' value="{{ his.session_id.pk }}" />
+                    <button type="submit" class="btn btn-danger btn-sm" data-toggle='tooltip' title="Delete Session!!">
+                      <i class="la la-trash"></i>
+                    </button>
+                  </form>
+
+                </td>
+              </tr>
+              {% endif %}
+              {% empty %}
+              <tr>
+                <td colspan='3'>
+                  <p class="text-dark-75 font-weight-bolder text-hover-primary font-size-lg">
+                    No run history
+                  </p>
+                </td>
+              </tr>
+              {% endfor %}
+
+
+            </tbody>
+          </table>
+        </div>
+        <!--end::Table run history sessions-->
+      </fieldset>
+    </div>
+    <!--end::Body-->
+  </div>
+</div>
+<!--end::Content-->
+
+
+{% endblock content %}
+
+{% block customjs %}
+<script src="{% static 'assets/js/custom/datahandler/sessions_history.js' %}" type="text/javascript"></script>
+{% endblock customjs %}

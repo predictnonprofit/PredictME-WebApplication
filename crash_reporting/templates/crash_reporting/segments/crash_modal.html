@@ -1,0 +1,94 @@
+{% load widget_tweaks %}
+
+{# Start crash modal #}
+<!-- Modal-->
+<div class="modal fade" id="crashReportModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="crashReportModalLabel">Crash Detected!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                {#crash_report_form.as_p#}
+                <form class="form" method="POST" enctype="multipart/form-data" action="{% url 'crash-report-url' %}">
+                    {% csrf_token %}
+                    <input type='hidden' name='crash_url' value="{{ request.path_info }}" />
+                    <div class="card-body pt-5">
+                        <h3 class="font-size-lg text-dark font-weight-bold mb-10">Crash Details:</h3>
+                        <div class="mb-5">
+                            <div class="form-group row">
+                                <label class="col-lg-2 col-form-label">
+                                    URL
+                                </label>
+                                <div class="col-lg-9">
+                                    {# &#8594; #}
+                                    {% render_field crash_report_form.url class+="form-control not-allowed-cursor" readonly='readonly' placeholder="URL of crash (press the button to generate it ->" %}
+                                    <span class="form-text text-muted">The path where the crash occurred</span>
+                                </div>
+                                <div class="col-lg-1">
+                                    <button data-toggle="tooltip" title="Get URL" type="button"
+                                        id='generateCrashReportUrlBtn' class="btn btn-icon btn-light-primary mr-2">
+                                        <i class="icon-md fas fa-link"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-2 col-form-label">
+                                    {{ crash_report_form.title.label }}
+                                </label>
+                                <div class="col-lg-9">
+                                    {% render_field crash_report_form.title class+="form-control" placeholder='Title of the issue' %}
+                                    <span class="form-text text-muted">Please enter title for this crash</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-2 col-form-label">
+                                    {{ crash_report_form.description.label }}
+                                </label>
+                                <div class="col-lg-9">
+                                    {% render_field crash_report_form.description class+="form-control" placeholder='Description' %}
+                                    <span class="form-text text-muted">Please describe what caused the crash</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-2 col-form-label">
+                                    {{ crash_report_form.file_attachment.label }}
+                                </label>
+                                <div class="col-lg-9">
+                                    <div class="custom-file">
+                                        {% render_field crash_report_form.file_attachment class+="custom-file-input" accept=".xlsx, .csv, .xls" %}
+                                        <label class="custom-file-label" for="customFile">Choose file</label>
+                                    </div>
+                                    <span class="form-text text-muted">Upload data file (OPTIONAL)</span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-2 col-form-label">
+                                    {{ crash_report_form.screenshot.label }}
+                                </label>
+                                <div class="col-lg-9">
+                                    <div class="custom-file">
+                                        {% render_field crash_report_form.screenshot class+="custom-file-input" accept=".jpg, .png, .jpeg" %}
+                                        <label class="custom-file-label" for="customFile">Choose file</label>
+                                    </div>
+                                    <span class="form-text text-muted">Upload screenshot (OPTIONAL)</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger font-weight-bold" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary font-weight-bold">Report</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{# End crash modal #}

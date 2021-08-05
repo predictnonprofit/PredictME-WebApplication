@@ -1,0 +1,288 @@
+{% if request.user.is_staff %}
+<div id="kt_header_menu" class="header-menu header-menu-mobile header-menu-layout-default">
+    <!--begin::Nav-->
+    <ul class="menu-nav">
+        <li class="menu-item menu-item-submenu menu-item-rel" aria-haspopup="true">
+            <a href="{% url 'dashboard-home' %}" class="menu-link">
+                <span class="menu-text">Dashboard</span>
+                <i class="menu-arrow"></i>
+            </a>
+
+        </li>
+        <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="click" aria-haspopup="true">
+            <a href="javascript:;" class="menu-link menu-toggle">
+                <span class="menu-text ">Settings</span>
+                <span class="menu-desc"></span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="menu-submenu menu-submenu-classic menu-submenu-left">
+                <ul class="menu-subnav">
+                    <li class="menu-item" aria-haspopup="true">
+                        <a href="{% url 'settings-company'%}" class="menu-link">
+                            <i class="menu-bullet menu-bullet-dot">
+                                <span></span>
+                            </i>
+                            <span class="menu-text">Company Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+        </li>
+        <li class="menu-item menu-item-submenu menu-item-rel " data-menu-toggle="click" aria-haspopup="true">
+            <a href="javascript:;" class="menu-link menu-toggle" data-toggle='tooltip' title="Administrator Profile">
+                <span class="menu-text ">Profile</span>
+                <span class="menu-desc"></span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="menu-submenu menu-submenu-classic menu-submenu-left">
+                <ul class="menu-subnav">
+                    <li class="menu-item" aria-haspopup="true">
+                        <a href="{% url 'admin-profile-overview'%}" class="menu-link">
+                            <i class="menu-bullet menu-bullet-dot">
+                                <span></span>
+                            </i>
+                            <span class="menu-text">Overview</span>
+                        </a>
+                    </li>
+                    <li class="menu-item" aria-haspopup="true">
+                        <a href="{% url 'admin-profile-personal'%}" class="menu-link">
+                            <i class="menu-bullet menu-bullet-dot">
+                                <span></span>
+                            </i>
+                            <span class="menu-text">Personal Information</span>
+                        </a>
+                    </li>
+                    <li class="menu-item" aria-haspopup="true">
+                        <a href="{% url 'admin-profile-info'%}" class="menu-link">
+                            <i class="menu-bullet menu-bullet-dot">
+                                <span></span>
+                            </i>
+                            <span class="menu-text">Account Information</span>
+                        </a>
+                    </li>
+                    <li class="menu-item" aria-haspopup="true">
+                        <a href="{% url 'admin-profile-change-password'%}" class="menu-link">
+                            <i class="menu-bullet menu-bullet-dot">
+                                <span></span>
+                            </i>
+                            <span class="menu-text">Change Password</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+        </li>
+        <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="click" aria-haspopup="true">
+            <a href="javascript:;" class="menu-link menu-toggle">
+                <span class="menu-text ">Data</span>
+                <span class="menu-desc"></span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="menu-submenu menu-submenu-classic menu-submenu-left">
+                <ul class="menu-subnav">
+                    <li class="menu-item" aria-haspopup="true">
+                        <a href="{% url 'data-handler-manage-list'%}" class="menu-link">
+                            <i class="menu-bullet menu-bullet-dot">
+                                <span></span>
+                            </i>
+                            <span class="menu-text">List</span>
+                        </a>
+                    </li>
+                    <li class="menu-item" aria-haspopup="true">
+                        <a href="{% url 'data-handler-manage-details'%}" class="menu-link">
+                            <i class="menu-bullet menu-bullet-dot">
+                                <span></span>
+                            </i>
+                            <span class="menu-text">Details</span>
+                        </a>
+                    </li>
+                    <li class="menu-item disabled" aria-haspopup="true">
+                        <a href="#" class="menu-link disabled">
+                            <i class="menu-bullet menu-bullet-dot">
+                                <span></span>
+                            </i>
+                            <span class="menu-text">Admin Data</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+        </li>
+        <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="click" aria-haspopup="true">
+            <a href="javascript:;" class="menu-link menu-toggle">
+                <span class="menu-text ">Members</span>
+                <span class="menu-desc"></span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="menu-submenu menu-submenu-classic menu-submenu-left">
+                <ul class="menu-subnav">
+                    <li class="menu-item" aria-haspopup="true">
+                        <a href="{% url 'admin-users-list'%}" class="menu-link">
+                            <i class="menu-bullet menu-bullet-dot">
+                                <span></span>
+                            </i>
+                            <span class="menu-text">Members</span>
+                        </a>
+                    </li>
+                    <li class="menu-item" aria-haspopup="true">
+                        <a href="{% url 'admin-users-create'%}" class="menu-link">
+                            <i class="menu-bullet menu-bullet-dot">
+                                <span></span>
+                            </i>
+                            <span class="menu-text">Add Member</span>
+                        </a>
+                    </li>
+                    <!-- <li class="menu-item" aria-haspopup="true">
+                        <a href="{% url 'admin-users-pending'%}" class="menu-link">
+                            <i class="menu-bullet menu-bullet-dot">
+                                <span></span>
+                            </i>
+                            <span class="menu-text">Pending Members</span>
+                        </a>
+                    </li> -->
+                </ul>
+            </div>
+
+        </li>
+        <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="click" aria-haspopup="true">
+            <a href="javascript:;" class="menu-link menu-toggle">
+                <span class="menu-text ">Reports</span>
+                <span class="menu-desc"></span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="menu-submenu menu-submenu-classic menu-submenu-left">
+                <ul class="menu-subnav">
+                    <li class="menu-item" aria-haspopup="true">
+                        <a href="{% url 'reports-list-view'%}" class="menu-link">
+                            <i class="menu-bullet menu-bullet-dot">
+                                <span></span>
+                            </i>
+                            <span class="menu-text">List</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+        </li>
+        <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="click" aria-haspopup="true">
+            <a href="javascript:;" class="menu-link menu-toggle">
+                <span class="menu-text ">Invoices</span>
+                <span class="menu-desc"></span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="menu-submenu menu-submenu-classic menu-submenu-left">
+                <ul class="menu-subnav">
+                    <li class="menu-item" aria-haspopup="true">
+                        <a href="{% url 'invoice-create'%}" class="menu-link">
+                            <i class="menu-bullet menu-bullet-dot">
+                                <span></span>
+                            </i>
+                            <span class="menu-text">New</span>
+                        </a>
+                    </li>
+                    <li class="menu-item" aria-haspopup="true">
+                        <a href="{% url 'invoice-details'%}" class="menu-link">
+                            <i class="menu-bullet menu-bullet-dot">
+                                <span></span>
+                            </i>
+                            <span class="menu-text">Details</span>
+                        </a>
+                    </li>
+                    <li class="menu-item" aria-haspopup="true">
+                        <a href="{% url 'invoice-list'%}" class="menu-link">
+                            <i class="menu-bullet menu-bullet-dot">
+                                <span></span>
+                            </i>
+                            <span class="menu-text">List</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+        </li>
+
+        <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="click" aria-haspopup="true">
+            <a href="javascript:;" class="menu-link menu-toggle">
+                <span class="menu-text ">Inbox <span class="label label-rounded label-success ml-2">5</span></span>
+                <span class="menu-desc"></span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="menu-submenu menu-submenu-classic menu-submenu-left">
+                <ul class="menu-subnav">
+                    <li class="menu-item" aria-haspopup="true">
+                        <a href="{% url 'inbox' %}" class="menu-link">
+                            <i class="menu-bullet menu-bullet-dot">
+                                <span></span>
+                            </i>
+                            <span class="menu-text">Members &nbsp;<span
+                                    class="label label-sm label-primary mr-2">12</span></span>
+                        </a>
+                    </li>
+                    <li class="menu-item" aria-haspopup="true">
+                        <a href="{% url 'inbox' %}" class="menu-link">
+                            <i class="menu-bullet menu-bullet-dot">
+                                <span></span>
+                            </i>
+                            <span class="menu-text">Not Members &nbsp;<span
+                                    class="label label-sm label-dark mr-2">2</span></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+        </li>
+        <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="click" aria-haspopup="true">
+            <a href="javascript:;" class="menu-link menu-toggle">
+                <span class="menu-text ">Activities</span>
+                <span class="menu-desc"></span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="menu-submenu menu-submenu-classic menu-submenu-left">
+                <ul class="menu-subnav">
+                    <li class="menu-item" aria-haspopup="true">
+                        <a href="{% url 'activity-list' %}" class="menu-link">
+                            <i class="menu-bullet menu-bullet-dot">
+                                <span></span>
+                            </i>
+                            <span class="menu-text">Activities</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+        </li>
+
+        <li class="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="click" aria-haspopup="true">
+            <a href="javascript:;" class="menu-link menu-toggle">
+                <span class="menu-text ">Crash Reports
+                    <span class="label label-rounded label-success ml-2">
+                        {{ admin_top_navbar_total.total_new_reports }}
+                    </span>
+                </span>
+                <span class="menu-desc"></span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="menu-submenu menu-submenu-classic menu-submenu-left">
+                <ul class="menu-subnav">
+                    <li class="menu-item" aria-haspopup="true">
+                        <a href="{% url 'crashes-list-url' %}" class="menu-link">
+                            <i class="menu-bullet menu-bullet-dot">
+                                <span></span>
+                            </i>
+                            <span class="menu-text">
+                                All Reports &nbsp;
+                                <span class="label label-rounded label-info ml-2">
+                                    {{ admin_top_navbar_total.total_new_reports }}
+                                </span>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+        </li>
+    </ul>
+    <!--end::Nav-->
+</div>
+{% endif %}

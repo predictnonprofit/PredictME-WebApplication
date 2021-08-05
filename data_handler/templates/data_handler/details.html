@@ -1,0 +1,253 @@
+{% extends 'members_app/inc/master.html' %}
+{% load static %}
+
+{% block title %}
+    {{ session_info.data_handler_session_label }}
+{% endblock title %}
+
+{% block customcss %}
+    <!--begin::Page Vendors Styles(used by this page)-->
+    <link href="{% static 'assets/css/custom/stripe_extra_form.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'assets/css/pages/wizard/wizard-4.css' %}" rel="stylesheet" type="text/css"/>
+    <style>
+        html {
+            line-height: 1.15;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+
+        .myText {
+            text-decoration: line-through;
+        }
+
+        .row-full {
+            width: 90vw;
+            position: relative;
+            margin-left: -50vw;
+            left: 57%;
+        }
+
+        #data_handler_table thead {
+            color: #B5B5C3;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.1rem;
+            cursor: pointer;
+        }
+
+        ul.vakata-context,
+        ul.jstree-contextmenu,
+        ul.jstree-default-contextmenu {
+            z-index: 1;
+        }
+
+        #semitransparent {
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 70px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 2;
+            -moz-opacity: .80;
+            filter: alpha(opacity=80);
+            opacity: .80;
+        }
+
+        .notAllowedCur {
+            cursor: not-allowed !important;
+        }
+
+        .list-group-item.active {
+            background-color: rgba(105, 147, 255, 0.2) !important;
+            border-color: rgba(105, 147, 255, 0.2) !important;
+            color: #0a0a0a !important;
+        }
+
+        #availableColumnsList li.disabled:HOVER, .columnItem.disabled:HOVER {
+            cursor: not-allowed !important;
+        }
+
+        .protip, .protip-open {
+            z-index: auto !important;
+        }
+
+        #pick-columns-btns {
+            margin-left: 8px;
+            max-width: 100%;
+        }
+
+        #pick-columns-btns button {
+            margin-left: -12px;
+        }
+
+        #top-data-table-toolbar {
+            margin-top: 15px;
+
+        }
+
+        @media only screen and (max-width: 768px) {
+            #pick-columns-btns {
+                margin-top: 25px;
+            }
+
+            #top-data-table-toolbar {
+                margin-top: 60px;
+                text-align: center;
+            }
+
+            .tableFixHead table thead th {
+                width: 20vw;
+
+            }
+
+            #semitransparent {
+                width: auto;
+                height: 100%;
+
+            }
+
+        }
+
+
+        /* Just common table stuff. Really. */
+        .tableFixHead {
+            height: 600px;
+            max-height: 100%;
+            display: inline-block;
+            position: relative;
+
+        }
+
+
+        .tableFixHead table {
+        {#white-space: nowrap;#} table-layout: fixed;
+            width: 100%;
+            border-collapse: collapse !important;
+        }
+
+
+        .tableFixHead table thead th {
+            position: -webkit-sticky;
+            position: -moz-sticky;
+            position: -ms-sticky;
+            position: -o-sticky;
+            position: sticky;
+            top: 0px;
+        {#max-width: 250px;#}
+            width: 200px;
+            font-size: 1rem;
+            text-align: center;
+        {#word-wrap: break-spaces;#}{#z-index: 97 !important;#}
+        }
+
+
+    </style>
+
+{% endblock customcss %}
+
+{% block pagename %}
+    {{ session_info.data_handler_session_label }}
+
+{% endblock pagename %}
+
+{% block content %}
+    <!-- Instructions Modal  -->
+    {% include "data_handler/inc/instructions_modal.html" %}
+    <!-- ./Instructions Modal  -->
+
+    <!-- donor Data Files Modal  -->
+    {% include "data_handler/inc/donor_files_modal.html" %}
+    <!-- ./donor Data Files Modal  -->
+
+    <!-- donor Data Upload Form Modal  -->
+    {# include "data_handler/inc/upload_donor_file_form.html" #}
+    <!-- ./donor Data Upload Form Modal  -->
+
+    <!-- Pay for extra records or update subscription   -->
+    {% include "data_handler/inc/extra_records_or_upgrade_sub_modal.html" %}
+    <!-- ./Pay for extra records or update subscription   -->
+
+    <!-- Records Counter Box   -->
+    {% include "data_handler/inc/count_records_progress_modal.html" %}
+    <!-- ./Records Counter Box  -->
+
+    <!-- Columns Dual Box   -->
+    {#    {% include "data_handler/inc/columns_dualbox.html" %}#}
+    <!-- ./Columns Dual Box   -->
+    <!-- Start Tabs Wrapper -->
+    <section id="data-handler-tabs-wrapper">
+
+
+        {# first check if the member has previous sessions or not #}
+        {% if has_session == False %}
+            <!-- Start Spinner   -->
+            <div id="data-handler-wrapper-spinner" class="position-relative text-center" style="height: auto;">
+                <div class="spinner spinner-danger spinner-lg position-absolute"
+                     style="z-index: 10; left: 50%; top: 50px;"></div>
+            </div>
+            <!-- End Spinner   -->
+            <!-- Start Session List Table -->
+            {% include 'data_handler/segments/sessions_list.html' %}
+            <!-- End Session List Table -->
+        {% else %}
+            <!-- Start Tabs and content -->
+            {% include 'data_handler/segments/data_tabs_content.html' %}
+            <!-- End Tabs and content -->
+        {% endif %}
+
+
+    </section>
+    <!-- End Tabs Wrapper -->
+
+
+
+{% endblock content %}
+
+
+
+
+
+{% block customjs %}
+    <script src="{% static 'assets/js/custom/datahandler/data_handler_stripe.js' %}"></script>
+    <script src="{% static 'assets/plugins/custom/jstree/jstree.bundle.js' %}"></script>
+    <script src="{% static 'assets/js/custom/djangocookie.js' %}" type="text/javascript"></script>
+    <script src="{% static 'assets/js/custom/library/protip.min.js' %}" type="text/javascript"></script>
+    <!--end::Page Vendors-->
+    <!--begin::Page Scripts(used by this page)-->
+    <script src="{% static 'assets/js/custom/datahandler/data_handler_tree.js' %}"></script>
+    <!--begin::Page Scripts(used by this page)-->
+    <script src="{% static 'assets/js/custom/datahandler/helpers.js' %}" type="text/javascript"></script>
+    <!--end::Page Vendors-->
+    <!--begin::Page Scripts(used by this page)-->
+    <script src="{% static 'assets/js/custom/datahandler/data_handler_fetch_rows.js' %}"></script>
+
+    <!-- Custom script of dualbox -->
+    <script src="{% static 'assets/js/custom/datahandler/dualbox.js' %}"></script>
+
+
+    <!-- Custom Script of data handler list page -->
+    <script src="{% static 'assets/js/custom/datahandler/datahandlerlist.js' %}"></script>
+
+    <script>
+
+
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+            $.protip();
+            {% comment %} $('#tableFixHead table thead th').flowtype({
+                 fontRatio: 10,
+                 minFont: 12,
+                 maxFont: 40,
+                 minimum: 1000,
+                 maximum: 1200,
+
+             });{% endcomment %}
+        });
+
+    </script>
+
+
+{% endblock customjs %}

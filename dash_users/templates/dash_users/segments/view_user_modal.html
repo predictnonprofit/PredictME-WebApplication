@@ -1,0 +1,209 @@
+{% load static %}
+<!-- Modal -->
+<div class="modal fade" data-backdrop="static" data-keyboard="false" id="viewUserModal" tabindex="-1" role="dialog" aria-labelledby="viewMemberModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="viewMemberModalLabel">Loading...</h5>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Spinner  -->
+        <div id="userLoadSpinner">
+          <div class="d-flex flex-column align-items-center justify-content-center">
+            <div class="row">
+              <div class="spinner-border m-3 text-dark" style="width: 4rem; height: 4rem;" role="status">
+                <span class="sr-only">Please Wait...</span>
+              </div>
+            </div>
+            <div class="row">
+              <strong style="font-size: 16px;" class="kt-font-dark">Please wait...</strong>
+            </div>
+          </div>
+        </div>
+        <!-- ./Spinner  -->
+
+        <div id="user-modal-body" style="display: none">
+          <div class="container">
+            <div class="row mb-7">
+              <div class="col-12">
+                <!--begin::Info-->
+                <div class="flex-grow-1">
+                  <!--begin::Title-->
+                  <div class="d-flex justify-content-between flex-wrap mt-1">
+                    <div class="d-flex mr-3">
+                      <span id="dMemberName" class="text-dark-75 text-hover-primary font-size-h5 font-weight-bold mr-3 d-member-info-value">
+                      </span>
+                      <a href="#">
+                        <i class="flaticon2-correct text-success font-size-h5"></i>
+                      </a>
+                    </div>
+                    <div class="my-lg-0 my-3">
+                      <span class="label label-xl font-weight-bold label-inline d-member-info-value" id='dMemberStatus'></span>
+                      <!-- <button type="button"
+                                                class="btn btn-outline-success btn-sm font-weight-bolder text-uppercase mx-1"
+                                                data-toggle="tooltip" title="Accept the account">
+                                                <i class="icon-md la la-check"></i>
+                                            </button>
+                                            <button type="button"
+                                                class="btn btn-outline-danger btn-sm font-weight-bolder text-uppercase"
+                                                data-toggle="tooltip" title="Cancel the account">
+                                                <i class="icon-md la la-user-times"></i>
+                                            </button> -->
+                    </div>
+                  </div>
+                  <!--end::Title-->
+                  <!--begin::Content-->
+                  <div class="d-flex flex-wrap justify-content-between mt-1">
+                    <div class="d-flex flex-column flex-grow-1 pr-8">
+                      <div class="d-flex flex-wrap mb-4">
+                        <a href="#" id='dMemberEmail' class="text-dark-50 text-hover-primary font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2 d-member-info-value">
+                        </a>
+                        <span id='dMemberJobTitle' class="text-dark-50 text-hover-primary font-weight-bold mr-lg-8 mr-5 mb-lg-0 mb-2 d-member-info-value">
+                        </span>
+                        <span class="text-dark-50 text-hover-primary font-weight-bold d-member-info-value" id='dMemberCountry'>
+                        </span>
+                      </div>
+
+                    </div>
+                    <div class="d-flex align-items-center w-50 flex-fill float-right mt-lg-8 mt-5">
+                      <span class="font-weight-bold text-dark-75 w-25">Data Usage</span>
+                      <div class="progress progress-xs mx-3 w-100">
+                        <div class="progress-bar bg-success" role="progressbar" id='dMemberDataUsageProgressbar' style="width: 0%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                      <span class="font-weight-bolder text-dark" id='dMemberDataUsagePer'></span>
+                    </div>
+                  </div>
+                  <!--end::Content-->
+                </div>
+                <!--end::Info-->
+              </div>
+            </div>
+            <div class="separator separator-solid"></div>
+            <div class="row mt-7">
+              <div class="col">
+                <!--begin::Item-->
+                <div class="d-flex align-items-center flex-lg-fill mr-5 mb-2">
+                  <span class="mr-4">
+                    <!-- Starter Icon -->
+                    <span class="svg-icon svg-icon-2x svg-icon-primary membership-icon d-none d-member-info-value dashboard-member-membership-icon" id='dMemberStarterIcon'>
+                      <!--begin::Svg Icon | path:assets/media/svg/icons/Home/Flower3.svg-->
+                      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                          <polygon points="0 0 24 0 24 24 0 24"></polygon>
+                          <path d="M1.4152146,4.84010415 C11.1782334,10.3362599 14.7076452,16.4493804 12.0034499,23.1794656 C5.02500006,22.0396582 1.4955883,15.9265377 1.4152146,4.84010415 Z" fill="#000000" opacity="0.3"></path>
+                          <path d="M22.5950046,4.84010415 C12.8319858,10.3362599 9.30257403,16.4493804 12.0067693,23.1794656 C18.9852192,22.0396582 22.5146309,15.9265377 22.5950046,4.84010415 Z" fill="#000000" opacity="0.3"></path>
+                          <path d="M12.0002081,2 C6.29326368,11.6413199 6.29326368,18.7001435 12.0002081,23.1764706 C17.4738192,18.7001435 17.4738192,11.6413199 12.0002081,2 Z" fill="#000000" opacity="0.3"></path>
+                        </g>
+                      </svg>
+                      <!--end::Svg Icon-->
+                    </span>
+                    <!-- Starter Icon -->
+
+                    <!-- Pro Icon -->
+                    <span class="svg-icon svg-icon-2x svg-icon-primary d-none membership-icon d-member-info-value dashboard-member-membership-icon" id='dMemberProIcon'>
+                      <!--begin::Svg Icon | path:assets/media/svg/icons/Tools/Compass.svg-->
+                      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                          <rect x="0" y="0" width="24" height="24"></rect>
+                          <path
+                            d="M7.07744993,12.3040451 C7.72444571,13.0716094 8.54044565,13.6920474 9.46808594,14.1079953 L5,23 L4.5,18 L7.07744993,12.3040451 Z M14.5865511,14.2597864 C15.5319561,13.9019016 16.375416,13.3366121 17.0614026,12.6194459 L19.5,18 L19,23 L14.5865511,14.2597864 Z M12,3.55271368e-14 C12.8284271,3.53749572e-14 13.5,0.671572875 13.5,1.5 L13.5,4 L10.5,4 L10.5,1.5 C10.5,0.671572875 11.1715729,3.56793164e-14 12,3.55271368e-14 Z"
+                            fill="#000000" opacity="0.3"></path>
+                          <path
+                            d="M12,10 C13.1045695,10 14,9.1045695 14,8 C14,6.8954305 13.1045695,6 12,6 C10.8954305,6 10,6.8954305 10,8 C10,9.1045695 10.8954305,10 12,10 Z M12,13 C9.23857625,13 7,10.7614237 7,8 C7,5.23857625 9.23857625,3 12,3 C14.7614237,3 17,5.23857625 17,8 C17,10.7614237 14.7614237,13 12,13 Z"
+                            fill="#000000" fill-rule="nonzero"></path>
+                        </g>
+                      </svg>
+                      <!--end::Svg Icon-->
+                    </span>
+                    <!-- Pro Icon -->
+
+                    <!-- Expert Icon -->
+                    <span class="svg-icon svg-icon-2x svg-icon-primary d-none membership-icon d-member-info-value dashboard-member-membership-icon" id='dMemberExpertIcon'>
+                      <!--begin::Svg Icon | path:assets/media/svg/icons/Shopping/Cart2.svg-->
+                      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                          <rect x="0" y="0" width="24" height="24"></rect>
+                          <path
+                            d="M12,4.56204994 L7.76822128,9.6401844 C7.4146572,10.0644613 6.7840925,10.1217854 6.3598156,9.76822128 C5.9355387,9.4146572 5.87821464,8.7840925 6.23177872,8.3598156 L11.2317787,2.3598156 C11.6315738,1.88006147 12.3684262,1.88006147 12.7682213,2.3598156 L17.7682213,8.3598156 C18.1217854,8.7840925 18.0644613,9.4146572 17.6401844,9.76822128 C17.2159075,10.1217854 16.5853428,10.0644613 16.2317787,9.6401844 L12,4.56204994 Z"
+                            fill="#000000" fill-rule="nonzero" opacity="0.3"></path>
+                          <path
+                            d="M3.28077641,9 L20.7192236,9 C21.2715083,9 21.7192236,9.44771525 21.7192236,10 C21.7192236,10.0817618 21.7091962,10.163215 21.6893661,10.2425356 L19.5680983,18.7276069 C19.234223,20.0631079 18.0342737,21 16.6576708,21 L7.34232922,21 C5.96572629,21 4.76577697,20.0631079 4.43190172,18.7276069 L2.31063391,10.2425356 C2.17668518,9.70674072 2.50244587,9.16380623 3.03824078,9.0298575 C3.11756139,9.01002735 3.1990146,9 3.28077641,9 Z M12,12 C11.4477153,12 11,12.4477153 11,13 L11,17 C11,17.5522847 11.4477153,18 12,18 C12.5522847,18 13,17.5522847 13,17 L13,13 C13,12.4477153 12.5522847,12 12,12 Z M6.96472382,12.1362967 C6.43125772,12.2792385 6.11467523,12.8275755 6.25761704,13.3610416 L7.29289322,17.2247449 C7.43583503,17.758211 7.98417199,18.0747935 8.51763809,17.9318517 C9.05110419,17.7889098 9.36768668,17.2405729 9.22474487,16.7071068 L8.18946869,12.8434035 C8.04652688,12.3099374 7.49818992,11.9933549 6.96472382,12.1362967 Z M17.0352762,12.1362967 C16.5018101,11.9933549 15.9534731,12.3099374 15.8105313,12.8434035 L14.7752551,16.7071068 C14.6323133,17.2405729 14.9488958,17.7889098 15.4823619,17.9318517 C16.015828,18.0747935 16.564165,17.758211 16.7071068,17.2247449 L17.742383,13.3610416 C17.8853248,12.8275755 17.5687423,12.2792385 17.0352762,12.1362967 Z"
+                            fill="#000000"></path>
+                        </g>
+                      </svg>
+                      <!--end::Svg Icon-->
+                    </span>
+                    <!-- Expert Icon -->
+
+                  </span>
+                  <div class="d-flex flex-column text-dark-75">
+                    <span class="font-weight-bolder font-size-sm">Membership</span>
+                    <span class="font-weight-bolder font-size-h5">
+                      <span id='dMemberMembership' class="text-dark font-weight-bold d-member-info-value"></span>
+                    </span>
+                  </div>
+                </div>
+                <!--end::Item-->
+              </div>
+              <div class="col">
+                <!--begin::Item-->
+                <div class="d-flex align-items-center flex-lg-fill mr-5 mb-2">
+                  <span class="mr-4">
+                    <span class="svg-icon svg-icon-primary svg-icon-2x">
+                      <!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\legacy\metronic\theme\html\demo2\dist/../src/media/svg/icons\Shopping\Dollar.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                        width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                          <rect x="0" y="0" width="24" height="24" />
+                          <rect fill="#000000" opacity="0.3" x="11.5" y="2" width="2" height="4" rx="1" />
+                          <rect fill="#000000" opacity="0.3" x="11.5" y="16" width="2" height="5" rx="1" />
+                          <path
+                            d="M15.493,8.044 C15.2143319,7.68933156 14.8501689,7.40750104 14.4005,7.1985 C13.9508311,6.98949895 13.5170021,6.885 13.099,6.885 C12.8836656,6.885 12.6651678,6.90399981 12.4435,6.942 C12.2218322,6.98000019 12.0223342,7.05283279 11.845,7.1605 C11.6676658,7.2681672 11.5188339,7.40749914 11.3985,7.5785 C11.2781661,7.74950085 11.218,7.96799867 11.218,8.234 C11.218,8.46200114 11.2654995,8.65199924 11.3605,8.804 C11.4555005,8.95600076 11.5948324,9.08899943 11.7785,9.203 C11.9621676,9.31700057 12.1806654,9.42149952 12.434,9.5165 C12.6873346,9.61150047 12.9723317,9.70966616 13.289,9.811 C13.7450023,9.96300076 14.2199975,10.1308324 14.714,10.3145 C15.2080025,10.4981676 15.6576646,10.7419985 16.063,11.046 C16.4683354,11.3500015 16.8039987,11.7268311 17.07,12.1765 C17.3360013,12.6261689 17.469,13.1866633 17.469,13.858 C17.469,14.6306705 17.3265014,15.2988305 17.0415,15.8625 C16.7564986,16.4261695 16.3733357,16.8916648 15.892,17.259 C15.4106643,17.6263352 14.8596698,17.8986658 14.239,18.076 C13.6183302,18.2533342 12.97867,18.342 12.32,18.342 C11.3573285,18.342 10.4263378,18.1741683 9.527,17.8385 C8.62766217,17.5028317 7.88033631,17.0246698 7.285,16.404 L9.413,14.238 C9.74233498,14.6433354 10.176164,14.9821653 10.7145,15.2545 C11.252836,15.5268347 11.7879973,15.663 12.32,15.663 C12.5606679,15.663 12.7949989,15.6376669 13.023,15.587 C13.2510011,15.5363331 13.4504991,15.4540006 13.6215,15.34 C13.7925009,15.2259994 13.9286662,15.0740009 14.03,14.884 C14.1313338,14.693999 14.182,14.4660013 14.182,14.2 C14.182,13.9466654 14.1186673,13.7313342 13.992,13.554 C13.8653327,13.3766658 13.6848345,13.2151674 13.4505,13.0695 C13.2161655,12.9238326 12.9248351,12.7908339 12.5765,12.6705 C12.2281649,12.5501661 11.8323355,12.420334 11.389,12.281 C10.9583312,12.141666 10.5371687,11.9770009 10.1255,11.787 C9.71383127,11.596999 9.34650161,11.3531682 9.0235,11.0555 C8.70049838,10.7578318 8.44083431,10.3968355 8.2445,9.9725 C8.04816568,9.54816454 7.95,9.03200304 7.95,8.424 C7.95,7.67666293 8.10199848,7.03700266 8.406,6.505 C8.71000152,5.97299734 9.10899753,5.53600171 9.603,5.194 C10.0970025,4.85199829 10.6543302,4.60183412 11.275,4.4435 C11.8956698,4.28516587 12.5226635,4.206 13.156,4.206 C13.9160038,4.206 14.6918294,4.34533194 15.4835,4.624 C16.2751706,4.90266806 16.9686637,5.31433061 17.564,5.859 L15.493,8.044 Z"
+                            fill="#000000" />
+                        </g>
+                      </svg>
+                      <!--end::Svg Icon-->
+                    </span>
+                  </span>
+                  <div class="d-flex flex-column text-dark-75">
+                    <span class="font-weight-bolder font-size-sm">Total Spent</span>
+                    <span class="font-weight-bolder font-size-h5">
+                      <span id='dMemberTotalSpent' class="text-dark font-weight-bold d-member-info-value"></span>
+                    </span>
+                  </div>
+                </div>
+                <!--end::Item-->
+              </div>
+              <div class="col">
+                <!--begin::Item-->
+                <div class="d-flex align-items-center flex-lg-fill mr-5 mb-2">
+                  <span class="mr-4">
+                    <i class="flaticon-pie-chart display-4 text-primary font-weight-bold"></i>
+                  </span>
+                  <div class="d-flex flex-column text-dark-75">
+                    <span class="font-weight-bolder font-size-sm">Run Model</span>
+                    <span class="font-weight-bolder font-size-h5">
+                      <span id='dMemberRunModelTimes' class="text-dark font-weight-bold d-member-info-value"></span>
+                    </span>
+                  </div>
+                </div>
+                <!--end::Item-->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">
+          <i class="icon-lg la la-close"></i>
+        </button>
+        <a href="javascript:void(0)" id='dMemberEditLink' class="btn btn-outline-warning not-allowed-cursor disabled-link" data-toggle="tooltip" title="View user info">
+          <i class="icon-lg la la-user-edit"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

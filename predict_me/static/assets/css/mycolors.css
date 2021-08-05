@@ -1,0 +1,725 @@
+/* My Custom Colors and some styles */
+/* Prevent the user from selection */
+.noselect {
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Old versions of Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+/* Prevent the user from selection */
+/* button:disabled {
+    cursor: not-allowed !important;
+    pointer-events: all !important;
+} */
+#data_handler_table td.fit,
+#data_handler_table th.fit {
+  white-space: nowrap !important;
+  width: 1% !important;
+}
+
+.data-table-input {
+  width: -webkit-fill-available !important;
+  width: -moz-available !important;
+  width: fill-available !important;
+}
+
+.b-u,
+.u-b {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.not-allowed-cursor {
+  cursor: not-allowed !important;
+  pointer-events: auto !important;
+}
+
+/* Spinner style */
+#donerFilesSpinner {
+  position: relative;
+  right: 0;
+  left: 0;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 0px;
+  margin-bottom: 35px;
+  top: 21px;
+}
+
+/* Spinner style */
+/* Custom font size */
+.form-group label {
+  font-size: 1.1rem !important;
+}
+
+/* Custom font size */
+/* display errors in form */
+.errorlist {
+  list-style-type: none;
+  padding-left: 2px;
+}
+
+.errorlist li:before {
+  content: "✗ ";
+  /*content: "❌ ";*/
+}
+
+/* display errors in form */
+/* Pay extra fees form */
+section#payExtraRecordsSection form#payExtraFeesForm input.form-control {
+  cursor: not-allowed !important;
+}
+
+/* Pay extra fees form */
+#upgradeSubscriptionSection .kt-spinner.kt-spinner--dark:before {
+  border: 2px solid #FFF !important;
+}
+
+.my-disabled-btn {
+  cursor: not-allowed !important;
+}
+
+.swal2-popup .swal2-title {
+  font-size: 2rem !important;
+}
+
+/* Start overview page */
+/* Progress Bars */
+.progress--bar {
+  height: 1.5rem;
+  margin: 1rem;
+  background-color: #ddd;
+}
+
+.progress--bar:after {
+  content: '';
+  display: block;
+  height: 100%;
+  background-color: #63B8FF;
+}
+
+.progress--circle {
+  position: relative;
+  display: inline-block;
+  margin: 1rem;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: #ddd;
+}
+
+.progress--circle:before {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background-color: white;
+}
+
+.progress--circle:after {
+  content: '';
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #63B8FF;
+}
+
+.progress__number {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  line-height: 1;
+  margin-top: -0.75rem;
+  text-align: center;
+  font-size: 1.5rem;
+  color: #777;
+}
+
+.progress--pie:before {
+  display: none;
+  /* Get rid of white circle for "pie chart style" meter */
+}
+
+.progress--pie .progress__number {
+  color: white;
+  text-shadow: rgba(0, 0, 0, 0.35) 1px 1px 1px;
+}
+
+/**
+    * $step is set to 5 by default, meaning you can only use percentage classes in increments of five (e.g. 25, 30, 45, 50, and so on). This helps to reduce the size of the final CSS file. If you need a number that doesn't end in 0 or 5, you can change the text percentage while rounding the class up/down to the nearest 5.
+    */
+.progress--bar.progress--0:after {
+  width: 0%;
+}
+
+.progress--circle.progress--0:after {
+  background-image: linear-gradient(90deg, #ddd 50%, transparent 50%, transparent), linear-gradient(90deg, #63B8FF 50%, #ddd 50%, #ddd);
+}
+
+.progress--bar.progress--5:after {
+  width: 5%;
+}
+
+.progress--circle.progress--5:after {
+  background-image: linear-gradient(90deg, #ddd 50%, transparent 50%, transparent), linear-gradient(108deg, #63B8FF 50%, #ddd 50%, #ddd);
+}
+
+.progress--bar.progress--10:after {
+  width: 10%;
+}
+
+.progress--circle.progress--10:after {
+  background-image: linear-gradient(90deg, #ddd 50%, transparent 50%, transparent), linear-gradient(126deg, #63B8FF 50%, #ddd 50%, #ddd);
+}
+
+.progress--bar.progress--15:after {
+  width: 15%;
+}
+
+.progress--circle.progress--15:after {
+  background-image: linear-gradient(90deg, #ddd 50%, transparent 50%, transparent), linear-gradient(144deg, #63B8FF 50%, #ddd 50%, #ddd);
+}
+
+.progress--bar.progress--20:after {
+  width: 20%;
+}
+
+.progress--circle.progress--20:after {
+  background-image: linear-gradient(90deg, #ddd 50%, transparent 50%, transparent), linear-gradient(162deg, #63B8FF 50%, #ddd 50%, #ddd);
+}
+
+.progress--bar.progress--25:after {
+  width: 25%;
+}
+
+.progress--circle.progress--25:after {
+  background-image: linear-gradient(90deg, #ddd 50%, transparent 50%, transparent), linear-gradient(180deg, #63B8FF 50%, #ddd 50%, #ddd);
+}
+
+.progress--bar.progress--30:after {
+  width: 30%;
+}
+
+.progress--circle.progress--30:after {
+  background-image: linear-gradient(90deg, #ddd 50%, transparent 50%, transparent), linear-gradient(198deg, #63B8FF 50%, #ddd 50%, #ddd);
+}
+
+.progress--bar.progress--35:after {
+  width: 35%;
+}
+
+.progress--circle.progress--35:after {
+  background-image: linear-gradient(90deg, #ddd 50%, transparent 50%, transparent), linear-gradient(216deg, #63B8FF 50%, #ddd 50%, #ddd);
+}
+
+.progress--bar.progress--40:after {
+  width: 40%;
+}
+
+.progress--circle.progress--40:after {
+  background-image: linear-gradient(90deg, #ddd 50%, transparent 50%, transparent), linear-gradient(234deg, #63B8FF 50%, #ddd 50%, #ddd);
+}
+
+.progress--bar.progress--45:after {
+  width: 45%;
+}
+
+.progress--circle.progress--45:after {
+  background-image: linear-gradient(90deg, #ddd 50%, transparent 50%, transparent), linear-gradient(252deg, #63B8FF 50%, #ddd 50%, #ddd);
+}
+
+.progress--bar.progress--50:after {
+  width: 50%;
+}
+
+.progress--circle.progress--50:after {
+  background-image: linear-gradient(-90deg, #63B8FF 50%, transparent 50%, transparent), linear-gradient(270deg, #63B8FF 50%, #ddd 50%, #ddd);
+}
+
+.progress--bar.progress--55:after {
+  width: 55%;
+}
+
+.progress--circle.progress--55:after {
+  background-image: linear-gradient(-72deg, #63B8FF 50%, transparent 50%, transparent), linear-gradient(270deg, #63B8FF 50%, #ddd 50%, #ddd);
+}
+
+.progress--bar.progress--60:after {
+  width: 60%;
+}
+
+.progress--circle.progress--60:after {
+  background-image: linear-gradient(-54deg, #63B8FF 50%, transparent 50%, transparent), linear-gradient(270deg, #63B8FF 50%, #ddd 50%, #ddd);
+}
+
+.progress--bar.progress--65:after {
+  width: 65%;
+}
+
+.progress--circle.progress--65:after {
+  background-image: linear-gradient(-36deg, #63B8FF 50%, transparent 50%, transparent), linear-gradient(270deg, #63B8FF 50%, #ddd 50%, #ddd);
+}
+
+.progress--bar.progress--70:after {
+  width: 70%;
+}
+
+.progress--circle.progress--70:after {
+  background-image: linear-gradient(-18deg, #63B8FF 50%, transparent 50%, transparent), linear-gradient(270deg, #63B8FF 50%, #ddd 50%, #ddd);
+}
+
+.progress--bar.progress--75:after {
+  width: 75%;
+}
+
+.progress--circle.progress--75:after {
+  background-image: linear-gradient(0deg, #63B8FF 50%, transparent 50%, transparent), linear-gradient(270deg, #63B8FF 50%, #ddd 50%, #ddd);
+}
+
+.progress--bar.progress--80:after {
+  width: 80%;
+}
+
+.progress--circle.progress--80:after {
+  background-image: linear-gradient(18deg, #63B8FF 50%, transparent 50%, transparent), linear-gradient(270deg, #63B8FF 50%, #ddd 50%, #ddd);
+}
+
+.progress--bar.progress--85:after {
+  width: 85%;
+}
+
+.progress--circle.progress--85:after {
+  background-image: linear-gradient(36deg, #63B8FF 50%, transparent 50%, transparent), linear-gradient(270deg, #63B8FF 50%, #ddd 50%, #ddd);
+}
+
+.progress--bar.progress--90:after {
+  width: 90%;
+}
+
+.progress--circle.progress--90:after {
+  background-image: linear-gradient(54deg, #63B8FF 50%, transparent 50%, transparent), linear-gradient(270deg, #63B8FF 50%, #ddd 50%, #ddd);
+}
+
+.progress--bar.progress--95:after {
+  width: 95%;
+}
+
+.progress--circle.progress--95:after {
+  background-image: linear-gradient(72deg, #63B8FF 50%, transparent 50%, transparent), linear-gradient(270deg, #63B8FF 50%, #ddd 50%, #ddd);
+}
+
+.progress--bar.progress--100:after {
+  width: 100%;
+}
+
+.progress--circle.progress--100:after {
+  background-image: linear-gradient(90deg, #63B8FF 50%, transparent 50%, transparent), linear-gradient(270deg, #63B8FF 50%, #ddd 50%, #ddd);
+}
+
+/* End overview page */
+/* Start the transparent layer background for profile */
+#currentBillingCycle {
+  opacity: 0.2;
+}
+
+#noCycleBilling {
+  width: 65%;
+  height: 80%;
+  /* margin: 0; */
+  position: relative;
+  bottom: 30%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+}
+
+#noCycleBilling div {
+  top: 30%;
+  /* left: 50%; */
+  position: relative;
+  width: auto;
+}
+
+/* End the transparent layer background for profile */
+/* Start Data handler list page */
+/*.inst-content-block p {*/
+/*    font-size: 17px;*/
+/*}*/
+/*.inst-content-block li {*/
+/*    font-size: 16px;*/
+/*}*/
+.vakata-context {
+  z-index: 10052 !important;
+}
+
+.kt-checkbox.kt-checkbox--success.kt-checkbox--tick>span {
+  top: -10px;
+}
+
+.mylink-disabled {
+  pointer-events: none;
+  cursor: default;
+}
+
+/* End Data handler list page */
+.uppy-Dashboard-innerWrap {
+  background: rgba(253, 57, 122, 0.137);
+  /* background: #f66151; */
+}
+
+/* Start datatable watermark */
+#no-data-watermark {
+  position: absolute;
+  opacity: 0.6;
+  font-size: 4.5em;
+  width: 100%;
+  top: 40%;
+  text-align: center;
+  z-index: 500;
+  transform: rotate(-25deg);
+}
+
+/* End datatable watermark */
+/* Start Data handler Wrapper */
+#data-handler-wrapper {}
+
+#data-handler-wrapper #wrapper-ul li {
+  margin: auto;
+  width: 250px;
+}
+
+#data-handler-wrapper #wrapper-ul li a {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.data-table-action-item:hover {
+  background-color: rgba(105, 147, 255, 0.12) !important;
+}
+
+/* End Data handler Wrapper */
+/* Start Reports Filter Section */
+.filter-name-item-wrapper {
+  /*  border-right: 0;
+    border-left: 0;
+    border-bottom: 1px solid #EBEDF3; */
+  height: 350px;
+  overflow: auto;
+}
+
+li.generic-filter-li-item:first-child {
+  border-top: none;
+}
+
+.generic-filter-li-item,
+.generic-filter-item-selected {
+  cursor: pointer;
+  border-radius: 0 !important;
+  border-left: 0;
+  border-right: 0;
+}
+
+.generic-filter-li-item:hover,
+.generic-filter-item-selected:HOVER {
+  /* background-color: #EBEDF3; */
+  background-color: rgba(137, 80, 252, 0.08) !important;
+  /* background-color: #EBEDF3 !important; */
+}
+
+.generic-filter-li-item.disabled:HOVER {
+  background-color: unset !important;
+}
+
+/* .generic-filter-li-item.bg-primary-o-40:HOVER{
+    background-color: none !important;
+} */
+/* .generic-filter-item:disabled{
+    pointer-events: none;
+    cursor: not-allowed !important;
+} */
+select.select-filter {
+  height: 150px !important;
+}
+
+li.generic-filter-item-selected:first-child {
+  border-top: none;
+}
+
+.generic-filter-item-selected {
+  position: relative;
+  border-left: 0;
+  border-right: 0;
+}
+
+.generic-report-type {
+  font-weight: bold;
+  display: inline-block;
+  /* border-left: rgb(235, 237, 243) solid 3px; */
+  width: auto;
+  max-width: auto;
+  padding-left: 10px;
+}
+
+.generic-filter-li-item {
+  /* font-weight: bold; */
+  /* padding: 0 */
+  /* text-indent: 0.3125em; */
+  line-height: 40px;
+}
+
+.generic-filter-item {
+  /* font-weight: bold; */
+  display: inline-block;
+  border-right: rgb(235, 237, 243) solid 1px;
+  width: 60%;
+  max-width: 60%;
+}
+
+/* .generic-filter-item-selected span.label{
+    position: relative;
+    left: 39%;
+} */
+/* End Reports Filter Section */
+#modelRunResultWrapper {
+  padding: 10px 10px 10px 10px;
+}
+
+#modelRunResultWrapper>#runModalResults {
+  font-size: 17px;
+}
+
+span.tabNoValidLabel,
+span.tabValidLabel {
+  height: 10px;
+  width: 10px;
+  background-color: #f05454;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  left: 5px;
+}
+
+span.tabValidLabel {
+  background-color: #70af85;
+}
+
+.center-header-item {
+  position: relative;
+  /* top: 50%; */
+  width: 100%;
+  left: 10px;
+  /* transform: translate(0%, -50%); */
+}
+
+@media only screen and (max-width: 400px) {
+  .center-header-item {
+    left: 14px;
+  }
+}
+
+#resetSortTableBtn,
+#undoBtn,
+#save-data-table-changes-btn2 {
+  font-size: 17px;
+}
+
+/* Start Invoices table list */
+#invoicesListContainer,
+#transactionsListContainer {
+  margin-top: 20px;
+}
+
+#invoicesListTableWrapper,
+#transactionsListTableWrapper {
+  display: none;
+}
+
+/* End Invoices table list */
+/* Start Data handler table overview overlay */
+.dhTdParentTableOverview {
+  text-align: center;
+}
+
+.tableOverviewOverlay {
+  position: absolute;
+  width: 100%;
+  height: 96%;
+  text-align: center;
+  background-color: rgba(212, 212, 212, 0.44) !important;
+  margin: auto;
+}
+
+.tableOverviewOverlayIsSmall {
+  position: absolute;
+  width: 86% !important;
+  height: 69% !important;
+}
+
+.tableOverviewOverlay>div {
+  text-align: center;
+  position: absolute;
+  margin: auto;
+  left: 43%;
+  top: 48%;
+}
+
+/* End Data handler table overview overlay */
+/* Start Dualbox styles */
+.dualbox-criteria-icon {
+  position: relative;
+  top: 2px;
+}
+
+#dualbox-criteria-wrapper {
+  box-shadow: 0px 0px 10px 0px rgba(50, 50, 50, 0.35);
+}
+
+/* End Dualbox styles */
+/* Start Data handler Stripe form  */
+div#data-handler-stripe-spinner {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  /* background-color: rgba(212, 212, 212, 0.44) !important; */
+  z-index: 1;
+  display: none;
+}
+
+div#data-handler-stripe-spinner>div:first-of-type {
+  top: -7%;
+  position: relative;
+}
+
+.progress-cur {
+  cursor: progress !important;
+}
+
+/* End Data handler Stripe form   */
+/* Start custom tooltip */
+.red-tooltip>.tooltip-inner {
+  background-color: #f00 !important;
+}
+
+.red-tooltip>.tooltip-inner>.tooltip-arrow {
+  border-bottom-color: #f00 !important;
+}
+
+/* End custom tooltip */
+.font-14px {
+  font-size: 14px !important;
+}
+
+/* Start run modal loader */
+.lds-hourglass {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+
+.lds-hourglass:after {
+  content: " ";
+  display: block;
+  border-radius: 50%;
+  width: 0;
+  height: 0;
+  margin: 8px;
+  box-sizing: border-box;
+  border: 32px solid #cef;
+  border-color: #cef transparent #cef transparent;
+  animation: lds-hourglass 1.2s infinite;
+}
+
+@keyframes lds-hourglass {
+  0% {
+    transform: rotate(0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+
+  50% {
+    transform: rotate(900deg);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  100% {
+    transform: rotate(1800deg);
+  }
+}
+
+.slide-top {
+  -webkit-animation: slide-top 0.5s ease-in-out both;
+  animation: slide-top 0.5s ease-in-out both;
+}
+
+@-webkit-keyframes slide-top {
+  0% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+    color: red;
+  }
+
+  100% {
+    -webkit-transform: translateY(-50px);
+    transform: translateY(-50px);
+    color: red;
+  }
+}
+
+@keyframes slide-top {
+  0% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+    color: red;
+  }
+
+  100% {
+    -webkit-transform: translateY(-50px);
+    transform: translateY(-50px);
+    color: red;
+  }
+}
+
+/* End run modal loader */
+/* Start Color file upload input */
+/* input[name="donor_file"] {
+    background-color: #666 !important;
+    color: #FFF !important;
+} */
+div#fileUploadOverlay {
+  position: absolute;
+  background-color: rgba(235, 237, 243, 0.6);
+  width: 100%;
+  height: 79px;
+  bottom: 0;
+  top: -19px;
+}
+
+/* End Color file upload input */
+/* Start Disabled link */
+.disabled-link {
+  pointer-events: none;
+  color: #ccc;
+}
+
+/* Start Disabled link */
+
+/* Start progress cursor */
+.progress-cursor{
+  cursor: progress !important;
+}
+/* End progress cursor */

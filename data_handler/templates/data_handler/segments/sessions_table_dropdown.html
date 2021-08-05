@@ -1,0 +1,85 @@
+<div class="btn-group dropdown" id="sessions-table-dropdown">
+    <button class="btn btn-transparent-white font-weight-bold dropdown-toggle py-3" type="button" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
+        Sessions
+    </button>
+    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="max-width: 500px; width: 500px;">
+        <form class="px-5 pt-5 pb-0" id="data-handler-sessions-form">
+            {{ csrf }}
+
+            <div class="form-group row">
+                <div class="col-10">
+                    <div class="input-icon">
+                        <input type="text" class="form-control form-control-sm" placeholder="Search...">
+                        <span><i class="flaticon2-search-1 icon-md"></i></span>
+                    </div>
+                    <span class="form-text text-muted">Search in previous sessions</span>
+                </div>
+                <div class="col-2">
+                    <button type="button" id="sessions-search-form-btn" data-toggle="tooltip" title="search in sessions"
+                        class="btn btn-sm btn-primary">
+                        <i class="flaticon2-search-1 icon-md"></i>
+                    </button>
+                </div>
+
+            </div>
+        </form>
+
+        <!-- Start sessions table -->
+        <div class="row">
+            <div class="col">
+                <div class="table-responsive px-2 overflow-auto" style="height: 200px;">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th width="15%" class="pt-0 cursor-pointer">
+                                    Name <i class="icon-lg la la-sort-alpha-down"></i>
+                                </th>
+                                <th width="20%" class="pt-0 cursor-pointer">
+                                    Date
+                                    <i class="icon-lg la la-sort"></i>
+                                </th>
+                                <th width="10%" class="pt-0"></th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for m_sess in get_all_member_info.DATA_HANDLER.data_sessions_set.all %}
+                            {% if m_sess.is_process_complete is True %}
+                            <tr>
+                                <td>
+                                    <b>
+                                        <a href="{% url 'data-handler-user-session-details' m_sess.run_history.get.pk %}">
+                                            {{ m_sess.data_handler_session_label }}
+                                        </a>
+                                    </b>
+                                </td>
+                                <td>
+                                    {{ m_sess.upload_date }}
+                                </td>
+                                <td>
+                                    <a href="{% url 'data-handler-user-session-details' m_sess.run_history.get.pk %}"
+                                        id="sessions-search-form-btn" data-toggle="tooltip" title="view"
+                                        class="btn btn-sm btn-secondary">
+                                        <i class="icon-md la la-eye"></i>
+                                    </a>
+                                </td>
+
+                            </tr>
+                            {% endif %}
+
+
+                            {% endfor %}
+
+
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+        <!-- End sessions table -->
+
+    </div>
+</div>

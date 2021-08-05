@@ -1,0 +1,177 @@
+<section id='instruction-wrapper' class="pr-5">
+  <div class="p-6">
+    <h4 class="text-dark mb-5 text-center font-weight-bolder">Upload Instructions</h4>
+    <!-- Start The first instruction -->
+    <article class="mb-2 font-weight-normal text-dark-50" id="">
+      <p class="">
+        The number of records that will be used to predict the likelihood of donors donating depends on the quality and
+        format of the file provided. To ensure data validations and correct values
+        formatting, please follow these instructions and review the donor data template as a sample before uploading
+        your donor file.
+      </p>
+    </article>
+    <!-- End The first instruction -->
+    <!--begin::Accordion-->
+    <div class="accordion accordion-solid accordion-toggle-plus" id="accordionExample1">
+      <!--begin::Item-->
+      <div class="card">
+        <!--begin::Header-->
+        <div class="card-header" id="headingOne1">
+          <div class="card-title" data-toggle="collapse" data-target="#collapseOne1" aria-expanded="true"
+            aria-controls="collapseOne1" role="button">
+            <div class="card-label text-dark pl-4 font-weight-bolder">What Do You Need?</div>
+          </div>
+        </div>
+        <!--end::Header-->
+        <!--begin::Body-->
+        <div id="collapseOne1" class="collapse show" aria-labelledby="headingOne1" data-parent="#accordionExample1">
+          <div class="card-body text-dark-50 font-size-lg pl-3">
+            <p class="">
+              It is prudent to note that your donor file MUST contain the following column. The first row in the donor
+              file must contain the column names.
+            </p>
+            <ol>
+              <li>
+                Donor Unique Identifier (ID)
+              </li>
+              <li>
+                At least three (3) types of data points (text columns) from the list below.
+                <ol type="a" class="ml-2">
+                  <li>
+                    NOTE: In order for the model to run, please supply a minimum of three (3) text columns on your
+                    donor file.
+                    <ul class="ml-1">
+                      <li>
+                          Donation history is NOT a part of this requirement.
+                      </li>
+                    </ul>
+                  <li>
+                    Highly recommended:
+                    <ul class='ml-1'>
+                      <li>
+                      Donation(s) history
+                      </li>
+                      <li>
+                      Country, State and City level data to see Donors Predicted via map feature.
+                      </li>
+                    </ul>
+                  </li>
+              </li>
+            
+            </ol>
+          </div>
+        </div>
+        <!--end::Body-->
+      </div>
+      <!--end::Item-->
+      <!--begin::Item-->
+      <div class="card border-top-0">
+        <!--begin::Header-->
+        <div class="card-header" id="headingTwo1">
+          <div class="card-title collapsed" data-toggle="collapse" data-target="#collapseTwo1" aria-expanded="false"
+            aria-controls="collapseTwo1" role="button">
+            <div class="card-label text-dark pl-4 font-weight-bolder">List of Useful Data</div>
+          </div>
+        </div>
+        <!--end::Header-->
+        <!--begin::Body-->
+        <div id="collapseTwo1" class="collapse show" aria-labelledby="headingTwo1" data-parent="#accordionExample1">
+          <div class="card-body text-dark-50 font-size-lg pl-3">
+            <p>
+              Your donor file should contain the following columns/information (highly recommended). Use unique headers
+              for each column. Each column should have a different header name. This helps the data validation
+              correctly classify the information in the column.
+            </p>
+            <div class="row">
+              <div class="col">
+                <ul>
+                  <li>
+                    <b>Donation History</b> (Example: 2019
+                    Donation, 2018 Donation, 2017 Donation)
+                  </li>
+                  <li>
+                    <b>Donor Age</b>
+                  </li>
+                  <li>
+                    <b>Gender</b>
+                  </li>
+                  <li>
+                    <b>Marital Status</b>
+                  </li>
+                  <li>
+                    <b>Occupation</b>
+                  </li>
+                  <li>
+                    <b>Education Level</b>
+                  </li>
+                  <li>
+                    <b>Income</b>
+                  </li>
+                  <li>
+                    <b>Past Engagement</b> (Example:
+                    Volunteer, Mentor, Board Member)
+                  </li>
+                </ul>
+              </div>
+
+              <div class="col">
+                <ul>
+                  <li>
+                    <b>Past Giving Areas</b> (Health,
+                    Education, Program-related etc.)
+                  </li>
+                  <li>
+                    <b>Email Address</b>
+                  </li>
+                  <li>
+                    <b>
+                      Phone Number
+                    </b>
+                  </li>
+                  <li>
+                    <b>Geo Location for Map feature</b>
+                    <ul>
+                      <li><b>Country</b></li>
+                      <li><b>State</b></li>
+                      <li><b>City</b></li>
+                      <li><b>Zip Code</b></li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--end::Body-->
+      </div>
+      <!--end::Item-->
+      <!--begin::Item-->
+      <div class="card">
+        <!--begin::Header-->
+        <div class="card-header" id="headingThree1">
+          <div class="card-title collapsed" data-toggle="collapse" data-target="#collapseThree1" aria-expanded="false"
+            aria-controls="collapseThree1" role="button">
+            <div class="card-label text-dark pl-4 font-weight-bolder">NOTE</div>
+          </div>
+        </div>
+        <!--end::Header-->
+        <!--begin::Body-->
+        <div id="collapseThree1" class="collapse show" aria-labelledby="headingThree1" data-parent="#accordionExample1">
+          <div class="card-body text-dark-50 font-size-lg pl-3">
+            <p class="">
+              Your donor file must be a .csv,.xls, or .xlsx. Your donor file may also contain any number of additional
+              columns. All data points will be returned with the prediction(s) appended file in the CSV format. Each
+              data column should contain the same type of information. For example, if you have a column with the header
+              “State,” then you should only include States in that column.
+              Also, please eliminate all unusual characters from the file, if possible (for example, $, %, &, commas,
+              etc.).
+            </p>
+          </div>
+        </div>
+        <!--end::Body-->
+      </div>
+      <!--end::Item-->
+    </div>
+    <!--end::Accordion-->
+  </div>
+</section>

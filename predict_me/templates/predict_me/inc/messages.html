@@ -1,0 +1,30 @@
+{% if messages %}
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-12">
+                {% for message in messages %}
+                    <div class="alert alert-custom alert-outline-2x alert-light-{{ message.tags }} fade show mb-5" role="alert">
+                        {% if message.tags == "success" %}
+                            <div class="alert-icon"><i class="icon-2x text-success-50 flaticon2-check-mark"></i></div>
+                        {% elif message.tags == "info" %}
+                            <div class="alert-icon"><i class="icon-2x text-warning-50 flaticon-information"></i></div>
+                        {% elif message.tags == "warning" %}
+                            <div class="alert-icon"><i class="icon-2x text-warning-50 flaticon2-warning"></i></div>
+                        {% elif message.tags == "error" %}
+                            <div class="alert-icon"><i class="icon-2x text-danger-50 flaticon2-cross"></i></div>
+                        {% endif %}
+                        <div class="alert-text font-weight-bolder">
+                            {{ message|capfirst }}
+                        </div>
+                        <div class="alert-close">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true"><i class="la la-close"></i></span>
+                            </button>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+{% endif %}

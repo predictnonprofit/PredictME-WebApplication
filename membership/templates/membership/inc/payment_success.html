@@ -1,0 +1,63 @@
+{% extends "predict_me/inc/master.html" %}
+{% load static %}
+
+
+{% block title %}
+Subscripted Successfully
+{% endblock title %}
+
+{% block customcss %}
+
+
+{% endblock customcss %}
+
+{% block content %}
+<section class="container my-5" style="min-height: 75vh;">
+
+
+
+  <div class="card card-custom gutter-b bg-light-success">
+    <div class="card-body">
+      <div class="d-flex align-items-center justify-content-between p-4 flex-lg-wrap flex-xl-nowrap">
+        <div class="d-flex flex-column mr-5">
+          <a href="#" class="h4 text-dark text-hover-primary mb-5">
+            Register Successfully!
+          </a>
+          <p class="text-dark-50">
+            Your account is inactive, wait until Administrator review and active your account, if you have
+            any problem
+            contact us <a href="mailto:email@email.com">predictme@email.com</a> directly<br />
+            You will be redirect to login page please wait...
+          </p>
+        </div>
+        <div class="ml-6 ml-lg-0 ml-xxl-6 flex-shrink-0">
+          <button disabled type="button" class="btn btn-custom btn-bold btn-upper btn-font-sm  btn-success">
+            <span id="paymentCounter">5</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+{% endblock content%}
+
+
+{% block customjs %}
+<script>
+  var sec = 6;
+  setInterval(function() {
+    sec--;
+    if (sec >= 0) {
+      document.getElementById("paymentCounter").innerText = sec;
+    }
+
+  }, 1000)
+
+  // timer to redirect member after charge payment successfuly
+  setTimeout(function() {
+    window.location.href = "{% url 'logout' %}";
+  }, 7000);
+</script>
+{% endblock customjs %}

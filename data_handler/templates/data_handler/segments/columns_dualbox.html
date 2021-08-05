@@ -1,0 +1,153 @@
+<div class="card card-custom gutter-b mx-auto" style="height: 100%;">
+
+  <div class="card-body h-100 pb-0">
+    <div class="container-fluid">
+      <div class="row ">
+        <div class="col-md-12 col-sm-12 col-lg-5">
+          <div class="d-inline-flex justify-content-between w-100">
+            <div class="p-1 mx-3">
+              <div class="font-weight-bolder" id='avaliableColumnsTotal'>
+                <h5 class="font-weight-bolder">Total Columns &nbsp;<b></b></h5>
+
+              </div>
+            </div>
+
+            <div class="p-1">
+              <h6 class="font-weight-bolder">Default Data
+                Format</h6>
+            </div>
+          </div>
+
+
+          <ul class="list-group border-bottom border-left w-100" id="availableColumnsList"
+            style="overflow-y: scroll; height: 400px;">
+
+          </ul>
+
+        </div>
+
+        <div class="col-sm col-md col-lg">
+          <div id="pick-columns-btns" class="mt-lg-15 mt-sm-5 mt-md-15 text-center">
+
+            <button type="button" id="removeAllColumnsBtn" class="btn btn-light dualbox-btn">
+              << </button> <button type="button" id="removeColumnBtn" class="btn btn-light dualbox-btn">
+                < </button> <button type="button" id="addColumnBtn" class="btn btn-light dualbox-btn">>
+            </button>
+            <button type="button" id="addAllColumnsBtn" class="btn btn-light dualbox-btn">>>
+            </button>
+          </div>
+          <div id="validate-reset-btns-block" class="my-10">
+            <button type="button" id='validateColumnsBtn'
+              class="btn btn-light-primary btn-block font-weight-bold disabled" style="cursor: not-allowed;" disabled>
+              Validate Columns
+            </button>
+            <div class="separator separator-solid my-3"></div>
+            <button type="button" id="resetColumnBoxBtn" data-toggle="tooltip" title="Reset all columns"
+              disabled='disabled' class="btn btn-light-warning btn-block font-weight-bold">
+              Reset Columns
+            </button>
+
+            <!-- <button type="button" class="btn btn-danger btn-block font-weight-bold" style="margin-top: 11rem !important;" data-toggle="tooltip" title="Delete and repeat the process again!" id="cancelReuploadBtn">
+              Re-process
+            </button> -->
+
+          </div>
+
+
+        </div>
+
+        <div class="col-md-12 col-sm-12 col-lg-5">
+          <div class="d-inline-flex justify-content-between w-100">
+            <div class="p-1">
+              <div class="font-weight-bolder" id='pickedColumnsTotal'>
+                <h5 class="font-weight-bolder">Total Columns Picked &nbsp;<b></b></h5>
+              </div>
+            </div>
+
+            <div class="p-1">
+              <h6 class="font-weight-bolder">
+                Select Data Type
+              </h6>
+            </div>
+          </div>
+          <!--begin::Table-->
+
+          <ul class="list-group border-bottom w-100" id="pickedColumnsList" style="overflow-y: scroll; height: 400px;">
+          </ul>
+        </div>
+
+      </div>
+      <div class="row">
+
+        <div class="col">
+          <div class="card card-custom my-10" id='dualbox-criteria-wrapper'>
+            <div class="card-header m-auto text-center">
+              <h3 class="card-title font-weight-bolder text-center">
+                <u>Data Validation Requirements: Select Data Fields</u>
+              </h3>
+            </div>
+            <div class="card-body">
+              <div class="container">
+                <div class="row">
+                  <div class="col-6">
+                    <div class="row">
+                      <div class="col-12">
+                        <p class="font-weight-bolder position-relative">
+                          <span id="selectUniqueID" class="mr-1 dualbox-criteria-icon" data-toggle="tooltip"
+                            title="Required">
+                            <i class="icon-lg la la-times-circle text-danger"></i>
+                          </span>
+                          Required: Select Unique ID Field
+                        </p>
+                      </div>
+                      <div class="col-12">
+                        <p class="font-weight-bolder position-relative" data-toggle="tooltip" title="Required">
+                          <span id="isSelect3Col" class="mr-1 dualbox-criteria-icon" data-toggle="tooltip"
+                            title="Required">
+                            <i class="icon-lg la la-times-circle text-danger"></i>
+                          </span>
+                          Required: Select Minimum 3 Text Fields
+                        </p>
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <div class="col-6">
+                    <div class="row">
+                      <div class="col-12">
+                        <p class="font-weight-bolder position-relative" id="donationFieldLi">
+                          <span id="donationField" class="mr-1 dualbox-criteria-icon" data-toggle="tooltip"
+                            title="Optional">
+                            <i class="icon-lg text-warning la la-minus-circle"></i>
+                          </span>
+                          Recommended: Select Donation Field(s)
+                        </p>
+                      </div>
+
+                      <div class="col-12">
+                        <p class="font-weight-bolder position-relative" id="geoLocationFieldLi">
+                          <span id="geoLocationField" class="mr-1 dualbox-criteria-icon" data-toggle="tooltip"
+                            title="Optional">
+                            <i class="icon-lg text-warning la la-minus-circle"></i>
+                          </span>
+                          Recommended: Select Geo-Location Field(s)
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+</div>

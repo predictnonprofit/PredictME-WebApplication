@@ -1,0 +1,108 @@
+/**
+ * The CSS shown here will not be introduced in the Quickstart guide, but shows
+ * how you can use CSS to style your Element's container.
+ */
+.StripeElement {
+  box-sizing: border-box;
+
+  height: 40px;
+
+  padding: 10px 12px;
+
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background-color: white;
+
+  box-shadow: 0 1px 3px 0 #e6ebf1;
+  -webkit-transition: box-shadow 150ms ease;
+  transition: box-shadow 150ms ease;
+  max-width: 100%;
+  width: 100%;
+}
+
+.StripeElement--focus {
+  box-shadow: 0 1px 3px 0 #cfd7df;
+}
+
+.StripeElement--invalid {
+  border-color: #fa755a;
+}
+
+.StripeElement--webkit-autofill {
+  background-color: #fefde5 !important;
+}
+
+/***** Form 3 *****/
+
+.form-3-box {
+  padding-top: 30px;
+}
+
+.form-3-box p {
+  opacity: 0.8;
+}
+
+.form-3-box fieldset {
+  border: 1px solid #fff;
+  border-color: #EBEDF3 !important;
+}
+
+.form-3-box legend {
+  font-size: inherit;
+  line-height: 30px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.form-3-box label {
+  color: #fff;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.form-3-box input[type="text"],
+.form-3-box textarea {
+  background: #fff;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  color: #888;
+  box-shadow: none;
+}
+
+.form-3-box textarea {
+  height: 120px;
+}
+
+
+.form-3-box input[type="text"]::-moz-placeholder,
+.form-3-box textarea::-moz-placeholder {
+  color: #bbb;
+  font-style: italic;
+}
+
+.form-3-box input[type="text"]:-ms-input-placeholder,
+.form-3-box textarea:-ms-input-placeholder {
+  color: #bbb;
+  font-style: italic;
+}
+
+.form-3-box input[type="text"]::-webkit-input-placeholder,
+.form-3-box textarea::-webkit-input-placeholder {
+  color: #bbb;
+  font-style: italic;
+}
+
+
+.form-3-box button.btn-customized:hover,
+.form-3-box button.btn-customized:active,
+.form-3-box button.btn-customized:focus,
+.form-3-box button.btn-customized:active:focus,
+.form-3-box button.btn-customized.active:focus,
+.form-3-box button.btn.btn-primary:not(:disabled):not(.disabled):active,
+.form-3-box button.btn.btn-primary:not(:disabled):not(.disabled):active:focus {
+  outline: 0;
+  background: #ca594d;
+  border: 0;
+  color: #fff;
+  box-shadow: none;
+}

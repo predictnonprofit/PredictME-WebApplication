@@ -1,0 +1,118 @@
+{% extends 'members_app/inc/master.html' %}
+{% load static %}
+
+{% block title %}
+    Personal
+{% endblock title %}
+
+{% block pagename %}
+    Personal Information
+{% endblock pagename %}
+
+{% block content %}
+
+
+    {% include 'predict_me/inc/messages.html' %}
+
+    <!-- begin:: Content -->
+    <div class="flex-row-fluid ml-lg-8">
+        <!--begin::Card-->
+        <!--begin::Form-->
+        <form class="form" id="personal-form" method="POST">
+            {% csrf_token %}
+            <div class="card card-custom card-stretch">
+                <!--begin::Header-->
+                <div class="card-header py-3">
+                    <div class="card-title align-items-start flex-column">
+                        <h3 class="card-label font-weight-bolder text-dark">Personal Information</h3>
+                        <span class="text-muted font-weight-bold font-size-sm mt-1">Update your personal informaiton</span>
+                    </div>
+                    <div class="card-toolbar">
+                        <button type="submit" class="btn btn-success mr-2">Save Changes</button>
+                        <button type="reset" class="btn btn-secondary">Cancel</button>
+                    </div>
+                </div>
+                <!--end::Header-->
+                <!--begin::Body-->
+                <div class="card-body">
+                    <div class="row">
+                        <label class="col-xl-3"></label>
+                        <div class="col-lg-9 col-xl-6">
+                            <h5 class="font-weight-bold mb-6">Member Info</h5>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-xl-3 col-lg-3 col-form-label text-right">First Name</label>
+                        <div class="col-lg-9 col-xl-6">
+                            <input class="form-control form-control-lg form-control-solid" name="first-name" type="text"
+                                   value="{{ member.first_name }}">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-xl-3 col-lg-3 col-form-label text-right">Last Name</label>
+                        <div class="col-lg-9 col-xl-6">
+                            <input class="form-control form-control-lg form-control-solid" type="text" name="last-name"
+                                   value="{{ member.last_name }}">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-xl-3 col-lg-3 col-form-label text-right">Full Name</label>
+                        <div class="col-lg-9 col-xl-6">
+                            <input disabled readonly class="form-control form-control-lg form-control-solid" type="text"
+                                   value="{{ member.full_name }}">
+                            <!-- <span class="form-text text-muted">If you want your invoices addressed to a company. Leave blank to use your full name.</span> -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-xl-3"></label>
+                        <div class="col-lg-9 col-xl-6">
+                            <h5 class="font-weight-bold mt-10 mb-6">Contact Info</h5>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-xl-3 col-lg-3 col-form-label text-right">Contact Phone</label>
+                        <div class="col-lg-9 col-xl-6">
+                            <div class="input-group input-group-lg input-group-solid">
+                                <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="la la-phone"></i>
+                                        </span>
+                                </div>
+                                <input type="text" class="form-control form-control-lg form-control-solid" name="phone"
+                                       value="{{ member.phone }}" placeholder="Phone">
+                            </div>
+                            <span class="form-text text-muted">We'll never share your email with anyone else.</span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-xl-3 col-lg-3 col-form-label text-right">Email Address</label>
+                        <div class="col-lg-9 col-xl-6">
+                            <div class="input-group input-group-lg input-group-solid">
+                                <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="la la-at"></i>
+                                        </span>
+                                </div>
+                                <input type="email" class="form-control form-control-lg form-control-solid" name="email"
+                                       value="{{ member.email }}" placeholder="Email Address">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!--end::Body-->
+
+            </div>
+        </form>
+        <!--end::Form-->
+    </div>
+
+    <!-- end:: Content -->
+
+
+{% endblock content %}
+
+{% block customjs %}
+    <script src="{% static 'assets/js/pages/custom/user/profile.js' %}" type="text/javascript"></script>
+{% endblock customjs %}

@@ -1,0 +1,86 @@
+<div class="btn-group dropdown" id="sessions-table-dropdown">
+    <button class="btn btn-transparent-white font-weight-bold dropdown-toggle py-3 mx-2"
+            type="button" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+        Model
+    </button>
+    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right"
+         style="max-width: 500px; width: 500px;">
+
+
+        <!-- Start sessions table -->
+        <div class="row">
+            <div class="col">
+                <div class="table-responsive px-2 overflow-auto" style="height: 200px;">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th width="50%" class="pt-0">
+                                Name
+                            </th>
+
+                            <th width="20%" class="pt-0">Download</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                            <td>
+                                <b>
+                                  <a href="{% url 'data-handler-download-pdf-report' report_type='pdf' run_history_id=0 %}">Download Report as PDF</a>
+
+                                </b>
+                            </td>
+
+                            <td class='pl-5'>
+                                <a href="{% url 'data-handler-download-pdf-report' report_type='pdf' run_history_id=0 %}" data-toggle="tooltip" title="download report as pdf" class="btn btn-sm btn-secondary">
+                                    <i class="far fa-file-pdf" ></i>
+                                </a>
+                            </td>
+
+                        </tr>
+
+                            <tr>
+                            <td>
+                                <b>
+                                <a href="{% url 'data-handler-download-pdf-report' report_type='csv' run_history_id=0 %}">Download Report as CSV</a>
+
+                                </b>
+                            </td>
+
+                            <td class='pl-5'>
+                                <a href="{% url 'data-handler-download-pdf-report' report_type='csv' run_history_id=0 %}" title="download dashboard as csv" data-toggle="tooltip" class="btn btn-sm btn-secondary">
+                                  <i class="fas fa-file-csv"></i>
+                                </a>
+                            </td>
+
+                        </tr>
+
+                        <tr>
+                        <td>
+                            <b>
+                            <a href="#">Download Dashboard as PDF</a>
+
+                            </b>
+                        </td>
+
+                          <td class='pl-5'>
+                            <a href="#" data-toggle="tooltip" title="download dashboard as pdf" class="btn btn-sm btn-secondary">
+                              <i class="far fa-file-pdf" ></i>
+                            </a>
+                        </td>
+
+                    </tr>
+
+
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+        <!-- End sessions table -->
+
+    </div>
+</div>
