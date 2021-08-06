@@ -40,7 +40,19 @@
 
 .not-allowed-cursor {
   cursor: not-allowed !important;
-  pointer-events: auto !important;
+  /* pointer-events: auto !important; */
+}
+
+.pointer-event-none {
+  pointer-events: none;
+}
+
+.pointer-event-all {
+  pointer-events: all;
+}
+
+span#dhWizardBtnWrapper:hover{
+  cursor: not-allowed !important;
 }
 
 /* Spinner style */
@@ -719,7 +731,44 @@ div#fileUploadOverlay {
 /* Start Disabled link */
 
 /* Start progress cursor */
-.progress-cursor{
+.progress-cursor {
   cursor: progress !important;
 }
+
 /* End progress cursor */
+
+/* Start dashboard loader */
+.dashboard-loader>img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  height: 50px;
+}
+
+/* End dashboard loader */
+
+/* Start my transition */
+.my-transition {
+  transition: all .5s ease-in-out !important;
+  -webkit-transition: all .5s ease-in-out !important;
+  -moz-transition: all .5s ease-in-out !important;
+  -ms-transition: all .5s ease-in-out !important;
+  -o-transition: all .5s ease-in-out !important;
+}
+
+/* End my transition */
+
+/* Start my d-block and d-none */
+.my-d-none {
+  transition: opacity 1s ease-out;
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.my-d-block {
+  opacity: 1;
+  height: auto;
+}
+
+/* End my d-block and d-none */
