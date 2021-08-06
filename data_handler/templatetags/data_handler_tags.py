@@ -20,7 +20,7 @@ def extra_fee_records(records_total):
 
 @register.filter
 def get_type(value):
-    return type(value)
+    return type(value).__name__.strip()
 
 
 @register.filter
