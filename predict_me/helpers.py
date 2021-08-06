@@ -1,5 +1,5 @@
 import traceback
-
+from ast import literal_eval
 import requests
 from termcolor import cprint
 
@@ -43,14 +43,15 @@ def is_integer_or_float(value):
     This function will determine the type of value and return int or float
     """
     try:
-        from ast import literal_eval
 
         val = literal_eval(value)
+
         if isinstance(val, int):
             # cprint("Integer value", 'green')
             return int(val)
         elif isinstance(val, float):
             # cprint("float value", 'yellow')
             return float(val)
+
     except (TypeError, ValueError):
         return False
