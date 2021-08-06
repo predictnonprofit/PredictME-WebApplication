@@ -58,6 +58,9 @@ google-api-core = "*"
 requests = "*"
 google-auth = "*"
 autopep8 = "*"
+pytest = "*"
+pytest-django = "*"
+coverage = "*"
 
 [dev-packages]
 
