@@ -286,7 +286,6 @@ fabric.properties
 notes.txt
 js.backup
 member_accounts.txt
-member_accounts.rst
 heroku_vars.txt
 vars.sh
 bugs.txt
@@ -315,11 +314,15 @@ media/data/base/*.xlsx
 media/data/base/*.xls
 members_accounts.rst
 
-# exclude everything
-data_handler/PM_Model/modal_output_files/*.json
+### exclude everything ###
+data_handler/PM_Model/model_output_files/*.json
 
-# # exception to the rule
-!data_handler/PM_Model/modal_output_files/.gitkeep
+### exception to the rule ###
+!data_handler/PM_Model/model_output_files/.gitkeep
+
+
+### exclude all test files ###
+tests/
 
 
 ### VisualStudioCode ###
