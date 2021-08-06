@@ -38,7 +38,8 @@ urlpatterns = [
         path("check-is-allowed-run-model", IsAllowedToRunModel.as_view(), name="data-handler-check-allowed-run-model"),
         path("check-session-dtype-valid", CheckIfSessionDataTypeValid.as_view(), name="data-handler-check-dtype-valid"),
         path("export", ExportUpdatedDataFile.as_view(), name="data-handler-export-updated-file"),
-        path("fetch-session-dashboard-session", FetchDashboardSessionData.as_view(), name="data-handler-fetch-dashboard-session"),
+        path("fetch-session-dashboard-session", FetchDashboardSessionData.as_view(),
+             name="data-handler-fetch-dashboard-session"),
     ])),
 
 ]
