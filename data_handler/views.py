@@ -690,27 +690,32 @@ class ValidateColumnsView(APIView):
 
             # cprint(columns_json, 'magenta')
             # loop and save only donation fields
-            donation_fields = []
-            geo_location_fields = []
-            text_columns = []
+            donation_fields = []   # all donation fields
+            geo_location_fields = []   # all geo-location fields
+            text_fields = []     # all text fields
+            numeric_fields = []   # all numeric fields
             for key, value in columns_json.items():
                 if "donation" in value:
                     donation_fields.append(f"'{key}'")
                 if "geo-location" in value:
                     geo_location_fields.append(f"'{key}'")
                 if "text" in value:
-                    text_columns.append(f"'{key}'")
+                    text_fields.append(f"'{key}'")
+                if "numeric" in value:
+                    numeric_fields.append(f"'{key}'")
+
+            # convert to string and save the columns to database
             donation_fields_as_string = f"[{', '.join(donation_fields)}]"
-            # cprint(donation_fields_as_string, 'cyan')
             geo_location_fields_as_string = f"[{', '.join(geo_location_fields)}]"
-            text_columns_fields_as_string = f"[{', '.join(text_columns)}]"
-            # cprint(geo_location_fields_as_string, 'blue')
+            text_fields_as_string = f"[{', '.join(text_fields)}]"
+            numeric_fields_as_string = f"[{', '.join(numeric_fields)}]"
             member_data_session = member_data_file.data_sessions_set.get(pk=session_id)
 
-            # cprint(member_data_session.file_name, 'yellow')
+            # save to database
             member_data_session.donation_columns = donation_fields_as_string
             member_data_session.geo_columns = geo_location_fields_as_string
-            member_data_session.text_columns = text_columns_fields_as_string
+            member_data_session.text_columns = text_fields_as_string
+            member_data_session.numeric_columns = numeric_fields_as_string
             member_data_session.save()
             data_file = member_data_session.data_file_path
             columns_list = member_data_session.get_selected_columns_as_list
@@ -1424,6 +1429,7 @@ class FetchDashboardSessionData(APIView):
             data = dict()
             train_test_data = dict()
             important_features_data = dict()
+            geo_location_data = dict()
             history_id = int(request.data.get('historyID'))
             key_name = request.data.get('keyName')
             run_history_obj = RunHistory.objects.filter(pk=history_id).first()
@@ -1432,17 +1438,31 @@ class FetchDashboardSessionData(APIView):
             # open the json data file
             with open(file_obj.as_posix(), 'r') as json_file:
                 data = json.load(json_file)
-                pprint(data)
+                # pprint(data)
             # check what is the key name to fetch
             if key_name == 'training_testing':
+                cprint(f"training_testing request", 'cyan', attrs=['bold'])
                 train_test_data['training'] = is_integer_or_float(data.get("training"))
                 train_test_data['testing'] = is_integer_or_float(data.get("testing"))
-                # cprint(train_test_data, 'green')
+                train_test_data['donation_columns'] = data.get("donation_columns")
+                pprint(train_test_data)
                 return JsonResponse(data={"data": train_test_data}, status=200)
+
             elif key_name == 'important_features':
+                cprint(f"important_features request", 'magenta', attrs=['bold'])
                 important_features_data['labels'] = data.get('feature_importance_labels')
                 important_features_data['values'] = data.get('feature_importance_values')
+                important_features_data['donation_columns'] = data.get("donation_columns")
+                pprint(important_features_data)
                 return JsonResponse(data={"data": important_features_data}, status=200)
+
+            elif key_name == 'geo_location_fields':
+                cprint(f"geo_location_fields request", 'green', attrs=['bold'])
+                data_file = run_history_obj.session_id.data_file_path
+                geo_location_fields = run_history_obj.session_id.get_geo_columns
+                geo_location_data = get_geo_location_data(data_file, geo_location_fields)
+                cprint(geo_location_data, 'yellow')
+                return JsonResponse(data={"data": {'geo_location_data': geo_location_data}}, status=200)
 
         except Exception as ex:
             cprint(traceback.format_exc(), 'red')
