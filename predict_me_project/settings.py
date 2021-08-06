@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 import json
+from pathlib import Path
 from django.contrib.messages import constants as messages
 
 MESSAGE_TAGS = {
@@ -20,6 +21,9 @@ MESSAGE_TAGS = {
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR2 = Path(__file__).resolve().parent.parent
 
 with open(os.path.join(BASE_DIR, "predict_me_project", "secrets.json")) as json_data:
     secret_data = json.load(json_data)
@@ -140,6 +144,7 @@ CHANNEL_LAYERS = {
     },
 }
 
+
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
@@ -147,6 +152,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'TEST': {
+            'NAME': 'testing_db.sqlite3',
+        },
     }
 }
 
@@ -372,3 +380,10 @@ CACHES = {
 # CACHE_MIDDLEWARE_ALIAS = 'default'  # which cache alias to use
 # CACHE_MIDDLEWARE_SECONDS = '600'  # number of seconds to cache a page for (TTL)
 # CACHE_MIDDLEWARE_KEY_PREFIX = ''  # should be used if the cache is shared across multiple sites that use the same Django instance
+
+# fixture data directories
+FIXTURE_DIRS = [
+    # BASE_DIR2.joinpath('db_data/')
+    # BASE_DIR2 / "db_data/",
+    os.path.join(BASE_DIR, "db_data/"),
+]
