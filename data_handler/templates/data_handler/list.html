@@ -228,10 +228,10 @@ Manage Your Data
                       <div>
                         <div>
 
-                          <span id="dhWizardBtnWrapper" class="d-inline-block" tabindex="0">
+                          <span id="dhWizardBtnWrapper" class="d-inline-block" tabindex="0" data-toggle='tooltip' title="Please validate columns">
                             <button data-wizard-type="action-next" data-step-name="instructions"
                               id="dataHandlerWizardBtn" type="button"
-                              class="btn btn-success font-weight-bolder text-uppercase px-9 py-4 not-allowed-cursor"
+                              class="btn btn-success font-weight-bolder text-uppercase px-9 py-4 not-allowed-cursor pointer-event-none"
                               disabled='disabled'>
                               Next: Select data columns
                             </button>
@@ -285,7 +285,8 @@ Manage Your Data
 
 <script>
   $(document).ready(function () {
-    $('[data-toggle="tooltip"]').tooltip();
+    // hide the tooltip by default
+    $("#dhWizardBtnWrapper").tooltip('disable');
 
     //$("#extraRecordsModel").modal("show");
     // $("#runModelModal").modal("show");
