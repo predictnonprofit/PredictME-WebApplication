@@ -655,9 +655,6 @@ $(document).ready(function () {
     }
   });
 
-  // this to handle data handler wizard button
-  // handleDataHandlerWizardBtn();
-
   // when member click on rename session button in details page
   renameSessionFunc();
   // to run the function of save the new updates of data table cells
