@@ -76,6 +76,7 @@ class DataHandlerSession(models.Model):
     not_validate_columns = models.CharField(null=True, blank=True, max_length=255)
     geo_columns = models.CharField(null=True, blank=True, max_length=255)
     text_columns = models.CharField(null=True, blank=True, max_length=255)
+    numeric_columns = models.CharField(null=True, blank=True, max_length=255)
     above_plan_limit_records = models.IntegerField(null=True, blank=True)
     is_run_model = models.BooleanField(null=True, blank=True, default=False)
     run_modal_date_time = models.DateTimeField(null=True, blank=True)
@@ -96,8 +97,19 @@ class DataHandlerSession(models.Model):
 
     @property
     def get_geo_columns(self):
-        cols = self.geo_columns.replace("[", "").replace("]", "").replace("'", "").split(", ")
-        return cols
+        if self.geo_columns == "[]":
+            return None
+        else:
+            cols = self.geo_columns.replace("[", "").replace("]", "").replace("'", "").split(", ")
+            return cols
+
+    @property
+    def get_numeric_columns(self):
+        if self.numeric_columns == "[]":
+            return None
+        else:
+            cols = self.numeric_columns.replace("[", "").replace("]", "").replace("'", "").split(", ")
+            return cols
 
     @property
     def get_fields_as_list(self):
