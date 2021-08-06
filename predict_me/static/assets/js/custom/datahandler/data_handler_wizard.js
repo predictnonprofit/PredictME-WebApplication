@@ -26,8 +26,8 @@ let setDHBtnLabel = (stepName) => {
   if (stepName === 'upload-instructions') {
     btn.html("Next: Select Data Columns");
   } else if (stepName === 'pick-columns') {
-    dhWizardBtnWrapper.attr("data-toggle", "tooltip");
-    dhWizardBtnWrapper.attr("title", "please validate columns");
+    // dhWizardBtnWrapper.attr("data-toggle", "tooltip");
+    // dhWizardBtnWrapper.attr("title", "please validate columns");
     btn.html("Next: Review Data");
   }
 };
@@ -39,7 +39,7 @@ let wizardEl = document.querySelector('#datahandler_wizard');
 // Initialize wizard object
 var wizardObj = new KTWizard(wizardEl, {
   startStep: 1, // initial active step number
-  clickableSteps: true, // allow step clicking
+  clickableSteps: false, // allow step clicking
   navigation: false // disable default navigation handlers,
 });
 
@@ -74,6 +74,11 @@ nextButton.addEventListener('click', function () {
   // do some validation here
   enableDisableDhBtn("disable");
   setDHBtnLabel(stepName);
+
+  // check if the user in pick columns step, to fix the tooltip in next btn
+  if(wizardObj.getStep() === 2){
+    dhWizardBtnWrapper.tooltip('enable');
+  }
 
   // check if it is the last step
   if (wizardObj.isLastStep() === true) {
