@@ -1,16 +1,30 @@
 from django import forms
 from django_countries.fields import CountryField
 from django.core import validators
+from django.forms.models import model_to_dict
 import re
 from .models import CompanySettings
+from django.db import connection
+from termcolor import cprint
 
 # company_data = {
 #     "description": "description",
 #     "keywords": "keywords",
 #     "close_msg": "Close Message"
 # }
-company_data = CompanySettings.objects.get(slug='company')
-
+# cprint(CompanySettings.objects.all(), 'green')
+# cprint(settings.FIXTURE_DIRS, 'cyan')
+# cprint(connection.settings_dict.get('NAME'), 'yellow')
+company_data = CompanySettings.objects.filter(slug='company').first()
+if company_data is not None:
+    company_data = model_to_dict(company_data)
+else:
+    company_data = {
+        "description": "description",
+        "keywords": "keywords",
+        "close_msg": "Close Message"
+    }
+# company_data = model_to_dict(company_data)
 
 REGEX_PATTERS = {
     "NAME": re.compile(r"^[a-zA-Z '.-]*$", re.IGNORECASE),  # name or first second
@@ -28,8 +42,10 @@ class CompanySettingsForm(forms.Form):
     logo = forms.FileField(label='Logo', required=False)
     url = forms.URLField(label="Website URL", required=False, max_length=100,
                          validators=[validators.URLValidator(message="Website URL not correct!")])
-    description = forms.CharField(label="Description", required=False, widget=forms.Textarea, initial=company_data.description)
-    keywords = forms.CharField(label="Keywords", required=False, widget=forms.Textarea, initial=company_data.keywords)
+    description = forms.CharField(label="Description", required=False, widget=forms.Textarea,
+                                  initial=company_data.get('description'))
+    keywords = forms.CharField(label="Keywords", required=False, widget=forms.Textarea,
+                               initial=company_data.get('keywords'))
     country = CountryField(blank_label='Select Country').formfield(label="Country", required=False)
     city = forms.CharField(label="City", max_length=20, required=False, validators=[
         validators.RegexValidator(regex=REGEX_PATTERS['NAME'], message="City must be Alphabet!")])
@@ -38,4 +54,5 @@ class CompanySettingsForm(forms.Form):
     admin_email = forms.EmailField(label="Admin Email", max_length=100, required=False,
                                    validators=[validators.EmailValidator(message="Admin Email Not Valid!")])
     status = forms.BooleanField(label="Website in Maintenance mode:", required=False)
-    closed_msg = forms.CharField(label="Closed Message", required=False, widget=forms.Textarea, initial=company_data.close_msg)
+    closed_msg = forms.CharField(label="Closed Message", required=False, widget=forms.Textarea,
+                                 initial=company_data.get('close_msg'))
