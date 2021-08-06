@@ -329,7 +329,7 @@ function drawDataTableRows(rowsData, isValidate, isLastPage) {
   // console.log(currentRowData[0]);
   // console.log(currentRowData);
   // check if it is last page btn
-  if(isLastPage === true){
+  if (isLastPage === true) {
     $("[data-action='next'], [data-action='last']").attr("disabled", "disabled").addClass("disabled").tooltip('hide');
   }
   if ((typeof currentRowData === undefined) || (typeof currentRowData === 'undefined')) {
@@ -1558,7 +1558,7 @@ function uploadDataFileFunction(formInputEle) {
 
 
       }
-      
+
     } else {
       // in case the user upload wrong file type
       swAlert("Error!", 'There is error while uploading the data file, please try again later', "error");
@@ -1851,9 +1851,10 @@ function downloadUpdatedDataFile(btn) {
 
 // this function will enable and disable data handler navigation button
 function enableDisableDhBtn(status) {
+  const btn = $("#dataHandlerWizardBtn");
   if (status === 'disable') {
-    $("#dataHandlerWizardBtn").attr("disabled", 'disabled').addClass("not-allowed-cursor disabled");
+    btn.attr("disabled", 'disabled').addClass("not-allowed-cursor disabled pointer-event-none").removeClass('pointer-event-all');
   } else if (status === 'enable') {
-    $("#dataHandlerWizardBtn").removeAttr("disabled").removeClass("not-allowed-cursor disabled");
+    btn.removeAttr("disabled").removeClass("not-allowed-cursor disabled pointer-event-none").addClass('pointer-event-all');
   }
 }
