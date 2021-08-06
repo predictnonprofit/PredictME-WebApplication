@@ -95,7 +95,7 @@ function saveClickedColumn(isLeftCol, colIdx) {
 
 function selectAvaliableColumns() {
   // single click on the avaliable column
-  $("ul#availableColumnsList").on("click", 'li', function(ev) {
+  $("ul#availableColumnsList").on("click", 'li', function (ev) {
     try {
       ev.preventDefault();
       $("#availableColumnsList li.active").removeClass("active");
@@ -109,7 +109,7 @@ function selectAvaliableColumns() {
 
   });
 
-  $("ul#availableColumnsList").on("dblclick", 'li', function(ev) {
+  $("ul#availableColumnsList").on("dblclick", 'li', function (ev) {
     ev.preventDefault();
     try {
 
@@ -135,7 +135,7 @@ function selectAvaliableColumns() {
 function selectPickedRightColumns() {
 
   let pickedColumnsSeList = $(".colPickedItem");
-  $('ul#pickedColumnsList').on('click', 'li', function(ev) {
+  $('ul#pickedColumnsList').on('click', 'li', function (ev) {
     ev.preventDefault();
     $("#pickedColumnsList li.active").removeClass("active");
     $(this).addClass('active');
@@ -145,7 +145,7 @@ function selectPickedRightColumns() {
 
   });
 
-  $("ul#pickedColumnsList").on("dblclick", 'li', function(ev) {
+  $("ul#pickedColumnsList").on("dblclick", 'li', function (ev) {
     ev.preventDefault();
     const [idx, colName, colDataType] = extractRightColData(clickedRightColumnItem);
     enableLeftColumnItem(idx);
@@ -199,7 +199,7 @@ function addAllRightColumnItems() {
   // this when member clicked on the left column to add new item to right column
   $("#pickedColumnsList").empty(); // to avoid duplicate items in the list
   let availableColumnsList = $("#availableColumnsList li");
-  availableColumnsList.each(function(cIdx, column) {
+  availableColumnsList.each(function (cIdx, column) {
     const columnIndex = cIdx;
     const columnItem = $(column);
     clickedLeftColumnItem = columnItem;
@@ -218,7 +218,7 @@ function addAllRightColumnItems() {
 function addAllLeftColumnItems() {
   // this when member clicked on the right column to get back old item to left column
   const pickedColumnsList = $("#pickedColumnsList li");
-  pickedColumnsList.each(function(cIdx, column) {
+  pickedColumnsList.each(function (cIdx, column) {
     const columnIndex = parseInt(cIdx);
     const columnItem = $(column);
     clickedRightColumnItem = columnItem;
@@ -350,7 +350,7 @@ function validatePickedColumns(evt) {
 function resetAllColumnsToDefault() {
   $("#pickedColumnsList").empty();
   let availableColumnsList = $("#availableColumnsList li");
-  availableColumnsList.each(function(cIdx, column) {
+  availableColumnsList.each(function (cIdx, column) {
     const colIt = $(column);
     colIt.removeClass("disabled bg-gray-200");
     clickedLeftColumnItem = "";
@@ -364,10 +364,10 @@ function resetAllColumnsToDefault() {
 
 function sendRequestValidate() {
   let validateResponseObj = validateColumnsAjaxRequest(selectedValidateColumns);
-  $.when(validateResponseObj).done(function(data, textStatus, jqXHR) {
+  $.when(validateResponseObj).done(function (data, textStatus, jqXHR) {
     if ((textStatus === 'success') && (jqXHR.status === 200)) {
       const notValideRequest = notValidateColumnsRequest(notValidateColumns);
-      $.when(notValideRequest).done(function(notVdata, notVTextStatus, notVjqXHR) {
+      $.when(notValideRequest).done(function (notVdata, notVTextStatus, notVjqXHR) {
         if ((notVTextStatus === 'success') && (notVjqXHR.status === 200)) {
           setSessionLastName("data_process");
           for (let key in selectedValidateColumns) {
@@ -396,7 +396,7 @@ function sendRequestValidate() {
             if (result.value) {
               // $("#validateColumnsBtn").attr("disabled", 'disabled').toggleClass('disabled');
               sendSelectedColumns();
-              dhWizardBtnWrapper.removeAttr("title").removeAttr("data-toggle");
+              $('#dhWizardBtnWrapper').tooltip('dispose');
               enableDisableDhBtn("enable");
               $("#validateColumnsBtn").html("Revalidate Columns").addClass("disabled").attr('disabled', 'disabled');
             } else if (
@@ -404,8 +404,9 @@ function sendRequestValidate() {
               result.dismiss === Swal.DismissReason.cancel
             ) {
               $("#validateColumnsBtn").html("Revalidate Columns");
-              dhWizardBtnWrapper.attr("data-toggle", "tooltip");
-              dhWizardBtnWrapper.attr("title", "please revalidate columns");
+              $('#dhWizardBtnWrapper').tooltip('dispose').attr("title", "Please revalidate columns")
+                .tooltip('fixTitle').tooltip('update').tooltip('enable');
+              // $('#dhWizardBtnWrapper').tooltip('hide');
               Swal.close();
             }
           })
@@ -539,7 +540,7 @@ function columnOptionsChangeSaved(ele, option) {
       element.attr("title", `Default Data Type ${element.data('value').toUpperCase()}\nCurrent data format ${element.data('value').toUpperCase()}`);
 
       // when member click on the reset unique button
-      tmpIDSpan.on("click", function(e) {
+      tmpIDSpan.on("click", function (e) {
         let clickedResetID = $(this);
         let clickedResetIDParent = $(this).parent().find("select");
         $(".column-option-dtype  option:contains('Unique Identifier (ID)')").removeAttr("disabled");
@@ -626,7 +627,7 @@ function setCriterias() {
   }
 
 
-  $(".column-option-dtype").each(function(idx, val) {
+  $(".column-option-dtype").each(function (idx, val) {
     let currTmpEle = $(val);
 
     if ((currTmpEle.val() !== '') && (currTmpEle.val() !== null)) {
@@ -695,14 +696,14 @@ let obsConfig = {
   subtree: true
 };
 //--- Add a target node to the observer. Can only add one node at a time.
-targetNodes.each(function() {
+targetNodes.each(function () {
   myObserver.observe(this, obsConfig);
 });
 
 function mutationHandler(mutationRecords) {
 
   // console.info("mutationHandler:");
-  mutationRecords.forEach(function(mutation) {
+  mutationRecords.forEach(function (mutation) {
     // this condition if one the childes is delete or remove from the dom
     if (typeof mutation.removedNodes === 'object') {
       try {
@@ -770,7 +771,7 @@ function mutationHandler(mutationRecords) {
 }
 
 
-jQuery(document).ready(function() {
+jQuery(document).ready(function () {
   //mutationObservFunc();
   selectAvaliableColumns();
   selectPickedRightColumns();
@@ -785,13 +786,13 @@ jQuery(document).ready(function() {
   let validateColumnsBtn = $("#validateColumnsBtn");
   validateColumnsBtn.on("click", validatePickedColumns);
   let columnsDataTypeOptions = $(".column-option-dtype");
-  $("#pickedColumnsList").on("change", ".column-option-dtype", function(evt, option) {
+  $("#pickedColumnsList").on("change", ".column-option-dtype", function (evt, option) {
     columnOptionsChangeSaved(this, option);
   });
 
 
 
-  let totalInterval = setInterval(function() {
+  let totalInterval = setInterval(function () {
     setColumnsTotal();
   }, 200);
 
