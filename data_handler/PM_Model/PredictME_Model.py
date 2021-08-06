@@ -51,6 +51,8 @@ import locale
 
 # Ibrahim's imports
 from pathlib import Path
+import traceback
+from predict_me.my_logger import (log_exception, log_info)
 from django.conf import settings
 from termcolor import cprint
 
@@ -342,7 +344,10 @@ def calculate_feature_importance(df_info, feature_names, feature_value, no_donat
     sorted_idx = np.argsort(feature_imp)
     pos = np.arange(sorted_idx.shape[0]) + .5
     if (no_donation_columns or is_similar_file == True):
-
+        model_output_data['feature_importance_values'] = """
+        Note: Feature Importance is based on the testing set of the similar donor file stored in Predict Me's server.
+        No categorical features processed from the input file for plotting a Feature Importance.
+        """
         pdf.set_font(font_style, size=10)
         pdf.ln(1)
         pdf.multi_cell(h=5.0, w=0,
@@ -700,14 +705,6 @@ def model_selection(X, y, X_pred, donation_columns, cat_col, donor_df, no_donati
 
     test_list = [chr(x) for x in range(ord('a'), ord('z') + 1)]
 
-    # save donation columns
-    cprint(f"Model donation_columns --> {donation_columns}", 'cyan')
-    model_output_data['donation_columns'] = donation_columns
-
-    # save the categorical columns
-    cprint(f"cat_col.tolist() --> {cat_col.tolist()}", 'green')
-    model_output_data['categorical_data_features'] = cat_col.tolist()
-
     if (no_donation_columns or is_similar_file == True):
         pdf.multi_cell(h=5.0, w=0,
                        txt="     3. Donation Columns: The input data is missing donation information (no Target Value) OR only has one class (class")
@@ -728,6 +725,13 @@ def model_selection(X, y, X_pred, donation_columns, cat_col, donor_df, no_donati
         pdf.multi_cell(h=5.0, w=0, txt="         Processing (NLP) method to maximize the model performance.")
 
         pdf.ln(0.5)
+        model_output_data['donation_columns'] = """
+            Donation Columns: The input data is missing donation information (no Target Value) OR only has one class 
+            (class") donor or class non-donor 'data imbalance') to list donation column(s). 
+             In such cases, to execute the model") successfully, data features from the input file are matched against 
+             data features on the similar donor files stored in") the Predict Me's server. Donor file with the highest 
+             match rate is selected and processed using Natural Language Processing (NLP) method to maximize the model performance.
+        """.capitalize()
 
     else:
         pdf.multi_cell(h=5.0, w=0, txt="     3. Donation Columns:")
@@ -736,6 +740,8 @@ def model_selection(X, y, X_pred, donation_columns, cat_col, donor_df, no_donati
             pdf.multi_cell(h=5.0, w=0, txt="              {}. {}".format(test_list[i], donation_columns[i]))
             pdf.ln(0.3)
         pdf.ln(0.5)
+        # save donation columns
+        model_output_data['donation_columns'] = donation_columns
 
     if (len(cat_col) > len(test_list) and is_similar_file == False):
         cat_col = random.sample(cat_col, len(test_list))
@@ -746,6 +752,9 @@ def model_selection(X, y, X_pred, donation_columns, cat_col, donor_df, no_donati
         for i in range(len(cat_col)):
             pdf.multi_cell(h=5.0, w=0, txt="              {}. {}".format(test_list[i], cat_col[i]))
             pdf.ln(0.3)
+            # save the categorical columns
+        cprint(f"cat_col.tolist() --> {cat_col.tolist()}", 'green')
+        model_output_data['categorical_data_features'] = cat_col.tolist()
     else:
         pdf.multi_cell(h=5.0, w=0,
                        txt="     4. Categorical Data Features: No categorical data features processed from the input file due to missing ")
@@ -759,6 +768,11 @@ def model_selection(X, y, X_pred, donation_columns, cat_col, donor_df, no_donati
                        txt="          with the highest match rate is selected to calculate data features importance.")
 
         pdf.ln(0.5)
+        model_output_data['categorical_data_features'] = """
+            Categorical Data Features: No categorical data features processed from the input file due to missing 
+            donation information OR only has one class to list categorical data features. In such cases, the donor file
+            with the highest match rate is selected to calculate data features importance.
+        """.capitalize()
 
     pdf.set_font(font_style, 'BU', size=10)
     pdf.multi_cell(h=7.5, w=0, txt="B. Important Metrics Definition")
@@ -804,7 +818,6 @@ def model_selection(X, y, X_pred, donation_columns, cat_col, donor_df, no_donati
 
     pdf.multi_cell(h=5.0, w=0, txt="     4. Data Imbalance: Skewness of the dataset.")
     pdf.ln(0.5)
-
     pdf.multi_cell(h=5.0, w=0,
                    txt="     5. Training Set: Subset of data to train a model. Test set: Subset of data to test the trained model.")
     pdf.ln(0.5)
@@ -1209,155 +1222,168 @@ skewed_target_value_similar = False
 # Run the model from the view
 
 def run_model(data_file_path, donation_cols, text_cols, send_obj):
-    global skewed_target_value, send_data_obj, model_output_data
-    send_data_obj = send_obj
-    start_time = time.time()
-    pdf.ln(2)
-    today = date.today()
-    # today_date = today.strftime("%B %d, %Y")
-    today_date = today.strftime("%b-%d-%Y")
-    pdf.set_font(font_style, 'B', size=10)
-    pdf.multi_cell(h=5.0, w=0, txt="Predictive Modeling Results", align="C")
-    pdf.ln(0.5)
-    pdf.set_font(font_style, 'B', size=8)
-    pdf.multi_cell(h=5.0, w=0, txt="Report Date: {}".format(today_date), align="C")
-    pdf.ln(3)
-    delete_old_plots()
+    try:
+        global skewed_target_value, send_data_obj, model_output_data
+        send_data_obj = send_obj
+        start_time = time.time()
+        pdf.ln(2)
+        today = date.today()
+        # today_date = today.strftime("%B %d, %Y")
+        today_date = today.strftime("%b-%d-%Y")
+        pdf.set_font(font_style, 'B', size=10)
+        pdf.multi_cell(h=5.0, w=0, txt="Predictive Modeling Results", align="C")
+        pdf.ln(0.5)
+        pdf.set_font(font_style, 'B', size=8)
+        pdf.multi_cell(h=5.0, w=0, txt="Report Date: {}".format(today_date), align="C")
+        pdf.ln(3)
+        delete_old_plots()
 
-    file_path = data_file_path
-    donation_columns = ast.literal_eval(str(donation_cols))
-    text_columns = ast.literal_eval(str(text_cols))  # save the text columns
+        file_path = data_file_path
+        donation_columns = ast.literal_eval(str(donation_cols))
+        text_columns = ast.literal_eval(str(text_cols))  # save the text columns
 
-    donor_df = read_input_file(file_path)
-    # save the categorical columns
-    categorical_columns = identify_categorical_columns(donor_df, text_columns)
-    pdf.set_font(font_style, 'BU', size=10)
-    pdf.multi_cell(h=7.5, w=0, txt="A. Data Input Summary")
-    pdf.set_font(font_style, size=10)
-    pdf.ln(1)
-    donor_df = remove_rows_containg_all_null_values(donor_df)
-    no_donations_columns = False
-    skewed_target_value = False
-    is_similar_file = False
-    skewed_target_value_similar = False
-    similar_filename = None
-    common_features = None
-    y = []  # list of target values
+        donor_df = read_input_file(file_path)
+        # save the categorical columns
+        categorical_columns = identify_categorical_columns(donor_df, text_columns)
+        pdf.set_font(font_style, 'BU', size=10)
+        pdf.multi_cell(h=7.5, w=0, txt="A. Data Input Summary")
+        pdf.set_font(font_style, size=10)
+        pdf.ln(1)
+        donor_df = remove_rows_containg_all_null_values(donor_df)
+        no_donations_columns = False
+        skewed_target_value = False
+        is_similar_file = False
+        skewed_target_value_similar = False
+        similar_filename = None
+        common_features = None
+        y = []  # list of target values
 
-    # check if donation_columns exist
-    if (len(donation_columns) != 0):
-        donation_columns_df = process_donation_columns(donor_df, donation_columns, no_donations_columns,
-                                                       skewed_target_value)
-        # check for skewness
-        no_donations_columns, skewed_target_value = check_skew_donation_cols(donation_columns_df, donation_columns)
+        # check if donation_columns exist
+        if (len(donation_columns) != 0):
+            donation_columns_df = process_donation_columns(donor_df, donation_columns, no_donations_columns,
+                                                           skewed_target_value)
+            # check for skewness
+            no_donations_columns, skewed_target_value = check_skew_donation_cols(donation_columns_df, donation_columns)
 
-        # when there is only one class in the file, "no_donations_columns"
-        # becomes true
-        if (no_donations_columns == True):
+            # when there is only one class in the file, "no_donations_columns"
+            # becomes true
+            if (no_donations_columns == True):
+                df, donation_columns_similar, donation_columns_df_similar, skewed_target_value_similar, similar_filename, common_features = find_similar_files(
+                    file_path, no_donations_columns, skewed_target_value)
+                if (len(df) == 0):
+                    raise ValueError(
+                        "The similar file is not found, and the donation columns of input file does not exist. "
+                        "Please provide donation columns on your donor file.")
+
+                else:  # if similar file found
+                    is_similar_file = True
+                    donation_columns_df = []
+            else:
+                skewed_target_value_similar = False
+                df = donor_df
+
+        # donation columns of input file do not exist.  So, find the similar file
+        # Note: When donation columns of input file do not exist, skewness cannot
+        # be measured.
+        else:
+            no_donations_columns = True
             df, donation_columns_similar, donation_columns_df_similar, skewed_target_value_similar, similar_filename, common_features = find_similar_files(
                 file_path, no_donations_columns, skewed_target_value)
+
+            # if the similar file Not found
             if (len(df) == 0):
                 raise ValueError(
-                    "The similar file is not found, and the donation columns of input file does not exist. "
+                    "The similar file is not found, and the donation columns of input file does not exist.  "
                     "Please provide donation columns on your donor file.")
 
             else:  # if similar file found
                 is_similar_file = True
                 donation_columns_df = []
+
+        # ********************************************************************************************
+
+        if (is_similar_file):
+            info_columns = identify_info_columns(df, donation_columns_similar)
+            y_similar = list(donation_columns_df_similar['target'])
+            if no_donations_columns == False:
+                y = list(donation_columns_df['target'])
         else:
-            skewed_target_value_similar = False
-            df = donor_df
-
-    # donation columns of input file do not exist.  So, find the similar file
-    # Note: When donation columns of input file do not exist, skewness cannot
-    # be measured.
-    else:
-        no_donations_columns = True
-        df, donation_columns_similar, donation_columns_df_similar, skewed_target_value_similar, similar_filename, common_features = find_similar_files(
-            file_path, no_donations_columns, skewed_target_value)
-
-        # if the similar file Not found
-        if (len(df) == 0):
-            raise ValueError("The similar file is not found, and the donation columns of input file does not exist.  "
-                             "Please provide donation columns on your donor file.")
-
-        else:  # if similar file found
-            is_similar_file = True
-            donation_columns_df = []
-
-    # ********************************************************************************************
-
-    if (is_similar_file):
-        info_columns = identify_info_columns(df, donation_columns_similar)
-        y_similar = list(donation_columns_df_similar['target'])
-        if no_donations_columns == False:
+            info_columns = identify_info_columns(df, donation_columns)
             y = list(donation_columns_df['target'])
-    else:
-        info_columns = identify_info_columns(df, donation_columns)
-        y = list(donation_columns_df['target'])
-        y_similar = y
+            y_similar = y
 
-    df_info = remove_columns_unique_values(df, info_columns)
-    if len(info_columns) < 3:
-        raise ValueError("In order for the model to run, please supply a minimum of three text columns on your donor "
-                         "file.")
+        df_info = remove_columns_unique_values(df, info_columns)
+        if len(info_columns) < 3:
+            raise ValueError(
+                "In order for the model to run, please supply a minimum of three text columns on your donor "
+                "file.")
 
-    processed_text, tfidf_matrix, feature_names, df_info, vectorizer = feature_extraction(df_info)
+        processed_text, tfidf_matrix, feature_names, df_info, vectorizer = feature_extraction(df_info)
 
-    if (is_similar_file and no_donations_columns == False):  # Similar file is used (donation columns exist)
-        input_file_text_cols = identify_info_columns(donor_df, donation_columns)
-        donor_df_text = donor_df[input_file_text_cols]
-        X_pred = transform_features(vectorizer, donor_df_text)
-        X_train = tfidf_matrix
+        if (is_similar_file and no_donations_columns == False):  # Similar file is used (donation columns exist)
+            input_file_text_cols = identify_info_columns(donor_df, donation_columns)
+            donor_df_text = donor_df[input_file_text_cols]
+            X_pred = transform_features(vectorizer, donor_df_text)
+            X_train = tfidf_matrix
 
-    elif (is_similar_file and no_donations_columns):  # Simialr file is used but donation columns do not exist
-        X_pred = transform_features(vectorizer, donor_df)
-        X_train = tfidf_matrix
+        elif (is_similar_file and no_donations_columns):  # Simialr file is used but donation columns do not exist
+            X_pred = transform_features(vectorizer, donor_df)
+            X_train = tfidf_matrix
 
-    else:
-        X_pred = tfidf_matrix
-        X_train = tfidf_matrix
+        else:
+            X_pred = tfidf_matrix
+            X_train = tfidf_matrix
 
-    categorical_df = df_info.columns[df_info.columns.isin(categorical_columns)]
-    # df_info.columns[0:-1]
-    if (is_similar_file == True and similar_filename != None and common_features != None):
-        print("The most similar file to the input file is: {} \n"
-              "% of common features in original input file and similar file is: {:.2f} \n"
-              "Categorical columns of the similar file used for prediction models are: {}".format(similar_filename,
-                                                                                                  common_features,
-                                                                                                  ", ".join(
-                                                                                                      df_info.columns[
-                                                                                                      0:-1])))
+        categorical_df = df_info.columns[df_info.columns.isin(categorical_columns)]
+        # df_info.columns[0:-1]
+        if (is_similar_file == True and similar_filename != None and common_features != None):
+            print("The most similar file to the input file is: {} \n"
+                  "% of common features in original input file and similar file is: {:.2f} \n"
+                  "Categorical columns of the similar file used for prediction models are: {}".format(similar_filename,
+                                                                                                      common_features,
+                                                                                                      ", ".join(
+                                                                                                          df_info.columns[
+                                                                                                          0:-1])))
 
-    model_f1_score, classification_full_pred, classification_full_pred_prob, feature_importance_dict, roc_fpr, \
-    roc_tpr, roc_auc, y_test_dict, y_pred_dict, top3_models = model_selection(X_train, y_similar, X_pred,
-                                                                              donation_columns, categorical_df,
-                                                                              donor_df,
-                                                                              no_donations_columns, skewed_target_value,
-                                                                              skewed_target_value_similar,
-                                                                              is_similar_file)
+        model_f1_score, classification_full_pred, classification_full_pred_prob, feature_importance_dict, roc_fpr, \
+        roc_tpr, roc_auc, y_test_dict, y_pred_dict, top3_models = model_selection(X_train, y_similar, X_pred,
+                                                                                  donation_columns, categorical_df,
+                                                                                  donor_df,
+                                                                                  no_donations_columns,
+                                                                                  skewed_target_value,
+                                                                                  skewed_target_value_similar,
+                                                                                  is_similar_file)
 
-    df_final, best_model = generate_prediction_file(donor_df, model_f1_score, classification_full_pred,
-                                                    classification_full_pred_prob, y, feature_importance_dict, roc_fpr,
-                                                    roc_tpr,
-                                                    roc_auc, y_test_dict, y_pred_dict, feature_names, df_info,
-                                                    donation_columns_df,
-                                                    no_donations_columns, skewed_target_value,
-                                                    skewed_target_value_similar, top3_models, is_similar_file)
+        df_final, best_model = generate_prediction_file(donor_df, model_f1_score, classification_full_pred,
+                                                        classification_full_pred_prob, y, feature_importance_dict,
+                                                        roc_fpr,
+                                                        roc_tpr,
+                                                        roc_auc, y_test_dict, y_pred_dict, feature_names, df_info,
+                                                        donation_columns_df,
+                                                        no_donations_columns, skewed_target_value,
+                                                        skewed_target_value_similar, top3_models, is_similar_file)
 
-    prediction_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "prediction"))
-    pdf_report_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "PdfReport"))
-    file_path = file_path.split("/")[-1]
-    pdf.output("{}/{}_{}_{}_report.pdf".format(pdf_report_path, file_path.split(".")[0], best_model, today_date))
-    MODEL_FILES_PATH['PDF_FILE'] = "{}/{}_{}_{}_report.pdf".format(pdf_report_path, file_path.split(".")[0], best_model,
-                                                                   today_date)
-    df_final.to_csv(
-        "{}/{}_{}_{}_prediction.csv".format(prediction_path, file_path.split(".")[0], best_model, today_date),
-        index=None)
-    MODEL_FILES_PATH['CSV_FILE'] = "{}/{}_{}_{}_prediction.csv".format(prediction_path, file_path.split(".")[0],
+        prediction_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "prediction"))
+        pdf_report_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "PdfReport"))
+        file_path = file_path.split("/")[-1]
+        pdf.output("{}/{}_{}_{}_report.pdf".format(pdf_report_path, file_path.split(".")[0], best_model, today_date))
+        MODEL_FILES_PATH['PDF_FILE'] = "{}/{}_{}_{}_report.pdf".format(pdf_report_path, file_path.split(".")[0],
                                                                        best_model,
                                                                        today_date)
+        df_final.to_csv(
+            "{}/{}_{}_{}_prediction.csv".format(prediction_path, file_path.split(".")[0], best_model, today_date),
+            index=None)
+        MODEL_FILES_PATH['CSV_FILE'] = "{}/{}_{}_{}_prediction.csv".format(prediction_path, file_path.split(".")[0],
+                                                                           best_model,
+                                                                           today_date)
 
-    print("total run time is {}".format(round(time.time() - start_time, 3)))
-    MODEL_FILES_PATH['OUTPUT'] = model_output_data
-    return MODEL_FILES_PATH
+        print("total run time is {}".format(round(time.time() - start_time, 3)))
+        MODEL_FILES_PATH['OUTPUT'] = model_output_data
+        return MODEL_FILES_PATH
+    except Exception as error:
+        cprint(traceback.format_exc(), 'red', attrs=['bold'])
+        log_exception(traceback.format_exc())
+        return {}
+    else:
+        cprint(f"The Else block of model exception", 'green', attrs=['bold'])
+        return MODEL_FILES_PATH
