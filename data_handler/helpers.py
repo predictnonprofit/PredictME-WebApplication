@@ -2,7 +2,7 @@ from pathlib import Path
 import os
 from datetime import date
 from django.http import HttpResponse
-from prettyprinter import pprint
+from prettyprinter import pprint, cpprint
 from seaborn.external.docscrape import header
 from django.conf import settings
 from .models import (DataFile, DataHandlerSession, RunHistory)
@@ -91,6 +91,7 @@ def save_data_file_rounded(file_path):
             df_copy.to_csv(data_file.as_posix(), header=new_cleand_cols, index=False, sep=',')
 
         cprint("save done", 'green')
+        cprint(data_file.as_posix(), 'yellow', 'on_grey')
     except Exception as ex:
         cprint(traceback.format_exc(), 'red')
         delete_data_file(file_path)
@@ -618,8 +619,6 @@ def get_df_from_data_file(file_path):
             if (data_file.suffix == ".xlsx") or (data_file.suffix == ".xls"):
                 df = pd.read_excel(data_file.as_posix())
                 df_columns = df.columns.tolist()
-                # del df  # to delete the df and get the new one
-                # df = pd.read_excel(data_file.as_posix(), header=None, names=df_columns)
             elif data_file.suffix == ".csv":
                 df = pd.read_csv(data_file.as_posix(), sep=',', skipinitialspace=True)
                 df_columns = df.columns.tolist()
@@ -1002,7 +1001,7 @@ def save_modal_output_to_json(file_name: str, data_to_save: dict) -> str:
     try:
         data_handler_app = apps.get_app_config('data_handler')
         data_handler_path = data_handler_app.path
-        modal_output_dir = Path(data_handler_path) / "PM_Model" / 'modal_output_files'
+        modal_output_dir = Path(data_handler_path) / "PM_Model" / 'model_output_files'
         json_output_file = modal_output_dir / file_name
         json_file = open(json_output_file.as_posix(), 'w')
         json.dump(data_to_save, json_file, indent=3, sort_keys=True)
@@ -1037,3 +1036,38 @@ def extract_model_output_from_json(json_file_path: str) -> dict:
         cprint(traceback.format_exc(), 'red')
         log_exception(traceback.format_exc())
         return json_data
+
+
+def get_geo_location_data(file_path: str, geo_location_columns: list) -> dict:
+    """this function will return the geo location data from data session file
+
+    Args:
+        file_path (str): data file path
+        geo_location_columns (list): list of geo-location columns
+    """
+    df = None
+    try:
+        data_file = Path(file_path)
+
+        # check if the file exists
+        if data_file.exists():
+            # check if the geo_location_columns not None
+            if geo_location_columns is not None:
+                if (data_file.suffix == ".xlsx") or (data_file.suffix == ".xls"):
+                    df = pd.read_excel(data_file.as_posix(), usecols=geo_location_columns)
+                elif data_file.suffix == ".csv":
+                    df = pd.read_csv(data_file.as_posix(), sep=',', skipinitialspace=True, usecols=geo_location_columns)
+
+                    return df.to_dict()
+        else:
+            # file not exists
+            raise FileNotFoundError("Data file not found!")
+    except Exception as ex:
+        cprint(traceback.format_exc(), 'red')
+        log_exception(traceback.format_exc())
+        return None
+    else:
+        if geo_location_columns is not None:
+            return df.to_dict()
+        else:
+            return None
