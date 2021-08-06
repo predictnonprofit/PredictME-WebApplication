@@ -12,14 +12,6 @@
 <link href="{% static 'assets/plugins/custom/prismjs/prismjs.bundle.css' %}" rel="stylesheet" type="text/css" />
 {% endblock customcss %}
 
-{% block pagename %}
-{% if get_user_membership.data_file_obj.data_handler_session_label == "" %}
-UNNAMED SESSION!
-{% else %}
-{{get_user_membership.data_file_obj.data_handler_session_label}}
-
-{% endif %}
-{% endblock pagename %}
 
 {% block content %}
 
@@ -52,40 +44,58 @@ UNNAMED SESSION!
     </div>
     <!--end:: Alert-->
     <!--Begin::Row-->
-    <div class="row">
+    <div class="row mb-5">
 
         <div class="col-xl-4 col-lg-4">
+            <!-- Start full card wrapper -->
+            <section id="training-and-testing-full-wrapper">
+                <!-- Start the card -->
+                <div class="card card-custom">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span class="card-icon">
+                                <i class="icon-xl la la-chart-pie text-primary"></i>
+                            </span>
+                            <h3 class="card-label">
+                                Train/Test Set
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <!-- Start Loader Image -->
+                        <div class="dashboard-loader">
+                            <img src="{% static 'images/ajax-loader.gif' %}" alt="Loading..." />
+                        </div>
+                        <!-- End Loader Image -->
+
+                        <!-- Start train and test data chart -->
+                        <section id='trainAndTestWrapper' class="my-transition d-none">
+                            <!--begin:: Widgets/Revenue Change-->
+                            <div id="session_dashboard_training_testing_chart"
+                                class="d-flex justify-content-center my-transition"></div>
+                            <!--end:: Widgets/Revenue Change-->
+                        </section>
+                        <!-- End train and test data chart -->
 
 
-            <!--begin:: Widgets/Revenue Change-->
-            <div class="card card-custom gutter-b">
-                <div class="card-header">
-                    <div class="card-title">
-                        <h3 class="card-label">
-                            Train/Test Set
-                        </h3>
-
+                        <!-- Start No train and test data  -->
+                        <section id="noTrainingAndTestingWrapper" class="d-none my-transition">
+                            <p class="text-dark-50 font-weight-bold" id='noTrainingAndTestingBody'></p>
+                        </section>
+                        <!-- End No train and test data  -->
                     </div>
                 </div>
-                <div class="card-body">
-                    <!-- <span class="text-muted mb-3 d-inline-block">
-                        Model Accuracy breakdown by cities
-                    </span> -->
-                    <!--begin::Chart-->
-                    <div id="session_dashboard_training_testing_chart" class="d-flex justify-content-center"></div>
-                    <!--end::Chart-->
-                </div>
-            </div>
+                <!-- End the card -->
+            </section>
+            <!-- End full card wrapper -->
 
-            <!--end:: Widgets/Revenue Change-->
+
         </div>
-
-
 
         <div class="col-xl col-lg">
             {% if not donation_info.all_info %}
             {# in case no donation columns for this session #}
-            <div class="card card-custom gutter-b bg-diagonal bg-diagonal-light-warning">
+            <div class="card card-custom gutter-b bg-diagonal bg-diagonal-light-warning h-100">
                 <div class="card-body">
                     <div class="d-flex align-items-center justify-content-between p-4 flex-lg-wrap flex-xl-nowrap">
                         <div class="d-flex flex-column mr-5">
@@ -93,7 +103,15 @@ UNNAMED SESSION!
                                 No Donation Columns.
                             </p>
                             <p class="text-dark-50">
-                                You do not pick donation columns before run the model for this session
+                                Donation Columns: The input data is missing donation information (no Target Value) OR
+                                only has one class (class
+                                donor or class non-donor 'data imbalance') to list donation column(s). In such cases, to
+                                execute the model
+                                successfully, data features from the input file are matched against data features on the
+                                similar donor files stored in
+                                the Predict Me's server. Donor file with the highest match rate is selected and
+                                processed using Natural Language
+                                Processing (NLP) method to maximize the model performance
                             </p>
                         </div>
                         <div class="ml-6 ml-lg-0 ml-xxl-6 flex-shrink-0">
@@ -106,7 +124,7 @@ UNNAMED SESSION!
             </div>
             {% else %}
             {# in case donation columns exists for this session #}
-            <div class="card card-custom gutter-b">
+            <div class="card card-custom gutter-b h-100">
                 <div class="card-header">
                     <div class="card-title">
                         <h3 class="card-label">
@@ -186,7 +204,7 @@ UNNAMED SESSION!
 
         <div class="col">
 
-            <div class="card">
+            <div class="card h-100">
                 <div class="card-header">
                     <header>
                         <h3 data-toggle="collapse" data-target="#categoricalCollapse" aria-expanded="false"
@@ -195,10 +213,17 @@ UNNAMED SESSION!
                         </h3>
                     </header>
                 </div>
-                <div class="card-body" style="overflow-x: auto; white-space: nowrap;">
+                <div class="card-body" style="overflow-x: auto">
                     <div class="collapse show active" id="categoricalCollapse">
                         <div class="card card-body">
                             <div class="d-flex flex-row">
+                                {% if model_output_data.categorical_data_features|get_type == "str" %}
+                                <div class="alert alert-secondary p-5 font-weight-bold" role="alert">
+                                    <h4>
+                                        {{ model_output_data.categorical_data_features|title }}
+                                    </h4>
+                                </div>
+                                {% else %}
                                 {% for item in model_output_data.categorical_data_features %}
                                 <div class="mx-2">
                                     <button type="button" class="btn btn-primary font-weight-bold btn-pill">
@@ -206,6 +231,8 @@ UNNAMED SESSION!
                                     </button>
                                 </div>
                                 {% endfor %}
+                                {% endif %}
+
                             </div>
 
                         </div>
@@ -221,7 +248,7 @@ UNNAMED SESSION!
 
         <div class="col">
 
-            <div class="card">
+            <div class="card h-100">
                 <div class="card-header">
                     <header>
                         <h3>
@@ -285,39 +312,88 @@ UNNAMED SESSION!
     <div class="row">
 
         <div class="col-xl-6 col-lg-6">
+            <!-- Start full card wrapper -->
+            <section id="important-features-full-wrapper">
+                <div class="card card-custom h-100">
+                    <div class="card-header" style="z-index: 1;">
+                        <div class="card-title">
+                            <span class="card-icon">
+                                <i class="icon-xl la la-chart-bar text-primary"></i>
+                            </span>
+                            <h3 class="card-label">
+                                Important Features
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <!-- Start Loader Image -->
+                        <div class="dashboard-loader">
+                            <img src="{% static 'images/ajax-loader.gif' %}" alt="Loading..." />
+                        </div>
+                        <!-- End Loader Image -->
 
-            <div class="card card-custom gutter-b">
-                <div class="card-header">
-                    <div class="card-title">
-                        <h3 class="card-label">Important Features</h3>
+                        <!-- Start Important Features -->
+                        <section id='importantFeaturesWrapper' class="my-transition d-none">
+                            <!--begin::Chart-->
+                            <div id="session_dashboard_important_features_chart" class="d-flex justify-content-center">
+                            </div>
+                            <!--end::Chart-->
+                        </section>
+                        <!-- End Important Features -->
+
+                        <!-- Start No Important Features  -->
+                        <section id="noImportantFeaturesWrapper" class="d-none my-transition">
+                            <p class="text-dark-50 font-weight-bold" id='noImportantFeaturesBody'></p>
+                        </section>
+                        <!-- End No Important Features  -->
+
+
                     </div>
                 </div>
-                <div class="card-body">
-                    <!--begin::Chart-->
-                    <div id="session_dashboard_important_features_chart" class="d-flex justify-content-center"></div>
-                    <!--end::Chart-->
-                </div>
-            </div>
-            <!--end::Card-->
+                <!-- End full card wrapper -->
+
+            </section>
         </div>
 
 
 
         <div class="col-xl-6 col-lg-6">
-            <!--begin::Card-->
-            <!--begin::Card-->
-            <div class="card card-custom gutter-b">
-                <div class="card-header">
-                    <div class="card-title">
-                        <h3 class="card-label">Donor Penetration</h3>
+            <!-- Start Map full wrapper -->
+            <section id="map-full-wrapper" class="h-100">
+                <div class="card card-custom h-100">
+                    <div class="card-header" style="z-index: 1;">
+                        <div class="card-title">
+                            <span class="card-icon">
+                                <i class="icon-xl la la-map-marked text-primary"></i>
+                            </span>
+                            <h3 class="card-label">
+                                Donor Penetration
+                            </h3>
+
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <!-- Start Loader Image -->
+                        <div class="dashboard-loader">
+                            <img src="{% static 'images/ajax-loader.gif' %}" alt="Loading..." />
+                        </div>
+                        <!-- End Loader Image -->
+
+                        <!-- Start Map Wrapper -->
+                        <section id="map-wrapper" class="my-transition d-none">
+                            <div id="kt_jqvmap_world" class="jqvmap" " style=" height: 300px;"></div>
+                        </section>
+                        <!-- End Map Wrapper -->
+
+                        <!-- Start no map wrapper -->
+                        <section id="no-map-wrapper" class="d-none my-transition">
+                            <p class="text-dark-50 font-weight-bold" id='noMapBody'></p>
+                        </section>
+                        <!-- End no map wrapper -->
                     </div>
                 </div>
-                <div class="card-body">
-                    <div id="kt_jqvmap_world" class="jqvmap" style="height:300px;"></div>
-                </div>
-            </div>
-            <!--end::Card-->
-            <!--end::Card-->
+            </section>
+            <!-- End Map full wrapper -->
         </div>
     </div>
 
