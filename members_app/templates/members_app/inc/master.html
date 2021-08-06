@@ -942,6 +942,9 @@
                 // Autosize the textarea
                 autosize(document.querySelectorAll('textarea'));
                 $('[data-toggle="tooltip"]').tooltip();
+                $('[data-toggle="tooltip"]').on('click', function () {
+                    $(this).tooltip('hide');
+                });
 
                 // download dashboard as pdf
                 $("#download-dashboard-pdf-btn").on("click", function (evt) {
