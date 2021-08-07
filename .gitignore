@@ -324,6 +324,11 @@ data_handler/PM_Model/model_output_files/*.json
 ### exclude all test files ###
 tests/
 
+### Fixtures files ###
+data_handler/fixtures/
+
+default_permissions.txt
+
 
 ### VisualStudioCode ###
 .vscode/*
