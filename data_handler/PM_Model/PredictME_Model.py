@@ -56,7 +56,7 @@ from predict_me.my_logger import (log_exception, log_info)
 from django.conf import settings
 from termcolor import cprint
 
-#locale.setlocale(locale.LC_ALL, 'en_US')
+# locale.setlocale(locale.LC_ALL, 'en_US')
 
 
 font_style = 'Arial'
@@ -65,6 +65,9 @@ font_style = 'Arial'
 MODEL_FILES_PATH = {}
 send_data_obj = None
 model_output_data = dict()
+TEXT_COLS = None  # will hold all text columns
+
+
 #### MY CUSTOM VARIABLES, TO INTEGRATE WITH WEB APPLICATION ####
 
 
@@ -101,7 +104,7 @@ def read_input_file(file_path):
     file_name = file_path.split('/')[-1]
     extension = file_name.split(".")[-1]
     if extension == "csv":
-        return pd.read_csv(file_path)
+        return pd.read_csv(file_path, encoding="ISO-8859-1")
     elif (extension == "xlsx") | (extension == "xls"):
         return pd.read_excel(file_path)
     else:
@@ -120,12 +123,18 @@ def identify_years_columns(file_name):
 
 
 # Identify text columns
-def identify_info_columns(df, donation_columns, text_columns=None):
+def identify_info_columns(df, donation_columns, use_text_columns=False):
     column_names = df.columns
-    cols = [col for col in column_names if col not in donation_columns]
-    if text_columns is not None:
-        return text_columns
-    return cols
+    info_cols = None
+    if use_text_columns is True:
+        # this to get the text columns which the user pass to model
+        info_cols = [col for col in column_names if col in TEXT_COLS]
+    else:
+        info_cols = [col for col in column_names if col not in donation_columns]
+    # _(f"TEXT COLUMNS: ", TEXT_COLS)
+    # print('------------------------------------------------------------------')
+    # _(f"Info Columns: ", info_cols)
+    return info_cols
 
 
 # Remove column contains 80% unique values and more than 50% null values
@@ -189,6 +198,8 @@ def feature_extraction(df_info):
     else:
         feature_count = int(0.5 * unique_features)
     print("unique features {} and feature count {}".format(unique_features, feature_count))
+    model_output_data['unique_features'] = unique_features
+    model_output_data['feature_count'] = feature_count
     vectorizer = TfidfVectorizer(max_features=feature_count)
     X = vectorizer.fit_transform(processed_text)
     tfidf_matrix = X.todense()
@@ -252,16 +263,17 @@ def check_skew_donation_cols(donation_columns_df, donation_columns):
     if ((len(donation_columns) == 0) | (donation_columns == "[]")):
         no_donations_columns = True
         print("No donation columns present for the file")
-        send_data_obj.send(text_data=json.dumps({'msg': f"No donation columns present for the file", "is_reserved": False}))
+        send_data_obj.send(
+            text_data=json.dumps({'msg': f"No donation columns present for the file", "is_reserved": False}))
     else:
         print("donation columns {}".format(len(donation_columns)))
-        send_data_obj.send(text_data=json.dumps({"msg": "donation columns {}".format(len(donation_columns)), "is_reserved": False}))
+        send_data_obj.send(
+            text_data=json.dumps({"msg": "donation columns {}".format(len(donation_columns)), "is_reserved": False}))
 
     # check for skewness
     if ((postive_class <= math.ceil((donation_columns_df.shape[0]) * 0.02)) | (
             negative_class <= math.ceil((donation_columns_df.shape[0]) * 0.02))):
         skewed_target_value = True
-
         print("positive class {} and negative class {}".format(postive_class, negative_class))
 
     return no_donations_columns, skewed_target_value
@@ -274,9 +286,10 @@ def generate_correlation(donation_columns, no_donation_columns, skewed_target_va
         pdf.multi_cell(h=5.0, w=0, txt="# Correlation Plot")
         pdf.set_font(font_style, size=10)
         pdf.ln(1)
-        pdf.multi_cell(h=5.0, w=0, txt="Correlation Plot: Please note that Correlation is calculated based on the similar "
-                                       "donor datasets stored in Predict Me's server. These datasets are used to find "
-                                       "common donor attributes to maximize the model performance.")
+        pdf.multi_cell(h=5.0, w=0,
+                       txt="Correlation Plot: Please note that Correlation is calculated based on the similar "
+                           "donor datasets stored in Predict Me's server. These datasets are used to find "
+                           "common donor attributes to maximize the model performance.")
         pdf.ln(0.5)
         pdf.multi_cell(h=5.0, w=0, txt="NOTE: The uploaded donor file is missing donation information (amount) required"
                                        " for plotting a Correlation Matrix.")
@@ -286,9 +299,10 @@ def generate_correlation(donation_columns, no_donation_columns, skewed_target_va
         pdf.multi_cell(h=5.0, w=0, txt="# Correlation Plot")
         pdf.set_font(font_style, size=10)
         pdf.ln(1)
-        pdf.multi_cell(h=5.0, w=0, txt="Correlation Plot: The uploaded donor file has an imbalanced dataset. More than 98% "
-                                       "of your sample belongs to one class (0 or 1 Target Value) that make up a large "
-                                       "proportion of the data.")
+        pdf.multi_cell(h=5.0, w=0,
+                       txt="Correlation Plot: The uploaded donor file has an imbalanced dataset. More than 98% "
+                           "of your sample belongs to one class (0 or 1 Target Value) that make up a large "
+                           "proportion of the data.")
         pdf.ln(0.5)
 
         pdf.multi_cell(h=5.0, w=0, txt="Please note that Correlation is calculated based on the similar donor datasets "
@@ -345,9 +359,9 @@ def calculate_feature_importance(df_info, feature_names, feature_value, no_donat
     pos = np.arange(sorted_idx.shape[0]) + .5
     if (no_donation_columns or is_similar_file == True):
         model_output_data['feature_importance_values'] = """
-        Note: Feature Importance is based on the testing set of the similar donor file stored in Predict Me's server.
-        No categorical features processed from the input file for plotting a Feature Importance.
-        """
+                Note: Feature Importance is based on the testing set of the similar donor file stored in Predict Me's server.
+                No categorical features processed from the input file for plotting a Feature Importance.
+                """
         pdf.set_font(font_style, size=10)
         pdf.ln(1)
         pdf.multi_cell(h=5.0, w=0,
@@ -358,17 +372,11 @@ def calculate_feature_importance(df_info, feature_names, feature_value, no_donat
     else:
         featfig = plt.figure(figsize=(10, 6))
         featax = featfig.add_subplot(1, 1, 1)
-        # cprint(f"feature_imp --> {feature_imp}", 'yellow')
-        # cprint(f"feature_imp --> {sorted(feature_imp)}", 'magenta')
-        # model_output_data['feature_importance_values'] = sorted(feature_imp)
         model_output_data['feature_importance_values'] = pos.tolist()
-        # cprint(f"pos ---> {pos}", 'green')
         featax.barh(pos, sorted(feature_imp), align='center')
         featax.set_yticks(pos)
         featax.set_yticklabels(np.array(feature_columns)[sorted_idx], fontsize=12)
-        cprint(np.array(feature_columns)[sorted_idx].tolist(), 'yellow')
         model_output_data['feature_importance_labels'] = np.array(feature_columns)[sorted_idx].tolist()
-        # cprint(f"feature_columns ->>> {feature_columns}", 'blue')
         featax.set_xlabel('% Relative Feature Importance', fontsize=16)
         # featax.set_xticklabels(fontsize=12)
         plt.tight_layout()
@@ -389,17 +397,17 @@ def add_classification_report_table(y_test, y_pred, no_donation_columns, skewed_
     report_df['precision'] = report_df['precision'].apply(lambda x: str(round(x, 2)))
     report_df['recall'] = report_df['recall'].apply(lambda x: str(round(x, 2)))
     del report_df['support']
-    #report_df['support'] = report_df['support'].apply(lambda x:
-    #str(convert_number_format(int(x))))
+    # report_df['support'] = report_df['support'].apply(lambda x:
+    # str(convert_number_format(int(x))))
     report_df = report_df.rename(columns={"f1-score": "F1-score",
                                           "precision": "Precision",
                                           "recall": "Recall"})
-                                          #"support": "Support"})
+    # "support": "Support"})
     report_df.reset_index(inplace=True)
     report_df['index'] = report_df['index'].replace({"0": "Non-donor class", "1": "Donor class"})
-                                                     #"macro avg": "Macro avg",
-                                                     #"weighted avg": "Weighted
-                                                     #avg"
+    # "macro avg": "Macro avg",
+    # "weighted avg": "Weighted
+    # avg"
     report_df = report_df.rename(columns={"index": "Class"})
     report_df = pd.DataFrame(np.vstack([report_df.columns, report_df]))
     report_df = report_df.values.tolist()
@@ -409,8 +417,9 @@ def add_classification_report_table(y_test, y_pred, no_donation_columns, skewed_
     row_height = pdf.font_size
     # if donation columns do not exis, the classification report is based on
     # the similar file not the real input file
-    if(no_donation_columns or is_similar_file == True):
-        pdf.multi_cell(h=5.0, w=0, align ='L', txt="Note: Classification Repot Table is based on the testing set of the similar donor file stored in Predict Me's server.")
+    if (no_donation_columns or is_similar_file == True):
+        pdf.multi_cell(h=5.0, w=0, align='L',
+                       txt="Note: Classification Repot Table is based on the testing set of the similar donor file stored in Predict Me's server.")
         pdf.ln(4)
 
     for row in report_df:
@@ -560,8 +569,8 @@ def plot_roc_curve(roc_fpr, roc_tpr, roc_auc, top_5_models, no_donation_columns,
 
 def model_selection(X, y, X_pred, donation_columns, cat_col, donor_df, no_donation_columns, skewed_target_value,
                     skewed_target_value_similar, is_similar_file):
+    cprint(f"=============>> {cat_col}", 'yellow', 'on_grey')
     # Handle Class imbalance using data augmentation techniques
-
     if ((skewed_target_value == True and is_similar_file == False) or (
             skewed_target_value_similar == True and is_similar_file == True)):
         over_sampling = RandomOverSampler(random_state=1, sampling_strategy=0.4)
@@ -611,7 +620,6 @@ def model_selection(X, y, X_pred, donation_columns, cat_col, donor_df, no_donati
         print("Classifier: {} and time(seconds): {}".format(m['label'], round(time.time() - start_time, 3)))
         send_data_obj.send(text_data=json.dumps({"msg": "Classifier: {} ".format(m['label']), 'is_reserved': False}))
         print()
-        time.sleep(0.5)
 
         model_f1_score[m['label']] = round(f1_score(y_test, y_pred, average='weighted'), 2)
 
@@ -639,7 +647,7 @@ def model_selection(X, y, X_pred, donation_columns, cat_col, donor_df, no_donati
     # top_model = sorted(model_f1_score, key=model_f1_score.get,
     # reverse=True)[:1][0]
     top3_models = sorted(model_f1_score, key=model_f1_score.get, reverse=True)[:3]
-    model_output_data['model_name'] = ["Ensemble Method (Top 3 best fit classifiers)" ,top3_models]
+    model_output_data['model_name'] = ["Ensemble Method (Top 3 best fit classifiers)", top3_models]
     # ensemble the top 3 methods using the soft voting
     lst_models = list()
     for ind, m in enumerate(models):
@@ -682,7 +690,7 @@ def model_selection(X, y, X_pred, donation_columns, cat_col, donor_df, no_donati
     pdf.ln(0.5)
     pdf.multi_cell(h=5.0, w=0, txt="              c. {}".format(top3_models[2]))
     pdf.ln(0.5)
-
+    model_output_data['total_data_sample'] = convert_number_format(donor_df.shape[0])
     pdf.multi_cell(h=5.0, w=0, txt="     2. Total Data Sample: {}".format(convert_number_format(donor_df.shape[0])))
 
     if (not no_donation_columns) & (not is_similar_file) & (skewed_target_value == False):
@@ -704,7 +712,6 @@ def model_selection(X, y, X_pred, donation_columns, cat_col, donor_df, no_donati
         pdf.ln(0.5)
 
     test_list = [chr(x) for x in range(ord('a'), ord('z') + 1)]
-
     if (no_donation_columns or is_similar_file == True):
         pdf.multi_cell(h=5.0, w=0,
                        txt="     3. Donation Columns: The input data is missing donation information (no Target Value) OR only has one class (class")
@@ -723,8 +730,6 @@ def model_selection(X, y, X_pred, donation_columns, cat_col, donor_df, no_donati
 
         pdf.ln(0.25)
         pdf.multi_cell(h=5.0, w=0, txt="         Processing (NLP) method to maximize the model performance.")
-
-        pdf.ln(0.5)
         model_output_data['donation_columns'] = """
             Donation Columns: The input data is missing donation information (no Target Value) OR only has one class 
             (class") donor or class non-donor 'data imbalance') to list donation column(s). 
@@ -732,6 +737,7 @@ def model_selection(X, y, X_pred, donation_columns, cat_col, donor_df, no_donati
              data features on the similar donor files stored in") the Predict Me's server. Donor file with the highest 
              match rate is selected and processed using Natural Language Processing (NLP) method to maximize the model performance.
         """.capitalize()
+        pdf.ln(0.5)
 
     else:
         pdf.multi_cell(h=5.0, w=0, txt="     3. Donation Columns:")
@@ -744,17 +750,15 @@ def model_selection(X, y, X_pred, donation_columns, cat_col, donor_df, no_donati
         model_output_data['donation_columns'] = donation_columns
 
     if (len(cat_col) > len(test_list) and is_similar_file == False):
-        cat_col = random.sample(cat_col, len(test_list))
+        cat_col = random.sample(cat_col.tolist(), len(test_list))
+
     if (len(cat_col) != 0 and is_similar_file == False):
+        model_output_data['categorical_data_features'] = cat_col.tolist()
         pdf.multi_cell(h=5.0, w=0, txt="     4. Categorical Data Features:")
         pdf.ln(0.5)
-
         for i in range(len(cat_col)):
             pdf.multi_cell(h=5.0, w=0, txt="              {}. {}".format(test_list[i], cat_col[i]))
             pdf.ln(0.3)
-            # save the categorical columns
-        cprint(f"cat_col.tolist() --> {cat_col.tolist()}", 'green')
-        model_output_data['categorical_data_features'] = cat_col.tolist()
     else:
         pdf.multi_cell(h=5.0, w=0,
                        txt="     4. Categorical Data Features: No categorical data features processed from the input file due to missing ")
@@ -769,10 +773,10 @@ def model_selection(X, y, X_pred, donation_columns, cat_col, donor_df, no_donati
 
         pdf.ln(0.5)
         model_output_data['categorical_data_features'] = """
-            Categorical Data Features: No categorical data features processed from the input file due to missing 
-            donation information OR only has one class to list categorical data features. In such cases, the donor file
-            with the highest match rate is selected to calculate data features importance.
-        """.capitalize()
+                    Categorical Data Features: No categorical data features processed from the input file due to missing 
+                    donation information OR only has one class to list categorical data features. In such cases, the donor file
+                    with the highest match rate is selected to calculate data features importance.
+                """.capitalize()
 
     pdf.set_font(font_style, 'BU', size=10)
     pdf.multi_cell(h=7.5, w=0, txt="B. Important Metrics Definition")
@@ -818,6 +822,7 @@ def model_selection(X, y, X_pred, donation_columns, cat_col, donor_df, no_donati
 
     pdf.multi_cell(h=5.0, w=0, txt="     4. Data Imbalance: Skewness of the dataset.")
     pdf.ln(0.5)
+
     pdf.multi_cell(h=5.0, w=0,
                    txt="     5. Training Set: Subset of data to train a model. Test set: Subset of data to test the trained model.")
     pdf.ln(0.5)
@@ -903,7 +908,6 @@ def generate_prediction_file(df, model_f1_score, classification_full_pred, class
                              skewed_target_value_similar,
                              top3_models, is_similar_file):
     model_f1_score = {k: v for k, v in sorted(model_f1_score.items(), key=lambda item: item[1])}
-
     # Number of models we want in report, modify the count below
     # top_5_model = sorted(model_f1_score, key=model_f1_score.get,
     # reverse=True)[:1]
@@ -951,7 +955,8 @@ def generate_prediction_file(df, model_f1_score, classification_full_pred, class
             max_acc_threshold = t_sorted[-1]
 
         print("Threshold used: {}".format(max_acc_threshold[0]))
-        send_data_obj.send(text_data=json.dumps({"msg": "{}".format(max_acc_threshold[0]), 'is_reserved': True, 'key_value': "threshold"}))
+        send_data_obj.send(text_data=json.dumps(
+            {"msg": "{}".format(max_acc_threshold[0]), 'is_reserved': True, 'key_value': "threshold"}))
         df[prediction_column_name] = df[probability_column_name].apply(lambda x: 1 if x >= max_acc_threshold[0] else 0)
 
         donor_count = df[df[prediction_column_name] == 1].shape[0]
@@ -960,11 +965,6 @@ def generate_prediction_file(df, model_f1_score, classification_full_pred, class
 
         pdf.set_font(font_style, size=10)
         pdf.ln(1)
-        # integration
-        model_output_data['f1_score'] = model_f1_score.get(m)
-        model_output_data['threshold'] = max_acc_threshold[0]
-        model_output_data['donors_predicted'] = f"{donor_per}%"
-
         if (no_donations_columns == True or is_similar_file == True):
             pdf.multi_cell(h=5.0, w=0, txt="        a. F1-Score: {}".format(model_f1_score.get(m)))
             pdf.ln(0.75)
@@ -989,15 +989,17 @@ def generate_prediction_file(df, model_f1_score, classification_full_pred, class
                                                                                                         donor_count),
                                                                                                     convert_number_format(
                                                                                                         df.shape[0])))
-
+        model_output_data['f1_score'] = model_f1_score.get(m)
+        model_output_data['threshold'] = max_acc_threshold[0]
+        model_output_data['donors_predicted'] = f"{donor_per}%"
         pdf.ln(3)
         print("F1-score: {}".format(model_f1_score.get(m)))
-        send_data_obj.send(text_data=json.dumps({'msg': "{}".format(model_f1_score.get(m)), 'is_reserved': True, 'key_value': "f1_score"}))
+        send_data_obj.send(text_data=json.dumps(
+            {'msg': "{}".format(model_f1_score.get(m)), 'is_reserved': True, 'key_value': "f1_score"}))
         print("Donors predicted: {}% ({} out of {})".format(donor_per, convert_number_format(donor_count),
                                                             convert_number_format(df.shape[0])))
         send_data_obj.send(text_data=json.dumps({"msg": "{}% ({} out of {})".format(
             donor_per, convert_number_format(donor_count), convert_number_format(df.shape[0])), "is_reserved": True, 'key_value': "donor_predicted_states"}))
-
         # When the donation columns of the real input file exist (regardless of
         # similar file is used or not due to skewness), the evaluation metrics
         # should be used for the input file using the values in
@@ -1037,35 +1039,34 @@ def generate_prediction_file(df, model_f1_score, classification_full_pred, class
 def get_tfidf_features(file_name):
     df = read_input_file(file_name)
     df = remove_rows_containg_all_null_values(df)
-    df_info = remove_columns_unique_values(df, identify_info_columns(df, []))
+    info_columns = identify_info_columns(df, [], False)
+    df_info = remove_columns_unique_values(df, info_columns)
+    # if df_info.columns.tolist():
     df_info = df_info.astype(str)
     df_info['comb_text'] = df_info.apply(lambda x: ' '.join(x), axis=1)
     processed_text = text_processing(list(df_info['comb_text']))
     vectorizer = TfidfVectorizer()
     X = vectorizer.fit_transform(processed_text)
     return vectorizer.get_feature_names()
+    # else:
+    #     _('Df INFO Columns (AFTER): ', df_info.columns.tolist(), 'red')
 
 
 # Find similar files in DB
+# Find similar files in DB
 def find_similar_files(input_file, no_donations_columns, skewed_target_value):
-    # settings media path
-    media_path = Path(settings.MEDIA_ROOT) / "data"
     input_file = os.path.abspath(os.path.join(os.path.dirname(__file__), input_file))
-    # directory_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "donation_amount_files"))
-    directory_path = media_path
-    # cprint(f"directory_path  ->> {directory_path}", 'cyan')
+    directory_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "donation_amount_files"))
     input_features = get_tfidf_features(input_file)
     common_features = {}
-    # cprint(f"Directory Content -<< {glob.glob(directory_path.as_posix() + '/*.*')}", 'cyan')
-    for file_name in glob.glob(directory_path.as_posix() + '/*.*'):
+    for file_name in glob.glob(directory_path + '/*.*'):
         if file_name != input_file:
-            # cprint("CAlllll", 'cyan')
             file_features = get_tfidf_features(file_name)
             print("Total features: {} for: {}".format(len(set(file_features)), file_name.split('/')[-1]))
 
             common_features_per = float(len(set(file_features) & set(input_features))) * 100 / len(set(input_features))
             common_features[file_name] = common_features_per
-            model_output_data['percentage'] = common_features_per
+            model_output_data['similar_percentage'] = common_features_per
             print("% of common features: {} for: {}".format(common_features_per, file_name))
 
     file_dict = {k: v for k, v in sorted(common_features.items(), key=lambda item: item[1])}
@@ -1223,7 +1224,7 @@ skewed_target_value_similar = False
 
 def run_model(data_file_path, donation_cols, text_cols, send_obj):
     try:
-        global skewed_target_value, send_data_obj, model_output_data
+        global skewed_target_value, send_data_obj, model_output_data, TEXT_COLS
         send_data_obj = send_obj
         start_time = time.time()
         pdf.ln(2)
@@ -1241,10 +1242,15 @@ def run_model(data_file_path, donation_cols, text_cols, send_obj):
         file_path = data_file_path
         donation_columns = ast.literal_eval(str(donation_cols))
         text_columns = ast.literal_eval(str(text_cols))  # save the text columns
-
+        TEXT_COLS = text_columns
         donor_df = read_input_file(file_path)
         # save the categorical columns
-        categorical_columns = identify_categorical_columns(donor_df, text_columns)
+        categorical_columns = identify_categorical_columns(donor_df, TEXT_COLS)
+        categorical_df = donor_df.loc[:, categorical_columns]
+        categorical_index = donor_df.columns[donor_df.columns.isin(categorical_columns)]
+        cprint(f"categorical_columns -> {categorical_columns}", 'blue', 'on_grey')
+        cprint(f"categorical_index -> {categorical_index}", 'green', 'on_grey')
+        cprint(f"categorical_df -> {categorical_df}", 'cyan', 'on_grey')
         pdf.set_font(font_style, 'BU', size=10)
         pdf.multi_cell(h=7.5, w=0, txt="A. Data Input Summary")
         pdf.set_font(font_style, size=10)
@@ -1303,12 +1309,16 @@ def run_model(data_file_path, donation_cols, text_cols, send_obj):
         # ********************************************************************************************
 
         if (is_similar_file):
-            info_columns = identify_info_columns(df, donation_columns_similar)
+            # this if will call when no donation columns provided
+            # _("Call ", "Call in if (is_similar_file):", 'cyan')
+            info_columns = identify_info_columns(df, donation_columns_similar, True)
             y_similar = list(donation_columns_df_similar['target'])
             if no_donations_columns == False:
                 y = list(donation_columns_df['target'])
         else:
-            info_columns = identify_info_columns(df, donation_columns)
+            # this if will call when donation columns provided (exists)
+            # _("Call ", "Call in ELSE (is_similar_file):", 'cyan')
+            info_columns = identify_info_columns(df, donation_columns, True)
             y = list(donation_columns_df['target'])
             y_similar = y
 
@@ -1321,7 +1331,8 @@ def run_model(data_file_path, donation_cols, text_cols, send_obj):
         processed_text, tfidf_matrix, feature_names, df_info, vectorizer = feature_extraction(df_info)
 
         if (is_similar_file and no_donations_columns == False):  # Similar file is used (donation columns exist)
-            input_file_text_cols = identify_info_columns(donor_df, donation_columns)
+            # _("Call in ", "(is_similar_file and no_donations_columns == False)", 'cyan')
+            input_file_text_cols = identify_info_columns(donor_df, donation_columns, True)
             donor_df_text = donor_df[input_file_text_cols]
             X_pred = transform_features(vectorizer, donor_df_text)
             X_train = tfidf_matrix
@@ -1334,7 +1345,6 @@ def run_model(data_file_path, donation_cols, text_cols, send_obj):
             X_pred = tfidf_matrix
             X_train = tfidf_matrix
 
-        categorical_df = df_info.columns[df_info.columns.isin(categorical_columns)]
         # df_info.columns[0:-1]
         if (is_similar_file == True and similar_filename != None and common_features != None):
             print("The most similar file to the input file is: {} \n"
@@ -1344,10 +1354,14 @@ def run_model(data_file_path, donation_cols, text_cols, send_obj):
                                                                                                       ", ".join(
                                                                                                           df_info.columns[
                                                                                                           0:-1])))
+        model_output_data['similar_filename'] = similar_filename  # save the similar file name
+        model_output_data['common_features'] = common_features  # save the common features for similar file
+        model_output_data['similar_categorical_columns'] = str(
+            df_info.columns[0:-1].tolist())  # save the categorical columns of similar file
 
         model_f1_score, classification_full_pred, classification_full_pred_prob, feature_importance_dict, roc_fpr, \
         roc_tpr, roc_auc, y_test_dict, y_pred_dict, top3_models = model_selection(X_train, y_similar, X_pred,
-                                                                                  donation_columns, categorical_df,
+                                                                                  donation_columns, categorical_index,
                                                                                   donor_df,
                                                                                   no_donations_columns,
                                                                                   skewed_target_value,
@@ -1381,6 +1395,7 @@ def run_model(data_file_path, donation_cols, text_cols, send_obj):
         MODEL_FILES_PATH['OUTPUT'] = model_output_data
         return MODEL_FILES_PATH
     except Exception as error:
+        cprint("call in run_model method!!".upper(), 'red', 'on_grey', attrs=['bold'])
         cprint(traceback.format_exc(), 'red', attrs=['bold'])
         log_exception(traceback.format_exc())
         return {}
