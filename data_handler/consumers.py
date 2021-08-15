@@ -6,12 +6,13 @@ from termcolor import cprint
 import traceback
 from predict_me.my_logger import log_exception
 import json
-from data_handler.models import (DataFile, RunHistory, DataUsage)
+from data_handler.models import (DataFile, RunHistory, DataUsage, ModelMostSimilarFile)
 from datetime import datetime
 import sys
 import uuid
 from data_handler.PM_Model.PredictME_Model import run_model
 from .helpers import save_modal_output_to_json
+from decimal import Decimal
 from prettyprinter import pprint
 
 
@@ -60,14 +61,17 @@ class RunModelConsumer(WebsocketConsumer):
                 member_data_file = DataFile.objects.get(member=member)
                 data_session = member_data_file.data_sessions_set.filter(pk=session_id).first()
                 donation_cols = data_session.donation_columns
+                donation_cols_as_list = data_session.get_donation_columns
                 text_cols = data_session.text_columns
                 cprint(f"donation_cols --> {donation_cols}", 'yellow')
+                cprint(f"donation_cols --> {donation_cols_as_list},  Type----> {type(donation_cols_as_list)}", 'red')
                 cprint(f"text_cols --> {text_cols}", 'yellow')
                 run_model_data = run_model(data_session.data_file_path, donation_cols, text_cols, self)
-                # run_model_data = run_model(data_session.base_data_file_path, donation_cols, self)
                 if run_model_data:
-                    modal_output_data = run_model_data.get("OUTPUT")
+                    model_output_data = run_model_data.get("OUTPUT")
                     cprint("Run model completed!", 'green')
+
+                    # update current session data
                     data_session.pdf_report_file_path = run_model_data.get('PDF_FILE')
                     data_session.csv_report_file_path = run_model_data.get('CSV_FILE')
                     data_session.is_process_complete = True
@@ -75,7 +79,10 @@ class RunModelConsumer(WebsocketConsumer):
                     data_session.run_modal_date_time = datetime.now()
                     data_session.save()
                     member_data_file.is_run_the_model = True
+                    cprint("Save to member_data_file table", 'green', 'on_grey', attrs=['bold'])
                     member_data_file.save()
+
+                    # save to run history
                     run_history = RunHistory()
                     run_history.member = self.user
                     run_history.session_id = data_session
@@ -83,18 +90,67 @@ class RunModelConsumer(WebsocketConsumer):
                     run_history.pdf_report_file_path = run_model_data.get('PDF_FILE')
                     run_history.csv_report_file_path = run_model_data.get('CSV_FILE')
                     # save the output to json file and return the json file path
-                    unique_filename = str(uuid.uuid4()) + ".json"
-                    modal_json_output_file_path = save_modal_output_to_json(unique_filename, modal_output_data)
+                    unique_filename = data_session.data_handler_session_label + str(uuid.uuid4()) + ".json"
+                    modal_json_output_file_path = save_modal_output_to_json(unique_filename, model_output_data)
                     run_history.modal_output_json_file_path = modal_json_output_file_path
+                    cprint("Save to run_history table", 'green', 'on_grey', attrs=['bold'])
                     run_history.save()
-                    cprint("save run history...", 'yellow')
-                    cprint('save to db done...', 'yellow')
+
+                    cprint(f"############ >> {type(model_output_data.get('donation_columns')).__name__}", 'yellow')
+                    # save model similar file data to db
+                    if type(model_output_data.get('donation_columns')).__name__ == 'str':  # check if the donation columns not exists
+                        similar_file_obj = None
+                        cprint("Donation columns not exists will save similar file!", 'blue', 'on_grey', attrs=['bold'])
+                        cprint(model_output_data.get("similar_percentage"), 'magenta', attrs=['bold'])
+                        # the data when create
+                        created_data = {
+                            'similar_file_path': model_output_data.get('similar_filename'),
+                            'member': self.user,
+                            'data_session': data_session,
+                            'similar_percentage': Decimal(model_output_data.get("similar_percentage")),
+                            'unique_features': model_output_data.get("unique_features"),
+                            'feature_count': model_output_data.get("feature_count"),
+                            'common_features': model_output_data.get("common_features"),
+                            'categorical_data': model_output_data.get("similar_categorical_columns")
+
+                        }
+
+                        try:
+
+                            similar_file_obj = ModelMostSimilarFile.objects.get(
+                                similar_file_path__exact=model_output_data.get('similar_filename')
+                            )
+                            cprint("Will update the similar file, already exists", 'blue', 'on_grey', attrs=['bold'])
+                            similar_file_obj.counter = similar_file_obj.counter + 1
+                            similar_file_obj.member = self.user
+                            similar_file_obj.data_session = data_session
+                            similar_file_obj.similar_percentage = Decimal(model_output_data.get("similar_percentage"))
+                            similar_file_obj.unique_features = model_output_data.get("unique_features")
+                            similar_file_obj.feature_count = model_output_data.get("feature_count")
+                            similar_file_obj.common_features = model_output_data.get("common_features")
+                            similar_file_obj.categorical_data = model_output_data.get("similar_categorical_columns")
+                        except ModelMostSimilarFile.DoesNotExist:
+                            # in case the model not exists, create new one
+                            cprint("********* Will create the similar file, not exists!", 'blue', attrs=['bold'])
+                            similar_file_obj = ModelMostSimilarFile.objects.create(**created_data)
+                            cprint(f"similar_file_objsimilar_file_obj ---> {similar_file_obj}", 'red', attrs=['bold'])
+                        finally:
+                            cprint("********** Save to model_most_similar_file table", 'green', 'on_grey', attrs=['bold'])
+                            similar_file_obj.save()
+
+                        cprint(f"$$$$$$$$$>>>> {similar_file_obj}", 'magenta', 'on_grey', attrs=['bold'])
+                    else:
+                        # this case when donation columns not empty
+                        cprint("Donation columns exists will not save similar file!", 'blue', 'on_grey', attrs=['bold'])
+
+                    cprint('save to db completed...', 'yellow')
 
                     self.send(json.dumps({"msg": "Complete Successfully!"}))
                     # self.close()
         except Exception as ex:
             cprint(traceback.format_exc(), 'red')
             cprint(str(traceback.format_exc()), 'red')
+            cprint("Call in Consumers", 'red', "on_grey", attrs=['bold'])
             member_data_file.is_run_the_model = False
             member_data_file.save()
             data_session.is_process_complete = False
