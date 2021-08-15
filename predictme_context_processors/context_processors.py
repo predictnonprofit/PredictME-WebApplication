@@ -1,6 +1,7 @@
 import traceback
-from termcolor import cprint
-
+from membership.models import (Membership, Subscription)
+from data_handler.models import (DataFile, DataHandlerSession)
+from site_settings.models import CompanySettings
 from crash_reporting.models import CrashReport
 from members_app.helper import calculate_records_left_percentage
 from django.core.cache import cache
@@ -11,11 +12,13 @@ from predict_me.my_logger import log_exception
 import json
 from django.core.serializers.json import DjangoJSONEncoder
 from crash_reporting.forms import CrashReportForm
+from termcolor import cprint
+from prettyprinter import (cpprint, pprint)
+# from predict_me.helpers import quick_print, set_permissions_and_groups_to_members
 
 
 def get_user_subscription(request):
     if request.user.is_authenticated:
-        from membership.models import Subscription
 
         try:
             subscription_obj = Subscription.objects.get(member_id=request.user)
@@ -26,7 +29,7 @@ def get_user_subscription(request):
 
 def get_data_handler_obj(request):
     if request.user.is_authenticated:
-        from data_handler.models import DataFile
+
         # check if the user is administrator account
         if request.user.is_superuser is not True:
             data_handler_obj = DataFile.objects.get(member=request.user)
@@ -35,7 +38,6 @@ def get_data_handler_obj(request):
 
 def get_data_handler_and_session(request):
     if request.user.is_authenticated:
-        from data_handler.models import (DataFile, DataHandlerSession)
         data_handler_obj = DataFile.objects.filter(member=request.user).first()
         data_session_obj = DataHandlerSession.objects.filter(data_handler_id=data_handler_obj).first()
         return {
@@ -160,7 +162,6 @@ def get_stripe_details(request):
 
 def get_all_memberships(request):
     try:
-        from membership.models import Membership
         all_memberships = {}
         all_memberships_obj = Membership.objects.filter(parent__isnull=True)
         for membership in all_memberships_obj:
@@ -199,7 +200,7 @@ def get_company_settings(request):
     This will use globally to access company details
     """
     try:
-        from site_settings.models import CompanySettings
+
         settings = CompanySettings.objects.values()
         settings = json.dumps(list(settings), cls=DjangoJSONEncoder)
         settings = json.loads(settings)
@@ -232,6 +233,11 @@ def get_administrator_top_navbar_total_badges(request):
         log_exception(traceback.format_exc())
 
 
+def is_administrator_user(request):
+    if request.user.is_authenticated:
+        return request.user.groups.filter(name='Administrator').exists()
+
+
 def return_all_context(request):
     return {
         "get_user_membership": get_user_subscription(request),  # fix this in all places that call it
@@ -245,4 +251,5 @@ def return_all_context(request):
         "get_company_settings": get_company_settings(request),
         'crash_report_form': get_crash_reporting_form(request),
         "admin_top_navbar_total": get_administrator_top_navbar_total_badges(request),
+        'is_administrator_user': is_administrator_user(request)
     }
