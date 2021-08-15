@@ -1,6 +1,8 @@
 from pathlib import Path
 import os
 from datetime import date
+
+import pandas as pd
 from django.http import HttpResponse
 from prettyprinter import pprint, cpprint
 from seaborn.external.docscrape import header
@@ -12,11 +14,13 @@ from itertools import islice
 from termcolor import cprint
 import traceback
 from predict_me.my_logger import (log_exception, log_info)
+from predict_me.constants.countries import *
 import fitz
 import re
 import pandas as pd
 from django.apps import apps
 import json
+from typing import Union
 from prettyprinter import pprint
 
 validate_obj = DataValidator()
@@ -1069,5 +1073,49 @@ def get_geo_location_data(file_path: str, geo_location_columns: list) -> dict:
     else:
         if geo_location_columns is not None:
             return df.to_dict()
+        else:
+            return None
+
+
+def extract_geo_location_counter(file_path: str, geo_location_columns: list) -> str:
+    """this function will return how many time geo-location column repeated in model csv output file
+
+    Args:
+        file_path (str): data file path
+        geo_location_columns (list): list of geo-location columns
+    """
+    df = None
+    try:
+        data_file = Path(file_path)
+        all_data = dict()  # this will hold the geo col as key and duplicated values as value
+        predictme_col_name = 'Model Name: ensemble: Donor Predicted Classification (>= Threshold Value)'
+        cprint(data_file.name, 'magenta', attrs=['bold'])
+        cprint(geo_location_columns, 'magenta', attrs=['bold'])
+        print('')
+        # check if the geo_location_columns is not None
+        if geo_location_columns is not None:
+            # check if the file exists
+            if data_file.exists():
+                df = pd.read_csv(data_file.as_posix(), sep=',', skipinitialspace=True)
+                filtered = (df[predictme_col_name] == 1)
+                new_filtered_df = df.loc[filtered]
+                # geo_location_columns.append(predictme_col_name)  # append the predictme column to dataframe columns
+                geo_df = df.loc[filtered, geo_location_columns]
+
+                for geo_col in geo_location_columns:
+                    duplicated_values = geo_df.pivot_table(columns=[geo_col], aggfunc='size')
+                    all_data[geo_col] = duplicated_values.to_dict()
+                cpprint(all_data)
+            else:
+                # file not exists
+                raise FileNotFoundError("Model output file not found!")
+    except Exception as ex:
+        cprint(traceback.format_exc(), 'red')
+        log_exception(traceback.format_exc())
+        return None
+    else:
+        # for try block
+        if geo_location_columns is not None:
+            return all_data
         else:
             return None
