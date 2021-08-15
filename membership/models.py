@@ -11,13 +11,15 @@ MEMBERSHIP_LABELS = (
     ("professional_monthly", "Professional Monthly"),
     ("professional_yearly", "Professional Yearly"),
     ("expert_monthly", "Expert Monthly"),
-    ("expert_yearly", "Expert Yearly")
+    ("expert_yearly", "Expert Yearly"),
+    ("unlimited", "Unlimited (development)"),
 )
 
 PARENTS_MEMBERSHIP_LABELS = (
     ("starter", "Starter"),
     ("professional", "Professional",),
-    ("expert", "Expert")
+    ("expert", "Expert"),
+    ("unlimited_development", "Unlimited (Development)"),
 )
 
 SUB_RANGE = (
@@ -31,7 +33,7 @@ class Membership(models.Model):
     #     db_table = "membership"
 
     slug = models.SlugField(null=True, blank=True, db_index=True)
-    membership_type = models.CharField(choices=MEMBERSHIP_LABELS, max_length=20, null=True, blank=True)
+    membership_type = models.CharField(choices=MEMBERSHIP_LABELS, max_length=30, null=True, blank=True)
     monthly_fee = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     yearly_fee = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     day_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
@@ -39,7 +41,7 @@ class Membership(models.Model):
     stripe_price_id = models.CharField(max_length=100, null=True, blank=True)
     additional_fee_per_extra_record = models.DecimalField(max_digits=2, decimal_places=2, null=True, blank=True)
     allowed_records_count = models.BigIntegerField(null=True, blank=True)
-    parent = models.CharField(choices=PARENTS_MEMBERSHIP_LABELS, max_length=20, null=True, blank=True)
+    parent = models.CharField(choices=PARENTS_MEMBERSHIP_LABELS, max_length=30, null=True, blank=True)
     range_label = models.CharField(max_length=20, choices=SUB_RANGE, null=True, blank=True)
 
     @property
