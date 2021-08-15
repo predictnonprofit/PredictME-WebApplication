@@ -7,7 +7,7 @@
 
 {% block customcss %}
 
-<link href="{% static 'assets/plugins/custom/jqvmap/jqvmap.bundle.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'assets/css/custom/members_app/jqvmap.css' %}" rel="stylesheet" type="text/css" />
 <link href="{% static 'assets/plugins/custom/datatables/datatables.bundle.css' %}" rel="stylesheet" type="text/css" />
 <link href="{% static 'assets/plugins/custom/prismjs/prismjs.bundle.css' %}" rel="stylesheet" type="text/css" />
 {% endblock customcss %}
@@ -381,7 +381,7 @@
 
                         <!-- Start Map Wrapper -->
                         <section id="map-wrapper" class="my-transition d-none">
-                            <div id="kt_jqvmap_world" class="jqvmap" " style=" height: 300px;"></div>
+                            <div id="data_session_dashboard_jqvmap" class="jqvmap" " style=" height: 300px;"></div>
                         </section>
                         <!-- End Map Wrapper -->
 
@@ -406,14 +406,11 @@
 
 
 {% block customjs %}
-
+<script src="{% static 'assets/plugins/custom/jqvmap/jqvmap.bundle.js' %}"></script>
 <script src="{% static 'assets/js/pages/widgets.js' %}"></script>
-
 <script src="{% static 'assets/js/custom/members_app/dashboard_apexcharts.js' %}"></script>
+<script src="{% static 'assets/js/custom/members_app/maps/jquery.vmap.world.js' %}"></script>
 <script src="{% static 'assets/js/custom/members_app/dashboard_jqvmap.js' %}"></script>
-<script src="{% static 'assets/plugins/custom/datatables/datatables.bundle.js' %}"></script>
-<script src="{% static 'assets/js/custom/djangocookie.js' %}" type="text/javascript"></script>
-<script src="{% static 'assets/js/pages/widgets.js' %}"></script>
 <!-- Custom Script of data handler list page -->
 <script src="{% static 'assets/js/custom/members_app/helpers.js' %}"></script>
 <script src="{% static 'assets/js/custom/members_app/apis.js' %}"></script>
