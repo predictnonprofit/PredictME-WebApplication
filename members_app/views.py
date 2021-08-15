@@ -172,11 +172,10 @@ class RunHistoryView(LoginRequiredMixin, ListView):
     login_url = "login"
     model = RunHistory
     template_name = 'members_app/profile/run_history.html'
-    ordering = ['-run_date']
 
     def get_queryset(self):
         member = self.request.user
-        queryset = RunHistory.objects.filter(member=member)
+        queryset = RunHistory.objects.filter(member=member).order_by('-run_date')
         return queryset
 
 
