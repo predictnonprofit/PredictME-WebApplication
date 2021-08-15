@@ -2,8 +2,11 @@ import traceback
 from ast import literal_eval
 import requests
 from termcolor import cprint
-
+from pprint import pprint as ppnt
+from prettyprinter import (cpprint, pprint)
 from predict_me.my_logger import log_exception
+from users.models import Member
+from django.contrib.auth.models import Group, Permission
 
 
 def check_internet_access():
@@ -55,3 +58,49 @@ def is_integer_or_float(value):
 
     except (TypeError, ValueError):
         return False
+
+
+def quick_print(obj):
+    cprint("Call quick_print function:-> ", 'green', attrs=['bold'])
+    output = []
+    for ob in dir(obj):
+        if not ob.startswith('__'):
+            output.append(ob)
+    output = sorted(output)
+    cpprint(output)
+
+
+# def set_permissions_and_groups_to_members():
+#     """
+#     just for developments
+#     """
+#     try:
+#         all_groups = Group.objects.all()
+#         all_permissions = Permission.objects.all()
+#         all_members = Member.objects.all()
+#
+#         for member in all_members:
+#             # check if the member is administrator account
+#             if member.is_superuser and member.is_staff:
+#                 administrator_group = Group.objects.filter(name='Administrator').first()
+#                 is_in_groups = member.groups.filter(name='Administrator').exists()
+#                 # check if administrator group exists in the member
+#                 if not is_in_groups:
+#                     member.groups.add(administrator_group)
+#                     member.save()
+#             else:
+#                 data_handler_groups = Group.objects.filter(
+#                     name__in=['Data Handler', 'Data Handler Session', 'Data Handler Usage',
+#                               'Data Handler Download Counter',
+#                               "Data Handler Run History"])
+#                 # cprint(f"Before:->  {member.groups.all()}", 'yellow')
+#                 for group in data_handler_groups:
+#                     is_in_group = member.groups.filter(name=group.name).exists()
+#                     if not is_in_groups:
+#                         member.groups.add(group)
+#                         member.save()
+#                 # cprint(f"After:->  {member.groups.all()}", 'green')
+#                 print('')
+#     except Exception as ex:
+#         cprint(traceback.format_exc(), 'red')
+#         log_exception(traceback.format_exc())
