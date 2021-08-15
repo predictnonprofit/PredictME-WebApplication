@@ -21,12 +21,20 @@ MEMBER_STATUS = (
     ("unverified", "Un-Verified")
 )
 
+# Just for developments purposes
+MEMBERS_TYPES = (
+    ('normal_member', 'Normal Member'),
+    ('development_member', 'Development Member'),
+)
+
 
 class Member(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_('email address'), unique=True, db_index=True)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
     date_joined = models.DateTimeField(default=timezone.now)
+    member_type = models.CharField(choices=MEMBERS_TYPES, default=MEMBERS_TYPES[0][0],
+                                   max_length=50)  # development only
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     full_name = models.CharField(max_length=60)
