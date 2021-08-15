@@ -1438,7 +1438,7 @@ class FetchDashboardSessionData(APIView):
             # open the json data file
             with open(file_obj.as_posix(), 'r') as json_file:
                 data = json.load(json_file)
-                # pprint(data)
+                pprint(data)
             # check what is the key name to fetch
             if key_name == 'training_testing':
                 cprint(f"training_testing request", 'cyan', attrs=['bold'])
@@ -1461,7 +1461,10 @@ class FetchDashboardSessionData(APIView):
                 data_file = run_history_obj.session_id.data_file_path
                 geo_location_fields = run_history_obj.session_id.get_geo_columns
                 geo_location_data = get_geo_location_data(data_file, geo_location_fields)
-                cprint(geo_location_data, 'yellow')
+                # cprint(geo_location_data, 'yellow')
+                csv_file_path = run_history_obj.csv_report_file_path
+                geo_data = extract_geo_location_counter(csv_file_path, geo_location_fields)
+                # cpprint(geo_data)
                 return JsonResponse(data={"data": {'geo_location_data': geo_location_data}}, status=200)
 
         except Exception as ex:
