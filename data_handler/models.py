@@ -257,3 +257,27 @@ class DataUsage(models.Model):
                                related_name='data_usage')
     records_used = models.BigIntegerField(null=True, blank=True, default=0)
     updated_at = models.DateTimeField(auto_now=True)
+
+
+class ModelMostSimilarFile(models.Model):
+    member = models.ForeignKey(to=Member, on_delete=models.DO_NOTHING, null=True, blank=True,
+                               related_name='member_model_similar_files')
+    data_session = models.ForeignKey(to=DataHandlerSession, on_delete=models.DO_NOTHING, null=True, blank=True,
+                                     related_name='data_session_model_similar_files')
+    similar_file_path = models.CharField(max_length=255, unique=True, null=False, blank=False)
+    similar_percentage = models.DecimalField(max_digits=10, decimal_places=7)
+    unique_features = models.PositiveBigIntegerField(default=0)
+    feature_count = models.PositiveBigIntegerField(default=0)
+    common_features = models.PositiveBigIntegerField(default=0)
+    categorical_data = models.CharField(max_length=255, default="[]")
+    counter = models.PositiveBigIntegerField(default=1, null=False, blank=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    # def save(self, *args, **kwargs):
+    #     print("Override SVEe METHOD in here", end='\n')
+    #     return # disable saving
+    #     super().save(*args, **kwargs)
+
+    class Meta:
+        db_table = 'model_most_similar_file'
