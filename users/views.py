@@ -16,6 +16,8 @@ from django.http import HttpResponseRedirect
 from django.core.cache import cache
 from termcolor import cprint
 from django.contrib.sites.shortcuts import get_current_site
+import traceback
+from predict_me.my_logger import (log_exception, log_info)
 
 
 class MembersLoginView(TemplateView):
@@ -24,35 +26,46 @@ class MembersLoginView(TemplateView):
         return render(request, "users/auth/login.html")
 
     def post(self, request, *args, **kwargs):
-        input_errors = dict()
-        email = request.POST['email'].strip()
-        password = request.POST['password']
+        try:
+            input_errors = dict()
+            email = request.POST['email'].strip()
+            password = request.POST['password']
 
-        # validate user inputs
-        if email == '' or email is None:
-            input_errors['email'] = "Email Address Required!"
+            # validate user inputs
+            if (email == '') or (email is None):
+                input_errors['email'] = "Email Address Required!"
 
-        if password == '' or password is None:
-            input_errors['password'] = "Password Required!"
+            if (password == '') or (password is None):
+                input_errors['password'] = "Password Required!"
 
-        # check if there any errors in user inputs
-        if input_errors:
-            return render(request, "users/login.html", context={"errors": input_errors, "email": email})
+            # check if there any errors in user inputs
+            if input_errors:
+                return render(request, "users/auth/login.html", context={"errors": input_errors, "email": email})
 
-        else:
-            # in case no errors
-            member = authenticate(request, email=email, password=password)
-            if member is not None:
-                login(request, member)
+            else:
+                # in case no errors
+                member = authenticate(request, email=email, password=password)
+                if member is not None:
+                    login(request, member)
 
-                if member.email == "admin@admin.com" or member.email == "admin2@email.com":
-                    return redirect(reverse("dashboard-home"))
+                    if member.email == "admin@admin.com" or member.email == "admin2@email.com":
+                        return redirect(reverse("dashboard-home"))
+                    else:
+                        next_url = cache.get('next')
+                        if next_url and 'profile/data' in next_url:
+                            cache.delete('next')
+                            return HttpResponseRedirect(next_url)
+                        return redirect(reverse("profile-overview"))
                 else:
-                    next_url = cache.get('next')
-                    if next_url and 'profile/data' in next_url:
-                        cache.delete('next')
-                        return HttpResponseRedirect(next_url)
-                    return redirect(reverse("profile-overview"))
+                    # user credentials not correct
+                    input_errors['login_error'] = "credentials not correct, please try again!"
+                    return render(request, "users/auth/login.html",
+                                  context={"login_error": input_errors, "email": email})
+        except Exception as ex:
+            cprint(traceback.format_exc(), 'red', 'on_grey')
+            log_exception(traceback.format_exc())
+            return render(request, "users/auth/login.html",
+                          context={"login_error": str(ex), "email": email})
 
 
 def register_view(request):
