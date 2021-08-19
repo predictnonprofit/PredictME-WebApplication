@@ -18,7 +18,7 @@ Login
 	<!--begin::Content body-->
 	<div class="d-flex flex-column-fluid flex-center">
 		<!--begin::Signin-->
-		<div class="login-form login-signin ">
+		<div class="login-form login-signin">
 			<!--begin::Form-->
 			<form class="form" method="POST" action="{% url 'login' %}">
 				{% csrf_token %}
@@ -26,15 +26,30 @@ Login
 				<div class="pb-13 pt-lg-0 pt-5">
 					<h3 class="font-weight-bolder text-dark font-size-h4 font-size-h1-lg">Welcome to PredictME</h3>
 					<span class="text-muted font-weight-bold font-size-h4">New Here?
-						<a href="{% url 'register' %}" class="text-primary font-weight-bolder">Create an
-							Account</a></span>
+						<a href="{% url 'register' %}" class="text-primary font-weight-bolder">
+							Create an
+							Account
+						</a>
+					</span>
 				</div>
+				{# Start login error alert #}
+				{% if login_error %}
+				<div class="alert alert-custom alert-outline-danger fade show mb-5 px-4 py-2" role="alert">
+					<div class="alert-icon"><i class="flaticon2-exclamation icon-lg"></i></div>
+					<div class="alert-text">
+						{{ login_error.login_error }}
+					</div>
+				</div>
+				{% endif %}
+				{# End login error alert #}
 				<!--begin::Title-->
 				<!--begin::Form group-->
 				<div class="form-group">
 					<label class="font-size-h6 font-weight-bolder text-dark">Email</label>
-					<input class="form-control form-control-solid h-auto py-7 px-6 rounded-lg" required type="email"
-						name="email" autocomplete="off" value="{% if email  %} {{ email }} {% endif %}" />
+					<input
+						class="form-control form-control-solid h-auto py-7 px-6 rounded-lg {% if login_error %} border border-danger {% endif %}"
+						required type="email" name="email" autocomplete="off"
+						value="{% if email  %} {{ email }} {% endif %}" />
 					{% include "users/inc/display_errors.html" with errors=errors.email %}
 				</div>
 				<!--end::Form group-->
@@ -46,8 +61,9 @@ Login
 							class="text-primary font-size-h6 font-weight-bolder text-hover-primary pt-5"
 							id="kt_login_forgot">Forgot Password ?</a>
 					</div>
-					<input class="form-control form-control-solid h-auto py-7 px-6 rounded-lg" type="password" required
-						name="password" autocomplete="off" />
+					<input
+						class="form-control form-control-solid h-auto py-7 px-6 rounded-lg {% if login_error %} border border-danger {% endif %}"
+						type="password" required name="password" autocomplete="off" />
 					{% include "users/inc/display_errors.html" with errors=errors.password %}
 				</div>
 				<!--end::Form group-->
