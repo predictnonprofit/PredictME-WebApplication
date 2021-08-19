@@ -1,32 +1,31 @@
-from django.conf import settings
 from django.views.generic import (TemplateView, View, DetailView)
-from rest_framework.decorators import api_view
-from django.core.exceptions import ObjectDoesNotExist
-from django.shortcuts import render, redirect
-from django.urls import (reverse_lazy, reverse)
-from predict_me.helpers import is_integer_or_float
-from django.db import transaction
-from rest_framework.exceptions import ParseError
-from rest_framework.parsers import (FileUploadParser, MultiPartParser, FormParser)
-from rest_framework.response import Response
-from rest_framework.views import APIView
-from rest_framework import authentication, permissions
-from django.core.files.storage import default_storage
-from django.core.files.base import ContentFile
-from .helpers import *
-import os, json, sys, traceback
-from django.contrib.auth.mixins import (LoginRequiredMixin, UserPassesTestMixin)
-from rest_framework.permissions import IsAuthenticated
-from .validators import CheckInDataError
-from django.contrib.auth.decorators import login_required
-from prettyprinter import pprint
-from django.core.signing import Signer
-from django.http import (HttpResponse, Http404, JsonResponse)
-from django.utils.encoding import smart_str
+import json
+import os
+import sys
+import traceback
 import uuid
-from data_handler.models import (DataFile, DataHandlerSession, RunHistory)
+
 from django.contrib import messages
-from django.core.cache import cache
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import (LoginRequiredMixin, UserPassesTestMixin)
+from django.core.exceptions import ObjectDoesNotExist
+from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage
+from django.http import (HttpResponse, JsonResponse)
+from django.shortcuts import (render, redirect)
+from django.urls import (reverse_lazy, reverse)
+from django.utils.encoding import smart_str
+from django.views.generic import (TemplateView, View, DetailView)
+from prettyprinter import pprint
+from rest_framework.decorators import api_view
+from rest_framework.parsers import (MultiPartParser, FormParser)
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView
+
+from data_handler.models import (DataFile, DataHandlerSession, RunHistory)
+from predict_me.helpers import is_integer_or_float
+from .helpers import *
+from .validators import CheckInDataError
 
 DONOR_LBL = "Donation Field"
 UNIQUE_ID_LBL = "Unique Identifier (ID)"
