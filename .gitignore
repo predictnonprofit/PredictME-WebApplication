@@ -346,7 +346,7 @@ default_permissions.txt
 # predict_me/logs/info.log
 static_files_changes.txt
 stripe_cards_numbers.txt
-static_files_changes.txt
+futuristic_features.rst
 jsconfig.json
 db.sqlite3.backup
 client_secret.json
