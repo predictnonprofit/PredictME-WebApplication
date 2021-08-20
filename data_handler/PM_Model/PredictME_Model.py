@@ -1363,9 +1363,10 @@ def run_model(data_file_path, donation_cols, text_cols, send_obj):
         model_output_data['similar_categorical_columns'] = str(
             df_info.columns[0:-1].tolist())  # save the categorical columns of similar file
 
+        # categorical_index
         model_f1_score, classification_full_pred, classification_full_pred_prob, feature_importance_dict, roc_fpr, \
         roc_tpr, roc_auc, y_test_dict, y_pred_dict, top3_models = model_selection(X_train, y_similar, X_pred,
-                                                                                  donation_columns, categorical_index,
+                                                                                  donation_columns, df_info.columns[0:-1],
                                                                                   donor_df,
                                                                                   no_donations_columns,
                                                                                   skewed_target_value,
