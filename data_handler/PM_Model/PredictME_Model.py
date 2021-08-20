@@ -1053,13 +1053,16 @@ def get_tfidf_features(file_name):
 
 
 # Find similar files in DB
-# Find similar files in DB
 def find_similar_files(input_file, no_donations_columns, skewed_target_value):
+    # settings media path
+    media_path = Path(settings.MEDIA_ROOT) / "data"
     input_file = os.path.abspath(os.path.join(os.path.dirname(__file__), input_file))
-    directory_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "donation_amount_files"))
+    # input_file = os.path.abspath(os.path.join(os.path.dirname(__file__), input_file))
+    # directory_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "donation_amount_files"))
+    directory_path = media_path
     input_features = get_tfidf_features(input_file)
     common_features = {}
-    for file_name in glob.glob(directory_path + '/*.*'):
+    for file_name in glob.glob(directory_path.as_posix() + '/*.*'):
         if file_name != input_file:
             file_features = get_tfidf_features(file_name)
             print("Total features: {} for: {}".format(len(set(file_features)), file_name.split('/')[-1]))
@@ -1321,8 +1324,9 @@ def run_model(data_file_path, donation_cols, text_cols, send_obj):
             info_columns = identify_info_columns(df, donation_columns, True)
             y = list(donation_columns_df['target'])
             y_similar = y
-
+        cprint(f"Before check info_columns < 3:-> {df.columns}:->  {info_columns}", 'yellow', attrs=['bold'])
         df_info = remove_columns_unique_values(df, info_columns)
+        cprint(f"After check info_columns < 3:->  {df_info}", 'magenta', attrs=['bold'])
         if len(info_columns) < 3:
             raise ValueError(
                 "In order for the model to run, please supply a minimum of three text columns on your donor "
