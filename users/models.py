@@ -59,6 +59,7 @@ class Member(AbstractBaseUser, PermissionsMixin):
     stripe_card_token = models.CharField(max_length=200, null=True, blank=True)
     stripe_customer_id = models.CharField(max_length=200, null=True, blank=True)
     ip_address = models.CharField(max_length=200, null=True, blank=True)
+    account_owner = models.CharField(max_length=50, null=True, blank=True, default="")  # just for development only
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
