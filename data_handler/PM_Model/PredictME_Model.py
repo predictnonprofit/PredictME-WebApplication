@@ -103,6 +103,7 @@ def remove_rows_containg_all_null_values(df):
 def read_input_file(file_path):
     file_name = file_path.split('/')[-1]
     extension = file_name.split(".")[-1]
+    cprint(file_name, 'green')
     if extension == "csv":
         return pd.read_csv(file_path, encoding="ISO-8859-1")
     elif (extension == "xlsx") | (extension == "xls"):
