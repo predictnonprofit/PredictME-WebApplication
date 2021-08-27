@@ -624,7 +624,7 @@ def get_df_from_data_file(file_path):
                 df = pd.read_excel(data_file.as_posix())
                 df_columns = df.columns.tolist()
             elif data_file.suffix == ".csv":
-                df = pd.read_csv(data_file.as_posix(), sep=',', skipinitialspace=True)
+                df = pd.read_csv(data_file.as_posix(), sep=',', skipinitialspace=True, encoding="ISO-8859-1")
                 df_columns = df.columns.tolist()
             # this for fill the empty cells with its own empty values
             float_cols = df.select_dtypes(include=['float64']).columns
