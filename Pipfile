@@ -64,6 +64,7 @@ coverage = "*"
 wheel = "*"
 fonttools = "*"
 python-dateutil = "*"
+cryptography = "*"
 
 [dev-packages]
 
