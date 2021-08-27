@@ -1333,6 +1333,8 @@ def run_model(data_file_path, donation_cols, text_cols, send_obj):
                 "In order for the model to run, please supply a minimum of three text columns on your donor "
                 "file.")
 
+        df_info = categorical_df  # this to make the pdf plot the categorical columns
+
         processed_text, tfidf_matrix, feature_names, df_info, vectorizer = feature_extraction(df_info)
 
         if (is_similar_file and no_donations_columns == False):  # Similar file is used (donation columns exist)
