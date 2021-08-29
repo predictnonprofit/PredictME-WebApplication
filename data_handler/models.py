@@ -85,7 +85,24 @@ class DataHandlerSession(models.Model):
         db_table = 'data_handler_sessions'
 
     def __str__(self):
-        return f"{self.data_handler_session_label}"
+        return f"DataSession Object Labeled --> {self.data_handler_session_label}"
+
+    @property
+    def get_all_columns_but_donation_columns(self):
+        all_cols = []  # will hold all columns
+        all_cols_str = ""
+        numeric_columns = self.get_numeric_columns
+        text_columns = self.get_text_columns
+        geo_columns = self.get_geo_columns
+        if numeric_columns:
+            all_cols = text_columns + numeric_columns
+        else:
+            all_cols = text_columns
+        for col in all_cols:
+            all_cols_str += f"'{col}', "
+        all_cols_str = all_cols_str.rstrip(', ')  # remove the comma from last item
+        all_cols_str = "[" + all_cols_str + "]"
+        return all_cols_str
 
     @property
     def get_donation_columns(self):
@@ -93,6 +110,14 @@ class DataHandlerSession(models.Model):
             return None
         else:
             cols = self.donation_columns.replace("[", "").replace("]", "").replace("'", "").split(", ")
+            return cols
+
+    @property
+    def get_text_columns(self):
+        if self.text_columns == "[]":
+            return None
+        else:
+            cols = self.text_columns.replace("[", "").replace("]", "").replace("'", "").split(", ")
             return cols
 
     @property
