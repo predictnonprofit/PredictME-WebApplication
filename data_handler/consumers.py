@@ -62,7 +62,8 @@ class RunModelConsumer(WebsocketConsumer):
                 data_session = member_data_file.data_sessions_set.filter(pk=session_id).first()
                 donation_cols = data_session.donation_columns
                 donation_cols_as_list = data_session.get_donation_columns
-                text_cols = data_session.text_columns
+                # text_cols = data_session.text_columns
+                text_cols = data_session.get_all_columns_but_donation_columns
                 cprint(f"donation_cols --> {donation_cols}", 'yellow')
                 cprint(f"donation_cols --> {donation_cols_as_list},  Type----> {type(donation_cols_as_list)}", 'red')
                 cprint(f"text_cols --> {text_cols}", 'yellow')
@@ -90,7 +91,8 @@ class RunModelConsumer(WebsocketConsumer):
                     run_history.pdf_report_file_path = run_model_data.get('PDF_FILE')
                     run_history.csv_report_file_path = run_model_data.get('CSV_FILE')
                     # save the output to json file and return the json file path
-                    unique_filename = data_session.data_handler_session_label + str(uuid.uuid4()) + ".json"
+                    unique_filename = str(self.user.pk) + "_" + data_session.data_handler_session_label + str(
+                        uuid.uuid4()) + ".json"
                     modal_json_output_file_path = save_modal_output_to_json(unique_filename, model_output_data)
                     run_history.modal_output_json_file_path = modal_json_output_file_path
                     cprint("Save to run_history table", 'green', 'on_grey', attrs=['bold'])
@@ -98,7 +100,8 @@ class RunModelConsumer(WebsocketConsumer):
 
                     cprint(f"############ >> {type(model_output_data.get('donation_columns')).__name__}", 'yellow')
                     # save model similar file data to db
-                    if type(model_output_data.get('donation_columns')).__name__ == 'str':  # check if the donation columns not exists
+                    if type(model_output_data.get(
+                            'donation_columns')).__name__ == 'str':  # check if the donation columns not exists
                         similar_file_obj = None
                         cprint("Donation columns not exists will save similar file!", 'blue', 'on_grey', attrs=['bold'])
                         cprint(model_output_data.get("similar_percentage"), 'magenta', attrs=['bold'])
@@ -135,7 +138,8 @@ class RunModelConsumer(WebsocketConsumer):
                             similar_file_obj = ModelMostSimilarFile.objects.create(**created_data)
                             cprint(f"similar_file_objsimilar_file_obj ---> {similar_file_obj}", 'red', attrs=['bold'])
                         finally:
-                            cprint("********** Save to model_most_similar_file table", 'green', 'on_grey', attrs=['bold'])
+                            cprint("********** Save to model_most_similar_file table", 'green', 'on_grey',
+                                   attrs=['bold'])
                             similar_file_obj.save()
 
                         cprint(f"$$$$$$$$$>>>> {similar_file_obj}", 'magenta', 'on_grey', attrs=['bold'])
