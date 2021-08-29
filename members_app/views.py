@@ -36,7 +36,7 @@ from django.conf import settings
 from membership.models import Membership
 from django.db.models import Q
 from predict_me.helpers import check_internet_access
-from data_handler.models import (DataFile, RunHistory)
+from data_handler.models import (DataFile, RunHistory, DataHandlerSession)
 from membership.models import Subscription
 from django.utils import timezone
 
@@ -91,18 +91,21 @@ def download_dashboard_pdf(request):
         log_exception(traceback.format_exc())
 
 
-class ProfileOverview(LoginRequiredMixin, View):
+class ProfileOverview(LoginRequiredMixin, TemplateView):
     """
     this view for profile of the member
     """
     login_url = "login"
+    template_name = 'members_app/profile/overview.html'
 
-    def get(self, request, *args, **kwargs):
+    def get_context_data(self, **kwargs):
         try:
-            # cprint(dir(request), 'blue')
-            # cprint(request.build_absolute_uri(), 'cyan')
+            member = self.request.user
             context = {}
-            member = Member.objects.get(email=request.user.email)
+            member = Member.objects.get(email=member.email)
+            # se = DataHandlerSession.objects.get(pk=1056)
+            # cprint(type(se.get_all_columns_but_donation_columns), 'yellow', attrs=['bold'])
+            # cprint(se.get_all_columns_but_donation_columns, 'green', attrs=['bold'])
             current_data_use = 0
             total_data_predicted = 0
             records_used_list = list(
@@ -145,27 +148,31 @@ class ProfileOverview(LoginRequiredMixin, View):
             context['title'] = "Profile Overview"
             context['total_data_predicted'] = total_data_predicted
 
-            return render(request, "members_app/profile/overview.html", context=context)
+            return context
         except Exception as ex:
             cprint(traceback.format_exc(), 'red')
             log_exception(traceback.format_exc())
 
-    def post(self, request):
-        try:
-            if request.is_ajax():
-                member = Member.objects.get(email=request.user.email)
-                member_data_file = DataFile.objects.get(member=member)
-                member_data_session = member_data_file.data_sessions_set.all()
-                # check if there is session to return the correct value to display on the dashboard
-                if member_data_session.count() > 0:
-                    records_left = calculate_records_left_percentage(member_data_file, member_data_session.first())
-                    return JsonResponse(data={"value": int(records_left)}, status=200)
-                else:
-                    return JsonResponse(data={"value": int(0)}, status=200)
+    # def get(self, request, *args, **kwargs):
 
-        except Exception as ex:
-            cprint(traceback.format_exc(), 'red')
-            log_exception(traceback.format_exc())
+    #
+    # def post(self, request):
+    #     try:
+    #         if request.is_ajax():
+    #             cprint(f"request.is_ajax() request.is_ajax()", 'green', 'on_grey')
+    #             member = Member.objects.get(email=request.user.email)
+    #             member_data_file = DataFile.objects.get(member=member)
+    #             member_data_session = member_data_file.data_sessions_set.all()
+    #             # check if there is session to return the correct value to display on the dashboard
+    #             if member_data_session.count() > 0:
+    #                 records_left = calculate_records_left_percentage(member_data_file, member_data_session.first())
+    #                 return JsonResponse(data={"value": int(records_left)}, status=200)
+    #             else:
+    #                 return JsonResponse(data={"value": int(0)}, status=200)
+    #
+    #     except Exception as ex:
+    #         cprint(traceback.format_exc(), 'red')
+    #         log_exception(traceback.format_exc())
 
 
 class RunHistoryView(LoginRequiredMixin, ListView):
