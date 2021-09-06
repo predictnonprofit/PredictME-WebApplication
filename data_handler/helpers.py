@@ -15,9 +15,7 @@ from termcolor import cprint
 import traceback
 from predict_me.my_logger import (log_exception, log_info)
 from predict_me.constants.countries import *
-import fitz
 import re
-import pandas as pd
 from django.apps import apps
 import json
 from typing import Union
@@ -292,10 +290,11 @@ SELECTED_COLUMN = ""  # global to call when access the series
 ERROR_ROWS_IDXS = []  # the rows which contains error or not validate data
 
 
-def get_not_validate_rows2(file_path, column_name, all_columns, columns_with_dtypes, records_count=50):
+def get_not_validate_rows2(file_path, column_name, all_columns, columns_with_dtypes, records_count=25):
     try:
         global SELECTED_COLUMN, ERROR_ROWS_IDXS
         SELECTED_COLUMN = column_name
+        per_page_count = 25
         # print(SELECTED_COLUMN)
         # all_columns = sorted(all_columns)
         errors_idx_lst = []
@@ -327,7 +326,7 @@ def get_not_validate_rows2(file_path, column_name, all_columns, columns_with_dty
         # print(df_error)
         current_record_data = {}
         rows_count = df.shape[0]
-        x_total = int(int(rows_count / 50) * 50)
+        x_total = int(int(rows_count / per_page_count) * per_page_count)
         cprint(x_total, 'blue')
         # rows_list = (x for x in range(0, rows_count))
         rows_array = np.arange(0, rows_count)
@@ -335,7 +334,7 @@ def get_not_validate_rows2(file_path, column_name, all_columns, columns_with_dty
         # rows_array = np.delete(rows_array, 5)
         # cprint(len(rows_array), "green")
         # pprint(df_error.tail())
-        previous_50_count = records_count - 50
+        previous_50_count = records_count - per_page_count
         print(previous_50_count, records_count)
         for index, row in islice(df_error.iterrows(), previous_50_count, records_count):
             # for index, row in results.iterrows():
@@ -374,7 +373,7 @@ def get_not_validate_rows2(file_path, column_name, all_columns, columns_with_dty
         if len(all_rows) <= 0:
             return 0
         else:
-            if x_total <= 50:
+            if x_total <= per_page_count:
                 return all_rows[::-1]
             else:
                 return all_rows
@@ -698,88 +697,6 @@ def remove_spaces_from_columns_names(file_path):
             df.to_excel(path_obj.as_posix(), index=False)
         elif path_obj.suffix == ".csv":
             df.to_csv(path_obj.as_posix(), index=False, sep=',')
-    except Exception as ex:
-        cprint(traceback.format_exc(), 'red')
-        log_exception(traceback.format_exc())
-
-
-def get_data_from_report_file(session_object, file_type, keyword):
-    """
-    this function will extract custom keyword from pdf, csv report file
-    of custom session of the user
-    """
-    report_file_path = None
-    if file_type == 'PDF':
-        # cprint(session_object, 'blue')
-        report_file_path = session_object.pdf_report_file_path
-        pdf_obj = fitz.open(report_file_path)
-        search_words = keyword
-        for page in pdf_obj:
-            page_content = page.getText()
-            # cprint(page.getText(keyword), 'blue')
-            # cprint(page_text_page.extractText(), 'red')
-            found = re.search(keyword, page_content)
-            searched_words = page.searchFor(keyword)
-            text_content = page.getTextPage().extractText()
-            if searched_words:
-                page_text_page = page.getTextPage()
-                all_chars_lower = list(map(chr, range(97, 123)))
-                all_chars_upper = list(map(chr, range(65, 91)))
-                all_digits = list(map(chr, range(48, 58)))
-                converted_txt = re.findall(r'\w+', page_text_page.extractText())
-                page_txt_list = page_text_page.extractText().split("\n")
-                # cprint(page_txt_list, 'red')
-                related_items = []
-                for txt in page_txt_list:
-                    if keyword in txt:
-                        # cprint(keyword, 'blue')
-                        # cprint(txt, 'cyan')
-                        # check if there is any value after :
-                        split_values = txt.strip().split(":")
-                        # cprint(split_values, 'magenta')
-                        # cprint(split_values[1].strip(), 'red')
-                        if split_values[1].strip() != "":
-                            related_items.append({
-                                "BASE_VALUE": split_values[1].strip()
-                            })
-                        keyword_index = page_txt_list.index(txt)
-                        # cprint(keyword_index, 'green')
-                        # cprint(all_chars_lower, 'green')
-                        if txt.strip()[0].isdigit():
-                            # related_items = []
-                            sliced_list = page_txt_list[int(keyword_index) + 1:]
-                            for sitem in sliced_list:
-                                if sitem.strip()[0] in all_chars_lower:
-                                    related_items.append(sitem.strip())
-                                else:
-                                    break
-                return related_items
-
-
-def get_custom_from_report_pdf_file(session_object, keyword):
-    try:
-        report_file_path = session_object.pdf_report_file_path
-        pdf_obj = fitz.open(report_file_path)
-        all_pages = []
-        found_value = ""
-        for page in pdf_obj:
-            all_pages.append(page.getText())
-
-        pattern = r"{}.*".format(keyword)
-        for pg in all_pages:
-            matched = re.search(pattern, pg)
-            if matched is not None:
-                # cprint(matched.group(), 'cyan')
-                matched_text = matched.group()
-                split = matched_text.split(":")
-                last_item = split.pop()
-                match_numeric = re.search(r"\d.", last_item)
-                if match_numeric is not None:
-                    found_value = last_item
-                else:
-                    found_value = "No Value"
-
-        return found_value
     except Exception as ex:
         cprint(traceback.format_exc(), 'red')
         log_exception(traceback.format_exc())
