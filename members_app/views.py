@@ -26,8 +26,7 @@ from .helper import calculate_records_left_percentage
 from django.views.generic.detail import DetailView
 from django.views.generic import ListView
 from django.http import JsonResponse
-from data_handler.helpers import (get_data_from_report_file, get_data_from_report_csv_file,
-                                  get_custom_from_report_pdf_file)
+from data_handler.helpers import get_data_from_report_csv_file
 from predict_me.constants.countries import (ALL_COUNTRIES, ALL_STATS)
 from django.contrib.auth.hashers import (check_password, make_password)
 import re
@@ -200,19 +199,6 @@ class UserSessionDetailsView(LoginRequiredMixin, DetailView):
         model_output_data = extract_model_output_from_json(history_obj.modal_output_json_file_path)
         member_obj = history_obj.member
         context['model_output_data'] = model_output_data
-        # cprint(model_output_data, 'yellow')
-        # context["extracted_data"]['categorical_data'] = get_data_from_report_file(data_session_obj, "PDF",
-        #                                                                           'Categorical Columns')
-        # context["extracted_data"]['total_data_sample'] = get_data_from_report_file(data_session_obj, "PDF",
-        #                                                                            'Total Data Sample')
-        # context["extracted_data"]['donation_columns'] = get_data_from_report_file(data_session_obj, "PDF",
-        #                                                                           'Donation Columns')
-        # context["extracted_data"]['f1_score'] = get_custom_from_report_pdf_file(data_session_obj, 'F1-score:')
-        # context["extracted_data"]['threshold'] = get_custom_from_report_pdf_file(data_session_obj, 'Threshold used:')
-        # context["extracted_data"]['donors_predicted'] = get_custom_from_report_pdf_file(data_session_obj,
-        #                                                                                 'Donor predicted:')
-        # context["extracted_data"]['model_name'] = get_data_from_report_file(data_session_obj, "PDF",
-        #                                                                     "Best fit model name:")
         context['donation_info'] = get_data_from_report_csv_file(history_obj, member_obj)
         return context
 
