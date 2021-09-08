@@ -32,8 +32,7 @@ class RunModelConsumer(WebsocketConsumer):
 
         except Exception as ex:
             cprint(traceback.format_exc(), 'red')
-            cprint(str(ex), 'red')
-            log_exception(ex)
+            log_exception(traceback.format_exc())
 
     def disconnect(self, close_code=None):
         try:
@@ -46,8 +45,7 @@ class RunModelConsumer(WebsocketConsumer):
             cprint("Close the connection", 'green')
         except Exception as ex:
             cprint(traceback.format_exc(), 'red')
-            cprint(str(ex), 'red')
-            log_exception(ex)
+            log_exception(traceback.format_exc())
 
     def receive(self, text_data=None):
         text_data_json = json.loads(text_data)
@@ -153,7 +151,6 @@ class RunModelConsumer(WebsocketConsumer):
                     # self.close()
         except Exception as ex:
             cprint(traceback.format_exc(), 'red')
-            cprint(str(traceback.format_exc()), 'red')
             cprint("Call in Consumers", 'red', "on_grey", attrs=['bold'])
             member_data_file.is_run_the_model = False
             member_data_file.save()
