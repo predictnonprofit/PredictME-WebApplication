@@ -104,7 +104,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.dropbox',
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.microsoft',
-    # "django_cleanup.apps.CleanupConfig",
+    'django_cleanup.apps.CleanupConfig',
 
 ]
 
@@ -134,15 +134,15 @@ WSGI_APPLICATION = 'predict_me_project.wsgi.application'
 ASGI_APPLICATION = 'predict_me_project.routing.application'
 # ASGI_APPLICATION = 'predict_me_project.asgi.application'
 
-# Redis for ASGI
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            'hosts': [os.environ.get("REDIS_URL", "redis://localhost:6379")],
-        },
-    },
-}
+# # Redis for ASGI
+# CHANNEL_LAYERS = {
+#     'default': {
+#         'BACKEND': 'channels_redis.core.RedisChannelLayer',
+#         'CONFIG': {
+#             'hosts': [os.environ.get("REDIS_URL", "redis://localhost:6379")],
+#         },
+#     },
+# }
 
 
 # Database
