@@ -230,8 +230,6 @@ class DataHandlerSession(models.Model):
         except Exception as ex:
             cprint(traceback.format_exc(), 'red')
             log_exception(traceback.format_exc())
-        except Exception as ex:
-            log_exception(traceback.format_exc())
         finally:
             return cols_all_dtype
 
