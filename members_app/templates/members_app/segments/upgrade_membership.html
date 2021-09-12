@@ -7,7 +7,7 @@
       Upgrade Membership
     </legend>
 
-    <form method="POST" id="upgradeMembershipForm" action="{% url 'membership-upgrade-membership' %}">
+    <form method="POST" id="upgradeMembershipAccountSettingsForm" action="{% url 'api-upgrade-membership' %}">
       {% csrf_token %}
 
       <!--begin::Table-->
@@ -40,7 +40,7 @@
           {% endif %}
 
           <tbody>
-            {% if get_user_membership_only == "starter" %}
+            {% if get_user_membership_only == "starter" or get_user_membership_only == 'unlimited_development' %}
             <tr>
               <th scope="row">
                 <div class="symbol mr-3">
@@ -61,7 +61,7 @@
                     <!--end::Svg Icon-->
                   </span>
                 </div>
-                <a onclick="return false;" href="#"
+                <a onclick="return false;"
                   class="text-dark font-weight-bolder text-hover-primary d-inline-block my-1 font-size-lg">
                   {{ get_all_memberships.expert.slug|title }} Fundraising
                 </a>
@@ -81,18 +81,21 @@
               <td>
                 <div class="radio-inline">
                   <label class="radio">
-                    <input type="radio" name="upgrade_membership_radio_btn" value='expert_monthly' />
+                    <input type="radio" name="upgrade_membership_radio_btn" data-btn-id="expertBtn" value='Monthly'
+                      data-membership-name="{{ get_all_memberships.expert.slug|title }}" />
                     <span></span>30 Days
                   </label>
                   <label class="radio">
-                    <input type="radio" value="expert_yearly" name="upgrade_membership_radio_btn" />
+                    <input type="radio" value="Yearly" name="upgrade_membership_radio_btn" data-btn-id="expertBtn"
+                      data-membership-name="{{ get_all_memberships.expert.slug|title }}" />
                     <span></span>Yearly
                   </label>
                 </div>
               </td>
               <td>
-                <button data-toggle='modal' data-target='#upgradeMembershipModal' type="button"
-                  class="btn btn-icon btn-light-primary btn-circle">
+                <button disabled='disabled' type="button"
+                  class="btn btn-icon btn-light-success btn-circle disabled not-allowed-cursor upgradeMembershipSettingsBtn"
+                  id='expertBtn'>
                   <i class="flaticon2-arrow-up"></i>
                 </button>
               </td>
@@ -118,7 +121,7 @@
                   </span>
 
                 </div>
-                <a onclick="return false;" href="#"
+                <a onclick="return false;"
                   class="text-dark font-weight-bolder text-hover-primary d-inline-block my-1 font-size-lg">
                   {{ get_all_memberships.professional.slug|title }} Fundraising
                 </a>
@@ -138,18 +141,21 @@
               <td>
                 <div class="radio-inline">
                   <label class="radio">
-                    <input type="radio" name="upgrade_membership_radio_btn" value="professional_monthly" />
+                    <input type="radio" name="upgrade_membership_radio_btn" data-btn-id="profBtn" value="Monthly"
+                      data-membership-name="{{ get_all_memberships.professional.slug|title }}" />
                     <span></span>30 Days
                   </label>
                   <label class="radio">
-                    <input type="radio" name="upgrade_membership_radio_btn" value='professional_yearly' />
+                    <input type="radio" name="upgrade_membership_radio_btn" data-btn-id="profBtn" value='Yearly'
+                      data-membership-name="{{ get_all_memberships.professional.slug|title }}" />
                     <span></span>Yearly
                   </label>
                 </div>
               </td>
               <td>
-                <button data-toggle='modal' data-target='#upgradeMembershipModal' type="button"
-                  class="btn btn-icon btn-light-primary btn-circle">
+                <button type="button" disabled='disabled'
+                  class="btn btn-icon btn-light-success btn-circle disabled not-allowed-cursor upgradeMembershipSettingsBtn"
+                  id="profBtn">
                   <i class="flaticon2-arrow-up"></i>
                 </button>
               </td>
@@ -175,7 +181,7 @@
                     <!--end::Svg Icon-->
                   </span>
                 </div>
-                <a onclick="return false;" href="#"
+                <a onclick="return false;"
                   class="text-dark font-weight-bolder text-hover-primary d-inline-block my-1 font-size-lg">
                   {{ get_all_memberships.expert.slug|title }} Fundraising
                 </a>
@@ -195,18 +201,21 @@
               <td>
                 <div class="radio-inline">
                   <label class="radio">
-                    <input type="radio" name="upgrade_membership_radio_btn" value="expert_monthly" />
+                    <input type="radio" name="upgrade_membership_radio_btn" data-btn-id="expertBtn" value='Monthly'
+                      data-membership-name="{{ get_all_memberships.expert.slug|title }}" />
                     <span></span>30 Days
                   </label>
                   <label class="radio">
-                    <input type="radio" name="upgrade_membership_radio_btn" value="expert_yearly" />
+                    <input type="radio" value="Yearly" name="upgrade_membership_radio_btn" data-btn-id="expertBtn"
+                      data-membership-name="{{ get_all_memberships.expert.slug|title }}" />
                     <span></span>Yearly
                   </label>
                 </div>
               </td>
               <td>
-                <button data-toggle='modal' data-target='#upgradeMembershipModal' type="button"
-                  class="btn btn-icon btn-light-primary btn-circle">
+                <button disabled='disabled' type="button"
+                  class="btn btn-icon btn-light-success btn-circle disabled not-allowed-cursor upgradeMembershipSettingsBtn"
+                  id='expertBtn'>
                   <i class="flaticon2-arrow-up"></i>
                 </button>
               </td>
