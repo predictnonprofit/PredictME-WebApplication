@@ -20,14 +20,18 @@ from django.apps import apps
 import json
 from typing import Union
 from prettyprinter import pprint
+import inspect
 
 validate_obj = DataValidator()
+SELECTED_COLUMN = ""  # global to call when access the series
+ERROR_ROWS_IDXS = []  # the rows which contains error or not validate data
 
 
 def clean_currency(x: str):
     """ If the value is a string, then remove currency symbol and delimiters
     otherwise, the value is numeric and can be converted
     """
+    # cprint(f"### Function Name:->  {inspect.stack()[0][3]} ###", 'yellow', 'on_grey', attrs=['bold'])
     try:
         # x = str(x)
         if isinstance(x, str):
@@ -49,6 +53,7 @@ def get_selected_columns_as_list(member_data_file):
     Returns:
         list
     """
+    cprint(f"### Function Name:->  {inspect.stack()[0][3]} ###", 'yellow', 'on_grey', attrs=['bold'])
     return member_data_file.get_selected_columns_as_list
 
 
@@ -56,6 +61,7 @@ def save_data_file_rounded(file_path):
     """
     Save new data file rounded float numbers
     """
+    cprint(f"### Function Name:->  {inspect.stack()[0][3]} ###", 'yellow', 'on_grey', attrs=['bold'])
     data_file = Path(file_path)
     df = get_df_from_data_file(file_path)
     df_copy = df.copy()
@@ -72,10 +78,11 @@ def save_data_file_rounded(file_path):
             new_cleand_cols.append(col.strip())
             saved_logged_cols_base.append(f"{col}: {df_copy[col].dtype}")
             if df_copy[col].dtype == "float64":
-                df_copy[col] = df_copy[col].round().astype('int64')
+                # df_copy[col] = df_copy[col].round().astype('int64')
+                df_copy[col] = df_copy[col].round().astype(float)
             elif df_copy[col].dtype == "object":
                 df_copy[col] = df_copy[col].str.strip()
-                df_copy[col] = df_copy[col].apply(clean_currency)
+                # df_copy[col] = df_copy[col].apply(clean_currency)
             if df_copy[col].dtype == "bool":
                 df_copy[col] = df_copy[col].astype(str)
             saved_logged_cols_after.append(f"{col}: {df_copy[col].dtype}")
@@ -95,16 +102,17 @@ def save_data_file_rounded(file_path):
         cprint("save done", 'green')
         cprint(data_file.as_posix(), 'yellow', 'on_grey')
     except Exception as ex:
-        cprint(traceback.format_exc(), 'red')
         delete_data_file(file_path)
+        cprint(traceback.format_exc(), 'red')
         log_exception(traceback.format_exc())
 
 
 def download_data_file_converter(member_data_file):
-    selected_columns = member_data_file.get_selected_columns_as_list
-    data_file_path = Path(member_data_file.data_file_path)
-    df = get_df_from_data_file(data_file_path)
+    cprint(f"### Function Name:->  {inspect.stack()[0][3]} ###", 'yellow', 'on_grey', attrs=['bold'])
     try:
+        selected_columns = member_data_file.get_selected_columns_as_list
+        data_file_path = Path(member_data_file.data_file_path)
+        df = get_df_from_data_file(data_file_path)
         if data_file_path.suffix == ".xlsx":
 
             df.to_excel(data_file_path.as_posix(), header=True, index=False, columns=selected_columns)
@@ -116,6 +124,7 @@ def download_data_file_converter(member_data_file):
 
 
 def extract_all_columns_with_dtypes(file_name):
+    cprint(f"### Function Name:->  {inspect.stack()[0][3]} ###", 'yellow', 'on_grey', attrs=['bold'])
     try:
         all_columns = {}  # hold all columns in the file
 
@@ -136,6 +145,7 @@ def extract_all_columns_with_dtypes(file_name):
 
 
 def extract_all_column_names(file_name):
+    cprint(f"### Function Name:->  {inspect.stack()[0][3]} ###", 'yellow', 'on_grey', attrs=['bold'])
     try:
         all_columns = []  # hold all columns in the file
 
@@ -153,20 +163,27 @@ def extract_all_column_names(file_name):
         # print(all_columns)
         return all_columns
     except Exception as ex:
-        cprint(str(ex), 'red')
         cprint(traceback.format_exc(), 'red')
         log_exception(traceback.format_exc())
 
 
 def get_row_count(file_path):
-    full_file_path = Path(file_path)
-    row_counts = None
-    df = get_df_from_data_file(file_path)
-    row_counts = df.shape[0]
-    return row_counts
+    cprint(f"### Function Name:->  {inspect.stack()[0][3]} ###", 'yellow', 'on_grey', attrs=['bold'])
+    try:
+        full_file_path = Path(file_path)
+        row_counts = None
+        df = get_df_from_data_file(file_path)
+        # cprint(df.dtypes, 'blue', attrs=['bold'])
+        # cprint(df, 'magenta')
+        row_counts = df.shape[0]
+        return row_counts
+    except Exception as ex:
+        cprint(traceback.format_exc(), 'red')
+        log_exception(traceback.format_exc())
 
 
 def get_rows_data_by_columns(file_path, columns, records_count, columns_with_types, all_original_columns):
+    cprint(f"### Function Name:->  {inspect.stack()[0][3]} ###", 'yellow', 'on_grey', attrs=['bold'])
     try:
         all_rows = []
         file_obj = Path(file_path)
@@ -218,6 +235,7 @@ def get_rows_data_by_columns(file_path, columns, records_count, columns_with_typ
 
 
 def get_rows_data_by_search_query(file_path, columns, search_query, columns_with_dtypes):
+    cprint(f"### Function Name:->  {inspect.stack()[0][3]} ###", 'yellow', 'on_grey', attrs=['bold'])
     try:
         all_rows = []
         search_query = str(search_query)
@@ -249,48 +267,49 @@ def get_rows_data_by_search_query(file_path, columns, search_query, columns_with
         else:
             return all_rows
     except Exception as ex:
-        cprint(str(ex), 'red')
         cprint(traceback.format_exc(), 'red')
         log_exception(traceback.format_exc())
 
 
 def get_not_validate_rows(file_path, all_columns, column_name):
-    # all_columns = sorted(all_columns)
-    all_rows = []
-    data_file = Path(file_path)
-    df = get_df_from_data_file(file_path)
+    cprint(f"### Function Name:->  {inspect.stack()[0][3]} ###", 'yellow', 'on_grey', attrs=['bold'])
+    try:
+        # all_columns = sorted(all_columns)
+        all_rows = []
+        data_file = Path(file_path)
+        df = get_df_from_data_file(file_path)
 
-    # df.fillna(method='pad')
-    current_record = []  # will be dynamic record, will indicate to current row in the loop, then set it to null
-    # column_mask = (df[column_name] == "NaN")
-    column_mask = df[column_name].isnull()
-    # df2 = df.loc[column_mask]  # data frame of elements which null
-    df2 = df.loc[column_mask, all_columns]  # data frame of elements which null
-    # print(type(df2))
-    # print(df2)
+        # df.fillna(method='pad')
+        current_record = []  # will be dynamic record, will indicate to current row in the loop, then set it to null
+        # column_mask = (df[column_name] == "NaN")
+        column_mask = df[column_name].isnull()
+        # df2 = df.loc[column_mask]  # data frame of elements which null
+        df2 = df.loc[column_mask, all_columns]  # data frame of elements which null
+        # print(type(df2))
+        # print(df2)
 
-    current_record_data = {}
-    for index, row in df2.iterrows():
-        # row is the series object
-        for col in all_columns:
-            # print(index, "----> ", col, "--->", row[col], end='\n')
-            tmp_cell_val = row[col]
-            current_record_data["PANDAS_ID"] = index
-            current_record_data[col] = validate_obj.detect_and_validate(replace_nan_value(tmp_cell_val))
-        all_rows.insert(0, current_record_data)
         current_record_data = {}
+        for index, row in df2.iterrows():
+            # row is the series object
+            for col in all_columns:
+                # print(index, "----> ", col, "--->", row[col], end='\n')
+                tmp_cell_val = row[col]
+                current_record_data["PANDAS_ID"] = index
+                current_record_data[col] = validate_obj.detect_and_validate(replace_nan_value(tmp_cell_val))
+            all_rows.insert(0, current_record_data)
+            current_record_data = {}
 
-        # breakpoint()
-    # print(all_rows)
-    print(len(all_rows))
-    return all_rows
-
-
-SELECTED_COLUMN = ""  # global to call when access the series
-ERROR_ROWS_IDXS = []  # the rows which contains error or not validate data
+            # breakpoint()
+        # print(all_rows)
+        print(len(all_rows))
+        return all_rows
+    except Exception as ex:
+        cprint(traceback.format_exc(), 'red')
+        log_exception(traceback.format_exc())
 
 
 def get_not_validate_rows2(file_path, column_name, all_columns, columns_with_dtypes, records_count=25):
+    cprint(f"### Function Name:->  {inspect.stack()[0][3]} ###", 'yellow', 'on_grey', attrs=['bold'])
     try:
         global SELECTED_COLUMN, ERROR_ROWS_IDXS
         SELECTED_COLUMN = column_name
@@ -379,7 +398,6 @@ def get_not_validate_rows2(file_path, column_name, all_columns, columns_with_dty
                 return all_rows
 
     except Exception as ex:
-        cprint(str(ex), 'red')
         cprint(traceback.format_exc(), 'red')
         log_exception(traceback.format_exc())
 
@@ -401,6 +419,7 @@ def validate_series(data_value: pd.Series):
 def update_rows_data(file_path, data_json, column_names, columns_with_dtypes):
     # pd.describe_option("display.float_format")
     # pd.set_option("display.float_format", "{:.2f}".format)
+    cprint(f"### Function Name:->  {inspect.stack()[0][3]} ###", 'yellow', 'on_grey', attrs=['bold'])
     try:
         data_file = Path(file_path)
         # check if file exists
@@ -449,7 +468,6 @@ def update_rows_data(file_path, data_json, column_names, columns_with_dtypes):
             return current_value, "Data saved successfully"
 
     except Exception as ex:
-        cprint(str(ex), 'red')
         cprint(traceback.format_exc(), 'red')
         log_exception(traceback.format_exc())
 
@@ -460,6 +478,7 @@ def validate_data_type_in_dualbox(columns: dict, data_file_path, columns_list):
         box before click on process and navigate to the data handler page
         ["", "object", "int64", "float64", 'bool', 'datetime64', 'category', 'timedelta'];
     """
+    cprint(f"### Function Name:->  {inspect.stack()[0][3]} ###", 'yellow', 'on_grey', attrs=['bold'])
     result_dict = {}  # the return dict with validate values
     df = get_df_from_data_file(data_file_path)
     # print(dict(df.dtypes))
@@ -489,6 +508,7 @@ def replace_nan_value(value):
 
 def delete_data_file(path):
     """ Deletes file from filesystem. """
+    cprint(f"### Function Name:->  {inspect.stack()[0][3]} ###", 'yellow', 'on_grey', attrs=['bold'])
     try:
         os.remove(path)
     except FileNotFoundError:
@@ -504,7 +524,7 @@ def reorder_columns(the_reset_of_column, is_dict=False):
     Returns: the_reset_of_column
 
     """
-
+    cprint(f"### Function Name:->  {inspect.stack()[0][3]} ###", 'yellow', 'on_grey', attrs=['bold'])
     unique_idx = "unique identifier (id)"
     unique_col = ''
 
@@ -545,6 +565,7 @@ def validate_column_date_type(columns):
 
 
 def handle_uploaded_file(f, fname):
+    cprint(f"### Function Name:->  {inspect.stack()[0][3]} ###", 'yellow', 'on_grey', attrs=['bold'])
     full_path = os.path.join("media", fname)
     with open(full_path, 'wb+') as destination:
         for chunk in f.chunks():
@@ -552,6 +573,7 @@ def handle_uploaded_file(f, fname):
 
 
 def check_int(num):
+    cprint(f"### Function Name:->  {inspect.stack()[0][3]} ###", 'yellow', 'on_grey', attrs=['bold'])
     try:
         int(num)
         return True
@@ -566,8 +588,8 @@ def delete_all_member_data_file_info(member_data_file):
         member_data_file:
 
     Returns:
-
     """
+    cprint(f"### Function Name:->  {inspect.stack()[0][3]} ###", 'yellow', 'on_grey', attrs=['bold'])
     try:
 
         for dfile in DataHandlerSession.objects.filter(data_handler_id=member_data_file):
@@ -594,6 +616,7 @@ def delete_all_member_data_file_info(member_data_file):
 
 
 def convert_dfile_with_selected_columns(df: pd.DataFrame, selected_columns: list, file_path: Path, file_ext: str):
+    cprint(f"### Function Name:->  {inspect.stack()[0][3]} ###", 'yellow', 'on_grey', attrs=['bold'])
     try:
         parent_dir = Path() / file_path.parent
         df_selected_columns = df[selected_columns]
@@ -610,7 +633,25 @@ def convert_dfile_with_selected_columns(df: pd.DataFrame, selected_columns: list
         log_exception(traceback.format_exc())
 
 
+# def get_df_from_data_file(file_path):
+#     cprint(f"### Function Name:->  {inspect.stack()[0][3]} ###", 'yellow', 'on_grey', attrs=['bold'])
+#     try:
+#         file_name = file_path.split('/')[-1]
+#         extension = file_name.split(".")[-1]
+#         cprint(file_name, 'green')
+#         if extension == "csv":
+#             return pd.read_csv(file_path, encoding="ISO-8859-1", skipinitialspace=True)
+#         elif (extension == "xlsx") | (extension == "xls"):
+#             return pd.read_excel(file_path)
+#         else:
+#             cprint("{} file format is not supported".format(extension), 'red', 'on_grey', attrs=['bold'])
+#     except Exception as ex:
+#         cprint(traceback.format_exc(), 'red')
+#         log_exception(traceback.format_exc())
+
+
 def get_df_from_data_file(file_path):
+    cprint(f"### Function Name:->  {inspect.stack()[0][3]} ###", 'yellow', 'on_grey', attrs=['bold'])
     try:
         data_file = Path(file_path)
         df_columns = []
@@ -625,13 +666,14 @@ def get_df_from_data_file(file_path):
             elif data_file.suffix == ".csv":
                 df = pd.read_csv(data_file.as_posix(), sep=',', skipinitialspace=True, encoding="ISO-8859-1")
                 df_columns = df.columns.tolist()
+
             # this for fill the empty cells with its own empty values
             float_cols = df.select_dtypes(include=['float64']).columns
             str_cols = df.select_dtypes(include=['object']).columns
             int_cols = df.select_dtypes(include=['int64']).columns
-            df.loc[:, float_cols] = df.loc[:, float_cols].fillna(0)
-            df.loc[:, int_cols] = df.loc[:, int_cols].fillna(0)
-            df.loc[:, str_cols] = df.loc[:, str_cols].fillna('NULL')
+            # df.loc[:, float_cols] = df.loc[:, float_cols].fillna(0)
+            # df.loc[:, int_cols] = df.loc[:, int_cols].fillna(0)
+            # df.loc[:, str_cols] = df.loc[:, str_cols].fillna('NULL')
             df_clone = df.copy()
 
             # this loop to convert bool dtype to string
@@ -641,13 +683,12 @@ def get_df_from_data_file(file_path):
                     df_clone[co] = df_clone[co].apply(str)
                     # cprint(df_clone[co].dtype, 'green')
                 elif df_clone[co].dtype == 'float64':
-                    df_clone[co] = df_clone[co].round().astype(int)
+                    # df_clone[co] = df_clone[co].round().astype(int)
+                    df_clone[co] = df_clone[co].round()
 
             # cprint(df_clone.dtypes, 'green')
 
             return df_clone
-        else:
-            return 0
 
     except Exception as ex:
         cprint(traceback.format_exc(), 'red')
@@ -655,6 +696,7 @@ def get_df_from_data_file(file_path):
 
 
 def check_empty_df(file_path):
+    cprint(f"### Function Name:->  {inspect.stack()[0][3]} ###", 'yellow', 'on_grey', attrs=['bold'])
     try:
         df = get_df_from_data_file(file_path)
         if df.empty is True:
@@ -688,6 +730,7 @@ def remove_spaces_from_columns_names(file_path):
     this function will take dataframe path and save the file without
     spaces in the columns name
     """
+    cprint(f"### Function Name:->  {inspect.stack()[0][3]} ###", 'yellow', 'on_grey', attrs=['bold'])
     try:
         path_obj = Path(file_path)
         df = get_df_from_data_file(file_path)
@@ -703,6 +746,7 @@ def remove_spaces_from_columns_names(file_path):
 
 
 def get_data_from_report_csv_file(history_obj: RunHistory, user: Member):
+    cprint(f"### Function Name:->  {inspect.stack()[0][3]} ###", 'yellow', 'on_grey', attrs=['bold'])
     try:
         all_donation_info = {}
         if type(history_obj).__name__ == 'RunHistory':
@@ -726,7 +770,7 @@ def get_data_from_report_csv_file(history_obj: RunHistory, user: Member):
                         cprint("object section", 'green')
                         df[col] = df[col].str.replace(',', '')
                         df[col] = df[col].str.replace('$', '')
-                        df[col] = df[col].apply(clean_currency).astype('float')
+                        df[col] = df[col].apply(clean_currency).astype(float)
                     donation_cols_counts[col] = {
                         'col_name': col,
                         "total_records": df[col].count(),
@@ -747,6 +791,7 @@ def delete_unfinished_sessions(data_file_obj: DataFile):
     """
      This function will take user @data_file_obj and check uncompleted sessions and will delete them
      """
+    cprint(f"### Function Name:->  {inspect.stack()[0][3]} ###", 'yellow', 'on_grey', attrs=['bold'])
     '''
         ['id', 'data_handler_id', 'file_upload_procedure', 'data_file_path', 'base_data_file_path', 'donation_columns', 
         'current_session_name', 'run_modal_date_time', 'data_handler_session_label', 'selected_columns', 
@@ -789,6 +834,7 @@ def delete_unfinished_sessions(data_file_obj: DataFile):
 
 
 def export_updated_data_file_csv(data_file_path: str, columns: list):
+    cprint(f"### Function Name:->  {inspect.stack()[0][3]} ###", 'yellow', 'on_grey', attrs=['bold'])
     selected_columns = columns
     new_csv_path = None
     try:
@@ -835,6 +881,7 @@ def export_updated_data_file_csv(data_file_path: str, columns: list):
 
 
 def export_updated_data_file_xlsx(data_file_path: str, columns: list):
+    cprint(f"### Function Name:->  {inspect.stack()[0][3]} ###", 'yellow', 'on_grey', attrs=['bold'])
     selected_columns = columns
     # download_data_file_converter(data_file)
     new_xlsx_path = None
@@ -889,6 +936,7 @@ def save_donation_columns_to_json(donation_columns: str, file_name: str):
     """
     This function will save new donation columns to column_name_mapping.json file
     """
+    cprint(f"### Function Name:->  {inspect.stack()[0][3]} ###", 'yellow', 'on_grey', attrs=['bold'])
     try:
         file_obj = Path(file_name)
         only_file_name = file_obj.name.split(".")[0]
@@ -919,6 +967,7 @@ def save_modal_output_to_json(file_name: str, data_to_save: dict) -> str:
         file_name (str): json file path,
         data_to_save (dict) : the data will save to json file
     """
+    cprint(f"### Function Name:->  {inspect.stack()[0][3]} ###", 'yellow', 'on_grey', attrs=['bold'])
     try:
         data_handler_app = apps.get_app_config('data_handler')
         data_handler_path = data_handler_app.path
@@ -945,6 +994,7 @@ def extract_model_output_from_json(json_file_path: str) -> dict:
     Returns:
         dict: the json file content
     """
+    cprint(f"### Function Name:->  {inspect.stack()[0][3]} ###", 'yellow', 'on_grey', attrs=['bold'])
     try:
         json_data = dict()
         json_file_path = Path(json_file_path)
@@ -966,6 +1016,7 @@ def get_geo_location_data(file_path: str, geo_location_columns: list) -> dict:
         file_path (str): data file path
         geo_location_columns (list): list of geo-location columns
     """
+    cprint(f"### Function Name:->  {inspect.stack()[0][3]} ###", 'yellow', 'on_grey', attrs=['bold'])
     df = None
     try:
         data_file = Path(file_path)
@@ -1001,6 +1052,7 @@ def extract_geo_location_counter(file_path: str, geo_location_columns: list) -> 
         file_path (str): data file path
         geo_location_columns (list): list of geo-location columns
     """
+    cprint(f"### Function Name:->  {inspect.stack()[0][3]} ###", 'yellow', 'on_grey', attrs=['bold'])
     df = None
     try:
         data_file = Path(file_path)
@@ -1036,3 +1088,62 @@ def extract_geo_location_counter(file_path: str, geo_location_columns: list) -> 
             return all_data
         else:
             return None
+
+
+def get_data_table_overview(member):
+    try:
+        at_or_below_plan_limit = False
+        check_records_total = False  # true if the total records more than the allowed in membership
+        total_cost_for_additional_rows = 0
+        above_plan_limit = 0
+        member = member
+        records_used = 0
+        records_used_and_not_run_sessions = 0  # this will be records used from data usage with sessions not finished
+        # check if the usage is not None
+        if member.data_usage.filter().first() is not None:
+            records_used = int(member.data_usage.first().records_used)
+
+        member_subscription_obj = member.member_subscription.get()
+        membership_object = member_subscription_obj.stripe_plan_id
+        data_handler_obj = member.member_data_file.get()
+        data_sessions = data_handler_obj.data_sessions_set.filter()
+        all_records_count = data_handler_obj.data_sessions_set.filter(is_run_model=False).values_list(
+            'all_records_count', flat=True)
+        # cprint(f"all records for sessions:-> {all_records_count}", 'yellow')
+        all_records_count = sum(list(all_records_count))
+        records_used_and_not_run_sessions = int(all_records_count + records_used)
+        at_or_below_plan_limit = int(membership_object.allowed_records_count - records_used_and_not_run_sessions)
+
+        # check if all uploaded files rows bigger or less the allowed of user membership
+        if records_used_and_not_run_sessions > membership_object.allowed_records_count:
+            above_plan_limit = int(records_used_and_not_run_sessions - membership_object.allowed_records_count)
+            # above_plan_limit = int(above_plan_limit + all_records_count)
+            total_cost_for_additional_rows = above_plan_limit * membership_object.additional_fee_per_extra_record
+            check_records_total = True
+        else:
+            check_records_total = False
+
+        # cprint(member_subscription_obj, 'blue')
+        # cprint(membership_object, 'cyan')
+        # cprint(data_handler_obj, 'green')
+        # cprint(data_sessions, 'yellow')
+        # cprint(all_records_count, 'magenta')
+        # cprint(at_or_below_plan_limit, 'magenta')
+        # cprint(total_cost_for_additional_rows, 'red')
+        # cprint(at_or_below_plan_limit, 'yellow')
+        # cprint(check_at_or_below_plan_limit, 'yellow')
+
+        data = {
+            "plan_name": membership_object.parent.capitalize(),
+            'plan_limit': membership_object.allowed_records_count,
+            # 'current_data_used': records_used,
+            'current_data_used': records_used_and_not_run_sessions,
+            'at_or_below_plan_limit': at_or_below_plan_limit,
+            "above_plan_rows": above_plan_limit,
+            "additional_fee": f"${membership_object.additional_fee_per_extra_record}",
+            'total_cost_for_additional': f"${total_cost_for_additional_rows}",
+            'check_records_total': check_records_total,
+        }
+        return data
+    except Exception as ex:
+        pass
