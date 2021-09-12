@@ -79,7 +79,7 @@ function fetchDataToSessionDashboard(dataKeyName) {
         if ((response.statusText === 'OK') && (response.status === 200)) {
           return response.json();
         }
-         /* else {
+        /* else {
           fetchTrainAndTest();
         } */
       })
@@ -96,6 +96,36 @@ function fetchDataToSessionDashboard(dataKeyName) {
     } else {
       console.error(error);
     }
+  }
+
+}
+
+
+// this function will upgrade to new membership
+function requestUpgradeToNewMembership(membershipSlug) {
+  const url = document.querySelector("#upgradeMembershipAccountSettingsForm").action;
+  try {
+    return fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+          "X-CSRFToken": getCookie('csrftoken')
+        },
+        body: JSON.stringify({
+          "membershipName": membershipSlug
+        })
+      })
+      .then(response => {
+        // check the response status
+        if (response.ok) {
+          return response.json();
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  } catch (error) {
+    console.error(error);
   }
 
 }
