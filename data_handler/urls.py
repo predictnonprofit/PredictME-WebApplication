@@ -40,6 +40,6 @@ urlpatterns = [
         path("export", ExportUpdatedDataFile.as_view(), name="data-handler-export-updated-file"),
         path("fetch-session-dashboard-session", FetchDashboardSessionData.as_view(),
              name="data-handler-fetch-dashboard-session"),
-    ])),
+    ]), name='data-handler-api-urls'),
 
 ]
