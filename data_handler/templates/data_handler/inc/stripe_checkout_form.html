@@ -19,34 +19,7 @@
         {% csrf_token %}
         <div class="kt-portlet__body">
             <fieldset class="form-group p-3">
-                <legend class="w-auto px-2 text-secondary">Option 2</legend>
-                <div class="form-group row">
-
-                    <div class="col-md-6">
-                        <label>Purchased records :</label>
-                        <input type="text" class="form-control data-handler-stripe-charge-form" placeholder="0"
-                            id="extraRowsPurchased" onkeyup="calculateExtraRows();" name="extraRowsPurchased"
-                            readonly required />
-                        <span class="form-text text-muted font-weight-bold"><b>${{get_all_member_info.MEMBERSHIP.additional_fee_per_extra_record}}
-                                cents per additional record</b></span>
-                    </div>
-
-                    <div class="col-md-6">
-                        <label>Total amount due :</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">
-                                    <i class="la la-dollar"></i>
-                                </span>
-                            </div>
-                            <input type="text" disabled="disabled" readonly
-                                class="data-handler-stripe-charge-form form-control" name="total_amount_due"
-                                placeholder="0" aria-describedby="basic-addon1" id="totalAmountDue">
-                        </div>
-                        <span class="form-text text-muted font-weight-bold"></span>
-                    </div>
-
-                </div>
+                <legend class="w-auto px-2 text-secondary">Option 2: Pay exceeded data amount now</legend>
                 <!-- Start Stripe Input -->
                 <div class="form-group">
                     <div class="row">
