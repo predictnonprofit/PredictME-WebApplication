@@ -100,12 +100,7 @@ async function stripeTokenHandler(token) {
     stripeToken = token.id;
   }
   let form = document.getElementById("data-handler-payment-form");
-
-  const extraRowsPurchased = form.elements.extraRowsPurchased.value;
-  const totalAmountDue = form.elements.total_amount_due.value;
   let formData = {
-    "extraRows": extraRowsPurchased,
-    "totalAmount": totalAmountDue,
     "stripeToken": stripeToken,
   };
   const chargeRequest = await chargeExtraRecords(formData);
@@ -213,14 +208,6 @@ $(function () {
   // code
   enableDisableCheckBtn(true);
   // console.log($("#dhAbovePlanLimitRecord").text())
-  $('#extraRecordsModel').on('shown.bs.modal', function (e) {
-    const aboveRecords = parseInt($(".dhAbovePlanLimitRecord").text());
-    extraRowsPurchased.attr('max', aboveRecords).val(parseInt(aboveRecords));
-    const purchased = parseFloat(parseInt(aboveRecords) * 0.50);
-    setTimeout(() => {
-      console.log($(".dhAbovePlanLimitRecord").text(), '\n');
-    }, 3000);
-    $("#extraRowsPurchased").val(purchased);
-  });
+
   
 });
