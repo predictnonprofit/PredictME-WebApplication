@@ -1226,64 +1226,12 @@ class FetchTableOverviewDataView(APIView):
     def post(self, request, format=None):
 
         try:
-            at_or_below_plan_limit = False
-            check_records_total = False  # true if the total records more than the allowed in membership
-            total_cost_for_additional_rows = 0
-            above_plan_limit = 0
-            member = request.user
-            records_used = 0
-            records_used_and_not_run_sessions = 0  # this will be records used from data usage with sessions not finished
-            # check if the usage is not None
-            if member.data_usage.filter().first() is not None:
-                records_used = int(member.data_usage.first().records_used)
-
-            member_subscription_obj = member.member_subscription.get()
-            membership_object = member_subscription_obj.stripe_plan_id
-            data_handler_obj = member.member_data_file.get()
-            data_sessions = data_handler_obj.data_sessions_set.filter()
-            all_records_count = data_handler_obj.data_sessions_set.filter(is_run_model=False).values_list(
-                'all_records_count', flat=True)
-            # cprint(f"all records for sessions:-> {all_records_count}", 'yellow')
-            all_records_count = sum(list(all_records_count))
-            records_used_and_not_run_sessions = int(all_records_count + records_used)
-            at_or_below_plan_limit = int(membership_object.allowed_records_count - records_used_and_not_run_sessions)
-
-            # check if all uploaded files rows bigger or less the allowed of user membership
-            if records_used_and_not_run_sessions > membership_object.allowed_records_count:
-                above_plan_limit = int(records_used_and_not_run_sessions - membership_object.allowed_records_count)
-                # above_plan_limit = int(above_plan_limit + all_records_count)
-                total_cost_for_additional_rows = above_plan_limit * membership_object.additional_fee_per_extra_record
-                check_records_total = True
-            else:
-                check_records_total = False
-
-            # cprint(member_subscription_obj, 'blue')
-            # cprint(membership_object, 'cyan')
-            # cprint(data_handler_obj, 'green')
-            # cprint(data_sessions, 'yellow')
-            # cprint(all_records_count, 'magenta')
-            # cprint(at_or_below_plan_limit, 'magenta')
-            # cprint(total_cost_for_additional_rows, 'red')
-            # cprint(at_or_below_plan_limit, 'yellow')
-            # cprint(check_at_or_below_plan_limit, 'yellow')
-
-            data = {
-                "plan_name": membership_object.parent.capitalize(),
-                'plan_limit': membership_object.allowed_records_count,
-                # 'current_data_used': records_used,
-                'current_data_used': records_used_and_not_run_sessions,
-                'at_or_below_plan_limit': at_or_below_plan_limit,
-                "above_plan_rows": above_plan_limit,
-                "additional_fee": f"${membership_object.additional_fee_per_extra_record}",
-                'total_cost_for_additional': f"${total_cost_for_additional_rows}",
-                'check_records_total': check_records_total,
-            }
+            data = get_data_table_overview(request.user)
             return JsonResponse(data={'data': data, 'status': 200}, status=200)
 
         except Exception as ex:
             cprint(traceback.format_exc(), 'red')
-            cprint(str(ex), 'red')
-            log_exception(ex)
+            log_exception(traceback.format_exc())
             return JsonResponse(data={'data': None, 'status': 202}, status=202)
 
 
