@@ -12,7 +12,7 @@ from predict_me.my_logger import log_exception
 from users.models import Member
 from .models import (Subscription, Membership, Charges)
 from termcolor import cprint
-from prettyprinter import pprint
+from prettyprinter import pprint, cpprint
 import stripe
 import os
 import datetime
@@ -20,6 +20,7 @@ import pytz
 from django.db.models import Q
 from django.db import transaction
 from predict_me.helpers import check_internet_access
+from data_handler.helpers import get_data_table_overview
 import copy
 
 stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
@@ -286,6 +287,7 @@ class ChargeExtraRecordView(APIView):
         try:
             # dict_keys(['csrfmiddlewaretoken', 'upgrade_plan', 'new_upgrade_range'])
             member = request.user
+            member_data = get_data_table_overview(member)
             data_handler_obj = member.member_data_file.get()
             all_not_finished_records_count = data_handler_obj.data_sessions_set.filter(is_run_model=False).values_list(
                 'all_records_count', flat=True)
@@ -296,7 +298,7 @@ class ChargeExtraRecordView(APIView):
             membership_obj = member_subscription.stripe_plan_id
             membership_row_count = int(membership_obj.allowed_records_count)
             all_not_finished_records_count = int(data_usage_rows) + int(all_not_finished_records_count)
-            cprint(f"all_not_finished_records_count -> {all_not_finished_records_count}", 'cyan')
+            # cprint(f"all_not_finished_records_count -> {all_not_finished_records_count}", 'cyan')
             # cprint(f"data_usage_rows-> {data_usage_rows}", 'green')
             subtracted_rows = int(data_usage_rows - membership_row_count)
             new_data_usage_rows = 0  # new rows will updated in data usage table after charging
@@ -304,11 +306,17 @@ class ChargeExtraRecordView(APIView):
             # cprint(request.data, 'cyan')
             # check internet connection
             if check_internet_access() is True:
+                """
+                {'plan_name': 'Unlimited_development', 'plan_limit': 9999999999, 'current_data_used': 1170, 
+                'at_or_below_plan_limit': 9999998829, 'above_plan_rows': 0, 'additional_fee': '$0.00', 
+                'total_cost_for_additional': '$0', 'check_records_total': False
+                """
                 form_data = json.loads(request.data.get("formData"))
+                # cprint(form_data, 'cyan')
                 stripe_name = form_data.get("name")
                 stripe_email = form_data.get("email")
-                extra_records = form_data.get("extraRows")
-                total_amount = float(form_data.get("totalAmount"))
+                extra_records = member_data.get("above_plan_rows")
+                total_amount = float(member_data.get("total_cost_for_additional").replace("$", ""))
                 stripe_token = form_data.get("stripeToken")
                 description = "PredictMe Charge"
                 # cprint(form_data, 'yellow')
@@ -317,45 +325,42 @@ class ChargeExtraRecordView(APIView):
                     return JsonResponse(data={"msg": "Some data are required!", 'is_done': False}, status=200)
 
                 # validate if the extra rows is more than the allowed or cross the limit
-                cprint(f"extra_records -> {extra_records}", 'cyan')
-                cprint(f"subtracted_rows -> {subtracted_rows}", 'cyan')
-                if int(extra_records) > all_not_finished_records_count:
-                    return JsonResponse(data={"msg": "Total records is more than allowed!!", 'is_done': False},
-                                        status=200)
+                # cprint(f"extra_records -> {extra_records}", 'cyan')
+                # cprint(f"subtracted_rows -> {subtracted_rows}", 'cyan')
+
+                # here if the extra records limited
+                if stripe_token is None:
+                    # in case the user will use old stripe card, which use it in registration
+                    stripe_charge = stripe.Charge.create(
+                        amount=int(total_amount * 100),
+                        currency="usd",
+                        description=description,
+                        customer=member_subscription.stripe_customer_id
+                    )
                 else:
-                    # here if the extra records limited
-                    if stripe_token is None:
-                        # in case the user will use old stripe card, which use it in registration
-                        stripe_charge = stripe.Charge.create(
-                            amount=int(total_amount * 100),
-                            currency="usd",
-                            description=description,
-                            customer=member_subscription.stripe_customer_id
-                        )
-                    else:
-                        # in case the user provide new stripe card
-                        stripe_charge = stripe.Charge.create(
-                            amount=int(total_amount * 100),
-                            currency="usd",
-                            source=stripe_token,
-                            description=f"Member's email address is: {member.email}, {description}",
-                        )
+                    # in case the user provide new stripe card
+                    stripe_charge = stripe.Charge.create(
+                        amount=int(total_amount * 100),
+                        currency="usd",
+                        source=stripe_token,
+                        description=f"Member's email address is: {member.email}, {description}",
+                    )
 
-                    # check if charge successfully
-                    if stripe_charge is not None:
-                        charge_obj = Charges()
-                        charge_obj.member = member
-                        charge_obj.charge_token = stripe_charge.get("id")
-                        charge_obj.amount = stripe_charge.get('amount')
-                        # charge_obj.invoice_token = stripe_charge.get('invoice')
-                        charge_obj.status = stripe_charge.get('status')
-                        charge_obj.save()
+                # check if charge successfully
+                if stripe_charge is not None:
+                    charge_obj = Charges()
+                    charge_obj.member = member
+                    charge_obj.charge_token = stripe_charge.get("id")
+                    charge_obj.amount = stripe_charge.get('amount')
+                    # charge_obj.invoice_token = stripe_charge.get('invoice')
+                    charge_obj.status = stripe_charge.get('status')
+                    charge_obj.save()
 
-                        # update data usage row for the member
-                        new_data_usage_rows = int(int(subtracted_rows) - int(extra_records))
-                        member_data_usage_obj.records_used = int(membership_row_count + new_data_usage_rows)
-                        member_data_usage_obj.save()
-                        return JsonResponse(data={"msg": "Charge Successfully!", "is_done": True}, status=200)
+                    # update data usage row for the member
+                    new_data_usage_rows = int(int(subtracted_rows) - int(extra_records))
+                    member_data_usage_obj.records_used = int(membership_row_count + new_data_usage_rows)
+                    member_data_usage_obj.save()
+                    return JsonResponse(data={"msg": "Charge Successfully!", "is_done": True}, status=200)
 
             else:
                 # no internet connection
@@ -367,6 +372,15 @@ class ChargeExtraRecordView(APIView):
             log_exception(traceback.format_exc())
             messages.error(request, 'There is errors!, try again latter')
             return JsonResponse(data={"msg": "Error while charging!!", 'is_done': False}, status=200)
+
+
+class UpgradeMembershipAPIView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request, *args, **kwargs):
+        cprint(request.data, 'magenta')
+        # cpprint(dir(request))
+        return JsonResponse(data={"msg": "Upgrade Api Request completed", "is_done": True}, status=200)
 
 
 class ChangeStripeCardView(APIView):
