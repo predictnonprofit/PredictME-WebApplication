@@ -1571,6 +1571,7 @@ function uploadDataFileFunction(formInputEle) {
 
   // reload overview data table
   callDataHandlerTableFunc();
+
 }
 
 
