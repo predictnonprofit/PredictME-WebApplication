@@ -349,6 +349,7 @@ stripe_cards_numbers.txt
 futuristic_features.rst
 jsconfig.json
 db.sqlite3.backup
+testing_db.sqlite3
 client_secret.json
 celerybeat-schedule.bak
 celerybeat-schedule.dat
