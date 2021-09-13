@@ -26,7 +26,9 @@ $(function () {
     };
 
     // Create an instance of the card Element.
-    var card = elements.create('card', {style: style});
+    var card = elements.create('card', {
+        style: style
+    });
 
     // Add an instance of the card Element into the `card-element` <div>.
     card.mount('#card-element');
@@ -45,6 +47,11 @@ $(function () {
     var form = document.getElementById('payment-form');
     form.addEventListener('submit', function (event) {
         event.preventDefault();
+        console.log('Submit stripe form');
+        const paymentBtn = document.querySelector("#paymentBtn");
+        // disable the button after click
+        paymentBtn.classList.add("disabled", "wait-cursor");
+        paymentBtn.disabled = true;
 
         stripe.createToken(card).then(function (result) {
             if (result.error) {
@@ -102,26 +109,18 @@ $(document).ready(function () {
         if ($(this).is(':checked')) {
             let rangeVal = $(this).closest('label').text().trim();
             // check if select monthly or yearly to print the correct "in Month", "in Year"
-            if(rangeVal === "Monthly"){
+            if (rangeVal === "Monthly") {
                 sRange.text("Month");
-            }else{
+            } else {
                 sRange.text("Year");
             }
 
             // check if select monthly or yearly to print the correct value in accept payment block
-            if(rangeVal === "Monthly"){
-                sPrice.text("Currently $" + ele.data('price') );  // the correct monthly value save it or parse it from context variable in django view
-            }else{
+            if (rangeVal === "Monthly") {
+                sPrice.text("Currently $" + ele.data('price')); // the correct monthly value save it or parse it from context variable in django view
+            } else {
                 sPrice.text("Currently $" + ele.data('price'));
             }
         }
-    });
-
-
-    // disable the button after click
-    const paymentBtn = $('#paymentBtn');
-    paymentBtn.on("click", function(event){
-      this.attr("disabled", "disabled");
-      this.addClass("disabled not-allowed-cursor");
     });
 })
