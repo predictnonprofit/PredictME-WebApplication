@@ -9,6 +9,12 @@ Check out
 {% block customcss %}
 <link rel="stylesheet" href="{% static 'assets/css/stripe-checkout.css' %}" type="text/css" />
 <link href="{% static 'assets/css/fixed_footer.css' %}" rel="stylesheet" type="text/css" />
+<style>
+  .wait-cursor {
+    cursor: wait !important;
+  }
+
+</style>
 {% endblock customcss %}
 
 {% block content %}
