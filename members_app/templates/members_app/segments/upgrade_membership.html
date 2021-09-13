@@ -3,7 +3,7 @@
 <section id="upgrade-membership-wrapper-account-settings">
 
   <fieldset>
-    <legend>
+    <legend class="text-center mb-4">
       Upgrade Membership
     </legend>
 
@@ -13,7 +13,7 @@
       <!--begin::Table-->
       <div class="table-responsive">
 
-        <table class="table">
+        <table class="table" id='upgradeMembershipTable'>
           {% if get_user_membership_only != "expert" %}
           <thead>
             <tr>
@@ -42,7 +42,7 @@
           <tbody>
             {% if get_user_membership_only == "starter" or get_user_membership_only == 'unlimited_development' %}
             <tr>
-              <th scope="row">
+              <td scope="row">
                 <div class="symbol mr-3">
                   <span class="svg-icon svg-icon-2x svg-icon-danger">
                     <!--begin::Svg Icon | path:assets/media/svg/icons/Shopping/Cart2.svg-->
@@ -65,18 +65,18 @@
                   class="text-dark font-weight-bolder text-hover-primary d-inline-block my-1 font-size-lg">
                   {{ get_all_memberships.expert.slug|title }} Fundraising
                 </a>
-              </th>
+              </td>
               <td>
                 <span
                   class="text-dark-75 font-weight-bolder d-block font-size-lg">{{ get_all_memberships.expert.allowed_records_count }}</span>
               </td>
               <td>
                 <span
-                  class="text-dark-75 font-weight-bolder d-block font-size-lg">${{ get_all_memberships.expert.monthly_fee|floatformat:1 }}</span>
+                  class="text-dark-75 font-weight-bolder d-block font-size-lg">${{ get_all_memberships.expert.monthly_fee|floatformat:0 }}</span>
               </td>
               <td>
                 <span
-                  class="text-dark-75 font-weight-bolder d-block font-size-lg">${{ get_all_memberships.expert.yearly_fee|floatformat:1 }}</span>
+                  class="text-dark-75 font-weight-bolder d-block font-size-lg">${{ get_all_memberships.expert.yearly_fee|floatformat:0 }}</span>
               </td>
               <td>
                 <div class="radio-inline">
@@ -101,7 +101,7 @@
               </td>
             </tr>
             <tr>
-              <th scope="row">
+              <td scope="row">
                 <div class="symbol mr-3">
                   <span class="svg-icon svg-icon-2x svg-icon-warning">
                     <!--begin::Svg Icon | path:assets/media/svg/icons/Tools/Compass.svg-->
@@ -125,7 +125,7 @@
                   class="text-dark font-weight-bolder text-hover-primary d-inline-block my-1 font-size-lg">
                   {{ get_all_memberships.professional.slug|title }} Fundraising
                 </a>
-              </th>
+              </td>
               <td>
                 <span
                   class="text-dark-75 font-weight-bolder d-block font-size-lg">{{ get_all_memberships.professional.allowed_records_count }}</span>
@@ -162,7 +162,7 @@
             </tr>
             {% elif get_user_membership_only == "professional" %}
             <tr>
-              <th scope="row">
+              <td scope="row">
                 <div class="symbol mr-3">
                   <span class="svg-icon svg-icon-2x svg-icon-danger">
                     <!--begin::Svg Icon | path:assets/media/svg/icons/Shopping/Cart2.svg-->
@@ -185,7 +185,7 @@
                   class="text-dark font-weight-bolder text-hover-primary d-inline-block my-1 font-size-lg">
                   {{ get_all_memberships.expert.slug|title }} Fundraising
                 </a>
-              </th>
+              </td>
               <td>
                 <span
                   class="text-dark-75 font-weight-bolder d-block font-size-lg">{{ get_all_memberships.expert.allowed_records_count }}</span>
