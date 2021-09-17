@@ -103,17 +103,53 @@ function fetchDataToSessionDashboard(dataKeyName) {
 
 // this function will upgrade to new membership
 function requestUpgradeToNewMembership(membershipSlug) {
-  const url = document.querySelector("#upgradeMembershipAccountSettingsForm").action;
   try {
+    const url = document.querySelector("#upgradeMembershipAccountSettingsForm").action;
+    const headers = new Headers({
+      "Content-Type": "application/json;charset=utf-8",
+      "X-CSRFToken": getCookie('csrftoken')
+    });
     return fetch(url, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json;charset=utf-8",
-          "X-CSRFToken": getCookie('csrftoken')
-        },
+        headers: headers,
         body: JSON.stringify({
           "membershipName": membershipSlug
         })
+      })
+      .then(response => {
+        // check the response status
+        if (response.ok) {
+          return response.json();
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  } catch (error) {
+    console.error(error);
+  }
+
+}
+
+
+// this function will send message request api
+async function requestSendMemberMessage(formData) {
+  try {
+    const url = document.querySelector("#members_inbox_compose_form").action;
+    // "Content-Type": "application/json;charset=utf-8",
+    // "Content-Type": "multipart/form-data;charset=utf-8",
+    // "Content-Type": "multipart/form-data; boundary=blob",
+    // "Content-Type": 'application/x-www-form-urlencoded',
+    const headers = new Headers({
+      "X-CSRFToken": getCookie('csrftoken'),
+      'Accept': 'application/json',
+      'X-Requested-With': 'XMLHttpRequest'
+    });
+
+    return await fetch(url, {
+        method: "POST",
+        headers: headers,
+        body: formData
       })
       .then(response => {
         // check the response status
