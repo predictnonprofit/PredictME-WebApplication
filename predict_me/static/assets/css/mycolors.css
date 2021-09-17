@@ -735,6 +735,10 @@ div#fileUploadOverlay {
   cursor: progress !important;
 }
 
+.disabled-label{
+  pointer-events: none !important;
+}
+
 /* End progress cursor */
 
 /* Start dashboard loader */
@@ -772,3 +776,21 @@ div#fileUploadOverlay {
 }
 
 /* End my d-block and d-none */
+
+/* Start Members Inbox */
+#member_compose_text_msg{
+  height: 300px;
+}
+#member_compose_subject{
+  border-radius: 0;
+  border-left: 0;
+  border-right: 0;
+}
+.in-valid-placeholder::placeholder{
+  color: #F64E60;
+}
+.ql-container.ql-snow{
+  border-top: 1px solid transparent;
+}
+
+/* End Members Inbox */
