@@ -1047,7 +1047,7 @@ function fetchDataForDataTable() {
       })
       .then(response => {
         // check the response status
-        if ((response.statusText === 'OK') && (response.status === 200)) {
+        if (response.ok) {
           return response.json();
         } else {
           fetchDataForDataTable();
@@ -1210,7 +1210,7 @@ function checkIsAllowedToRunModel() {
       })
       .then(response => {
         // check the response status
-        if ((response.statusText === 'OK') && (response.status === 200)) {
+        if (response.ok) {
           return response.json()
         } else {
           return {
@@ -1255,7 +1255,7 @@ function checkSessionDtypesValid() {
       })
       .then(response => {
         // check the response status
-        if ((response.statusText === 'OK') && (response.status === 200)) {
+        if (response.ok) {
           return response.json()
         } else {
           return {
