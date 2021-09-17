@@ -3,15 +3,19 @@
 const upgradeMembershipSettingsBtn = document.querySelectorAll(".upgradeMembershipSettingsBtn");
 // download invoices btn
 const downloadInvoicesBtn = document.querySelector("#downloadInvoicesBtn");
-downloadInvoicesBtn.addEventListener("click", event => {
-    fetchMemberInvoices();
-});
+if (downloadInvoicesBtn !== null) {
+    downloadInvoicesBtn.addEventListener("click", event => {
+        fetchMemberInvoices();
+    });
+}
 
 // download user transactions btn
 const downloadTransactionsBtn = document.querySelector("#downloadTransactionsBtn");
-downloadTransactionsBtn.addEventListener('click', event => {
-    fetchMemberTransactions();
-});
+if (downloadTransactionsBtn !== null) {
+    downloadTransactionsBtn.addEventListener('click', event => {
+        fetchMemberTransactions();
+    });
+}
 
 
 // upgrade membership btn
@@ -74,7 +78,7 @@ upgradeMembershipSettingsBtn.forEach(item => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 const upgradeResponse = await requestUpgradeToNewMembership(newMembershipName);
-                if(upgradeResponse['is_done']){
+                if (upgradeResponse['is_done']) {
                     Swal.fire('Upgraded!', 'Your membership upgraded successfully (testing)', 'success');
                 }
             }
