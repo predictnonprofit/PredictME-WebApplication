@@ -11,3 +11,15 @@ ORGANIZATION_TYPES = (
     'Environment', 'Animal', 'International', 'Religion related',
     'Other'
 )
+
+SUBJECTS_TYPES = (
+    ("profile_setup", "Profile Setup"),
+    ("update_information", "Update Information"),
+    ("login_issues", "Login Issues"),
+    ("billing_payment", "Billing/Payment"),
+    ("predictive_model", "Predictive Model"),
+    ("email_inbox", "Email Inbox"),
+    ("data_issue", "Data Issue(s)"),
+    ("website_related", "Website Related"),
+    ("other", "Other"),
+)
