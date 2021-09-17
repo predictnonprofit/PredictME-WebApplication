@@ -11,8 +11,14 @@ urlpatterns = [
     path("session/delete/", DeleteSessionHistoryView.as_view(),
          name="data-handler-user-delete-session-history"),
     # path("dashboard", ProfileDashboard.as_view(), name="profile-dashboard"),
+    path("inbox/", include([
+        path("", MemberInboxView.as_view(), name="member-inbox-list"),
+        path("<int:pk>", MemberInboxDetailsView.as_view(), name="member-inbox-details"),
+        path("api/", include([
+            path("send-message", MemberSendMessageViewAPI.as_view(), name='api-member-send-message')
+        ]), name="member-messages-api-urls"),
+    ]), name="members-inbox-urls"),
     path("activity", ActivityDashboard.as_view(), name="profile-activity"),
-    path("inbox", MemberInboxView.as_view(), name="member-inbox"),
     path("settings", AccountSettingsDashboard.as_view(), name="profile-account-settings"),
     path("personal", ProfilePersonal.as_view(), name="profile-personal"),
     path("information", ProfileInformation.as_view(), name="profile-info"),
@@ -26,4 +32,5 @@ urlpatterns = [
 
     path("download", download_instructions_template, name='data-handler-temp-download'),
     path("download-dashboard", download_dashboard_pdf, name='profile-dashboard-download'),
+
 ]
