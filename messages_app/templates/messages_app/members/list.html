@@ -1,0 +1,401 @@
+{% extends 'members_app/inc/master.html' %}
+{% load static %}
+{% load data_handler_tags %}
+
+{% block title %}
+{{title}}
+{% endblock title %}
+
+{% block customcss %}
+
+{% endblock customcss %}
+
+{% block pagename %}
+Inbox
+{% endblock pagename %}
+
+
+{% block content %}
+
+<!-- Start Messages -->
+{% include 'predict_me/inc/messages.html' %}
+<!-- End Messages -->
+
+<!-- begin:: Content -->
+<div class="d-flex flex-row mx-4">
+    <!--begin::List-->
+    <div class="flex-row-fluid  d-block" id="kt_inbox_list">
+        <!--begin::Card-->
+        <div class="card card-custom card-stretch">
+            <!--begin::Header-->
+            <div class="card-header row row-marginless align-items-center flex-wrap py-5 h-auto border-bottom-0">
+                <!--begin::Toolbar-->
+                <div class="col-12 col-sm-6 col-xxl-4 order-2 order-xxl-1 d-flex flex-wrap align-items-center">
+                    <div class="d-flex align-items-center mr-1 my-2">
+                        <label data-inbox="group-select" class="checkbox checkbox-inline checkbox-primary mr-3">
+                            <input type="checkbox">
+                            <span class="symbol-label"></span>
+                        </label>
+
+
+                    </div>
+                    <div class="d-flex align-items-center mr-1 my-2">
+
+
+                        {# Start Compose btn #}
+                        <span data-toggle="tooltip" title="Compose">
+                            <span class="btn btn-default btn-icon btn-sm mr-2" data-toggle="modal"
+                                data-target="#kt_inbox_compose" data-original-title="Compose">
+                                <span class="svg-icon svg-icon-md svg-icon-primary">
+                                    <!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\legacy\metronic\theme\html\demo2\dist/../src/media/svg/icons\Design\Edit.svg--><svg
+                                        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                            <rect x="0" y="0" width="24" height="24" />
+                                            <path
+                                                d="M8,17.9148182 L8,5.96685884 C8,5.56391781 8.16211443,5.17792052 8.44982609,4.89581508 L10.965708,2.42895648 C11.5426798,1.86322723 12.4640974,1.85620921 13.0496196,2.41308426 L15.5337377,4.77566479 C15.8314604,5.0588212 16,5.45170806 16,5.86258077 L16,17.9148182 C16,18.7432453 15.3284271,19.4148182 14.5,19.4148182 L9.5,19.4148182 C8.67157288,19.4148182 8,18.7432453 8,17.9148182 Z"
+                                                fill="#000000" fill-rule="nonzero"
+                                                transform="translate(12.000000, 10.707409) rotate(-135.000000) translate(-12.000000, -10.707409) " />
+                                            <rect fill="#000000" opacity="0.3" x="5" y="20" width="15" height="2"
+                                                rx="1" />
+                                        </g>
+                                    </svg>
+                                    <!--end::Svg Icon--></span>
+                            </span>
+                        </span>
+                        {# End Compose btn #}
+
+                        <span class="btn btn-default btn-icon btn-sm mr-2 d-none" data-toggle="tooltip" title=""
+                            data-original-title="Spam">
+                            <span class="svg-icon svg-icon-md svg-icon-primary">
+                                <!--begin::Svg Icon | path:assets/media/svg/icons/Code/Warning-1-circle.svg-->
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <rect x="0" y="0" width="24" height="24"></rect>
+                                        <circle fill="#000000" opacity="0.3" cx="12" cy="12" r="10"></circle>
+                                        <rect fill="#000000" x="11" y="7" width="2" height="8" rx="1"></rect>
+                                        <rect fill="#000000" x="11" y="16" width="2" height="2" rx="1"></rect>
+                                    </g>
+                                </svg>
+                                <!--end::Svg Icon-->
+                            </span>
+                        </span>
+
+
+
+                    </div>
+                    {# Start Second Row #}
+                    <div class='d-block mr-1 my-2'>
+                        {# Start Sent btn #}
+                        <span class="btn btn-default btn-icon btn-sm mr-2" data-toggle="tooltip"
+                            data-original-title="Sent">
+                            <span class="svg-icon svg-icon-md">
+                                <!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\themes\metronic\theme\html\demo2\dist/../src/media/svg/icons\Communication\Send.svg--><svg
+                                    xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <rect x="0" y="0" width="24" height="24" />
+                                        <path
+                                            d="M3,13.5 L19,12 L3,10.5 L3,3.7732928 C3,3.70255344 3.01501031,3.63261921 3.04403925,3.56811047 C3.15735832,3.3162903 3.45336217,3.20401298 3.70518234,3.31733205 L21.9867539,11.5440392 C22.098181,11.5941815 22.1873901,11.6833905 22.2375323,11.7948177 C22.3508514,12.0466378 22.2385741,12.3426417 21.9867539,12.4559608 L3.70518234,20.6826679 C3.64067359,20.7116969 3.57073936,20.7267072 3.5,20.7267072 C3.22385763,20.7267072 3,20.5028496 3,20.2267072 L3,13.5 Z"
+                                            fill="#000000" />
+                                    </g>
+                                </svg>
+                                <!--end::Svg Icon--></span>
+                        </span>
+                        {# End Sent btn #}
+
+                        {# Start Trash btn #}
+                        <span class="btn btn-default btn-icon btn-sm mr-2" id="member-inbox-trash-btn"
+                            data-toggle="tooltip" title="" data-original-title="Trash">
+                            <span class="svg-icon svg-icon-md svg-icon-danger">
+                                <!--begin::Svg Icon | path:assets/media/svg/icons/General/Trash.svg-->
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <rect x="0" y="0" width="24" height="24"></rect>
+                                        <path
+                                            d="M6,8 L6,20.5 C6,21.3284271 6.67157288,22 7.5,22 L16.5,22 C17.3284271,22 18,21.3284271 18,20.5 L18,8 L6,8 Z"
+                                            fill="#000000" fill-rule="nonzero"></path>
+                                        <path
+                                            d="M14,4.5 L14,4 C14,3.44771525 13.5522847,3 13,3 L11,3 C10.4477153,3 10,3.44771525 10,4 L10,4.5 L5.5,4.5 C5.22385763,4.5 5,4.72385763 5,5 L5,5.5 C5,5.77614237 5.22385763,6 5.5,6 L18.5,6 C18.7761424,6 19,5.77614237 19,5.5 L19,5 C19,4.72385763 18.7761424,4.5 18.5,4.5 L14,4.5 Z"
+                                            fill="#000000" opacity="0.3"></path>
+                                    </g>
+                                </svg>
+                                <!--end::Svg Icon-->
+                            </span>
+                        </span>
+                        {# End Trash btn #}
+
+                    </div>
+                    {# End Second Row #}
+
+
+                </div>
+                <!--end::Toolbar-->
+                <!--begin::Search-->
+                <div class="col-xxl-3 d-flex order-1 order-xxl-2 align-items-center justify-content-center">
+                    <div class="input-group input-group-lg input-group-solid my-2">
+                        <input type="text" class="form-control pl-4" placeholder="Search...">
+                        <div class="input-group-append">
+                            <span class="input-group-text pr-3">
+                                <span class="svg-icon svg-icon-lg">
+                                    <!--begin::Svg Icon | path:assets/media/svg/icons/General/Search.svg-->
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                            <rect x="0" y="0" width="24" height="24"></rect>
+                                            <path
+                                                d="M14.2928932,16.7071068 C13.9023689,16.3165825 13.9023689,15.6834175 14.2928932,15.2928932 C14.6834175,14.9023689 15.3165825,14.9023689 15.7071068,15.2928932 L19.7071068,19.2928932 C20.0976311,19.6834175 20.0976311,20.3165825 19.7071068,20.7071068 C19.3165825,21.0976311 18.6834175,21.0976311 18.2928932,20.7071068 L14.2928932,16.7071068 Z"
+                                                fill="#000000" fill-rule="nonzero" opacity="0.3"></path>
+                                            <path
+                                                d="M11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 Z M11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 Z"
+                                                fill="#000000" fill-rule="nonzero"></path>
+                                        </g>
+                                    </svg>
+                                    <!--end::Svg Icon-->
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <!--end::Search-->
+                <!--begin::Pagination-->
+                <div
+                    class="col-12 col-sm-6 col-xxl-4 order-2 order-xxl-3 d-flex align-items-center justify-content-sm-end text-right my-2">
+                    <!--begin::Per Page Dropdown-->
+                    <div class="d-flex align-items-center mr-2" data-toggle="tooltip" title=""
+                        data-original-title="Records per page">
+                        <span class="text-muted font-weight-bold mr-2" data-toggle="dropdown">1 - 50 of 235</span>
+                        <div class="dropdown-menu dropdown-menu-right p-0 m-0 dropdown-menu-sm">
+                            <ul class="navi py-3">
+                                <li class="navi-item">
+                                    <a href="#" class="navi-link">
+                                        <span class="navi-text">20 per page</span>
+                                    </a>
+                                </li>
+                                <li class="navi-item">
+                                    <a href="#" class="navi-link active">
+                                        <span class="navi-text">50 par page</span>
+                                    </a>
+                                </li>
+                                <li class="navi-item">
+                                    <a href="#" class="navi-link">
+                                        <span class="navi-text">100 per page</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!--end::Per Page Dropdown-->
+                    <!--begin::Arrow Buttons-->
+                    <span class="btn btn-default btn-icon btn-sm mr-2" data-toggle="tooltip" title=""
+                        data-original-title="Previose page">
+                        <i class="ki ki-bold-arrow-back icon-sm"></i>
+                    </span>
+                    <span class="btn btn-default btn-icon btn-sm mr-2" data-toggle="tooltip" title=""
+                        data-original-title="Next page">
+                        <i class="ki ki-bold-arrow-next icon-sm"></i>
+                    </span>
+                    <!--end::Arrow Buttons-->
+
+                </div>
+                <!--end::Pagination-->
+            </div>
+            <!--end::Header-->
+            <!--begin::Body-->
+            <div class="card-body table-responsive px-0">
+                <!--begin::Items-->
+                <div class="list list-hover min-w-500px" data-inbox="list">
+
+                    {% for object in object_list %}
+                    <!--begin::Item-->
+                    <div class="d-flex align-items-start list-item card-spacer-x py-3">
+                        <!--begin::Toolbar-->
+                        <div class="d-flex align-items-center">
+                            <!--begin::Actions-->
+                            <div class="d-flex align-items-center mr-3" data-inbox="actions">
+                                <label class="checkbox checkbox-inline checkbox-primary flex-shrink-0 mr-3">
+                                    <input type="checkbox" class="member-inbox-msg-checkbox" data-msg-id="{{ object.pk }}" />
+                                    <span></span>
+                                </label>
+
+                            </div>
+                            <!--end::Actions-->
+                            <!--begin::Author-->
+                            <div class="d-flex align-items-center flex-wrap w-xxl-180px mr-3"">
+                                <span class="symbol symbol-35 mr-3">
+
+                                </span>
+                                <a href="#" class="font-weight-bold text-dark-75 text-hover-primary">{{ object.sender.full_name }}</a>
+                            </div>
+                            <!--end::Author-->
+                        </div>
+                        <!--end::Toolbar-->
+                        <!--begin::Info-->
+                        <div class="flex-grow-1 mt-2 mr-2"">
+                            <div>
+                                <span class="font-weight-bolder font-size-lg mr-2">
+                                    <a href="{% url 'member-inbox-details' object.pk %}" style="color: unset">
+                                    {% if object.subject %} {{ object.get_subject_display }} {% else %} {{ object.other_subject }} {% endif %}
+                                </a>
+                                    -</span>
+                                <span class="text-muted">{{ object.message|striptags|truncatechars:50 }}...</span>
+                            </div>
+
+                        </div>
+                        <!--end::Info-->
+                        <!--begin::Datetime-->
+                        <div class="mt-2 mr-3 font-weight-bolder w-150px text-right"">{{ object.send_date|timesince }}</div>
+                        <!--end::Datetime-->
+                    </div>
+                    <!--end::Item-->
+                    {% empty %}
+                    <div class="container">
+                        <div class="alert alert-custom alert-notice alert-light-primary fade show mb-5" role="alert">
+                            <div class="alert-text">No messages in your inbox!</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                </div>
+                <!--end::Items-->
+            </div>
+            <!--end::Body-->
+        </div>
+        <!--end::Card-->
+    </div>
+    <!--end::List-->
+
+</div>
+
+<!-- Start Compose Model -->
+<div class="modal modal-sticky modal-sticky-lg modal-sticky-bottom-right" id="kt_inbox_compose" data-backdrop="false"
+    aria-hidden="true" style="display: none;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <!--begin::Form-->
+            <form id="members_inbox_compose_form" method="POST" enctype="multipart/form-data"
+                action="{% url 'api-member-send-message' %}">
+                {% csrf_token %}
+                <!--begin::Header-->
+                <div class="d-flex align-items-center justify-content-between py-5 pl-8 pr-5 border-bottom">
+                    <h5 class="font-weight-bold m-0">Compose</h5>
+                    <div class="d-flex ml-2">
+
+                        <span class="btn btn-clean btn-sm btn-icon" data-dismiss="modal">
+                            <i class="ki ki-close icon-1x"></i>
+                        </span>
+                    </div>
+                </div>
+                <!--end::Header-->
+                <!--begin::Body-->
+                <div class="d-block">
+                    <!--begin::To-->
+                    <div class="d-flex align-items-center border-bottom inbox-to px-8 min-h-45px">
+                        <div class="text-dark-50 w-75px">To:</div>
+                        <div class="d-flex align-items-center flex-grow-1">
+                            <tags class="tagify form-control border-0" tabindex="-1">
+
+                                <tag title="PredictMe Administrator" contenteditable="false" spellcheck="true"
+                                    tabindex="-1" class="tagify__tag tagify__tag--primary tagify--noAnim" role="tag"
+                                    __isvalid="true" pic="{% static 'assets/media/users/100_15.jpg' %}"
+                                    initialsstate="danger" initials="Administrator"
+                                    email="{{ get_company_settings.email }}" value="Administrator">
+                                    <div><span class="tagify__tag-text">PredictMe Administrator</span></div>
+                                </tag>
+                            </tags>
+                            <input type="text" class="form-control border-0 member-msg-compose-box-control"
+                                name="compose_to" value="{{ get_company_settings.email }}" readonly />
+                        </div>
+
+                    </div>
+                    <!--end::To-->
+
+                    <!--begin::Subject-->
+                    <div class="border-bottom">
+                        <select class="custom-select form-control px-8 min-h-45px member-msg-compose-box-control"
+                            name='member_compose_subject' id="member_compose_subject">
+                            <option selected value="">Select topic</option>
+                            {% for sub_type in subject_types %}
+                            <option value="{{ sub_type.0 }}">{{ sub_type.1 }}</option>
+                            {% endfor %}
+                        </select>
+                        <!-- Start other subject input -->
+                        <input class="form-control border-0 px-8 min-h-45px d-none member-msg-compose-box-control"
+                            name="other_member_compose_subject" id="other_member_compose_subject"
+                            placeholder="Other Subject" type="text" />
+                        <!-- Start other subject input -->
+
+                    </div>
+                    <!--end::Subject-->
+                    <!--begin::Message-->
+                    <div id="member_msg_content_block">
+                        <!-- Start Message Content -->
+                        <div id="member_compose_text_msg"></div>
+                        <!-- End Message Content -->
+                    </div>
+                    <!--end::Message-->
+                </div>
+                <!--end::Body-->
+                <!--begin::Footer-->
+                <div class="d-flex align-items-center justify-content-between py-5 pl-8 pr-5 border-top">
+                    <!--begin::Actions-->
+                    <div class="d-flex align-items-center mr-3">
+                        <!--begin::Send-->
+                        <div class="btn-group mr-4">
+                            <button type='submit'
+                                class="btn btn-primary font-weight-bold px-6 member-send-msg-btn member-msg-compose-box-control">Send</button>
+
+                        </div>
+                        <!--end::Send-->
+                        <!--begin::Other-->
+
+                        <!-- Start Msg Attachments block -->
+                        <div id='msg_attachment_block'>
+                            <label for='msg_attachment'>
+                                <span class="btn btn-icon btn-sm btn-clean mr-2 mt-3 member-msg-compose-box-control"
+                                    data-toggle="tooltip" data-title='Upload attachment'>
+                                    <i class="flaticon2-clip-symbol"></i>
+                                </span>
+                            </label>
+                            <input type='file' style="display: none;" id='msg_attachment' name="msg_attachment"
+                                class="member-msg-compose-box-control"
+                                accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" />
+                            <span class="form-text text-muted d-inline-block position-relative" style="top: 6px;"
+                                id="msg_attachmen_file_name"></span>
+                        </div>
+                        <!-- End Msg Attachments block -->
+
+                        <!--end::Other-->
+                    </div>
+                    <!--end::Actions-->
+
+                </div>
+                <!--end::Footer-->
+            </form>
+            <!--end::Form-->
+        </div>
+    </div>
+</div>
+<!-- End Compose Model -->
+
+<!-- end:: Content -->
+
+
+{% endblock content%}
+
+{% block customjs %}
+<script type="text/javascript">
+    var djangoStaticUrl = '{% get_static_prefix %}';
+
+</script>
+
+<script src="{% static 'assets/js/custom/djangocookie.js' %}" type="text/javascript"></script>
+<script src="{% static 'assets/js/pages/widgets.js' %}"></script>
+<!--begin::Page Scripts(used by this page)-->
+<script src="{% static 'assets/js/pages/crud/forms/widgets/bootstrap-datepicker.js' %}"></script>
+<script src="{% static 'assets/js/custom/messages_app/inbox.js' %}"></script>
+<script src="{% static 'assets/js/custom/messages_app/members_inbox.js' %}"></script>
+<!--end::Page Scripts-->
+{% endblock customjs %}
