@@ -1,8 +1,12 @@
+import json
+
 from django.views.generic import TemplateView, View
 from django.contrib.auth.mixins import (LoginRequiredMixin, UserPassesTestMixin)
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
+from prettyprinter import cpprint
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.parsers import (MultiPartParser, FormParser)
 from rest_framework.views import APIView
 from users.models import Member
 from django.shortcuts import render, redirect, reverse
@@ -16,7 +20,7 @@ from datetime import date
 from weasyprint import HTML, CSS
 from django.template.loader import render_to_string
 from xhtml2pdf import pisa
-from django.http import HttpResponse
+from django.http import (HttpResponse, JsonResponse)
 import traceback
 from predict_me.my_logger import (log_info, log_exception)
 from django.contrib import messages
@@ -38,6 +42,9 @@ from predict_me.helpers import check_internet_access
 from data_handler.models import (DataFile, RunHistory, DataHandlerSession)
 from membership.models import Subscription
 from django.utils import timezone
+from predict_me.constants.vars import SUBJECTS_TYPES
+from messages_app.forms import MemberMessagesForm
+from messages_app.models import MemberMessages
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -217,18 +224,31 @@ class ActivityDashboard(LoginRequiredMixin, TemplateView):
             messages.error(request, 'There is errors!, try again latter')
 
 
-class MemberInboxView(LoginRequiredMixin, TemplateView):
+class MemberInboxView(LoginRequiredMixin, ListView):
     login_url = "login"
+    model = MemberMessages
+    template_name = "messages_app/members/list.html"
 
-    def get(self, request):
-        try:
-            context = dict()
-            context['title'] = "Inbox"
-            return render(request, "members_app/inbox/inbox.html", context=context)
-        except Exception as ex:
-            cprint(traceback.format_exc(), 'red')
-            log_exception(traceback.format_exc())
-            messages.error(request, 'There is errors!, try again latter')
+    def get_queryset(self):
+        return self.request.user.messages_sent.all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = "Inbox"
+        context['subject_types'] = SUBJECTS_TYPES
+        return context
+
+
+class MemberInboxDetailsView(LoginRequiredMixin, DetailView):
+    login_url = "login"
+    model = MemberMessages
+    template_name = "messages_app/members/details.html"
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['title'] = "Inbox"
+    #     context['subject_types'] = SUBJECTS_TYPES
+    #     return context
 
 
 class AccountSettingsDashboard(LoginRequiredMixin, TemplateView):
@@ -357,6 +377,43 @@ class AccountSettingsDashboard(LoginRequiredMixin, TemplateView):
             cprint(traceback.format_exc(), 'red')
             log_exception(traceback.format_exc())
             messages.error(request, 'There is errors!, try again latter')
+
+
+class MemberSendMessageViewAPI(APIView):
+    """
+    ### Development only ###
+    API View to delete the data files
+
+    * Requires token authentication.
+    * Only admin users are able to access this view.
+    """
+    # authentication_classes = [authentication.TokenAuthentication]
+    # permission_classes = [permissions.IsAdminUser]
+    permission_classes = (IsAuthenticated,)
+
+    parser_classes = [MultiPartParser, FormParser]
+
+    def post(self, request, format=None):
+        try:
+            member = request.user
+            form_data = request.data
+            post_dict = request.POST.copy()
+            post_dict.update({"sender": request.user})
+            messages_form = MemberMessagesForm(post_dict, request.FILES)
+            # check if form valid
+            if messages_form.is_valid():
+                messages_form.save()
+                return JsonResponse(data={"msg": "Message sent successfully!", "is_error": False},
+                                    status=200)
+            else:
+                # cprint(messages_form.errors, 'red')
+                return JsonResponse(data={"msg": "Some data not correct", "is_error": True},
+                                    status=200)
+
+        except Exception as ex:
+            cprint(traceback.format_exc(), 'red')
+            log_exception(traceback.format_exc())
+            return JsonResponse(data={"msg": "Error when send the message!", "is_error": True}, status=200)
 
 
 class ProfilePersonal(LoginRequiredMixin, UserPassesTestMixin, View):
