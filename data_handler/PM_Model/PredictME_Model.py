@@ -55,6 +55,7 @@ import traceback
 from predict_me.my_logger import (log_exception, log_info)
 from django.conf import settings
 from termcolor import cprint
+import inspect
 
 # locale.setlocale(locale.LC_ALL, 'en_US')
 
@@ -89,11 +90,13 @@ image_index = 0
 
 
 def convert_number_format(d):
+    cprint(f"Model Function Name:->  {inspect.stack()[0][3]}", 'yellow', 'on_grey', attrs=['bold'])
     return locale.format("%d", d, grouping=True)
 
 
 # Remove rows containing null values in all columns
 def remove_rows_containg_all_null_values(df):
+    cprint(f"Model Function Name:->  {inspect.stack()[0][3]}", 'yellow', 'on_grey', attrs=['bold'])
     idx = df.index[~df.isnull().all(1)]
     df = df.loc[idx]
     return df
@@ -101,9 +104,9 @@ def remove_rows_containg_all_null_values(df):
 
 # Read input donation file
 def read_input_file(file_path):
+    cprint(f"Model Function Name:->  {inspect.stack()[0][3]}", 'yellow', 'on_grey', attrs=['bold'])
     file_name = file_path.split('/')[-1]
     extension = file_name.split(".")[-1]
-    cprint(file_name, 'green')
     if extension == "csv":
         return pd.read_csv(file_path, encoding="ISO-8859-1")
     elif (extension == "xlsx") | (extension == "xls"):
@@ -114,6 +117,7 @@ def read_input_file(file_path):
 
 # Identify donation columns for file stored in DataStore
 def identify_years_columns(file_name):
+    cprint(f"Model Function Name:->  {inspect.stack()[0][3]}", 'yellow', 'on_grey', attrs=['bold'])
     mapping_file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "column_name_mapping.json"))
     with open(mapping_file_path) as jsonfile:
         data = json.load(jsonfile)
@@ -125,6 +129,7 @@ def identify_years_columns(file_name):
 
 # Identify text columns
 def identify_info_columns(df, donation_columns, use_text_columns=False):
+    cprint(f"Model Function Name:->  {inspect.stack()[0][3]}", 'yellow', 'on_grey', attrs=['bold'])
     column_names = df.columns
     info_cols = None
     if use_text_columns is True:
@@ -140,6 +145,7 @@ def identify_info_columns(df, donation_columns, use_text_columns=False):
 
 # Remove column contains 80% unique values and more than 50% null values
 def remove_columns_unique_values(df, column_names):
+    cprint(f"Model Function Name:->  {inspect.stack()[0][3]}", 'yellow', 'on_grey', attrs=['bold'])
     final_col_ = []
     number_of_sample = df.shape[0]
     for col in column_names:
@@ -160,6 +166,7 @@ def remove_columns_unique_values(df, column_names):
 
 # Identify unique categorical columns
 def identify_categorical_columns(df, column_names):
+    cprint(f"Model Function Name:->  {inspect.stack()[0][3]}", 'yellow', 'on_grey', attrs=['bold'])
     cat_col_ = []
     for col in column_names:
         if df[col].unique().shape[0] <= 5:
@@ -169,6 +176,7 @@ def identify_categorical_columns(df, column_names):
 
 # Regex function to clean input text
 def text_processing(text):
+    cprint(f"Model Function Name:->  {inspect.stack()[0][3]}", 'yellow', 'on_grey', attrs=['bold'])
     pre_text = []
     for x in text:
         x = re.sub('[^a-zA-Z.\d\s]', '', x)
@@ -183,6 +191,7 @@ def text_processing(text):
 
 # Convert text to numeric values using Tf-IDF
 def feature_extraction(df_info):
+    cprint(f"Model Function Name:->  {inspect.stack()[0][3]}", 'yellow', 'on_grey', attrs=['bold'])
     df_info = df_info.astype(str)
     df_info['comb_text'] = df_info.apply(lambda x: ' '.join(x), axis=1)
     processed_text = text_processing(list(df_info['comb_text']))
@@ -210,6 +219,7 @@ def feature_extraction(df_info):
 
 # Clean donation columns by keeping only digits
 def clean_donation(donation):
+    # cprint(f"Model Function Name:->  {inspect.stack()[0][3]}", 'yellow', 'on_grey', attrs=['bold'])
     donation = ''.join(c for c in donation if (c.isdigit()) | (c == "."))
     if donation == "":
         return "0"
@@ -219,6 +229,7 @@ def clean_donation(donation):
 
 # Identify target value for each record
 def process_donation_columns(df, donation_columns, no_donation_columns, skewed_target_value):
+    cprint(f"Model Function Name:->  {inspect.stack()[0][3]}", 'yellow', 'on_grey', attrs=['bold'])
     if no_donation_columns:
         donation_columns = ast.literal_eval(donation_columns)
     elif skewed_target_value:
@@ -251,6 +262,7 @@ def process_donation_columns(df, donation_columns, no_donation_columns, skewed_t
 
 # Measuring Skewness of the file and check to see if donation columns exist
 def check_skew_donation_cols(donation_columns_df, donation_columns):
+    cprint(f"Model Function Name:->  {inspect.stack()[0][3]}", 'yellow', 'on_grey', attrs=['bold'])
     no_donations_columns = False
     skewed_target_value = False
 
@@ -282,6 +294,7 @@ def check_skew_donation_cols(donation_columns_df, donation_columns):
 
 # Generate correlation plot for donation columns
 def generate_correlation(donation_columns, no_donation_columns, skewed_target_value):
+    cprint(f"Model Function Name:->  {inspect.stack()[0][3]}", 'yellow', 'on_grey', attrs=['bold'])
     if no_donation_columns:
         pdf.set_font(font_style, 'BU', size=10)
         pdf.multi_cell(h=5.0, w=0, txt="# Correlation Plot")
@@ -328,6 +341,7 @@ def generate_correlation(donation_columns, no_donation_columns, skewed_target_va
 
 # Calculate sum of feature weights
 def get_feature_weights(feature_list, feature_dict):
+    cprint(f"Model Function Name:->  {inspect.stack()[0][3]}", 'yellow', 'on_grey', attrs=['bold'])
     sum_ = 0
     for f in feature_list:
         sum_ += feature_dict.get(f.lower(), 0)
@@ -337,6 +351,7 @@ def get_feature_weights(feature_list, feature_dict):
 # Plot feature importance for each column
 def calculate_feature_importance(df_info, feature_names, feature_value, no_donation_columns, skewed_target_value,
                                  skewed_target_value_similar, is_similar_file):
+    cprint(f"Model Function Name:->  {inspect.stack()[0][3]}", 'yellow', 'on_grey', attrs=['bold'])
     feature_dict = {i: abs(j) for i, j in zip(feature_names, feature_value)}
     info_columns = list(df_info.columns)
     info_columns.remove('comb_text')
@@ -392,6 +407,7 @@ def calculate_feature_importance(df_info, feature_names, feature_value, no_donat
 
 # Generate classification report
 def add_classification_report_table(y_test, y_pred, no_donation_columns, skewed_target_value, is_similar_file):
+    cprint(f"Model Function Name:->  {inspect.stack()[0][3]}", 'yellow', 'on_grey', attrs=['bold'])
     report = classification_report(y_test, y_pred, output_dict=True)
     report_df = pd.DataFrame(report).transpose()
     report_df['f1-score'] = report_df['f1-score'].apply(lambda x: str(round(x, 2)))
@@ -432,6 +448,7 @@ def add_classification_report_table(y_test, y_pred, no_donation_columns, skewed_
 # Plot confusion matrix
 def print_confusion_matrix_classification_report(y_test, y_pred, no_donation_columns, skewed_target_value,
                                                  is_similar_file):
+    cprint(f"Model Function Name:->  {inspect.stack()[0][3]}", 'yellow', 'on_grey', attrs=['bold'])
     df_cm = pd.DataFrame(confusion_matrix(y_test, y_pred), range(2), range(2))
     plt.figure(figsize=(15, 10))
     sn.set(font_scale=2.5)  # for label size
@@ -488,6 +505,7 @@ def print_confusion_matrix_classification_report(y_test, y_pred, no_donation_col
 
 # Calculates false postitive and true positive rate
 def calculate_fpr_tpr(model, y_test, y_pred, X_test, y_prob):
+    cprint(f"Model Function Name:->  {inspect.stack()[0][3]}", 'yellow', 'on_grey', attrs=['bold'])
     try:
         if model != None and X_test != None:
             fpr, tpr, thresholds = roc_curve(y_test, model.predict_proba(X_test)[:, 1])
@@ -503,6 +521,7 @@ def calculate_fpr_tpr(model, y_test, y_pred, X_test, y_prob):
 
 # Plot ROC curve
 def plot_roc_curve(roc_fpr, roc_tpr, roc_auc, top_5_models, no_donation_columns, skewed_target_value, is_similar_file):
+    cprint(f"Model Function Name:->  {inspect.stack()[0][3]}", 'yellow', 'on_grey', attrs=['bold'])
     pdf.set_font(font_style, 'BU', size=10)
     pdf.multi_cell(h=5.0, w=0, txt="D (c). ROC Curve")
     pdf.set_font(font_style, size=10)
@@ -570,7 +589,7 @@ def plot_roc_curve(roc_fpr, roc_tpr, roc_auc, top_5_models, no_donation_columns,
 
 def model_selection(X, y, X_pred, donation_columns, cat_col, donor_df, no_donation_columns, skewed_target_value,
                     skewed_target_value_similar, is_similar_file):
-    cprint(f"=============>> {cat_col}", 'yellow', 'on_grey')
+    cprint(f"Model Function Name:->  {inspect.stack()[0][3]}", 'yellow', 'on_grey', attrs=['bold'])
     # Handle Class imbalance using data augmentation techniques
     if ((skewed_target_value == True and is_similar_file == False) or (
             skewed_target_value_similar == True and is_similar_file == True)):
@@ -908,6 +927,7 @@ def generate_prediction_file(df, model_f1_score, classification_full_pred, class
                              feature_names, df_info, donation_columns_df, no_donations_columns, skewed_target_value,
                              skewed_target_value_similar,
                              top3_models, is_similar_file):
+    cprint(f"Model Function Name:->  {inspect.stack()[0][3]}", 'yellow', 'on_grey', attrs=['bold'])
     model_f1_score = {k: v for k, v in sorted(model_f1_score.items(), key=lambda item: item[1])}
     # Number of models we want in report, modify the count below
     # top_5_model = sorted(model_f1_score, key=model_f1_score.get,
@@ -1038,6 +1058,7 @@ def generate_prediction_file(df, model_f1_score, classification_full_pred, class
 
 # Get tfidf featues for file found from DB (No donation columns present)
 def get_tfidf_features(file_name):
+    cprint(f"Model Function Name:->  {inspect.stack()[0][3]}", 'yellow', 'on_grey', attrs=['bold'])
     df = read_input_file(file_name)
     df = remove_rows_containg_all_null_values(df)
     info_columns = identify_info_columns(df, [], False)
@@ -1055,6 +1076,7 @@ def get_tfidf_features(file_name):
 
 # Find similar files in DB
 def find_similar_files(input_file, no_donations_columns, skewed_target_value):
+    cprint(f"Model Function Name:->  {inspect.stack()[0][3]}", 'yellow', 'on_grey', attrs=['bold'])
     # settings media path
     media_path = Path(settings.MEDIA_ROOT) / "data"
     input_file = os.path.abspath(os.path.join(os.path.dirname(__file__), input_file))
@@ -1117,6 +1139,7 @@ def find_similar_files(input_file, no_donations_columns, skewed_target_value):
 
 # Transform text values to tf-idf features
 def transform_features(vectorizer, df_info):
+    cprint(f"Model Function Name:->  {inspect.stack()[0][3]}", 'yellow', 'on_grey', attrs=['bold'])
     df_info = df_info.astype(str)
     df_info['comb_text'] = df_info.apply(lambda x: ' '.join(x), axis=1)
     processed_text = text_processing(list(df_info['comb_text']))
@@ -1127,6 +1150,7 @@ def transform_features(vectorizer, df_info):
 
 # Print steps taken to run classifier in PDF
 def print_steps_taken(is_similar_file):
+    cprint(f"Model Function Name:->  {inspect.stack()[0][3]}", 'yellow', 'on_grey', attrs=['bold'])
     pdf.ln(1)
     pdf.set_font(font_style, 'BU', size=10)
     pdf.multi_cell(h=7.5, w=0, txt="C. Steps on Building and Executing Predictive Model")
@@ -1214,6 +1238,7 @@ def print_steps_taken(is_similar_file):
 
 # Delete old plots from directory
 def delete_old_plots():
+    cprint(f"Model Function Name:->  {inspect.stack()[0][3]}", 'yellow', 'on_grey', attrs=['bold'])
     plots_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "Plots"))
     files = glob.glob('{}/*.png'.format(plots_path))
     for f in files:
@@ -1225,8 +1250,8 @@ skewed_target_value_similar = False
 
 
 # Run the model from the view
-
 def run_model(data_file_path, donation_cols, text_cols, send_obj):
+    cprint(f"Model Function Name:->  {inspect.stack()[0][3]}", 'yellow', 'on_grey', attrs=['bold'])
     try:
         global skewed_target_value, send_data_obj, model_output_data, TEXT_COLS
         send_data_obj = send_obj
@@ -1252,9 +1277,9 @@ def run_model(data_file_path, donation_cols, text_cols, send_obj):
         categorical_columns = identify_categorical_columns(donor_df, TEXT_COLS)
         categorical_df = donor_df.loc[:, categorical_columns]
         categorical_index = donor_df.columns[donor_df.columns.isin(categorical_columns)]
-        cprint(f"categorical_columns -> {categorical_columns}", 'blue', 'on_grey')
-        cprint(f"categorical_index -> {categorical_index}", 'green', 'on_grey')
-        cprint(f"categorical_df -> {categorical_df}", 'cyan', 'on_grey')
+        # cprint(f"categorical_columns -> {categorical_columns}", 'blue', 'on_grey')
+        # cprint(f"categorical_index -> {categorical_index}", 'green', 'on_grey')
+        # cprint(f"categorical_df -> {categorical_df}", 'cyan', 'on_grey')
         pdf.set_font(font_style, 'BU', size=10)
         pdf.multi_cell(h=7.5, w=0, txt="A. Data Input Summary")
         pdf.set_font(font_style, size=10)
@@ -1325,15 +1350,15 @@ def run_model(data_file_path, donation_cols, text_cols, send_obj):
             info_columns = identify_info_columns(df, donation_columns, True)
             y = list(donation_columns_df['target'])
             y_similar = y
-        cprint(f"Before check info_columns < 3:-> {df.columns}:->  {info_columns}", 'yellow', attrs=['bold'])
+        # cprint(f"Before check info_columns < 3:-> {df.columns}:->  {info_columns}", 'yellow', attrs=['bold'])
         df_info = remove_columns_unique_values(df, info_columns)
-        cprint(f"After check info_columns < 3:->  {df_info}", 'magenta', attrs=['bold'])
+        # cprint(f"After check info_columns < 3:->  {df_info}", 'magenta', attrs=['bold'])
         if len(info_columns) < 3:
             raise ValueError(
                 "In order for the model to run, please supply a minimum of three text columns on your donor "
                 "file.")
 
-        df_info = categorical_df  # this to make the pdf plot the categorical columns
+        # df_info = categorical_df  # this to make the pdf plot the categorical columns
 
         processed_text, tfidf_matrix, feature_names, df_info, vectorizer = feature_extraction(df_info)
 
