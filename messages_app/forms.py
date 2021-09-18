@@ -6,5 +6,5 @@ from .models import MemberMessages
 class MemberMessagesForm(ModelForm):
     class Meta:
         model = MemberMessages
-        fields = ('sender', 'subject', "other_subject", "attachment", 'message')
+        fields = ('sender', 'subject', "other_subject", "attachment", 'message', "reply")
 
