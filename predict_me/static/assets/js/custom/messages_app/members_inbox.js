@@ -7,6 +7,7 @@ const attachmentFileName = document.querySelector("#msg_attachmen_file_name");
 const memberMsgComposeBoxControl = document.querySelectorAll(".member-msg-compose-box-control");
 const memberInboxTrashBtn = document.querySelector("#member-inbox-trash-btn");
 const memberInboxAllMsgCheckbox = document.querySelector("#memberInboxAllMsgCheckbox");
+const memberInboxListViewItems = document.querySelectorAll(".member-inbox-list-view-item");
 
 
 // hide and show the other subject input
@@ -55,6 +56,7 @@ const composeForm = document.querySelector("#members_inbox_compose_form");
 composeForm.addEventListener('submit', async (event) => {
     try {
         event.preventDefault();
+        const url = document.querySelector("#members_inbox_compose_form").action;
         const editor = document.querySelector("#member_compose_text_msg"); // the message editor
         // const editor = document.querySelector(".ql-editor");  // the message editor
         const msgSubject = document.querySelector("#member_compose_subject");
@@ -108,7 +110,7 @@ composeForm.addEventListener('submit', async (event) => {
         memberMsgEditor.disable();
         msgFileAttachment.disabled = true;
         addOrRemoveCssClassForNodeList(memberMsgComposeBoxControl, ["disabled", "progress-cursor"], "add");
-        const sendRequest = await requestSendMemberMessage(formData);
+        const sendRequest = await requestSendMemberMessage(formData, url);
         // check if there is any error
         if (sendRequest['is_error'] == true) {
             Swal.fire("Error", sendRequest['msg'], "error");
@@ -125,6 +127,7 @@ composeForm.addEventListener('submit', async (event) => {
             emptyValuesNodelist(memberMsgComposeBoxControl);
             otherSubjectInput.classList.add("d-none");
             $('#kt_inbox_compose').modal('hide');
+            setTimeout(() => {location.reload();}, 1000);
         }
 
 
@@ -160,4 +163,15 @@ memberInboxAllMsgCheckbox.addEventListener("change", event => {
             item.checked = false;
         });
     }
+});
+
+
+// click to navigate to message detail view
+memberInboxListViewItems.forEach(item => {
+    item.addEventListener("click", event => {
+        const clickedItem = event.currentTarget;
+        const msgId = clickedItem.dataset['msgId'];
+        location.href = location.href.concat(msgId);
+        // console.log(clickedItem.dataset);
+    });
 });
