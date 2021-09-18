@@ -230,7 +230,7 @@ class MemberInboxView(LoginRequiredMixin, ListView):
     template_name = "messages_app/members/list.html"
 
     def get_queryset(self):
-        return self.request.user.messages_sent.all()
+        return self.request.user.messages_sent.filter(reply__isnull=True)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -244,11 +244,11 @@ class MemberInboxDetailsView(LoginRequiredMixin, DetailView):
     model = MemberMessages
     template_name = "messages_app/members/details.html"
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['title'] = "Inbox"
-    #     context['subject_types'] = SUBJECTS_TYPES
-    #     return context
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['subject_types'] = SUBJECTS_TYPES
+        context['title'] = kwargs.get("object").get_subject_display() or kwargs.get("object").other_subject
+        return context
 
 
 class AccountSettingsDashboard(LoginRequiredMixin, TemplateView):
