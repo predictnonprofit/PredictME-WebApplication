@@ -170,7 +170,11 @@
 
                     </div>
                     {% empty %}
-                    No Replies.
+                    <div class="container mt-5">
+                        <div class="alert alert-custom alert-light-primary" role="alert">
+                            No replies for this message
+                        </div>
+                    </div>
                     {% endfor %}
 
 
