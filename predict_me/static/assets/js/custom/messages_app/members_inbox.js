@@ -6,6 +6,7 @@ const msgFileAttachment = document.querySelector("#msg_attachment");
 const attachmentFileName = document.querySelector("#msg_attachmen_file_name");
 const memberMsgComposeBoxControl = document.querySelectorAll(".member-msg-compose-box-control");
 const memberInboxTrashBtn = document.querySelector("#member-inbox-trash-btn");
+const memberInboxAllMsgCheckbox = document.querySelector("#memberInboxAllMsgCheckbox");
 
 
 // hide and show the other subject input
@@ -143,5 +144,20 @@ memberInboxTrashBtn.addEventListener("click", event => {
         displayTopNotification("You have to select message to delete", 'danger');
     } else {
         displayTopNotification("Message(s) deleted successfully!", 'success');
+    }
+});
+
+// check box for check all messages in member inbox
+memberInboxAllMsgCheckbox.addEventListener("change", event => {
+    const checked = event.currentTarget.checked;
+    const allMemberMsgs = document.querySelectorAll(".member-inbox-msg-checkbox");
+    if (checked === true) {
+        allMemberMsgs.forEach(item => {
+            item.checked = true;
+        });
+    } else {
+        allMemberMsgs.forEach(item => {
+            item.checked = false;
+        });
     }
 });
