@@ -210,13 +210,15 @@ Inbox
 
                     {% for object in object_list %}
                     <!--begin::Item-->
-                    <div class="d-flex align-items-start list-item card-spacer-x py-3">
+                    <div class="d-flex align-items-start list-item card-spacer-x py-3 member-inbox-list-view-item"
+                        data-msg-id="{{ object.pk }}">
                         <!--begin::Toolbar-->
                         <div class="d-flex align-items-center">
                             <!--begin::Actions-->
                             <div class="d-flex align-items-center mr-3" data-inbox="actions">
                                 <label class="checkbox checkbox-inline checkbox-primary flex-shrink-0 mr-3">
-                                    <input type="checkbox" class="member-inbox-msg-checkbox" data-msg-id="{{ object.pk }}" />
+                                    <input type="checkbox" class="member-inbox-msg-checkbox"
+                                        data-msg-id="{{ object.pk }}" />
                                     <span></span>
                                 </label>
 
@@ -224,10 +226,15 @@ Inbox
                             <!--end::Actions-->
                             <!--begin::Author-->
                             <div class="d-flex align-items-center flex-wrap w-xxl-180px mr-3"">
-                                <span class="symbol symbol-35 mr-3">
+                                <span class=" symbol symbol-35 mr-3">
+                                {% if object.attachment %}
+                                <i class="icon-md text-hover-primary la la-paperclip d-inline-block position-relative"
+                                    data-toggle="tooltip" title="contain attachment" style="top: 2px;"></i>
+                                {% endif %}
 
                                 </span>
-                                <a href="#" class="font-weight-bold text-dark-75 text-hover-primary">{{ object.sender.full_name }}</a>
+                                <a href="{% url 'member-inbox-details' object.pk %}"
+                                    class="font-weight-bold text-dark-75 text-hover-primary">{{ object.sender.full_name }}</a>
                             </div>
                             <!--end::Author-->
                         </div>
@@ -235,23 +242,24 @@ Inbox
                         <!--begin::Info-->
                         <div class="flex-grow-1 mt-2 mr-2"">
                             <div>
-                                <span class="font-weight-bolder font-size-lg mr-2">
-                                    <a href="{% url 'member-inbox-details' object.pk %}" style="color: unset">
-                                    {% if object.subject %} {{ object.get_subject_display }} {% else %} {{ object.other_subject }} {% endif %}
-                                </a>
-                                    -</span>
-                                <span class="text-muted">{{ object.message|striptags|truncatechars:50 }}...</span>
-                            </div>
-
+                                <span class=" font-weight-bolder font-size-lg mr-2">
+                            <a href="{% url 'member-inbox-details' object.pk %}" style="color: unset">
+                                {% if object.subject %} {{ object.get_subject_display }} {% else %}
+                                {{ object.other_subject }} {% endif %}
+                            </a>
+                            -</span>
+                            <span class="text-muted">{{ object.message|striptags|truncatechars:50 }}...</span>
                         </div>
-                        <!--end::Info-->
-                        <!--begin::Datetime-->
-                        <div class="mt-2 mr-3 font-weight-bolder w-150px text-right"">{{ object.send_date|timesince }}</div>
+
+                    </div>
+                    <!--end::Info-->
+                    <!--begin::Datetime-->
+                    <div class="mt-2 mr-3 font-weight-bolder w-150px text-right">{{ object.send_date|timesince }}</div>
                         <!--end::Datetime-->
                     </div>
                     <!--end::Item-->
                     {% empty %}
-                    <div class="container">
+                    <div class=" container">
                         <div class="alert alert-custom alert-notice alert-light-primary fade show mb-5" role="alert">
                             <div class="alert-text">No messages in your inbox!</div>
                         </div>
@@ -395,7 +403,6 @@ Inbox
 <script src="{% static 'assets/js/pages/widgets.js' %}"></script>
 <!--begin::Page Scripts(used by this page)-->
 <script src="{% static 'assets/js/pages/crud/forms/widgets/bootstrap-datepicker.js' %}"></script>
-<script src="{% static 'assets/js/custom/messages_app/inbox.js' %}"></script>
 <script src="{% static 'assets/js/custom/messages_app/members_inbox.js' %}"></script>
 <!--end::Page Scripts-->
 {% endblock customjs %}
