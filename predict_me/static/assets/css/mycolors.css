@@ -778,7 +778,7 @@ div#fileUploadOverlay {
 /* End my d-block and d-none */
 
 /* Start Members Inbox */
-#member_compose_text_msg{
+#member_compose_text_msg, .custom-quill-editor{
   height: 300px;
 }
 #member_compose_subject{
