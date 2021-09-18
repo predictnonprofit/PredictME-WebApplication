@@ -133,9 +133,8 @@ function requestUpgradeToNewMembership(membershipSlug) {
 
 
 // this function will send message request api
-async function requestSendMemberMessage(formData) {
+async function requestSendMemberMessage(formData, url) {
   try {
-    const url = document.querySelector("#members_inbox_compose_form").action;
     // "Content-Type": "application/json;charset=utf-8",
     // "Content-Type": "multipart/form-data;charset=utf-8",
     // "Content-Type": "multipart/form-data; boundary=blob",
