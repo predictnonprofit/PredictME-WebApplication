@@ -6,6 +6,7 @@ from predict_me.constants.vars import SUBJECTS_TYPES
 class MemberMessages(models.Model):
     sender = models.ForeignKey(to=Member, on_delete=models.CASCADE, related_name='messages_sent')
     reply = models.ForeignKey(to='self', on_delete=models.CASCADE, null=True, blank=True, related_name='message_replies')
+    # reply = models.One
     subject = models.CharField(choices=SUBJECTS_TYPES, max_length=100, null=True, blank=True)
     other_subject = models.CharField(max_length=100, null=True, blank=True)
     attachment = models.FileField(upload_to='message_attachments', null=True, blank=True)
@@ -16,6 +17,7 @@ class MemberMessages(models.Model):
 
     class Meta:
         db_table = 'member_messages'
+        ordering = ['-send_date']
 
     def __str__(self):
         return f"Message from {self.sender}, it's title {self.subject}"
