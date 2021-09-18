@@ -305,6 +305,7 @@ packages_dependencies.txt
 data_handler/PM_Model/PdfReport/*.pdf
 data_handler/PM_Model/prediction/*.csv
 media/crash_reports/
+media/message_attachments/*
 data_handler/PM_Model/prediction/*.csv
 media/data/*.csv
 media/data/*.xlsx
