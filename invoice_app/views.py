@@ -32,7 +32,7 @@ class GrabMemberInvoices(APIView):
             import datetime
             request_data = request.POST
             member = request.user
-            member_subscription = member.member_subscription.get()
+            member_subscription = member.subscription.get()
             start_date = request_data.get("startDate")
             end_date = request_data.get("endDate")
             invoices_count = 0
@@ -108,7 +108,7 @@ class GrabMemberTransactions(APIView):
             import datetime
             request_data = request.POST
             member = request.user
-            member_subscription = member.member_subscription.get()
+            member_subscription = member.subscription.get()
             start_date = request_data.get("startDate")
             end_date = request_data.get("endDate")
             trans_count = 0
