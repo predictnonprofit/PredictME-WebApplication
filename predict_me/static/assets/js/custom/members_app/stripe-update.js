@@ -44,10 +44,12 @@ $(function () {
     });
 
     // Handle form submission.
-    var form = document.getElementById('update-payment-form');
+    var form = document.getElementById('update-credit-card-form');
     form.addEventListener('submit', function (event) {
         event.preventDefault();
-
+        const updateBtn = document.querySelector("#memberUpdateCreditCardBtn");
+        updateBtn.classList.add("disabled", "wait-cursor");
+        updateBtn.disabled = true;
         stripe.createToken(card).then(function (result) {
             if (result.error) {
                 // Inform the user if there was an error.
@@ -63,7 +65,7 @@ $(function () {
     // Submit the form with the token ID.
     function stripeTokenHandler(token) {
         // Insert the token ID into the form so it gets submitted to the server
-        var form = document.getElementById('update-payment-form');
+        var form = document.getElementById('update-credit-card-form');
         var hiddenInput = document.createElement('input');
         hiddenInput.setAttribute('type', 'hidden');
         hiddenInput.setAttribute('name', 'stripeToken');
