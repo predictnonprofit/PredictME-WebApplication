@@ -12,9 +12,7 @@ from termcolor import cprint
 #     "keywords": "keywords",
 #     "close_msg": "Close Message"
 # }
-# cprint(CompanySettings.objects.all(), 'green')
-# cprint(settings.FIXTURE_DIRS, 'cyan')
-# cprint(connection.settings_dict.get('NAME'), 'yellow')
+
 company_data = CompanySettings.objects.filter(slug='company').first()
 if company_data is not None:
     company_data = model_to_dict(company_data)
@@ -24,7 +22,6 @@ else:
         "keywords": "keywords",
         "close_msg": "Close Message"
     }
-# company_data = model_to_dict(company_data)
 
 REGEX_PATTERS = {
     "NAME": re.compile(r"^[a-zA-Z '.-]*$", re.IGNORECASE),  # name or first second

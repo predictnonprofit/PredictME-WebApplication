@@ -20,6 +20,5 @@ class CompanySettings(models.Model):
     class Meta:
         db_table = "company_settings"
 
-
-# class AboutSettings(models.Model):
-#     text = models.TextField(null=True, blank=True)
+    def __str__(self):
+        return f"Site Settings Object {self.slug}"
