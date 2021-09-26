@@ -1103,8 +1103,8 @@ def get_data_table_overview(member):
         if member.data_usage.filter().first() is not None:
             records_used = int(member.data_usage.first().records_used)
 
-        member_subscription_obj = member.member_subscription.get()
-        membership_object = member_subscription_obj.stripe_plan_id
+        member_subscription_obj = member.subscription.get()
+        membership_object = member_subscription_obj.membership
         data_handler_obj = member.member_data_file.get()
         data_sessions = data_handler_obj.data_sessions_set.filter()
         all_records_count = data_handler_obj.data_sessions_set.filter(is_run_model=False).values_list(
@@ -1146,4 +1146,5 @@ def get_data_table_overview(member):
         }
         return data
     except Exception as ex:
-        pass
+        cprint(traceback.format_exc(), 'red')
+        log_exception(traceback.format_exc())
