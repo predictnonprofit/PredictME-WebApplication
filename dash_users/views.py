@@ -164,7 +164,7 @@ def delete_members(request):
 
     for member in all_members:
         if member.is_superuser is False:
-            if member.member_subscription.filter().first() is None:
+            if member.subscription.filter().first() is None:
                 member.delete()
                 cprint("Member has been deleted!", 'green')
 
