@@ -14,6 +14,7 @@ from data_handler.helpers import extract_model_output_from_json
 from pathlib import Path
 from termcolor import cprint
 import os
+import mimetypes
 import pandas as pd
 from django.conf import settings
 from datetime import date
@@ -118,8 +119,8 @@ class ProfileOverview(LoginRequiredMixin, TemplateView):
                 member.member_data_file.get().data_sessions_set.filter(is_run_model=True).values_list(
                     'all_records_count', flat=True))
             total_data_predicted = int(sum(records_used_list))
-            subscription_obj = member.member_subscription.get()
-            member_data_file = DataFile.objects.get(member=member)
+            subscription_obj = member.subscription.get()
+            member_data_file = member.member_data_file.get()
             member_data_session = member_data_file.data_sessions_set.all()
             data_usage_obj = member.data_usage.filter().first()
             today = datetime.now(tz=pytz.UTC)
@@ -233,10 +234,15 @@ class MemberInboxView(LoginRequiredMixin, ListView):
         return self.request.user.messages_sent.filter(reply__isnull=True)
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = "Inbox"
-        context['subject_types'] = SUBJECTS_TYPES
-        return context
+        try:
+            context = super().get_context_data(**kwargs)
+            context['title'] = "Inbox"
+            context['subject_types'] = SUBJECTS_TYPES
+            return context
+        except Exception as ex:
+            cprint(traceback.format_exc(), 'red')
+            log_exception(traceback.format_exc())
+            messages.error(self.request, 'There is errors!, try again latter')
 
 
 class MemberInboxDetailsView(LoginRequiredMixin, DetailView):
@@ -245,22 +251,50 @@ class MemberInboxDetailsView(LoginRequiredMixin, DetailView):
     template_name = "messages_app/members/details.html"
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['subject_types'] = SUBJECTS_TYPES
-        context['title'] = kwargs.get("object").get_subject_display() or kwargs.get("object").other_subject
-        return context
+        try:
+            context = super().get_context_data(**kwargs)
+            msg_obj = kwargs.get("object")
+            context['subject_types'] = SUBJECTS_TYPES
+            context['title'] = msg_obj.get_subject_display() or msg_obj.other_subject
+            return context
+        except Exception as ex:
+            cprint(traceback.format_exc(), 'red')
+            log_exception(traceback.format_exc())
+            messages.error(self.request, 'There is errors!, try again latter')
+
+
+class MemberDownloadMessageAttachmentView(LoginRequiredMixin, View):
+    login_url = "login"
+
+    def get(self, request, *args, **kwargs):
+        try:
+            msg_obj = MemberMessages.objects.filter(pk=kwargs.get("pk")).first()
+            path_obj = Path(msg_obj.attachment.path)
+            mimetype, encoding = mimetypes.guess_type(path_obj.as_posix())
+            if path_obj.exists():
+                file_new_name = path_obj.name
+                with open(path_obj.as_posix(), "rb") as f:
+                    response = HttpResponse(f.read(), content_type=mimetype)
+                    response['Content-Disposition'] = f"inline; filename={file_new_name}"
+            return response
+        except Exception as ex:
+            cprint(traceback.format_exc(), 'red')
+            log_exception(traceback.format_exc())
+            messages.error(self.request, 'Error while downloading message attachments!, please try again')
+            return redirect(request.META['HTTP_REFERER'])
 
 
 class AccountSettingsDashboard(LoginRequiredMixin, TemplateView):
     login_url = "login"
+    template_name = 'members_app/profile/account_settings.html'
 
-    def get(self, request):
+    def get_context_data(self, **kwargs):
         try:
-            context = dict()
+            context = super().get_context_data(**kwargs)
             stripe_card_obj = stripe_customer = None
-            member = Member.objects.get(email=request.user.email)
+            member = Member.objects.get(email=self.request.user.email)
             all_countries = ALL_COUNTRIES
-            member_subscription = member.member_subscription.get()
+            member_subscription = member.subscription.get()
             check_connection = check_internet_access()
             # check internet connection
             if check_connection is True:
@@ -282,7 +316,7 @@ class AccountSettingsDashboard(LoginRequiredMixin, TemplateView):
             else:
                 # if there is no internet connection
                 context['stripe_name'] = context['last4'] = context['has_connection'] = None
-                messages.warning(request, 'You do not have internet connection!', 'warning')
+                messages.warning(self.request, 'You do not have internet connection!', 'warning')
 
             context['member'] = member
             context['annual_revenue'] = ANNUAL_REVENUE
@@ -290,12 +324,12 @@ class AccountSettingsDashboard(LoginRequiredMixin, TemplateView):
             context['title'] = "Account Settings"
             context['all_countries'] = all_countries
             context['all_stats'] = ALL_STATS
-
-            return render(request, "members_app/profile/account_settings.html", context=context)
         except Exception as ex:
             cprint(traceback.format_exc(), 'red')
             log_exception(traceback.format_exc())
-            messages.error(request, 'There is errors!, try again latter')
+            messages.error(self.request, 'There is errors!, try again latter')
+        finally:
+            return context
 
     def post(self, request, *args, **kwargs):
         try:
