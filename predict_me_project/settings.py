@@ -76,6 +76,8 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+    "rest_framework",
+    "rest_framework.authtoken",
     "middlewares_app.apps.MiddlewaresAppConfig",
     'widget_tweaks',
     # "data_handler.apps.DataHandlerConfig",
