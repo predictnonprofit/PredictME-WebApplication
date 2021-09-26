@@ -30,7 +30,7 @@ Profile Overview
           <h2 class="card-title font-weight-bolder text-white font-weight-boldest"
             style="font-size: 1.7rem; line-height: 1.4;">
             Status: {% if sub_obj.subscription_status == True %} Active {% else %} In-Active {% endif %} <br />
-            Current Plan: {{ sub_obj.stripe_plan_id.parent|title }} <br />
+            Current Plan: {{ sub_obj.membership.parent|title }} <br />
           </h2>
 
 
@@ -209,7 +209,7 @@ Profile Overview
                 </span>
                 <h5 class="text-warning font-weight-bolder font-size-h6 position-relative"
                   style="top: 2px; font-size: 14px !important;">
-                  Data Limit: {{ sub_obj.stripe_plan_id.allowed_records_count }}
+                  Data Limit: {{ sub_obj.membership.allowed_records_count }}
                 </h5>
               </div>
               <div class="col bg-light-primary px-6 py-8 rounded-xl mb-7">
@@ -329,7 +329,7 @@ Profile Overview
                 </svg>
                 <!--end::Svg Icon--></span>
               <div class="media-body">
-                <h6 class="mt-0 font-weight-bolder">{{sub_obj.subscription_period_start|date:"M n, Y"}}</h6>
+                <h6 class="mt-0 font-weight-bolder">{{sub_obj.subscription_period_start|date:"M j, Y"}}</h6>
                 <p>Plan Start Date</p>
               </div>
             </div>
@@ -354,7 +354,7 @@ Profile Overview
                 <!--end::Svg Icon-->
               </span>
               <div class="media-body">
-                <h6 class="mt-0 font-weight-bolder">{{sub_obj.subscription_period_end|date:"M n, Y"}}</h6>
+                <h6 class="mt-0 font-weight-bolder">{{sub_obj.subscription_period_end|date:"M j, Y"}}</h6>
                 <p>Plan End Date</p>
               </div>
             </div>
