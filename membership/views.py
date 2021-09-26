@@ -1,195 +1,189 @@
+import copy
 import json
+import os
 import traceback
-from django.core.exceptions import BadRequest
+from datetime import datetime, date
+
+import pytz
+import stripe
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db import transaction
+from django.db.models import Q
 from django.http import JsonResponse
-from django.shortcuts import (render, redirect, reverse, HttpResponse)
-from django.views.generic import TemplateView, View
+from django.shortcuts import (redirect, reverse)
+from django.views.generic import TemplateView
+from prettyprinter import cpprint
+from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
+from termcolor import cprint
+
+from data_handler.helpers import get_data_table_overview
+from invoice_app.models import Charges
+from predict_me.helpers import check_internet_access
 from predict_me.my_logger import log_exception
 from users.models import Member
-from .models import (Subscription, Membership, Charges)
-from termcolor import cprint
-from prettyprinter import pprint, cpprint
-import stripe
-import os
-import datetime
-import pytz
-from django.db.models import Q
-from django.db import transaction
-from predict_me.helpers import check_internet_access
-from data_handler.helpers import get_data_table_overview
-import copy
+from .models import Membership
 
 stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
 
 
-class CheckoutView(View):
+class CheckoutView(LoginRequiredMixin, TemplateView):
     template_name = "membership/checkout.html"
+    login_url = "login"
 
-    def get(self, request):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
         stripe_key = os.getenv("STRIPE_PUBLISHABLE_KEY")
-        subscription = Subscription.objects.get(member_id=request.user)
-        return render(request, "membership/checkout.html",
-                      context={"subscription": subscription, "stripe_key": stripe_key})
+        subscription = self.request.user.subscription.get()
+        context['subscription'] = subscription
+        context['stripe_key'] = stripe_key
+        return context
 
-    def post(self, request):
-        if request.method == "POST":
+    @transaction.atomic
+    def post(self, request, *args, **kwargs):
+        try:
             # check if there is any internet connection errors
             if check_internet_access() is True:
                 # internet connection available
                 member = request.user
-                # cprint(request.POST, "cyan")
+                subscription = member.subscription.select_for_update().get()
+                # cpprint(request.POST, end="\n")
                 sub_range = request.POST.get("sub_range")
                 payment_agree = request.POST.get("agree_payment")
                 stripe_token = request.POST.get("stripeToken")
-                member.stripe_card_token = stripe_token
+                subscription.stripe_card_token = stripe_token
+                # cprint(f"Before {member.status}", 'blue')
                 member.status = "active"
-                member.save()
+
                 # id, created, plan[interval], plan[product], price[active], latest_invoice, status, current_period_end
                 # current_period_start, customer
-                subscription = Subscription.objects.get(member_id=member)
-                # cprint(subscription.stripe_plan_id, 'blue')
+
+                # start save the membership monthly or yearly to db
                 membership = Membership.objects.filter(
-                    Q(range_label=sub_range) & Q(parent=subscription.stripe_plan_id.slug)).first()
+                    Q(range_label=sub_range) & Q(parent=subscription.membership.slug)).first()
                 cprint("Here membership view: ", 'red')
                 cprint(membership, "yellow")
-                subscription.stripe_plan_id = membership
-                subscription.save()
-                # cprint(subscription.stripe_plan_id, 'magenta')
+                subscription.membership = membership
+                # subscription = subscription.save(commit=False)
+
+                # update member token in stripe with new card token
                 customer = stripe.Customer.modify(
-                    subscription.member_id.stripe_customer_id,
+                    subscription.stripe_customer_id,
                     card=stripe_token
                 )
-                member.stripe_customer_id = customer['id']
-                member.save()
+                subscription.stripe_customer_id = customer['id']
+
+                # create subscription object for customer in stripe
                 stripe_subscription_obj = stripe.Subscription.create(
                     customer=customer['id'],
                     items=[
-                        {"price": subscription.stripe_plan_id.stripe_price_id},
+                        {"price": subscription.membership.stripe_price_id},
                     ],
                 )
+
+                # latest_invoice
+                latest_invoice_id = stripe_subscription_obj.to_dict().get("latest_invoice")
+
+                # fetch member info from stripe
                 tmp_customer = stripe.Customer.retrieve(customer['id'])
                 card_id = tmp_customer['default_source']
                 subscription.stripe_subscription_id = stripe_subscription_obj['id']
                 subscription.stripe_card_id = card_id
-                card_obj = stripe.Customer.retrieve_source(customer['id'], card_id)
-                start_date = datetime.datetime.fromtimestamp(stripe_subscription_obj['current_period_start'],
-                                                             tz=pytz.UTC).strftime("%Y-%m-%d %H:%M:%S")
-                end_date = datetime.datetime.fromtimestamp(stripe_subscription_obj['current_period_end'],
-                                                           tz=pytz.UTC).strftime("%Y-%m-%d %H:%M:%S")
+                card_obj = stripe.Customer.retrieve_source(customer['id'], card_id)  # fetch card object
+                start_date = datetime.fromtimestamp(stripe_subscription_obj['current_period_start'],
+                                                    tz=pytz.UTC).strftime("%Y-%m-%d %H:%M:%S")
+                end_date = datetime.fromtimestamp(stripe_subscription_obj['current_period_end'],
+                                                  tz=pytz.UTC).strftime("%Y-%m-%d %H:%M:%S")
                 subscription.subscription_status = True if stripe_subscription_obj['status'] == "active" else False
                 subscription.subscription_period_start = start_date
                 subscription.subscription_period_end = end_date
-                subscription.card_expire = datetime.datetime(card_obj['exp_year'], card_obj['exp_month'], 1)
-                subscription.sub_range = sub_range
+                subscription.card_expire = datetime(card_obj['exp_year'], card_obj['exp_month'], 1)
+                subscription.last_invoice_id = latest_invoice_id
+                # subscription.sub_range = sub_range
 
+                cprint(f"After {member.status}", 'cyan')
+                member.save()
                 subscription.save()
-
+                messages.success(request, "Saved all subscription and membership data to db successfully!")
                 return redirect(reverse("register_successfully"))
             else:
                 # no internet connection avaliable
                 messages.error(request, "No Internet Connection!, try again later.", 'danger')
                 return redirect(reverse("register_successfully"))
+        except Exception as ex:
+            cprint(traceback.format_exc(), 'red')
+            log_exception(traceback.format_exc())
+            messages.error(request, "Error In checkout!")
 
 
-class UpdateStripeView(LoginRequiredMixin, TemplateView):
+class UpdateStripeCreditCardView(LoginRequiredMixin, TemplateView):
     login_url = "login"
     template_name = 'members_app/profile/account_settings.html'
 
-    def get(self, request, *args, **kwargs):
-        return redirect("profile-account-settings")
-
+    @transaction.atomic
     def post(self, request, *args, **kwargs):
         try:
-            # <QueryDict: {'csrfmiddlewaretoken': ['my12gzlhkhPiFjbik3Z5ekH5S3s0fGJycRF5UAh6HNYoapV7f5lvSUXhMgnJoFIl'],
-            # 'form-name': ['stripe-form'], 'full_name': ['Avye Abbott'], 'sub_range': ['yearly'],
-            # 'stripeToken': ['tok_1IeHTtCXFX3jJJ8Kycjk1WHo'], 'upgrade_plane': ['professional'],
-            # 'professionalRange': ['yearly']}>
-            cprint(request.POST.keys(), 'yellow')
-            cprint(request.POST, 'blue')
+            # old -> card_1Jctw4CXFX3jJJ8KJJ2Rtv7j
 
+            # cprint(request.POST.keys(), 'yellow')
+            # cpprint(request.POST)
+            tmp_data = request.POST.copy()
+            tmp_data.update({
+                "view_name": "membership-account-update-stripe"
+            })
+            # return JsonResponse(data=tmp_data, status=status.HTTP_200_OK)
+            # return Response(data=tmp_data, status=status.HTTP_200_OK)
             # check internet connection available
             if check_internet_access() is True:
-                member = Member.objects.get(email=request.user.email)
-                member_subscription = member.member_subscription.get()
-                member_subscription_backup = copy.deepcopy(member_subscription)
-                opposite_label = ''
-                sub_range = request.POST.get("sub_range")
+                member = request.user
+                member_subscription = member.subscription.select_for_update().get()
+                old_stripe_customer_data = stripe.Customer.retrieve(member_subscription.stripe_customer_id)
+                old_stripe_subscription_data = stripe.Subscription.retrieve(member_subscription.stripe_subscription_id)
+                # cpprint(old_stripe_customer_data.to_dict(), end="\n")
+                # cpprint(old_stripe_subscription_data.to_dict(), end="\n")
+                # cpprint(old_stripe_customer_data, end="\n")
+                tmp_data.update({"old_stripe_customer_data": old_stripe_customer_data.to_dict()})
+                tmp_data.update({"old_stripe_subscription_data": old_stripe_subscription_data.to_dict()})
+
+                # cprint(member_subscription, "cyan")
+                subscription_backup = copy.deepcopy(member_subscription)
                 stripe_token = request.POST.get("stripeToken")
-                # cprint(membership.range_label, 'magenta')
-                # print(sub_range, "==>", member_subscription.stripe_plan_id.parent)
-                # print("Range =>", membership.range_label)
-                if sub_range != member_subscription.sub_range:
-                    if sub_range == 'monthly':
-                        opposite_label = "yearly"
-                    else:
-                        opposite_label = 'monthly'
-                    new_membership = Membership.objects.filter(
-                        Q(range_label=sub_range) & Q(parent=member_subscription.stripe_plan_id.parent)).first()
-                    member_subscription.stripe_plan_id = new_membership
-                    member_subscription.save()
-                    stripe_customer = stripe.Customer.modify(
-                        member_subscription.member_id.stripe_customer_id,
-                        card=stripe_token
-                    )
-                    cprint('stripe_customer ok', 'green')
-                    # update stripe customer id
-                    member.stripe_customer_id = stripe_customer['id']
-                    # update stripe card id
-                    member.stripe_card_token = stripe_token
-                    member.save()
-                    # get stripe card token
-                    card_id = stripe_customer['default_source']
-                    fetch_subscription = stripe.Subscription.retrieve(member_subscription.stripe_subscription_id)
-                    stripe_subscription = stripe.Subscription.modify(
-                        member_subscription.stripe_subscription_id,
-                        billing_cycle_anchor='now',
-                        cancel_at_period_end=False,
-                        proration_behavior='create_prorations',
-                        items=[
-                            {
-                                'id': fetch_subscription['items']['data'][0].id,
-                                "price": member_subscription.stripe_plan_id.stripe_price_id,
-                            }
-                        ]
-                    )
-                    cprint('stripe subscription ok!', 'cyan')
-                    # update stripe new value in subscription table
-                    member_subscription.stripe_subscription_id = stripe_subscription['id']
-                    member_subscription.stripe_card_id = card_id
-                    card_obj = stripe.Customer.retrieve_source(stripe_customer['id'], card_id)
-                    start_date = datetime.datetime.fromtimestamp(stripe_subscription['current_period_start'],
-                                                                 tz=pytz.UTC).strftime("%Y-%m-%d %H:%M:%S")
-                    end_date = datetime.datetime.fromtimestamp(stripe_subscription['current_period_end'],
-                                                               tz=pytz.UTC).strftime("%Y-%m-%d %H:%M:%S")
-                    member_subscription.subscription_status = True if stripe_subscription[
-                                                                          'status'] == "active" else False
-                    member_subscription.subscription_period_start = start_date
-                    member_subscription.subscription_period_end = end_date
-                    member_subscription.card_expire = datetime.datetime(card_obj['exp_year'], card_obj['exp_month'], 1)
-                    member_subscription.sub_range = sub_range
-                    member_subscription.last_invoice_id = stripe_subscription['latest_invoice']
-                    member_subscription.save()
-                    messages.success(request, 'Subscription data updated successfully!', 'success')
+                full_name = request.POST.get("full_name")
+                # new_membership = Membership.objects.filter(slug='starter_monthly').first()
+                stripe_customer = stripe.Customer.modify(
+                    member_subscription.stripe_customer_id,
+                    source=stripe_token,
+                    name=full_name
+                )
+                cprint('stripe_customer ok', 'green')
+                # latest_invoice
+                latest_invoice_id = stripe_customer.to_dict().get("subscriptions").get("data")[0].get('latest_invoice')
 
-                # check if the subscription range is changed
+                # update stripe customer id
+                member_subscription.stripe_customer_id = stripe_customer['id']
+                # update stripe card id
+                member_subscription.stripe_card_id = stripe_customer['default_source']
+                member_subscription.stripe_card_token = stripe_token
+                member_subscription.last_invoice_id = latest_invoice_id
+                member_subscription.save()
+                # return JsonResponse(data=tmp_data, status=status.HTTP_200_OK)
+                messages.success(request, 'Credit card updated successfully!')
 
-                return redirect('profile-account-settings')
+                return redirect(request.META['HTTP_REFERER'])
 
             else:
                 # no internet connection available
-                messages.error(request, 'No internet connection!, try again later', 'danger')
-                return redirect('profile-account-settings')
+                messages.error(request, 'No internet connection!, try again later')
+                return redirect(request.META['HTTP_REFERER'])
 
         except Exception as ex:
             # rollback if any error occurred
-            # cprint(traceback.format_exc(), 'red')
-            cprint("Error occurred when update stripe membership!", 'red')
+            cprint(traceback.format_exc(), 'red')
             log_exception(traceback.format_exc())
-            messages.error(request, 'There is error!, try again latter')
+            messages.error(request, "Error occurred when update your credit card!")
+            return redirect(request.META['HTTP_REFERER'])
 
 
 class UpgradeMembershipView(LoginRequiredMixin, TemplateView):
@@ -207,8 +201,8 @@ class UpgradeMembershipView(LoginRequiredMixin, TemplateView):
             # cprint(request.POST, "magenta")
             with transaction.atomic():
                 # member_subscription_obj = member.member_subscription.get()
-                member_subscription_obj = member.member_subscription.select_for_update().first()
-                member_membership = member.member_subscription.select_for_update().first().stripe_plan_id
+                member_subscription_obj = member.subscription.select_for_update().first()
+                member_membership = member.subscription.select_for_update().first().stripe_plan_id
                 old_subscription = copy.deepcopy(member_subscription_obj)
                 old_membership = copy.deepcopy(member_membership)
                 # check internet connection
@@ -274,8 +268,8 @@ class UpgradeMembershipView(LoginRequiredMixin, TemplateView):
             messages.error(request, 'There is errors!, try again latter')
             # start rollback
             old_member = Member.objects.select_for_update().get(pk=member.pk)
-            old_member.member_subscription_set = old_subscription
-            old_member.member_subscription.get().stripe_plan_id = old_membership
+            old_member.subscription_set = old_subscription
+            old_member.subscription.get().stripe_plan_id = old_membership
 
             return redirect(request.META.get('HTTP_REFERER'))
 
@@ -292,7 +286,7 @@ class ChargeExtraRecordView(APIView):
             all_not_finished_records_count = data_handler_obj.data_sessions_set.filter(is_run_model=False).values_list(
                 'all_records_count', flat=True)
             all_not_finished_records_count = sum(list(all_not_finished_records_count))
-            member_subscription = member.member_subscription.get()
+            member_subscription = member.subscription.get()
             member_data_usage_obj = member.data_usage.filter().first()
             data_usage_rows = int(member_data_usage_obj.records_used)
             membership_obj = member_subscription.stripe_plan_id
@@ -370,7 +364,7 @@ class ChargeExtraRecordView(APIView):
             # rollback if any error occurred
             cprint(traceback.format_exc(), 'red')
             log_exception(traceback.format_exc())
-            messages.error(request, 'There is errors!, try again latter')
+            messages.error(request, 'Error in charge extra records view!!, try again latter')
             return JsonResponse(data={"msg": "Error while charging!!", 'is_done': False}, status=200)
 
 
@@ -378,9 +372,74 @@ class UpgradeMembershipAPIView(APIView):
     permission_classes = (IsAuthenticated,)
 
     def post(self, request, *args, **kwargs):
-        cprint(request.data, 'magenta')
-        # cpprint(dir(request))
-        return JsonResponse(data={"msg": "Upgrade Api Request completed", "is_done": True}, status=200)
+
+        try:
+            new_membership_lbl = ""  # save the label of new membership to return it to frontend with the response
+            with transaction.atomic():
+                member = request.user
+                new_membership_slug = request.data.get("membership_slug")
+                member_subscription_obj = member.subscription.select_for_update().get()
+                new_membership_obj = Membership.objects.select_for_update().filter(slug=new_membership_slug).first()
+                new_membership_lbl = new_membership_obj.get_membership_type_display()
+
+                # fetch stripe customer
+                stripe_customer = stripe.Customer.retrieve(member_subscription_obj.stripe_customer_id).to_dict()
+                # fetch previous member subscription from stripe
+                stripe_old_subscription = stripe.Subscription.retrieve(
+                    member_subscription_obj.stripe_subscription_id).to_dict()
+                # fetch stripe subscription item
+                stripe_subscription_item_id = stripe_old_subscription.get("items").to_dict().get("data")[0].get("id")
+
+                # fetch stripe card details
+                stripe_card_obj = stripe.Customer.retrieve_source(stripe_customer.get("id"),
+                                                                  stripe_customer.get("default_source")).to_dict()
+
+                # modify the stripe subscription
+                stripe_updated_subscription = stripe.Subscription.modify(
+                    member_subscription_obj.stripe_subscription_id,
+                    billing_cycle_anchor='now',
+                    cancel_at_period_end=False,
+                    proration_behavior='create_prorations',
+                    items=[
+                        {
+                            'id': stripe_subscription_item_id,
+                            "price": new_membership_obj.stripe_price_id,
+                        }
+                    ]
+                )
+                cprint('Subscription updated on stripe successfully!', 'green', attrs=['bold'])
+
+                # update the membership for the member
+                member_subscription_obj.membership = new_membership_obj
+
+                # update stripe new value in subscription table
+                member_subscription_obj.stripe_subscription_id = stripe_updated_subscription.get("id")
+                start_date = datetime.fromtimestamp(stripe_updated_subscription.get("current_period_start"),
+                                                    tz=pytz.UTC).strftime("%Y-%m-%d %H:%M:%S")
+                end_date = datetime.fromtimestamp(stripe_updated_subscription.get("current_period_end"),
+                                                  tz=pytz.UTC).strftime("%Y-%m-%d %H:%M:%S")
+                member_subscription_obj.subscription_status = True if stripe_updated_subscription.get(
+                    "status") == "active" else False
+                member_subscription_obj.subscription_period_start = start_date
+                member_subscription_obj.subscription_period_end = end_date
+                member_subscription_obj.card_expire = datetime(stripe_card_obj.get("exp_year"),
+                                                               stripe_card_obj.get("exp_month"), 1)
+                member_subscription_obj.last_invoice_id = stripe_updated_subscription.get("latest_invoice")
+                member_subscription_obj.save()
+                cprint('Membership & Subscription updated on our db successfully!', 'green', attrs=['bold'])
+
+                messages.success(request, f"Your membership upgraded to {new_membership_lbl} successfully!")
+
+            # raise AttributeError("Custom Assertion!")
+            return JsonResponse(
+                data={"msg": f"Your membership upgraded successfully to {new_membership_lbl}", "is_error": False},
+                status=status.HTTP_200_OK)
+        except Exception as ex:
+            # rollback if any error occurred
+            cprint(traceback.format_exc(), 'red')
+            log_exception(traceback.format_exc())
+            return JsonResponse(data={"msg": "Error when upgrade membership!", 'is_error': True},
+                                status=status.HTTP_200_OK)
 
 
 class ChangeStripeCardView(APIView):
