@@ -47,7 +47,6 @@ $(function () {
     var form = document.getElementById('payment-form');
     form.addEventListener('submit', function (event) {
         event.preventDefault();
-        console.log('Submit stripe form');
         const paymentBtn = document.querySelector("#paymentBtn");
         // disable the button after click
         paymentBtn.classList.add("disabled", "wait-cursor");
