@@ -44,7 +44,7 @@ $(function () {
   });
 
   // Handle form submission.
-  const form = document.getElementById('change-stripe-card-form');
+/*   const form = document.getElementById('change-stripe-card-form');
   form.addEventListener('submit', function (event) {
     event.preventDefault();
 
@@ -58,7 +58,7 @@ $(function () {
         stripeTokenHandler(result.token);
       }
     });
-  });
+  }); */
 
   // Submit the form with the token ID.
   function stripeTokenHandler(token) {
