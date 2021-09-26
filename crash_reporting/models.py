@@ -22,3 +22,6 @@ class CrashReport(models.Model):
 
     class Meta:
         db_table = "crash_reports"
+
+    def __str__(self):
+        return f"Crash {self.title}"
