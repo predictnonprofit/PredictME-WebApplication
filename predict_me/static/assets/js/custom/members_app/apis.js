@@ -102,14 +102,20 @@ function fetchDataToSessionDashboard(dataKeyName) {
 
 
 // this function will upgrade to new membership
-function requestUpgradeToNewMembership(membershipSlug) {
+async function requestUpgradeToNewMembership(membershipSlug, url) {
   try {
-    const url = document.querySelector("#upgradeMembershipAccountSettingsForm").action;
-    const headers = new Headers({
-      "Content-Type": "application/json;charset=utf-8",
-      "X-CSRFToken": getCookie('csrftoken')
+    const data = {
+      "membership_slug": membershipSlug
+    };
+    const requestPromise = await axios.post(url, data, {
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+        "X-CSRFToken": getCookie('csrftoken')
+      }
     });
-    return fetch(url, {
+    // const promiseData = requestPromise.then(response => response['data']);
+    return requestPromise['data'];
+    /* return fetch(url, {
         method: "POST",
         headers: headers,
         body: JSON.stringify({
@@ -124,7 +130,7 @@ function requestUpgradeToNewMembership(membershipSlug) {
       })
       .catch(error => {
         console.error(error);
-      });
+      }); */
   } catch (error) {
     console.error(error);
   }
