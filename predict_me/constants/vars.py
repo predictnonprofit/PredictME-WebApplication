@@ -23,3 +23,10 @@ SUBJECTS_TYPES = (
     ("website_related", "Website Related"),
     ("other", "Other"),
 )
+
+WITHDRAWN_REASONS = (
+    ("register_by_mistake", "Register by mistake in this web application"),
+    ("reason2", "Reason 2"),
+    ("reason3", "Reason 3"),
+    ("other", "Other"),
+)
