@@ -156,7 +156,7 @@ class DataHandlerFileUpload(APIView):
                 tmp_file = os.path.join(settings.MEDIA_ROOT, path)
                 row_count = get_row_count(tmp_file)  # get total rows of the uploaded file
                 allowed_records_number = int(
-                    request.user.member_subscription.get().stripe_plan_id.allowed_records_count)
+                    request.user.subscription.get().membership.allowed_records_count)
                 saved_allowed_number = 0
                 if row_count < allowed_records_number:
                     saved_allowed_number = 0
