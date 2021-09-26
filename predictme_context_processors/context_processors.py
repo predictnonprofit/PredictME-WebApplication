@@ -14,6 +14,9 @@ from django.core.serializers.json import DjangoJSONEncoder
 from crash_reporting.forms import CrashReportForm
 from termcolor import cprint
 from prettyprinter import (cpprint, pprint)
+from django.conf import settings
+
+
 # from predict_me.helpers import quick_print, set_permissions_and_groups_to_members
 
 
@@ -117,7 +120,7 @@ def get_stripe_details(request):
             if check_internet_access() is True:
                 # check if the user is is_anonymous user
                 if member.is_anonymous is not True:
-                    subscription_obj = member.member_subscription.filter().first()
+                    subscription_obj = member.subscription.filter().first()
                     if subscription_obj is not None:
                         try:
                             stripe_card_obj = stripe.Customer.retrieve_source(
@@ -163,7 +166,8 @@ def get_stripe_details(request):
 def get_all_memberships(request):
     try:
         all_memberships = {}
-        all_memberships_obj = Membership.objects.filter(parent__isnull=True)
+        # all_memberships_obj = Membership.objects.filter(parent__isnull=True)
+        all_memberships_obj = Membership.objects.all()
         for membership in all_memberships_obj:
             all_memberships[membership.slug] = {
                 'slug': membership.slug,
@@ -173,6 +177,8 @@ def get_all_memberships(request):
                 "additional_fee": membership.additional_fee_per_extra_record,
                 "allowed_records_count": membership.allowed_records_count,
             }
+
+        # cpprint(all_memberships, end="\n")
         return all_memberships
 
     except Exception as ex:
@@ -183,11 +189,11 @@ def get_all_memberships(request):
 def get_user_membership_only(request):
     try:
         if request.user.is_authenticated and not request.user.is_superuser:
-            subscription_obj = request.user.member_subscription.filter().first()
+            subscription_obj = request.user.subscription.filter().first()
             if subscription_obj is not None:
                 # check if the user has membership, to avoid any error in registration process
-                if subscription_obj.stripe_plan_id is not None:
-                    return subscription_obj.stripe_plan_id.parent
+                if subscription_obj.membership is not None:
+                    return subscription_obj.membership.parent
                     # return 'professional'
 
     except Exception as ex:
@@ -206,7 +212,8 @@ def get_company_settings(request):
         settings = json.loads(settings)
         settings = settings[0]
         return settings
-
+    except IndexError:
+        return {}
     except Exception as ex:
         cprint(traceback.format_exc(), 'red')
         log_exception(traceback.format_exc())
@@ -238,6 +245,10 @@ def is_administrator_user(request):
         return request.user.groups.filter(name='Administrator').exists()
 
 
+def is_debug_mode(request):
+    return settings.DEBUG
+
+
 def return_all_context(request):
     return {
         "get_user_membership": get_user_subscription(request),  # fix this in all places that call it
@@ -251,5 +262,6 @@ def return_all_context(request):
         "get_company_settings": get_company_settings(request),
         'crash_report_form': get_crash_reporting_form(request),
         "admin_top_navbar_total": get_administrator_top_navbar_total_badges(request),
-        'is_administrator_user': is_administrator_user(request)
+        'is_administrator_user': is_administrator_user(request),
+        "is_debug_mode": is_debug_mode(request)
     }
