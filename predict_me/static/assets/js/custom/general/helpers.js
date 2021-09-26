@@ -50,3 +50,14 @@ const displayTopNotification = (msgBody, msgType) => {
         timer: 1500,
     });
 };
+
+
+// convert string to title case
+const toTitleCase = (str) => {
+  return str.replace(
+    /\w\S*/g,
+    function(txt) {
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    }
+  );
+}
