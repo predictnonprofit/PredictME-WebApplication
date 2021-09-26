@@ -53,6 +53,9 @@ twisted = "==20.3.0"
 asgiref = "==3.3.4"
 setuptools = "*"
 django-cleanup = "*"
+google-auth = "*"
+sqlparse = "*"
+pip = "*"
 
 [dev-packages]
 
