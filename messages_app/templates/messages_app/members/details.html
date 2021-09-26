@@ -11,287 +11,261 @@
 {% endblock customcss %}
 
 {% block pagename %}
-
+{% if object.other_subject %}
+{{ object.other_subject }}
+{% else %}
+{{ object.get_subject_display }}
+{% endif %}
 {% endblock pagename %}
 
 
 {% block content %}
 
-<!-- Start Messages -->
-{% include 'predict_me/inc/messages.html' %}
-<!-- End Messages -->
-
 <!-- begin:: Content -->
 <div class="d-flex flex-row mx-4">
-    <!--begin::View-->
-    <div class="flex-row-fluid ml-lg-8" id="kt_inbox_view">
-        <!--begin::Card-->
-        <div class="card card-custom card-stretch">
-            <!--begin::Header-->
-            <div class="card-header align-items-center flex-wrap justify-content-between py-5 h-auto">
-                <!--begin::Left-->
-                <div class="d-flex align-items-center my-2">
-                    <button type="button" onclick="history.back();" class="btn btn-clean btn-icon btn-sm mr-6"
-                        data-inbox="back">
-                        <i class="flaticon2-left-arrow-1"></i>
-                    </button>
+  <!--begin::View-->
+  <div class="flex-row-fluid ml-lg-8" id="kt_inbox_view">
+    <!--begin::Card-->
+    <div class="card card-custom card-stretch">
+      <!--begin::Header-->
+      <div class="card-header align-items-center flex-wrap justify-content-between py-5 h-auto">
+        <!--begin::Left-->
+        <div class="d-flex align-items-center my-2">
+          <button type="button" onclick="history.back();" class="btn btn-clean btn-icon btn-sm mr-6" data-inbox="back">
+            <i class="flaticon2-left-arrow-1"></i>
+          </button>
 
-                    <span class="btn btn-default btn-icon btn-sm mr-2" data-toggle="tooltip" title=""
-                        data-original-title="Spam">
-                        <span class="svg-icon svg-icon-md">
-                            <!--begin::Svg Icon | path:assets/media/svg/icons/Code/Warning-1-circle.svg-->
-                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                    <rect x="0" y="0" width="24" height="24"></rect>
-                                    <circle fill="#000000" opacity="0.3" cx="12" cy="12" r="10"></circle>
-                                    <rect fill="#000000" x="11" y="7" width="2" height="8" rx="1"></rect>
-                                    <rect fill="#000000" x="11" y="16" width="2" height="2" rx="1"></rect>
-                                </g>
-                            </svg>
-                            <!--end::Svg Icon-->
-                        </span>
-                    </span>
+          <span class="btn btn-default btn-icon btn-sm mr-2" data-toggle="tooltip" title="" data-original-title="Spam">
+            <span class="svg-icon svg-icon-md">
+              <!--begin::Svg Icon | path:assets/media/svg/icons/Code/Warning-1-circle.svg-->
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                  <rect x="0" y="0" width="24" height="24"></rect>
+                  <circle fill="#000000" opacity="0.3" cx="12" cy="12" r="10"></circle>
+                  <rect fill="#000000" x="11" y="7" width="2" height="8" rx="1"></rect>
+                  <rect fill="#000000" x="11" y="16" width="2" height="2" rx="1"></rect>
+                </g>
+              </svg>
+              <!--end::Svg Icon-->
+            </span>
+          </span>
 
 
-                </div>
-                <!--end::Left-->
-            </div>
-            <!--end::Header-->
-            <!--begin::Body-->
-            <div class="card-body p-0">
-                <!--begin::Header-->
-                <div class="d-flex align-items-center justify-content-between flex-wrap card-spacer-x py-5">
-                    <!--begin::Title-->
-                    <div class="d-flex align-items-center mr-2 py-2">
-                        <div class="font-weight-bold font-size-h3 mr-3">
-
-                            {% if object.subject %}
-                            {{ object.get_subject_display }}
-                            {% else %}
-                            {{ object.other_subject }}
-                            {% endif %}
-
-
-                            {% if object.attachment %}
-                            <div class="d-inline-block" data-toggle="tooltip" title="Message has attachment file">
-                                <a href="" class="position-relative ml-3" style="top: 3px;">
-                                    <i
-                                        class="icon-xl text-hover-primary la la-paperclip d-inline-block position-relative"></i>
-                                </a>
-                            </div>
-                            {% endif %}
-
-                        </div>
-
-                    </div>
-                    <!--end::Title-->
-
-                </div>
-                <!--end::Header-->
-                <!--begin::Messages-->
-                <div class="mb-3">
-                    <div class="cursor-pointer shadow-xs toggle-on" data-inbox="message">
-                        <div class="d-flex align-items-center card-spacer-x py-6">
-                            <span class="symbol symbol-50 mr-4">
-
-                            </span>
-                            <div class="d-flex flex-column flex-grow-1 flex-wrap mr-2">
-                                <div class="d-flex">
-                                    <a href="#"
-                                        class="font-size-lg font-weight-bolder text-dark-75 text-hover-primary mr-2">
-                                        {{ object.sender.full_name }}
-                                    </a>
-
-                                </div>
-
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <div class="font-weight-bold text-muted mr-2">{{ object.send_date }}</div>
-                                <div class="d-flex align-items-center" data-inbox="toolbar">
-
-                                    <span class="btn btn-clean btn-sm btn-icon mr-2" data-toggle="tooltip"
-                                        data-placement="top" title="" data-original-title="Reply">
-                                        <i class="flaticon2-reply-1 icon-1x"></i>
-                                    </span>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-spacer-x py-3 toggle-off-item">
-                            {{ object.message|safe }}
-                        </div>
-                    </div>
-
-                    <div class="container mt-5">
-                        <h3>Replies</h3>
-                    </div>
-
-                    {% for reply in object.message_replies.all %}
-                    <div class="shadow-xs">
-                        <div class="d-flex align-items-center card-spacer-x py-6">
-
-                            <div class="d-flex flex-column flex-grow-1 flex-wrap mr-2">
-                                <div class="d-flex" data-toggle="expand">
-                                    <a href="javascript:void()"
-                                        class="font-size-lg font-weight-bolder text-dark-75 text-hover-primary mr-2">
-                                        {{ reply.sender.full_name }}
-                                    </a>
-                                    <div class="font-weight-bold text-muted">
-                                        {{ reply.send_date|timesince }}
-                                    </div>
-                                </div>
-                                <div class="d-flex flex-column w-600px">
-                                    <div class="text-muted font-weight-bold text-justify">
-                                        <div class="accordion accordion-light accordion-toggle-arrow" id="replyAccordion">
-                                            <div class="card">
-                                                <div class="card-header" id="headingReply{{ reply.pk }}">
-                                                 <div class="card-title" data-toggle="collapse" data-target="#reply{{ reply.pk }}">
-                                                    {{ reply.message|safe|truncatechars:50 }}
-                                                 </div>
-                                                </div>
-                                                <div id="reply{{ reply.pk }}" class="collapse" data-parent="#replyAccordion">
-                                                 <div class="card-body">
-                                                    {{ reply.message|safe }}
-                                                 </div>
-                                                </div>
-                                               </div>
-                                        </div>
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-end">
-                                <div class="font-weight-bold text-muted mr-2">
-                                    {{ reply.send_date }}
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    {% empty %}
-                    <div class="container mt-5">
-                        <div class="alert alert-custom alert-light-primary" role="alert">
-                            No replies for this message
-                        </div>
-                    </div>
-                    {% endfor %}
-
-
-                </div>
-                <!--end::Messages-->
-                <!--begin::Reply-->
-                <div class="card-spacer mb-3" id="kt_inbox_reply">
-                    <div class="card card-custom shadow-sm">
-                        <div class="card-body p-0">
-                            <!--begin::Form-->
-                            <form action="{% url 'api-member-send-message' %}" id="members_inbox_reply_form"
-                                method="POST" enctype="multipart/form-data">
-                                {% csrf_token %}
-                                <input type="hidden" id="msg_id" name="msg_id" value="{{ object.pk }}" />
-                                <!--begin::Body-->
-                                <div class="d-block">
-                                    <!--begin::To-->
-                                    <div class="d-flex align-items-center border-bottom inbox-to px-8 min-h-45px">
-                                        <div class="text-dark-50 w-75px">To:</div>
-                                        <div class="d-flex align-items-center flex-grow-1">
-                                            <tags class="tagify form-control border-0" tabindex="-1">
-
-                                                <tag title="PredictMe Administrator" contenteditable="false"
-                                                    spellcheck="true" tabindex="-1"
-                                                    class="tagify__tag tagify__tag--primary tagify--noAnim" role="tag"
-                                                    __isvalid="true" pic="{% static 'assets/media/users/100_15.jpg' %}"
-                                                    initialsstate="danger" initials="Administrator"
-                                                    email="{{ get_company_settings.email }}" value="Administrator">
-                                                    <div><span class="tagify__tag-text">PredictMe Administrator</span>
-                                                    </div>
-                                                </tag>
-                                            </tags>
-                                            <input type="text"
-                                                class="form-control border-0 member-msg-compose-box-control"
-                                                name="compose_to" value="{{ get_company_settings.email }}" readonly />
-                                        </div>
-
-                                    </div>
-                                    <!--end::To-->
-
-                                    <!--begin::Subject-->
-                                    <div class="border-bottom">
-                                        <select
-                                            class="custom-select form-control px-8 min-h-45px member-msg-compose-box-control"
-                                            name='member_reply_subject' id="member_reply_subject">
-                                            <option selected value="">Select topic</option>
-                                            {% for sub_type in subject_types %}
-                                            <option value="{{ sub_type.0 }}">{{ sub_type.1 }}</option>
-                                            {% endfor %}
-                                        </select>
-                                        <!-- Start other subject input -->
-                                        <input
-                                            class="form-control border-0 px-8 min-h-45px d-none member-msg-compose-box-control"
-                                            name="other_member_reply_subject" id="other_member_reply_subject"
-                                            placeholder="Other Subject" type="text" />
-                                        <!-- Start other subject input -->
-
-                                    </div>
-                                    <!--end::Subject-->
-                                    <!--begin::Message-->
-                                    <div id="member_reply_msg_content_block">
-                                        <!-- Start Message Content -->
-                                        <div id="member_reply_text_msg" class="custom-quill-editor"></div>
-                                        <!-- End Message Content -->
-                                    </div>
-                                    <!--end::Message-->
-                                </div>
-                                <!--end::Body-->
-                                <!--begin::Footer-->
-                                <div
-                                    class="d-flex align-items-center justify-content-between py-5 pl-8 pr-5 border-top">
-                                    <!--begin::Actions-->
-                                    <div class="d-flex align-items-center mr-3">
-                                        <!--begin::Send-->
-                                        <div class="btn-group mr-4">
-                                            <button type="submit"
-                                                class="btn btn-primary font-weight-bold px-6 member-send-msg-btn">Send
-                                                Reply</button>
-
-                                        </div>
-                                        <!--end::Send-->
-                                        <!--begin::Other-->
-
-                                        <!-- Start Msg Attachments block -->
-                                        <div id='reply_msg_attachment_block'>
-                                            <label for='reply_attachment'>
-                                                <span
-                                                    class="btn btn-icon btn-sm btn-clean mr-2 mt-3 member-msg-compose-box-control"
-                                                    data-toggle="tooltip" data-title='Upload attachment'>
-                                                    <i class="flaticon2-clip-symbol"></i>
-                                                </span>
-                                            </label>
-                                            <input type='file' style="display: none;" id='reply_attachment'
-                                                name="reply_attachment" class="member-msg-compose-box-control"
-                                                accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" />
-                                            <span class="form-text text-muted d-inline-block position-relative"
-                                                style="top: 6px;" id="reply_attachmen_file_name"></span>
-                                        </div>
-                                        <!-- End Msg Attachments block -->
-
-                                        <!--end::Other-->
-                                    </div>
-                                    <!--end::Actions-->
-                                </div>
-                                <!--end::Footer-->
-                            </form>
-                            <!--end::Form-->
-                        </div>
-                    </div>
-                </div>
-                <!--end::Reply-->
-            </div>
-            <!--end::Body-->
         </div>
-        <!--end::Card-->
+        <!--end::Left-->
+      </div>
+      <!--end::Header-->
+      <!--begin::Body-->
+      <div class="card-body p-0">
+        <!--begin::Header-->
+        <div class="d-flex align-items-center justify-content-between flex-wrap card-spacer-x py-5">
+          <!--begin::Title-->
+          <div class="d-flex align-items-center mr-2 py-2">
+            <div class="font-weight-bold font-size-h3 mr-3">
+
+              {% if object.subject %}
+              {{ object.get_subject_display }}
+              {% else %}
+              {{ object.other_subject }}
+              {% endif %}
+
+
+              {% if object.attachment %}
+              <div class="d-inline-block" data-toggle="tooltip" title="Message has attachment file">
+                <a href="{% url 'download-message-attachment' object.pk %}" class="position-relative ml-3" style="top: 3px;">
+                  <i class="icon-xl text-hover-primary la la-paperclip d-inline-block position-relative"></i>
+                </a>
+              </div>
+              {% endif %}
+
+            </div>
+
+          </div>
+          <!--end::Title-->
+
+        </div>
+        <!--end::Header-->
+        <!--begin::Messages-->
+        <div class="mb-3">
+          <div class="cursor-pointer shadow-xs toggle-on" data-inbox="message">
+            <div class="d-flex align-items-center card-spacer-x py-6">
+              <span class="symbol symbol-50 mr-4">
+
+              </span>
+              <div class="d-flex flex-column flex-grow-1 flex-wrap mr-2">
+                <div class="d-flex">
+                  <a href="#" class="font-size-lg font-weight-bolder text-dark-75 text-hover-primary mr-2">
+                    {{ object.sender.full_name }}
+                  </a>
+
+                </div>
+
+              </div>
+              <div class="d-flex align-items-center">
+                <div class="font-weight-bold text-muted mr-2">{{ object.send_date }}</div>
+                <div class="d-flex align-items-center" data-inbox="toolbar">
+
+                  <span class="btn btn-clean btn-sm btn-icon mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Reply">
+                    <i class="flaticon2-reply-1 icon-1x"></i>
+                  </span>
+
+                </div>
+              </div>
+            </div>
+            <div class="card-spacer-x py-3 toggle-off-item">
+              {{ object.message|safe }}
+            </div>
+          </div>
+
+          <div class="container mt-5">
+            <h3>Replies</h3>
+          </div>
+
+          {% for reply in object.message_replies.all %}
+          <div class="shadow-xs">
+            <div class="d-flex align-items-center card-spacer-x py-6">
+
+              <div class="d-flex flex-column flex-grow-1 flex-wrap mr-2">
+                <div class="d-flex" data-toggle="expand">
+                  <a href="javascript:void()" class="font-size-lg font-weight-bolder text-dark-75 text-hover-primary mr-2">
+                    {{ reply.sender.full_name }}
+                  </a>
+                  <div class="font-weight-bold text-muted">
+                    {{ reply.send_date|timesince }}
+                  </div>
+                </div>
+                <div class="d-flex flex-column w-600px">
+                  <div class="text-muted font-weight-bold text-justify">
+                    <div class="accordion accordion-light accordion-toggle-arrow" id="replyAccordion">
+                      <div class="card">
+                        <div class="card-header" id="headingReply{{ reply.pk }}">
+                          <div class="card-title" data-toggle="collapse" data-target="#reply{{ reply.pk }}">
+                            {{ reply.message|safe|truncatechars:50 }}
+                          </div>
+                        </div>
+                        <div id="reply{{ reply.pk }}" class="collapse" data-parent="#replyAccordion">
+                          <div class="card-body">
+                            {{ reply.message|safe }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+              <div class="d-flex align-items-end">
+                <div class="font-weight-bold text-muted mr-2">
+                  {{ reply.send_date }}
+                </div>
+              </div>
+            </div>
+
+          </div>
+          {% empty %}
+          <div class="container mt-5">
+            <div class="alert alert-custom alert-light-primary" role="alert">
+              No replies for this message
+            </div>
+          </div>
+          {% endfor %}
+
+
+        </div>
+        <!--end::Messages-->
+        <!--begin::Reply-->
+        <div class="card-spacer mb-3" id="kt_inbox_reply">
+          <div class="card card-custom shadow-sm">
+            <div class="card-body p-0">
+              <!--begin::Form-->
+              <form action="{% url 'api-member-send-message' %}" id="members_inbox_reply_form" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="hidden" id="msg_id" name="msg_id" value="{{ object.pk }}" />
+                <!--begin::Body-->
+                <div class="d-block">
+                  <!--begin::To-->
+                  <div class="d-flex align-items-center border-bottom inbox-to px-8 min-h-45px">
+                    <div class="text-dark-50 w-75px">To:</div>
+                    <div class="d-flex align-items-center flex-grow-1">
+                      <tags class="tagify form-control border-0" tabindex="-1">
+
+                        <tag title="PredictMe Administrator" contenteditable="false" spellcheck="true" tabindex="-1" class="tagify__tag tagify__tag--primary tagify--noAnim" role="tag" __isvalid="true"
+                          pic="{% static 'assets/media/users/100_15.jpg' %}" initialsstate="danger" initials="Administrator" email="{{ get_company_settings.email }}" value="Administrator">
+                          <div><span class="tagify__tag-text">PredictMe Administrator</span>
+                          </div>
+                        </tag>
+                      </tags>
+                      <input type="text" class="form-control border-0 member-msg-compose-box-control" name="compose_to" value="{{ get_company_settings.email }}" readonly />
+                    </div>
+
+                  </div>
+                  <!--end::To-->
+
+                  <!--begin::Subject-->
+                  <div class="border-bottom">
+                    <select class="custom-select form-control px-8 min-h-45px member-msg-compose-box-control" name='member_reply_subject' id="member_reply_subject">
+                      <option selected value="">Select topic</option>
+                      {% for sub_type in subject_types %}
+                      <option value="{{ sub_type.0 }}">{{ sub_type.1 }}</option>
+                      {% endfor %}
+                    </select>
+                    <!-- Start other subject input -->
+                    <input class="form-control border-0 px-8 min-h-45px d-none member-msg-compose-box-control" name="other_member_reply_subject" id="other_member_reply_subject" placeholder="Other Subject" type="text" />
+                    <!-- Start other subject input -->
+
+                  </div>
+                  <!--end::Subject-->
+                  <!--begin::Message-->
+                  <div id="member_reply_msg_content_block">
+                    <!-- Start Message Content -->
+                    <div id="member_reply_text_msg" class="custom-quill-editor"></div>
+                    <!-- End Message Content -->
+                  </div>
+                  <!--end::Message-->
+                </div>
+                <!--end::Body-->
+                <!--begin::Footer-->
+                <div class="d-flex align-items-center justify-content-between py-5 pl-8 pr-5 border-top">
+                  <!--begin::Actions-->
+                  <div class="d-flex align-items-center mr-3">
+                    <!--begin::Send-->
+                    <div class="btn-group mr-4">
+                      <button type="submit" class="btn btn-primary font-weight-bold px-6 member-send-msg-btn">Send
+                        Reply</button>
+
+                    </div>
+                    <!--end::Send-->
+                    <!--begin::Other-->
+
+                    <!-- Start Msg Attachments block -->
+                    <div id='reply_msg_attachment_block'>
+                      <label for='reply_attachment'>
+                        <span class="btn btn-icon btn-sm btn-clean mr-2 mt-3 member-msg-compose-box-control" data-toggle="tooltip" data-title='Upload attachment'>
+                          <i class="flaticon2-clip-symbol"></i>
+                        </span>
+                      </label>
+                      <input type='file' style="display: none;" id='reply_attachment' name="reply_attachment" class="member-msg-compose-box-control" accept=".csv, .xls, .xlsx, .doc, .docx, .pdf" />
+                      <span class="form-text text-muted d-inline-block position-relative" style="top: 6px;" id="reply_attachmen_file_name"></span>
+                    </div>
+                    <!-- End Msg Attachments block -->
+
+                    <!--end::Other-->
+                  </div>
+                  <!--end::Actions-->
+                </div>
+                <!--end::Footer-->
+              </form>
+              <!--end::Form-->
+            </div>
+          </div>
+        </div>
+        <!--end::Reply-->
+      </div>
+      <!--end::Body-->
     </div>
-    <!--end::View-->
+    <!--end::Card-->
+  </div>
+  <!--end::View-->
 </div>
 <!-- end:: Content -->
 
@@ -300,8 +274,7 @@
 
 {% block customjs %}
 <script type="text/javascript">
-    var djangoStaticUrl = '{% get_static_prefix %}';
-
+  var djangoStaticUrl = '{% get_static_prefix %}';
 </script>
 
 <script src="{% static 'assets/js/custom/djangocookie.js' %}" type="text/javascript"></script>

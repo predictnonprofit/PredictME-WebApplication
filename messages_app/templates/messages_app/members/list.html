@@ -17,10 +17,6 @@ Inbox
 
 {% block content %}
 
-<!-- Start Messages -->
-{% include 'predict_me/inc/messages.html' %}
-<!-- End Messages -->
-
 <!-- begin:: Content -->
 <div class="d-flex flex-row mx-4">
     <!--begin::List-->
@@ -87,23 +83,6 @@ Inbox
                     </div>
                     {# Start Second Row #}
                     <div class='d-block mr-1 my-2'>
-                        {# Start Sent btn #}
-                        <span class="btn btn-default btn-icon btn-sm mr-2" data-toggle="tooltip"
-                            data-original-title="Sent">
-                            <span class="svg-icon svg-icon-md">
-                                <!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\themes\metronic\theme\html\demo2\dist/../src/media/svg/icons\Communication\Send.svg--><svg
-                                    xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                    width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                        <rect x="0" y="0" width="24" height="24" />
-                                        <path
-                                            d="M3,13.5 L19,12 L3,10.5 L3,3.7732928 C3,3.70255344 3.01501031,3.63261921 3.04403925,3.56811047 C3.15735832,3.3162903 3.45336217,3.20401298 3.70518234,3.31733205 L21.9867539,11.5440392 C22.098181,11.5941815 22.1873901,11.6833905 22.2375323,11.7948177 C22.3508514,12.0466378 22.2385741,12.3426417 21.9867539,12.4559608 L3.70518234,20.6826679 C3.64067359,20.7116969 3.57073936,20.7267072 3.5,20.7267072 C3.22385763,20.7267072 3,20.5028496 3,20.2267072 L3,13.5 Z"
-                                            fill="#000000" />
-                                    </g>
-                                </svg>
-                                <!--end::Svg Icon--></span>
-                        </span>
-                        {# End Sent btn #}
 
                         {# Start Trash btn #}
                         <span class="btn btn-default btn-icon btn-sm mr-2" id="member-inbox-trash-btn"
@@ -242,19 +221,23 @@ Inbox
                         <!--begin::Info-->
                         <div class="flex-grow-1 mt-2 mr-2"">
                             <div>
+                                <span data-toggle="tooltip" title="reply count" class="label label-sm font-weight-boldest label-rounded label-primary mr-1">
+                                    {{ object.get_replies_total_for_single_msg }}
+                                </span>
+
                                 <span class=" font-weight-bolder font-size-lg mr-2">
                             <a href="{% url 'member-inbox-details' object.pk %}" style="color: unset">
                                 {% if object.subject %} {{ object.get_subject_display }} {% else %}
                                 {{ object.other_subject }} {% endif %}
                             </a>
                             -</span>
-                            <span class="text-muted">{{ object.message|striptags|truncatechars:50 }}...</span>
+                            <span class="text-muted">{{ object.message|striptags|truncatechars:40 }}</span>
                         </div>
 
                     </div>
                     <!--end::Info-->
                     <!--begin::Datetime-->
-                    <div class="mt-2 mr-3 font-weight-bolder w-150px text-right">{{ object.send_date|timesince }}</div>
+                    <div class="mt-2 mr-3 font-weight-bolder w-135px text-right">{{ object.send_date|timesince }}</div>
                         <!--end::Datetime-->
                     </div>
                     <!--end::Item-->
@@ -369,7 +352,7 @@ Inbox
                             </label>
                             <input type='file' style="display: none;" id='msg_attachment' name="msg_attachment"
                                 class="member-msg-compose-box-control"
-                                accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" />
+                                accept=".csv, .xls, .xlsx, .doc, .docx, .pdf" />
                             <span class="form-text text-muted d-inline-block position-relative" style="top: 6px;"
                                 id="msg_attachmen_file_name"></span>
                         </div>
