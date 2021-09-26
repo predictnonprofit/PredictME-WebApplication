@@ -1776,7 +1776,7 @@ async function setDataHandlerTableOverview() {
     }
   } catch (error) {
     if (error instanceof TypeError) {
-      setDataHandlerTableOverview();
+      // setDataHandlerTableOverview();
       console.info('Error in connection!!, please wait...');
     } else {
       console.error(error);
