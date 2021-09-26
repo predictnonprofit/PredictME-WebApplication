@@ -1,6 +1,4 @@
 from django.db import models
-# from membership.models import UserMembership
-# Create your models here.
 from django.contrib.auth import get_user_model
 import pandas as pd
 import json
@@ -36,7 +34,6 @@ class DataFile(models.Model):
     is_run_the_model = models.BooleanField(null=True, blank=True, default=False)
 
     class Meta:
-        # verbose_name = "member_data_file"
         db_table = 'member_data_files'
 
     def __str__(self):
@@ -261,8 +258,11 @@ class RunHistory(models.Model):
     csv_report_file_path = models.CharField(max_length=200, null=True, blank=True)
     modal_output_json_file_path = models.CharField(null=True, blank=True, max_length=250)
 
-    # class Meta:
-    #     db_table = "run_history"
+    class Meta:
+        db_table = "run_history"
+
+    def __str__(self):
+        return f"RunHistory Object for {self.member}"
 
     @property
     def get_session_name(self):
@@ -270,16 +270,16 @@ class RunHistory(models.Model):
 
 
 class DataUsage(models.Model):
+    member = models.ForeignKey(to=Member, on_delete=models.CASCADE, null=True, blank=True,
+                               related_name='data_usage')
+    records_used = models.BigIntegerField(null=True, blank=True, default=0)
+    updated_at = models.DateTimeField(auto_now=True)
+
     class Meta:
         db_table = 'data_usage'
 
     def __str__(self):
         return f"Data Usage for {self.member}"
-
-    member = models.ForeignKey(to=Member, on_delete=models.CASCADE, null=True, blank=True,
-                               related_name='data_usage')
-    records_used = models.BigIntegerField(null=True, blank=True, default=0)
-    updated_at = models.DateTimeField(auto_now=True)
 
 
 class ModelMostSimilarFile(models.Model):
@@ -296,11 +296,6 @@ class ModelMostSimilarFile(models.Model):
     counter = models.PositiveBigIntegerField(default=1, null=False, blank=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-    # def save(self, *args, **kwargs):
-    #     print("Override SVEe METHOD in here", end='\n')
-    #     return # disable saving
-    #     super().save(*args, **kwargs)
 
     class Meta:
         db_table = 'model_most_similar_file'
