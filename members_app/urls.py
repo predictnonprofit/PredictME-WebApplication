@@ -14,6 +14,8 @@ urlpatterns = [
     path("inbox/", include([
         path("", MemberInboxView.as_view(), name="member-inbox-list"),
         path("<int:pk>", MemberInboxDetailsView.as_view(), name="member-inbox-details"),
+        path("download-message-attachment/<int:pk>", MemberDownloadMessageAttachmentView.as_view(),
+             name="download-message-attachment"),
         path("api/", include([
             path("send-message", MemberSendMessageViewAPI.as_view(), name='api-member-send-message')
         ]), name="member-messages-api-urls"),
