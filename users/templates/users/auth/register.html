@@ -543,21 +543,20 @@
                   </div>
                 </div>
               </div>
-
-              <h3 class="font-size-lg text-dark font-weight-bold mb-6">Accept Terms *</h3>
-              <div class="mb-3">
-                <div class="form-group row">
-                  <div class="col">
-
+              <div class="form-group row">
+                <label class="col-3 col-form-label">Accept Terms *</label>
+                <div class="col-9 col-form-label">
+                  <div class="checkbox-inline">
                     <label class="checkbox checkbox-primary">
                       <input type="checkbox" value="1" name="accepted_privacy_terms">Accepts &nbsp; <a
                         href="{% url 'privacy-policy' %}" target="_blank">Privacy Terms</a> * &nbsp;
                       <span></span>
                     </label>
-                    {% include "users/inc/display_errors.html" with errors=input_errors.accepted_privacy_terms %}
                   </div>
+                  <!-- <span class="form-text text-muted">Some help text goes here</span> -->
                 </div>
               </div>
+              
             </div>
           </div>
 
@@ -714,6 +713,14 @@
         // the checkbox is now no longer checked
         $('#register_btn').attr("disabled", "disabled");
       }
+    });
+
+    document.querySelector("#kt_login_signup_form").addEventListener("submit", event => {
+      event.preventDefault();
+      const regBtn = document.querySelector("#register_btn");
+      regBtn.disabled = true;
+      regBtn.classList.add("disabled", "progress-cursor");
+      event.currentTarget.submit();
     });
   })
 </script>
