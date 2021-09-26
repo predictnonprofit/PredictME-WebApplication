@@ -1,13 +1,14 @@
-from django.shortcuts import render, redirect, reverse, HttpResponse
-from django.contrib import messages
-from django.views.generic import TemplateView
-from django.views import View
-from membership.models import (Membership, Subscription)
-from data_handler.models import (DataFile)
-from termcolor import cprint
-import stripe
 import os
-from django.conf import settings
+import traceback
+
+import stripe
+from django.db import transaction
+from django.shortcuts import render, redirect, reverse
+from django.views.generic import TemplateView
+from termcolor import cprint
+from django.contrib import messages
+from membership.models import Membership
+from predict_me.my_logger import log_exception
 
 stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
 
@@ -26,33 +27,34 @@ class FAQView(TemplateView):
     template_name = 'predict_me/faq.html'
 
 
-class PricingView(View):
+class PricingView(TemplateView):
+    template_name = "predict_me/pricing.html"
 
-    def get(self, request):
-        return render(request, "predict_me/pricing.html")
-
+    @transaction.atomic
     def post(self, request):
-        member_type = request.POST['type']
-        # cprint(request.POST, 'cyan')
-        member = request.user
-        # print(member.full_name)
-        # membership2 = Membership.objects.filter(Q(range_label=member_type) & Q(parent='starter')).first()
-        membership = Membership.objects.get(slug=member_type)
-        member_data_file = DataFile.objects.get(member=member)
-        # print(membership)
-        # user_membership = UserMembership.objects.get(member=member)
-        subscription = Subscription.objects.get(member_id=member)
-        subscription.stripe_plan_id = membership
-        # cprint(subscription.stripe_plan_id, "blue")
-        # cprint(membership.slug, "green")
-        member_data_file.allowed_records_count = membership.allowed_records_count
+        try:
+            membership_slug = request.POST.get("type")
+            member = request.user
+            subscription = member.subscription.select_for_update().get()
+            membership = Membership.objects.get(slug=membership_slug)
+            member_data_file = member.member_data_file.select_for_update().get()
 
-        subscription.save()
-        member_data_file.save()
-        # print(user_membership.membership)
+            subscription.membership = membership
+            # cprint(subscription.stripe_plan_id, "blue")
+            # cprint(membership.slug, "green")
+            member_data_file.allowed_records_count = membership.allowed_records_count
 
-        # messages.success(request, f"The plan you selected is {membership.membership_type} plan")
-        return redirect(reverse("checkout"))
+            subscription.save()
+            member_data_file.save()
+            # print(user_membership.membership)
+            membership_name = membership.get_membership_type_display()
+            messages.success(request, f"You select {membership_name} membership successfully!")
+            return redirect(reverse("checkout"))
+        except Exception as ex:
+            cprint(traceback.format_exc(), 'red')
+            log_exception(traceback.format_exc())
+            messages.error(request, "Error in pricing!!")
+            return redirect(reverse("pricing"))
 
 
 class ModelDescView(TemplateView):
