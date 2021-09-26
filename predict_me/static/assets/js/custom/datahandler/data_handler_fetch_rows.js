@@ -1050,7 +1050,7 @@ function fetchDataForDataTable() {
         if (response.ok) {
           return response.json();
         } else {
-          fetchDataForDataTable();
+          // fetchDataForDataTable();
         }
       })
       .catch(error => {
