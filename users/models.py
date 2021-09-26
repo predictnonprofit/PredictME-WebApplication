@@ -1,11 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_lazy
 from django.utils import timezone
 from termcolor import cprint
 
 from .managers import CustomUserManager
+from predict_me.constants.vars import WITHDRAWN_REASONS
 
 """
 ['id', 'password', 'last_login', 'is_superuser', 'email', 'is_staff', 'is_active', 'date_joined', 'first_name',
@@ -29,15 +30,15 @@ MEMBERS_TYPES = (
 
 
 class Member(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(_('email address'), unique=True, db_index=True)
+    email = models.EmailField(gettext_lazy('email address'), unique=True, db_index=True)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    full_name = models.CharField(max_length=60)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
     date_joined = models.DateTimeField(default=timezone.now)
     member_type = models.CharField(choices=MEMBERS_TYPES, default=MEMBERS_TYPES[0][0],
                                    max_length=50)  # development only
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
-    full_name = models.CharField(max_length=60)
     phone = models.CharField(max_length=50, null=True, blank=True)
     street_address = models.CharField(max_length=50)
     state = models.CharField(max_length=50, null=True, blank=True)
@@ -54,23 +55,22 @@ class Member(AbstractBaseUser, PermissionsMixin):
     num_of_volunteer = models.IntegerField(null=True, blank=True)
     num_of_board_members = models.IntegerField(null=True, blank=True)
     status = models.CharField(max_length=20, choices=MEMBER_STATUS, default="unverified")
-    # membership = models.OneToOneField(to="membership.Membership", null=True, on_delete=models.CASCADE, blank=True)
     member_register_token = models.CharField(max_length=150, null=True, blank=True)
-    stripe_card_token = models.CharField(max_length=200, null=True, blank=True)
-    stripe_customer_id = models.CharField(max_length=200, null=True, blank=True)
+    # stripe_card_token = models.CharField(max_length=200, null=True, blank=True)
+    # stripe_customer_id = models.CharField(max_length=200, null=True, blank=True)
     ip_address = models.CharField(max_length=200, null=True, blank=True)
     account_owner = models.CharField(max_length=50, null=True, blank=True, default="")  # just for development only
+
+    objects = CustomUserManager()
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
-    objects = CustomUserManager()
-
-    def __str__(self):
-        return self.email
-
     class Meta:
         db_table = "members"
+
+    def __str__(self):
+        return f"Member Email {self.email}"
 
     @property
     def get_fields_as_list(self):
@@ -82,7 +82,7 @@ class Member(AbstractBaseUser, PermissionsMixin):
 
     @property
     def get_member_info_as_dict(self):
-        subscription_obj = self.member_subscription.get()
+        subscription_obj = self.subscription.get()
         data_handler_obj = self.member_data_file.filter().first()
         data_usage_obj = self.data_usage.filter().first()
         membership_obj = subscription_obj.stripe_plan_id
@@ -130,9 +130,10 @@ class Member(AbstractBaseUser, PermissionsMixin):
         }
 
 
-class UnverifiedMember(models.Model):
-    member = models.OneToOneField(Member, on_delete=models.CASCADE)
-    join_date = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        db_table = "unverified_member"
+class WithdrawnMembers(models.Model):
+    member = models.OneToOneField(to=Member, on_delete=models.CASCADE, related_name='withdrawn')
+    reason = models.CharField(choices=WITHDRAWN_REASONS, max_length=255, null=False,
+                              help_text=gettext_lazy("Why you want to withdraw from our website"))
+    other_reason = models.TextField(help_text=gettext_lazy("Enter other reason"), null=True, blank=True)
+    note = models.TextField(help_text=gettext_lazy("Note (optional)"), null=True, blank=True)
+    created_at = models.DateTimeField(default=timezone.now)
