@@ -48,11 +48,10 @@ class GrabMemberInvoices(APIView):
                 # cprint(len(stripe_invoices), 'blue')
                 start_time = time.mktime(datetime.datetime.strptime(start_date, "%m/%d/%Y").timetuple())
                 end_time = time.mktime(datetime.datetime.strptime(end_date, "%m/%d/%Y").timetuple())
-                stripe_invoices = stripe.Invoice.list(customer=member_subscription.member_id.stripe_customer_id,
-                                                      created={
-                                                          'gte': int(start_time),
-                                                          "lte": int(end_time)
-                                                      })
+                stripe_invoices = stripe.Invoice.list(customer=member_subscription.stripe_customer_id, created={
+                    'gte': int(start_time),
+                    "lte": int(end_time)
+                })
                 # cprint(stripe_invoices, 'red')
                 cprint(len(stripe_invoices), 'blue')
                 invoices_count = len(stripe_invoices)
@@ -120,7 +119,7 @@ class GrabMemberTransactions(APIView):
             else:
                 start_time = time.mktime(datetime.datetime.strptime(start_date, "%m/%d/%Y").timetuple())
                 end_time = time.mktime(datetime.datetime.strptime(end_date, "%m/%d/%Y").timetuple())
-                stripe_trans = stripe.Charge.list(customer=member_subscription.member_id.stripe_customer_id)
+                stripe_trans = stripe.Charge.list(customer=member_subscription.stripe_customer_id)
                 # cprint(stripe_trans, 'red')
                 cprint(len(stripe_trans['data']), 'blue')
                 trans_count = len(stripe_trans)
