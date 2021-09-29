@@ -229,7 +229,11 @@ $(function () {
     const checkSessionDtypesRequest = await checkSessionDtypesValid();
     // check if the data is valid then he can run the Model
     if (checkSessionDtypesRequest['is_validate_data'] === false) {
-      swAlert('Error', "Please fix the data!", "error");
+      $('html,body').animate({
+        scrollTop: $("#dhWizardStepHeader3").offset().top
+      }, 'slow');
+      displayTopNotification("Please fix the data!", "danger");
+
     } else {
       // if the data is valid
       const isAllowedRequest = await checkIsAllowedToRunModel();
