@@ -59,7 +59,7 @@ function swConfirmDtype(elem, msg, tmpSpan, dataIX) {
     allowEscapeKey: false,
     allowEnterKey: false,
     showLoaderOnConfirm: true,
-    reverseButtons: true,
+    // reverseButtons: true,
     stopKeydownPropagation: false,
     focusCancel: true,
 
