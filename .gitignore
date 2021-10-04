@@ -343,8 +343,6 @@ default_permissions.txt
 .history
 
 
-# predict_me/logs/errors.log
-# predict_me/logs/info.log
 static_files_changes.txt
 stripe_cards_numbers.txt
 futuristic_features.rst
@@ -478,3 +476,5 @@ venv.bak/
 
 
 # End of https://www.gitignore.io/api/text,linux,django,python,pycharm,visualstudiocode
+predict_me/logs/errors.log
+predict_me/logs/info.log
