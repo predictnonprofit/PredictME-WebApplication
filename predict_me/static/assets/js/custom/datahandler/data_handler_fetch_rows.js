@@ -1284,7 +1284,6 @@ function checkSessionDtypesValid() {
 
 // this function will send request to charge extra records
 function chargeExtraRecords(formData) {
-  const sessionID = extractLastSessionID();
   const url = `${webSiteUrl}/profile/membership/charge-extra-records`;
   try {
     return fetch(url, {
@@ -1294,10 +1293,7 @@ function chargeExtraRecords(formData) {
           "X-CSRFToken": getCookie('csrftoken')
         },
         credentials: 'same-origin',
-        body: JSON.stringify({
-          sessionID: parseInt(sessionID),
-          "formData": JSON.stringify(formData),
-        })
+        body: JSON.stringify(formData)
       })
       .then(response => {
         // check the response status
