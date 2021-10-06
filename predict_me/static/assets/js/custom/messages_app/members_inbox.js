@@ -124,7 +124,7 @@ composeForm.addEventListener('submit', async (event) => {
             memberMsgEditor.enable();
             memberMsgEditor.setText("");
             attachmentFileName.innerText = "";
-            emptyValuesNodelist(memberMsgComposeBoxControl);
+            emptyValuesNodeList(memberMsgComposeBoxControl);
             otherSubjectInput.classList.add("d-none");
             $('#kt_inbox_compose').modal('hide');
             setTimeout(() => {location.reload();}, 1000);
