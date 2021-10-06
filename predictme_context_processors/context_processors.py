@@ -15,6 +15,7 @@ from crash_reporting.forms import CrashReportForm
 from termcolor import cprint
 from prettyprinter import (cpprint, pprint)
 from django.conf import settings
+from membership.helpers import PredictMEStripeProcesses
 
 
 # from predict_me.helpers import quick_print, set_permissions_and_groups_to_members
@@ -113,50 +114,31 @@ def get_stripe_details(request):
     try:
         member = request.user
         data = dict()
+        cache_data = cache.get('stripe_data')
 
-        # check if the stripe_data exists in cache
-        if bool(cache.get("stripe_data")) is False:
-            # check if internet connection available
-            if check_internet_access() is True:
-                # check if the user is is_anonymous user
-                if member.is_anonymous is not True:
-                    subscription_obj = member.subscription.filter().first()
-                    if subscription_obj is not None:
-                        try:
-                            stripe_card_obj = stripe.Customer.retrieve_source(
-                                subscription_obj.stripe_customer_id,
-                                subscription_obj.stripe_card_id,
-                            )
-                            # check if the user has data on stripe, to avoid any error in registration process
-                            if stripe_card_obj.get('data'):
-                                data['last4'] = stripe_card_obj['last4']
-                                stripe_customer = stripe.Customer.retrieve(
-                                    subscription_obj.stripe_customer_id)  # enable this
-                                data['s_name'] = stripe_customer['name']  # enable this
-                                data['card_token'] = stripe_customer.get('default_source')
-                                data['s_email'] = stripe_customer.get('email')
-                                data['subscription_id'] = stripe_customer.get('subscriptions').get('data')[0].get('id')
-                                data['status'] = stripe_customer.get('subscriptions').get('data')[0].get('status')
-                                data['current_period_start'] = stripe_customer.get('subscriptions').get('data')[0].get(
-                                    'current_period_start')
-                                data['current_period_end'] = stripe_customer.get('subscriptions').get('data')[0].get(
-                                    'current_period_end')
+        # check if the user is is_anonymous user
+        if member.is_anonymous is not True:
+            subscription_obj = member.subscription.filter().first()
+            if subscription_obj is not None:
+                stripe_process_obj = PredictMEStripeProcesses(subscription_obj)
+                # check if the stripe_data exists in cache
+                if cache_data is None:
+                    cprint("INIT new stripe in cache", "cyan")
+                    customer_data = stripe_process_obj.stripe_retrieve_customer_source_to_cache()
+                    cache.set("stripe_data", customer_data)
+                else:
+                    cprint("There is cached values", "green")
+                    old_cached = cache.get("stripe_data")
+                    new_data = stripe_process_obj.stripe_retrieve_customer_source_to_cache()
+                    # cpprint(old_cached, end="\n %%%%%%%%%  OLD  %%%%%%%%%%%%%%% \n")
+                    # cpprint(new_data, end="\n $$$$$$$$$$$$$ NEW $$$$$$$$$$$$$$$$$$$4 \n")
 
-                            cache.set('stripe_data', data)
-                            return cache.get("stripe_data")
-                        except stripe.error.InvalidRequestError:
-                            cprint(traceback.format_exc(), 'red')
-                            log_exception(traceback.format_exc())
+                    # check if there any new or update any changes with customer data on stripe
+                    if old_cached != new_data:
+                        cprint("The cache not matched, there is changes or updates", "red", "on_grey", attrs=['bold'])
+                        cache.set("stripe_data", new_data)
 
-                        except Exception as ex:
-                            cprint(traceback.format_exc(), 'red')
-                            log_exception(traceback.format_exc())
-            else:
-
-                cache.set('stripe_data', {'msg': 'No Internet Connection Available!'})
-        else:
-
-            return cache.get("stripe_data")
+                return cache.get("stripe_data")
 
     except Exception as ex:
         cprint(traceback.format_exc(), 'red')
@@ -207,11 +189,11 @@ def get_company_settings(request):
     """
     try:
 
-        settings = CompanySettings.objects.values()
-        settings = json.dumps(list(settings), cls=DjangoJSONEncoder)
-        settings = json.loads(settings)
-        settings = settings[0]
-        return settings
+        company_settings = CompanySettings.objects.values()
+        company_settings = json.dumps(list(company_settings), cls=DjangoJSONEncoder)
+        company_settings = json.loads(company_settings)
+        company_settings = company_settings[0]
+        return company_settings
     except IndexError:
         return {}
     except Exception as ex:
