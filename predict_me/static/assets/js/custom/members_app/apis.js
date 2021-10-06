@@ -102,12 +102,11 @@ function fetchDataToSessionDashboard(dataKeyName) {
 
 
 // this function will upgrade to new membership
-async function requestUpgradeToNewMembership(membershipSlug, url) {
+async function requestUpgradeToNewMembership(newCreditCardData, url) {
   try {
-    const data = {
-      "membership_slug": membershipSlug
-    };
-    const requestPromise = await axios.post(url, data, {
+    // console.log(arguments);
+
+    const requestPromise = await axios.post(url, newCreditCardData, {
       headers: {
         "Content-Type": "application/json;charset=utf-8",
         "X-CSRFToken": getCookie('csrftoken')
