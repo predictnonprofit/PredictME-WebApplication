@@ -63,7 +63,7 @@ allUpgradeMembershipRadioBtns.forEach(element => {
     });
 });
 
-// add event listner to upgrade btns in account settings page
+// add event listener to upgrade btns in account settings page
 upgradeMembershipSettingsBtn.forEach(item => {
     const url = upgradeMembershipForm.action;
     item.addEventListener("click", event => {
@@ -71,76 +71,14 @@ upgradeMembershipSettingsBtn.forEach(item => {
         // console.log(newMembershipName);
         const newMembershipLbl = newMembershipName.replace("_", ' ').trim();
         // console.log(newMembershipLbl);
-        Swal.fire({
-            title: 'Are you sure',
-            html: `Your membership will upgrade to <b>${toTitleCase(newMembershipLbl)}</b><br />, You won't be able to revert this!`,
-            icon: 'question',
-            // showDenyButton: true,
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, upgrade',
-            allowOutsideClick: false,
-            allowEscapeKey: false,
-            allowEnterKey: false,
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                // disable the upgrade buttons
-                upgradeMembershipSettingsBtn.forEach(btn => {
-                    btn.disabled = true;
-                    btn.classList.add("disabled", "progress-cursor");
-                });
-                // disable the membership radio buttons
-                allUpgradeMembershipRadioBtns.forEach(btn => {
-                    btn.disabled = true;
-                    btn.classList.add("disabled", "progress-cursor");
-                });
-                const upgradeResponse = await requestUpgradeToNewMembership(newMembershipName, url);
-                console.log(upgradeResponse);
-                if (upgradeResponse['is_error'] === false) {
-                    // Swal.fire('Upgraded!', 'Your membership upgraded successfully (testing)', 'success');
-                    /* Swal.fire({
-                        title: 'Congrats!',
-                        text: upgradeResponse['msg'],
-                        icon: 'success',
-                        confirmButtonText: 'OK'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            window.location.reload();
-                        }
-                    }) */
-                    let timerInterval
-                    Swal.fire({
-                        title: 'Congrats!',
-                        icon: "success",
-                        // html: 'I will close in <b></b> milliseconds.',
-                        text: upgradeResponse['msg'],
-                        timer: 2000,
-                        timerProgressBar: true,
-                        allowOutsideClick: false,
-                        allowEscapeKey: false,
-                        allowEnterKey: false,
-                        didOpen: () => {
-                            Swal.showLoading()
-                            // const b = Swal.getHtmlContainer().querySelector('b');
-                            timerInterval = setInterval(() => {
-                                // b.textContent = Swal.getTimerLeft();
-                            }, 100);
-                        },
-                        willClose: () => {
-                            clearInterval(timerInterval);
-                        }
-                    }).then((result) => {
-                        /* Read more about handling dismissals below */
-                        if (result.dismiss === Swal.DismissReason.timer) {
-                            console.log('I was closed by the timer');
-                            window.location.reload();
-                        }
-                    })
-                } else {
-                    Swal.fire('Error', 'There is an error in upgrade process!', 'error');
-                }
-            }
-        });
+        createSessionStorage("newSubMembership", newMembershipLbl, true);
+        $("#newCreditCardFormModal").modal("show");
+        $("#newCreditCardFormModal").modal("handleUpdate");
+
     });
 });
+
+/* setTimeout(() => {
+    $("#newCreditCardFormModal").modal("show");
+    $("#newCreditCardFormModal").modal("handleUpdate");
+}, 2000); */
