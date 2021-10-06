@@ -45,7 +45,9 @@ class Charges(models.Model):
     member = models.ForeignKey(to=Member, on_delete=models.CASCADE, related_name='charges', db_index=True)
     charge_token = models.CharField(max_length=100, unique=True)
     amount = models.BigIntegerField(null=True, blank=True)
-    # invoice_token = models.CharField(max_length=100, null=True, blank=True)
+    # invoice_id = models.CharField(max_length=100, null=True, blank=True)
+    payment_intent_id = models.CharField(max_length=100, null=True, blank=True)
+    is_paid = models.BooleanField(default=False, null=True, blank=True)
     status = models.CharField(max_length=20, null=True, blank=True)
     charge_date = models.DateTimeField(auto_now_add=True)
 
