@@ -1,5 +1,7 @@
 {% load data_handler_tags %}
-<!-- Modal -->
+
+{# Start modal #}
+
 <div class="modal fade" id="extraRecordsModel" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
   aria-labelledby="extraRecordsModelLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl" role="document">
@@ -9,330 +11,372 @@
           <span class="u-b">
             Based on your current plan You have exceeded the allowed data limit. You have two options!
           </span>
-
         </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <i aria-hidden="true" class="ki ki-close"></i>
         </button>
       </div>
       <div class="modal-body">
+        <section id="dh-upgrade-membership-extra-charge-wrapper">
+          <div class="container">
+            <div class="row row-cols-2">
 
-        <div class="form-3-box pt-0">
-          <fieldset class="form-group p-0">
-            <legend class="w-auto px-2 text-secondary">Option 1: Upgrade Membership</legend>
-            <!--begin::Portlet-->
-            <section id="askPayUpgradeSection">
+              {# Start left column, charge extra records #}
+              <div class="col">
+                <form class="kt-form" action="{% url 'membership-charge-extra-records' %}" method="POST"
+                  id="data-handler-payment-form">
+                  {% csrf_token %}
+                  <div class="form-3-box pt-0 mt-2">
 
+                    <fieldset class="form-group p-0">
+                      <legend class="w-auto px-2 text-secondary">Option 1: Pay exceeded data amount now</legend>
 
-              {# Start table and upgrade #}
-              <div class="row">
-                <div class="col-lg-6">
-                  <!--begin::Card-->
-                  <div class="card card-custom card-stretch">
-                    <div class="card-body text-center">
-                      {% include "data_handler/segments/table_payment_overview.html" with is_small=True %}
+                      {# Start payment table overview #}
+                      <div class="p-3">
+                        {% include "data_handler/segments/table_payment_overview.html" with is_small=True %}
+                      </div>
+                      {# End payment table overview #}
 
-                    </div>
-                  </div>
-                  <!--end::Card-->
-                </div>
-                <div class="col-lg-6">
-                  <!--begin::Card-->
-                  <div class="card card-custom card-stretch gutter-b">
-                    <!--begin::Header-->
-                    <div class="card-header border-0 pt-5">
-                      <h3 class="card-title align-items-start flex-column">
-                        <span class="card-label font-weight-bolder text-dark">Upgrade</span>
-                        <span class="text-muted mt-3 font-weight-bold font-size-sm">
-                          Upgrade you membership to increase your records
-                        </span>
-                        {# get_all_memberships.starter #}
-                      </h3>
-                    </div>
-                    <!--end::Header-->
-                    <!--begin::Body-->
-                    <div class="card-body pt-2 pb-0 mt-n3">
-                      <div class="tab-content mt-5" id="myTabTables8">
-                        <!--begin::Tap pane-->
-                        <div class="tab-pane fade active show" id="kt_tab_pane_8_1" role="tabpanel"
-                          aria-labelledby="kt_tab_pane_8_1">
-                          <!--begin::Table-->
-                          <div class="table-responsive">
-                            <table class="table table-borderless table-vertical-center">
-                              <thead>
-                                <tr>
-                                  <th class="p-0 w-100px"></th>
-                                  <th class="p-0 min-w-100px"></th>
-                                  <th class="p-0 min-w-100px"></th>
-                                  <th class="p-0 min-w-100px"></th>
-                                  <th class="p-0 min-w-100px"></th>
-                                </tr>
-                              </thead>
-                              <tbody>
+                      {# Start stripe extra charge form #}
+                      <div id="data-handler-charge-extra-stripe-form" class="p-3">
 
-                                {% if get_user_membership_only == "starter" %}
-                                {# if user starter #}
-                                <tr>
-                                  <td class="pl-0">
-                                    <div class="symbol mr-3">
-                                      <span class="svg-icon svg-icon-3x svg-icon-warning">
-                                        <!--begin::Svg Icon | path:assets/media/svg/icons/Tools/Compass.svg-->
-                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                          xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
-                                          viewBox="0 0 24 24" version="1.1">
-                                          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                            <rect x="0" y="0" width="24" height="24"></rect>
-                                            <path
-                                              d="M7.07744993,12.3040451 C7.72444571,13.0716094 8.54044565,13.6920474 9.46808594,14.1079953 L5,23 L4.5,18 L7.07744993,12.3040451 Z M14.5865511,14.2597864 C15.5319561,13.9019016 16.375416,13.3366121 17.0614026,12.6194459 L19.5,18 L19,23 L14.5865511,14.2597864 Z M12,3.55271368e-14 C12.8284271,3.53749572e-14 13.5,0.671572875 13.5,1.5 L13.5,4 L10.5,4 L10.5,1.5 C10.5,0.671572875 11.1715729,3.56793164e-14 12,3.55271368e-14 Z"
-                                              fill="#000000" opacity="0.3"></path>
-                                            <path
-                                              d="M12,10 C13.1045695,10 14,9.1045695 14,8 C14,6.8954305 13.1045695,6 12,6 C10.8954305,6 10,6.8954305 10,8 C10,9.1045695 10.8954305,10 12,10 Z M12,13 C9.23857625,13 7,10.7614237 7,8 C7,5.23857625 9.23857625,3 12,3 C14.7614237,3 17,5.23857625 17,8 C17,10.7614237 14.7614237,13 12,13 Z"
-                                              fill="#000000" fill-rule="nonzero"></path>
-                                          </g>
-                                        </svg>
-                                        <!--end::Svg Icon-->
-                                      </span>
-                                    </div>
-                                  </td>
-                                  <td>
-                                    <a onclick="return false;" href="#"
-                                      class="text-dark font-weight-bolder text-hover-primary d-block my-1 font-size-lg">Professional</a>
-                                    <span class="text-muted font-weight-bold">Fundraising</span>
-                                  </td>
-                                  <td class="text-right pr-0">
-                                    <span class="text-muted font-weight-bold d-block">Price</span>
-                                    <span class="text-dark-75 font-weight-bolder d-block font-size-lg">
-                                      ${{get_all_memberships.professional.monthly_fee.normalize}}
-                                    </span>
-                                  </td>
-                                  <td class="text-right pr-0">
-                                    <span class="text-muted font-weight-bold d-block">Records</span>
-                                    <span class="text-dark-75 font-weight-bolder d-block font-size-lg">
-                                      {{get_all_memberships.professional.allowed_records_count}}
-                                    </span>
-                                  </td>
-                                  <td class="text-right pr-0">
-                                    <button type="button"
-                                      class="btn btn-icon btn-light btn-sm upgrade-membership-extra-modal-btn"
-                                      data-toggle="tooltip" title="Chose" data-placement="top"
-                                      data-membership="professional">
-                                      <span class="svg-icon svg-icon-primary svg-icon-2x">
-                                        <!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\legacy\metronic\theme\html\demo2\dist/../src/media/svg/icons\Navigation\Arrow-up.svg--><svg
-                                          xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                          width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                            <polygon points="0 0 24 0 24 24 0 24" />
-                                            <rect fill="#000000" opacity="0.3" x="11" y="5" width="2" height="14"
-                                              rx="1" />
-                                            <path
-                                              d="M6.70710678,12.7071068 C6.31658249,13.0976311 5.68341751,13.0976311 5.29289322,12.7071068 C4.90236893,12.3165825 4.90236893,11.6834175 5.29289322,11.2928932 L11.2928932,5.29289322 C11.6714722,4.91431428 12.2810586,4.90106866 12.6757246,5.26284586 L18.6757246,10.7628459 C19.0828436,11.1360383 19.1103465,11.7686056 18.7371541,12.1757246 C18.3639617,12.5828436 17.7313944,12.6103465 17.3242754,12.2371541 L12.0300757,7.38413782 L6.70710678,12.7071068 Z"
-                                              fill="#000000" fill-rule="nonzero" />
-                                          </g>
-                                        </svg>
-                                        <!--end::Svg Icon--></span>
-                                    </button>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td class="pl-0">
-                                    <div class="symbol mr-3">
-                                      <span class="svg-icon svg-icon-3x svg-icon-danger">
-                                        <!--begin::Svg Icon | path:assets/media/svg/icons/Shopping/Cart2.svg-->
-                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                          xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
-                                          viewBox="0 0 24 24" version="1.1">
-                                          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                            <rect x="0" y="0" width="24" height="24"></rect>
-                                            <path
-                                              d="M12,4.56204994 L7.76822128,9.6401844 C7.4146572,10.0644613 6.7840925,10.1217854 6.3598156,9.76822128 C5.9355387,9.4146572 5.87821464,8.7840925 6.23177872,8.3598156 L11.2317787,2.3598156 C11.6315738,1.88006147 12.3684262,1.88006147 12.7682213,2.3598156 L17.7682213,8.3598156 C18.1217854,8.7840925 18.0644613,9.4146572 17.6401844,9.76822128 C17.2159075,10.1217854 16.5853428,10.0644613 16.2317787,9.6401844 L12,4.56204994 Z"
-                                              fill="#000000" fill-rule="nonzero" opacity="0.3"></path>
-                                            <path
-                                              d="M3.28077641,9 L20.7192236,9 C21.2715083,9 21.7192236,9.44771525 21.7192236,10 C21.7192236,10.0817618 21.7091962,10.163215 21.6893661,10.2425356 L19.5680983,18.7276069 C19.234223,20.0631079 18.0342737,21 16.6576708,21 L7.34232922,21 C5.96572629,21 4.76577697,20.0631079 4.43190172,18.7276069 L2.31063391,10.2425356 C2.17668518,9.70674072 2.50244587,9.16380623 3.03824078,9.0298575 C3.11756139,9.01002735 3.1990146,9 3.28077641,9 Z M12,12 C11.4477153,12 11,12.4477153 11,13 L11,17 C11,17.5522847 11.4477153,18 12,18 C12.5522847,18 13,17.5522847 13,17 L13,13 C13,12.4477153 12.5522847,12 12,12 Z M6.96472382,12.1362967 C6.43125772,12.2792385 6.11467523,12.8275755 6.25761704,13.3610416 L7.29289322,17.2247449 C7.43583503,17.758211 7.98417199,18.0747935 8.51763809,17.9318517 C9.05110419,17.7889098 9.36768668,17.2405729 9.22474487,16.7071068 L8.18946869,12.8434035 C8.04652688,12.3099374 7.49818992,11.9933549 6.96472382,12.1362967 Z M17.0352762,12.1362967 C16.5018101,11.9933549 15.9534731,12.3099374 15.8105313,12.8434035 L14.7752551,16.7071068 C14.6323133,17.2405729 14.9488958,17.7889098 15.4823619,17.9318517 C16.015828,18.0747935 16.564165,17.758211 16.7071068,17.2247449 L17.742383,13.3610416 C17.8853248,12.8275755 17.5687423,12.2792385 17.0352762,12.1362967 Z"
-                                              fill="#000000"></path>
-                                          </g>
-                                        </svg>
-                                        <!--end::Svg Icon-->
-                                      </span>
-                                    </div>
-                                  </td>
-                                  <td>
-                                    <a onclick="return false;" href="#"
-                                      class="text-dark font-weight-bolder text-hover-primary d-block my-1 font-size-lg">Expert</a>
-                                    <span class="text-muted font-weight-bold">Fundraising</span>
-                                  </td>
-                                  <td class="text-right pr-0">
-                                    <span class="text-muted font-weight-bold d-block">Price</span>
-                                    <span class="text-dark-75 font-weight-bolder d-block font-size-lg">
-                                      ${{get_all_memberships.expert.monthly_fee.normalize}}
-                                    </span>
-                                  </td>
-                                  <td class="text-right pr-0">
-                                    <span class="text-muted font-weight-bold d-block">Records</span>
-                                    <span class="text-dark-75 font-weight-bolder d-block font-size-lg">
-                                      {{get_all_memberships.expert.allowed_records_count}}
-                                    </span>
-                                  </td>
-                                  <td class="text-right pr-0">
-                                    <button type="button"
-                                      class="btn btn-icon btn-light btn-sm upgrade-membership-extra-modal-btn"
-                                      data-toggle="tooltip" title="Chose" data-placement="top" data-membership="expert">
-                                      <span class="svg-icon svg-icon-primary svg-icon-2x">
-                                        <!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\legacy\metronic\theme\html\demo2\dist/../src/media/svg/icons\Navigation\Arrow-up.svg--><svg
-                                          xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                          width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                            <polygon points="0 0 24 0 24 24 0 24" />
-                                            <rect fill="#000000" opacity="0.3" x="11" y="5" width="2" height="14"
-                                              rx="1" />
-                                            <path
-                                              d="M6.70710678,12.7071068 C6.31658249,13.0976311 5.68341751,13.0976311 5.29289322,12.7071068 C4.90236893,12.3165825 4.90236893,11.6834175 5.29289322,11.2928932 L11.2928932,5.29289322 C11.6714722,4.91431428 12.2810586,4.90106866 12.6757246,5.26284586 L18.6757246,10.7628459 C19.0828436,11.1360383 19.1103465,11.7686056 18.7371541,12.1757246 C18.3639617,12.5828436 17.7313944,12.6103465 17.3242754,12.2371541 L12.0300757,7.38413782 L6.70710678,12.7071068 Z"
-                                              fill="#000000" fill-rule="nonzero" />
-                                          </g>
-                                        </svg>
-                                        <!--end::Svg Icon--></span>
-                                    </button>
-                                  </td>
-                                </tr>
-                                {% elif get_user_membership_only == "professional" %}
-                                {# if user professional #}
-                                <tr>
-                                  <td class="pl-0">
-                                    <div class="symbol mr-3">
-                                      <span class="svg-icon svg-icon-3x svg-icon-danger">
-                                        <!--begin::Svg Icon | path:assets/media/svg/icons/Shopping/Cart2.svg-->
-                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                          xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
-                                          viewBox="0 0 24 24" version="1.1">
-                                          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                            <rect x="0" y="0" width="24" height="24"></rect>
-                                            <path
-                                              d="M12,4.56204994 L7.76822128,9.6401844 C7.4146572,10.0644613 6.7840925,10.1217854 6.3598156,9.76822128 C5.9355387,9.4146572 5.87821464,8.7840925 6.23177872,8.3598156 L11.2317787,2.3598156 C11.6315738,1.88006147 12.3684262,1.88006147 12.7682213,2.3598156 L17.7682213,8.3598156 C18.1217854,8.7840925 18.0644613,9.4146572 17.6401844,9.76822128 C17.2159075,10.1217854 16.5853428,10.0644613 16.2317787,9.6401844 L12,4.56204994 Z"
-                                              fill="#000000" fill-rule="nonzero" opacity="0.3"></path>
-                                            <path
-                                              d="M3.28077641,9 L20.7192236,9 C21.2715083,9 21.7192236,9.44771525 21.7192236,10 C21.7192236,10.0817618 21.7091962,10.163215 21.6893661,10.2425356 L19.5680983,18.7276069 C19.234223,20.0631079 18.0342737,21 16.6576708,21 L7.34232922,21 C5.96572629,21 4.76577697,20.0631079 4.43190172,18.7276069 L2.31063391,10.2425356 C2.17668518,9.70674072 2.50244587,9.16380623 3.03824078,9.0298575 C3.11756139,9.01002735 3.1990146,9 3.28077641,9 Z M12,12 C11.4477153,12 11,12.4477153 11,13 L11,17 C11,17.5522847 11.4477153,18 12,18 C12.5522847,18 13,17.5522847 13,17 L13,13 C13,12.4477153 12.5522847,12 12,12 Z M6.96472382,12.1362967 C6.43125772,12.2792385 6.11467523,12.8275755 6.25761704,13.3610416 L7.29289322,17.2247449 C7.43583503,17.758211 7.98417199,18.0747935 8.51763809,17.9318517 C9.05110419,17.7889098 9.36768668,17.2405729 9.22474487,16.7071068 L8.18946869,12.8434035 C8.04652688,12.3099374 7.49818992,11.9933549 6.96472382,12.1362967 Z M17.0352762,12.1362967 C16.5018101,11.9933549 15.9534731,12.3099374 15.8105313,12.8434035 L14.7752551,16.7071068 C14.6323133,17.2405729 14.9488958,17.7889098 15.4823619,17.9318517 C16.015828,18.0747935 16.564165,17.758211 16.7071068,17.2247449 L17.742383,13.3610416 C17.8853248,12.8275755 17.5687423,12.2792385 17.0352762,12.1362967 Z"
-                                              fill="#000000"></path>
-                                          </g>
-                                        </svg>
-                                        <!--end::Svg Icon-->
-                                      </span>
-                                    </div>
-                                  </td>
-                                  <td>
-                                    <a onclick="return false;" href="#"
-                                      class="text-dark font-weight-bolder text-hover-primary d-block my-1 font-size-lg">Expert</a>
-                                    <span class="text-muted font-weight-bold">Fundraising</span>
-                                  </td>
-                                  <td class="text-right pr-0">
-                                    <span class="text-muted font-weight-bold d-block">Price</span>
-                                    <span class="text-dark-75 font-weight-bolder d-block font-size-lg">
-                                      ${{get_all_memberships.expert.monthly_fee.normalize}}
-                                    </span>
-                                  </td>
-                                  <td class="text-right pr-0">
-                                    <span class="text-muted font-weight-bold d-block">Records</span>
-                                    <span class="text-dark-75 font-weight-bolder d-block font-size-lg">
-                                      {{get_all_memberships.expert.allowed_records_count}}
-                                    </span>
-                                  </td>
-                                  <td class="text-right pr-0">
-                                    <button type="button"
-                                      class="btn btn-icon btn-light btn-sm upgrade-membership-extra-modal-btn"
-                                      data-toggle="tooltip" title="Chose" data-placement="top" data-membership="expert">
-                                      <span class="svg-icon svg-icon-primary svg-icon-2x">
-                                        <!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\legacy\metronic\theme\html\demo2\dist/../src/media/svg/icons\Navigation\Arrow-up.svg--><svg
-                                          xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                          width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                            <polygon points="0 0 24 0 24 24 0 24" />
-                                            <rect fill="#000000" opacity="0.3" x="11" y="5" width="2" height="14"
-                                              rx="1" />
-                                            <path
-                                              d="M6.70710678,12.7071068 C6.31658249,13.0976311 5.68341751,13.0976311 5.29289322,12.7071068 C4.90236893,12.3165825 4.90236893,11.6834175 5.29289322,11.2928932 L11.2928932,5.29289322 C11.6714722,4.91431428 12.2810586,4.90106866 12.6757246,5.26284586 L18.6757246,10.7628459 C19.0828436,11.1360383 19.1103465,11.7686056 18.7371541,12.1757246 C18.3639617,12.5828436 17.7313944,12.6103465 17.3242754,12.2371541 L12.0300757,7.38413782 L6.70710678,12.7071068 Z"
-                                              fill="#000000" fill-rule="nonzero" />
-                                          </g>
-                                        </svg>
-                                        <!--end::Svg Icon--></span>
-                                    </button>
-                                  </td>
-                                </tr>
-                                {% else %}
-                                {# if user expert #}
-                                <div class="card card-custom gutter-b bg-diagonal bg-diagonal-light-danger">
-                                  <div class="card-body">
-                                    <div
-                                      class="d-flex align-items-center justify-content-between p-4 flex-lg-wrap flex-xl-nowrap">
-                                      <div class="d-flex flex-column mr-5">
-                                        <p class="h4 text-dark text-hover-primary mb-5">
-                                          You are Expert
-                                        </p>
-                                        <p class="text-dark-50">
-                                          You have the highest membership level.
-                                        </p>
-                                      </div>
-                                      <div class="ml-6 ml-lg-0 ml-xxl-6 flex-shrink-0">
-                                        <span class="svg-icon svg-icon-3x svg-icon-danger">
-                                          <!--begin::Svg Icon | path:assets/media/svg/icons/Shopping/Cart2.svg-->
-                                          <svg xmlns="http://www.w3.org/2000/svg"
-                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
-                                            viewBox="0 0 24 24" version="1.1">
-                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                              <rect x="0" y="0" width="24" height="24"></rect>
-                                              <path
-                                                d="M12,4.56204994 L7.76822128,9.6401844 C7.4146572,10.0644613 6.7840925,10.1217854 6.3598156,9.76822128 C5.9355387,9.4146572 5.87821464,8.7840925 6.23177872,8.3598156 L11.2317787,2.3598156 C11.6315738,1.88006147 12.3684262,1.88006147 12.7682213,2.3598156 L17.7682213,8.3598156 C18.1217854,8.7840925 18.0644613,9.4146572 17.6401844,9.76822128 C17.2159075,10.1217854 16.5853428,10.0644613 16.2317787,9.6401844 L12,4.56204994 Z"
-                                                fill="#000000" fill-rule="nonzero" opacity="0.3"></path>
-                                              <path
-                                                d="M3.28077641,9 L20.7192236,9 C21.2715083,9 21.7192236,9.44771525 21.7192236,10 C21.7192236,10.0817618 21.7091962,10.163215 21.6893661,10.2425356 L19.5680983,18.7276069 C19.234223,20.0631079 18.0342737,21 16.6576708,21 L7.34232922,21 C5.96572629,21 4.76577697,20.0631079 4.43190172,18.7276069 L2.31063391,10.2425356 C2.17668518,9.70674072 2.50244587,9.16380623 3.03824078,9.0298575 C3.11756139,9.01002735 3.1990146,9 3.28077641,9 Z M12,12 C11.4477153,12 11,12.4477153 11,13 L11,17 C11,17.5522847 11.4477153,18 12,18 C12.5522847,18 13,17.5522847 13,17 L13,13 C13,12.4477153 12.5522847,12 12,12 Z M6.96472382,12.1362967 C6.43125772,12.2792385 6.11467523,12.8275755 6.25761704,13.3610416 L7.29289322,17.2247449 C7.43583503,17.758211 7.98417199,18.0747935 8.51763809,17.9318517 C9.05110419,17.7889098 9.36768668,17.2405729 9.22474487,16.7071068 L8.18946869,12.8434035 C8.04652688,12.3099374 7.49818992,11.9933549 6.96472382,12.1362967 Z M17.0352762,12.1362967 C16.5018101,11.9933549 15.9534731,12.3099374 15.8105313,12.8434035 L14.7752551,16.7071068 C14.6323133,17.2405729 14.9488958,17.7889098 15.4823619,17.9318517 C16.015828,18.0747935 16.564165,17.758211 16.7071068,17.2247449 L17.742383,13.3610416 C17.8853248,12.8275755 17.5687423,12.2792385 17.0352762,12.1362967 Z"
-                                                fill="#000000"></path>
-                                            </g>
-                                          </svg>
-                                          <!--end::Svg Icon-->
-                                        </span>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                                {% endif %}
-                              </tbody>
-                            </table>
+                        {# Start use old card #}
+                        <div class="form-group row">
+                          <label class="col-4 col-form-label cursor-pointer" for="oldStripeCardCheckbox">
+                            Use old credit card
+                            <span class="form-text text-muted">Old card
+                              ************{{ get_stripe_details.last4 }}</span>
+                          </label>
+                          <div class="col-8 col-form-label">
+                            <div class="checkbox-inline">
+                              <label class="checkbox">
+                                <input type="checkbox" name="old-stripe-card" id='oldStripeCardCheckbox'
+                                  class="data-handler-extra-records-form-input" />
+                                <span></span></label>
+                            </div>
+                            {# <span class="form-text text-muted">Old card ************{{ get_stripe_details.last4 }}</span> #}
                           </div>
-                          <!--end::Table-->
                         </div>
-                        <!--end::Tap pane-->
+                        {# End use old card #}
+
+                        {# Start stripe form element #}
+                        <div class="form-group">
+                          <div id="dh-card-element-wrapper">
+                            <div id="card-element">
+                              <!-- A Stripe Element will be inserted here. -->
+                            </div>
+                            <!-- Used to display form errors. -->
+                            <div id="card-errors" class="text-danger" role="alert"></div>
+                          </div>
+                        </div>
+                        {# End stripe form element #}
+
+                        <!-- Start Submit Button -->
+                        <div class='form-group'>
+                          <button class="btn-block btn btn-success mt-2 data-handler-extra-records-form-input"
+                            type="submit" id='runStripeChargeBtn'>
+                            <i class="icon-md la la-dollar-sign"></i>
+                            Pay
+                          </button>
+                        </div>
+                        <div class="text-right">
+                          <span class="form-text text-muted d-inline-block">
+                            <b>
+                              * Transaction details will be sent to your email
+                            </b>
+                          </span>
+                        </div>
+                        <!-- End Submit Button -->
+
+                      </div>
+                      {# End stripe extra charge form #}
+
+                    </fieldset>
+                  </div>
+                </form>
+
+              </div>
+              {# End left column, charge extra records #}
+
+              {# Start right column, upgrade membership table #}
+              <div class="col">
+                {% if get_user_membership_only == "starter" or get_user_membership_only == "professional"  %}
+                <form action="" method="POST" id='dh-upgrade-membership-table-form'>
+                  {% csrf_token %}
+                  <div class="form-3-box pt-0 mt-2">
+                    <fieldset class="form-group p-3">
+                      <legend class="w-auto px-2 text-secondary">OPTION 2: UPGRADE MEMBERSHIP</legend>
+                      <div class="table-responsive">
+                        <!--begin::Table-->
+                        <table class="table table-bordered" id='data-handler-upgrade-membership-table'>
+                          <thead>
+                            <tr>
+                              <th scope="col" width="13%"></th>
+                              <th scope="col">Membership name</th>
+                              <th scope="col" width="15%">Records</th>
+                              <th scope="col" width="14%">Price</th>
+                              <th scope="col" width="23%">Billing Cycle</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+
+                            {% if get_user_membership_only == "starter" %}
+                            <tr>
+                              <td>
+                                <div class="symbol mr-3">
+                                  <span class="svg-icon svg-icon-3x svg-icon-danger">
+                                    <!--begin::Svg Icon | path:assets/media/svg/icons/Shopping/Cart2.svg-->
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                      width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                      <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <rect x="0" y="0" width="24" height="24"></rect>
+                                        <path
+                                          d="M12,4.56204994 L7.76822128,9.6401844 C7.4146572,10.0644613 6.7840925,10.1217854 6.3598156,9.76822128 C5.9355387,9.4146572 5.87821464,8.7840925 6.23177872,8.3598156 L11.2317787,2.3598156 C11.6315738,1.88006147 12.3684262,1.88006147 12.7682213,2.3598156 L17.7682213,8.3598156 C18.1217854,8.7840925 18.0644613,9.4146572 17.6401844,9.76822128 C17.2159075,10.1217854 16.5853428,10.0644613 16.2317787,9.6401844 L12,4.56204994 Z"
+                                          fill="#000000" fill-rule="nonzero" opacity="0.3"></path>
+                                        <path
+                                          d="M3.28077641,9 L20.7192236,9 C21.2715083,9 21.7192236,9.44771525 21.7192236,10 C21.7192236,10.0817618 21.7091962,10.163215 21.6893661,10.2425356 L19.5680983,18.7276069 C19.234223,20.0631079 18.0342737,21 16.6576708,21 L7.34232922,21 C5.96572629,21 4.76577697,20.0631079 4.43190172,18.7276069 L2.31063391,10.2425356 C2.17668518,9.70674072 2.50244587,9.16380623 3.03824078,9.0298575 C3.11756139,9.01002735 3.1990146,9 3.28077641,9 Z M12,12 C11.4477153,12 11,12.4477153 11,13 L11,17 C11,17.5522847 11.4477153,18 12,18 C12.5522847,18 13,17.5522847 13,17 L13,13 C13,12.4477153 12.5522847,12 12,12 Z M6.96472382,12.1362967 C6.43125772,12.2792385 6.11467523,12.8275755 6.25761704,13.3610416 L7.29289322,17.2247449 C7.43583503,17.758211 7.98417199,18.0747935 8.51763809,17.9318517 C9.05110419,17.7889098 9.36768668,17.2405729 9.22474487,16.7071068 L8.18946869,12.8434035 C8.04652688,12.3099374 7.49818992,11.9933549 6.96472382,12.1362967 Z M17.0352762,12.1362967 C16.5018101,11.9933549 15.9534731,12.3099374 15.8105313,12.8434035 L14.7752551,16.7071068 C14.6323133,17.2405729 14.9488958,17.7889098 15.4823619,17.9318517 C16.015828,18.0747935 16.564165,17.758211 16.7071068,17.2247449 L17.742383,13.3610416 C17.8853248,12.8275755 17.5687423,12.2792385 17.0352762,12.1362967 Z"
+                                          fill="#000000"></path>
+                                      </g>
+                                    </svg>
+                                    <!--end::Svg Icon-->
+                                  </span>
+                                </div>
+                              </td>
+                              <td>
+                                {{ get_all_memberships.expert.slug|title }} Fundraising
+                              </td>
+                              <td>
+                                {{ get_all_memberships.expert.allowed_records_count }}
+                              </td>
+                              <td>
+                                <div id="price-for-{{ get_all_memberships.expert.slug }}">
+                                  <b class="price-placeholder">
+                                    $0
+                                  </b>
+                                  <b class="price-monthly d-none">
+                                    ${{ get_all_memberships.expert.monthly_fee.normalize }}
+                                  </b>
+                                  <b class="price-yearly d-none">
+                                    ${{ get_all_memberships.expert.yearly_fee.normalize }}
+                                  </b>
+                                </div>
+
+                              </td>
+                              <td>
+                                <div class="radio-inline">
+                                  <label class="radio">
+                                    <input name="dh_upgrade_to_new_membership" data-cycle="yearly"
+                                      data-name="{{ get_all_memberships.expert_yearly.slug }}"
+                                      data-price-id="price-for-{{ get_all_memberships.expert.slug }}"
+                                      value="{{ get_all_memberships.expert_yearly.slug }}" type="radio"
+                                      class="data-handler-extra-records-form-input" />
+                                    <span></span>Yearly</label>
+                                  <label class="radio">
+                                    <input name="dh_upgrade_to_new_membership" data-cycle="monthly"
+                                      data-name="{{ get_all_memberships.expert_monthly.slug }}"
+                                      data-price-id="price-for-{{ get_all_memberships.expert.slug }}"
+                                      value="{{ get_all_memberships.expert_monthly.slug }}" type="radio"
+                                      class="data-handler-extra-records-form-input" />
+                                    <span></span>Monthly</label>
+                                </div>
+                              </td>
+                            </tr>
+
+                            <tr>
+                              <td>
+                                <div class="symbol mr-3">
+                                  <span class="svg-icon svg-icon-3x svg-icon-warning">
+                                    <!--begin::Svg Icon | path:assets/media/svg/icons/Tools/Compass.svg-->
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                      width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                      <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <rect x="0" y="0" width="24" height="24"></rect>
+                                        <path
+                                          d="M7.07744993,12.3040451 C7.72444571,13.0716094 8.54044565,13.6920474 9.46808594,14.1079953 L5,23 L4.5,18 L7.07744993,12.3040451 Z M14.5865511,14.2597864 C15.5319561,13.9019016 16.375416,13.3366121 17.0614026,12.6194459 L19.5,18 L19,23 L14.5865511,14.2597864 Z M12,3.55271368e-14 C12.8284271,3.53749572e-14 13.5,0.671572875 13.5,1.5 L13.5,4 L10.5,4 L10.5,1.5 C10.5,0.671572875 11.1715729,3.56793164e-14 12,3.55271368e-14 Z"
+                                          fill="#000000" opacity="0.3"></path>
+                                        <path
+                                          d="M12,10 C13.1045695,10 14,9.1045695 14,8 C14,6.8954305 13.1045695,6 12,6 C10.8954305,6 10,6.8954305 10,8 C10,9.1045695 10.8954305,10 12,10 Z M12,13 C9.23857625,13 7,10.7614237 7,8 C7,5.23857625 9.23857625,3 12,3 C14.7614237,3 17,5.23857625 17,8 C17,10.7614237 14.7614237,13 12,13 Z"
+                                          fill="#000000" fill-rule="nonzero"></path>
+                                      </g>
+                                    </svg>
+                                    <!--end::Svg Icon-->
+                                  </span>
+                                </div>
+                              </td>
+                              <td>
+                                {{ get_all_memberships.professional.slug|title }} Fundraising
+                              </td>
+                              <td>
+                                {{ get_all_memberships.professional.allowed_records_count }}
+                              </td>
+
+                              <td>
+                                <div id="price-for-{{ get_all_memberships.professional.slug }}">
+                                  <b class="price-placeholder">
+                                    $0
+                                  </b>
+                                  <b class="price-monthly d-none">
+                                    ${{ get_all_memberships.professional.monthly_fee.normalize }}
+                                  </b>
+                                  <b class="price-yearly d-none">
+                                    ${{ get_all_memberships.professional.yearly_fee.normalize }}
+                                  </b>
+                                </div>
+
+                              </td>
+                              <td>
+                                <div class="radio-inline">
+                                  <label class="radio">
+                                    <input name="dh_upgrade_to_new_membership" data-cycle="yearly"
+                                      data-name="{{ get_all_memberships.professional_yearly.slug }}"
+                                      data-price-id="price-for-{{ get_all_memberships.professional.slug }}"
+                                      value="{{ get_all_memberships.professional_yearly.slug }}" type="radio"
+                                      class="data-handler-extra-records-form-input" />
+                                    <span></span>Yearly</label>
+                                  <label class="radio">
+                                    <input name="dh_upgrade_to_new_membership" data-cycle="monthly"
+                                      data-name="{{ get_all_memberships.professional_monthly.slug }}"
+                                      data-price-id="price-for-{{ get_all_memberships.professional.slug }}"
+                                      value="{{ get_all_memberships.professional_monthly.slug }}" type="radio"
+                                      class="data-handler-extra-records-form-input" />
+                                    <span></span>Monthly</label>
+                                </div>
+                              </td>
+                            </tr>
+                            {% elif get_user_membership_only == "professional" %}
+                            <tr>
+                              <td>
+                                <div class="symbol mr-3">
+                                  <span class="svg-icon svg-icon-3x svg-icon-danger">
+                                    <!--begin::Svg Icon | path:assets/media/svg/icons/Shopping/Cart2.svg-->
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                      width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                      <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <rect x="0" y="0" width="24" height="24"></rect>
+                                        <path
+                                          d="M12,4.56204994 L7.76822128,9.6401844 C7.4146572,10.0644613 6.7840925,10.1217854 6.3598156,9.76822128 C5.9355387,9.4146572 5.87821464,8.7840925 6.23177872,8.3598156 L11.2317787,2.3598156 C11.6315738,1.88006147 12.3684262,1.88006147 12.7682213,2.3598156 L17.7682213,8.3598156 C18.1217854,8.7840925 18.0644613,9.4146572 17.6401844,9.76822128 C17.2159075,10.1217854 16.5853428,10.0644613 16.2317787,9.6401844 L12,4.56204994 Z"
+                                          fill="#000000" fill-rule="nonzero" opacity="0.3"></path>
+                                        <path
+                                          d="M3.28077641,9 L20.7192236,9 C21.2715083,9 21.7192236,9.44771525 21.7192236,10 C21.7192236,10.0817618 21.7091962,10.163215 21.6893661,10.2425356 L19.5680983,18.7276069 C19.234223,20.0631079 18.0342737,21 16.6576708,21 L7.34232922,21 C5.96572629,21 4.76577697,20.0631079 4.43190172,18.7276069 L2.31063391,10.2425356 C2.17668518,9.70674072 2.50244587,9.16380623 3.03824078,9.0298575 C3.11756139,9.01002735 3.1990146,9 3.28077641,9 Z M12,12 C11.4477153,12 11,12.4477153 11,13 L11,17 C11,17.5522847 11.4477153,18 12,18 C12.5522847,18 13,17.5522847 13,17 L13,13 C13,12.4477153 12.5522847,12 12,12 Z M6.96472382,12.1362967 C6.43125772,12.2792385 6.11467523,12.8275755 6.25761704,13.3610416 L7.29289322,17.2247449 C7.43583503,17.758211 7.98417199,18.0747935 8.51763809,17.9318517 C9.05110419,17.7889098 9.36768668,17.2405729 9.22474487,16.7071068 L8.18946869,12.8434035 C8.04652688,12.3099374 7.49818992,11.9933549 6.96472382,12.1362967 Z M17.0352762,12.1362967 C16.5018101,11.9933549 15.9534731,12.3099374 15.8105313,12.8434035 L14.7752551,16.7071068 C14.6323133,17.2405729 14.9488958,17.7889098 15.4823619,17.9318517 C16.015828,18.0747935 16.564165,17.758211 16.7071068,17.2247449 L17.742383,13.3610416 C17.8853248,12.8275755 17.5687423,12.2792385 17.0352762,12.1362967 Z"
+                                          fill="#000000"></path>
+                                      </g>
+                                    </svg>
+                                    <!--end::Svg Icon-->
+                                  </span>
+                                </div>
+                              </td>
+                              <td>
+                                {{ get_all_memberships.expert.slug|title }} Fundraising
+                              </td>
+                              <td>
+                                {{ get_all_memberships.expert.allowed_records_count }}
+                              </td>
+
+                              <td>
+                                <div id="price-for-{{ get_all_memberships.expert.slug }}">
+                                  <b class="price-placeholder">
+                                    $0
+                                  </b>
+                                  <b class="price-monthly d-none">
+                                    ${{ get_all_memberships.expert.monthly_fee.normalize }}
+                                  </b>
+                                  <b class="price-yearly d-none">
+                                    ${{ get_all_memberships.expert.yearly_fee.normalize }}
+                                  </b>
+                                </div>
+
+                              </td>
+                              <td>
+                                <div class="radio-inline">
+                                  <label class="radio">
+                                    <input name="dh_upgrade_to_new_membership" data-cycle="yearly"
+                                      data-name="{{ get_all_memberships.expert_yearly.slug }}"
+                                      data-price-id="price-for-{{ get_all_memberships.expert.slug }}"
+                                      value="{{ get_all_memberships.expert_yearly.slug }}" type="radio"
+                                      class="data-handler-extra-records-form-input" />
+                                    <span></span>Yearly</label>
+                                  <label class="radio">
+                                    <input name="dh_upgrade_to_new_membership" data-cycle="monthly"
+                                      data-name="{{ get_all_memberships.expert_monthly.slug }}"
+                                      data-price-id="price-for-{{ get_all_memberships.expert.slug }}"
+                                      value="{{ get_all_memberships.expert_monthly.slug }}" type="radio"
+                                      class="data-handler-extra-records-form-input" />
+                                    <span></span>Monthly</label>
+                                </div>
+                              </td>
+                            </tr>
+
+                            {% endif %}
+                          </tbody>
+                        </table>
+                        <!--end::Table-->
+                      </div>
+
+
+
+                      <div class="form-group">
+                        <button type="submit"
+                          class="btn btn-outline-primary btn-lg btn-block data-handler-extra-records-form-input">
+                          <i class="icon-lg la la-arrow-up"></i> Upgrade
+                        </button>
+                      </div>
+                      <div class="text-right">
+                        <span class="form-text text-muted d-inline-block">
+                          <b>
+                            * Transaction details will be sent to your email
+                          </b>
+                        </span>
+                      </div>
+
+
+                    </fieldset>
+                  </div>
+                </form>
+                {% else %}
+
+                {# Start if the member has expert membership #}
+                <div class="mt-7">
+                  <div class="alert alert-custom alert-light-success fade show mb-5" role="alert">
+                    <div class="alert-icon">
+                      <div class="symbol mr-3">
+                        <span class="svg-icon svg-icon-3x svg-icon-danger">
+                          <!--begin::Svg Icon | path:assets/media/svg/icons/Shopping/Cart2.svg-->
+                          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                            height="24px" viewBox="0 0 24 24" version="1.1">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                              <rect x="0" y="0" width="24" height="24"></rect>
+                              <path
+                                d="M12,4.56204994 L7.76822128,9.6401844 C7.4146572,10.0644613 6.7840925,10.1217854 6.3598156,9.76822128 C5.9355387,9.4146572 5.87821464,8.7840925 6.23177872,8.3598156 L11.2317787,2.3598156 C11.6315738,1.88006147 12.3684262,1.88006147 12.7682213,2.3598156 L17.7682213,8.3598156 C18.1217854,8.7840925 18.0644613,9.4146572 17.6401844,9.76822128 C17.2159075,10.1217854 16.5853428,10.0644613 16.2317787,9.6401844 L12,4.56204994 Z"
+                                fill="#000000" fill-rule="nonzero" opacity="0.3"></path>
+                              <path
+                                d="M3.28077641,9 L20.7192236,9 C21.2715083,9 21.7192236,9.44771525 21.7192236,10 C21.7192236,10.0817618 21.7091962,10.163215 21.6893661,10.2425356 L19.5680983,18.7276069 C19.234223,20.0631079 18.0342737,21 16.6576708,21 L7.34232922,21 C5.96572629,21 4.76577697,20.0631079 4.43190172,18.7276069 L2.31063391,10.2425356 C2.17668518,9.70674072 2.50244587,9.16380623 3.03824078,9.0298575 C3.11756139,9.01002735 3.1990146,9 3.28077641,9 Z M12,12 C11.4477153,12 11,12.4477153 11,13 L11,17 C11,17.5522847 11.4477153,18 12,18 C12.5522847,18 13,17.5522847 13,17 L13,13 C13,12.4477153 12.5522847,12 12,12 Z M6.96472382,12.1362967 C6.43125772,12.2792385 6.11467523,12.8275755 6.25761704,13.3610416 L7.29289322,17.2247449 C7.43583503,17.758211 7.98417199,18.0747935 8.51763809,17.9318517 C9.05110419,17.7889098 9.36768668,17.2405729 9.22474487,16.7071068 L8.18946869,12.8434035 C8.04652688,12.3099374 7.49818992,11.9933549 6.96472382,12.1362967 Z M17.0352762,12.1362967 C16.5018101,11.9933549 15.9534731,12.3099374 15.8105313,12.8434035 L14.7752551,16.7071068 C14.6323133,17.2405729 14.9488958,17.7889098 15.4823619,17.9318517 C16.015828,18.0747935 16.564165,17.758211 16.7071068,17.2247449 L17.742383,13.3610416 C17.8853248,12.8275755 17.5687423,12.2792385 17.0352762,12.1362967 Z"
+                                fill="#000000"></path>
+                            </g>
+                          </svg>
+                          <!--end::Svg Icon-->
+                        </span>
                       </div>
                     </div>
-                    <!--end::Body-->
+                    <div class="alert-text">
+                      Congrats you are an expert membership
+                    </div>
                   </div>
-                  <!--end::Card-->
                 </div>
+                {# End if the member has expert membership #}
+                {% endif %}
+
+
               </div>
-              {# End table and upgrade #}
+              {# End right column, upgrade membership table #}
 
-            </section>
-            <!--end::Portlet-->
-          </fieldset>
-
-
-        </div>
-
-        {# Start stripe checkout form #}
-        <!--begin::Form-->
-        <section id="stripe-data-handler-wrapper" class="position-relative">
-          {% include "data_handler/inc/stripe_checkout_form.html" %}
+            </div>
+          </div>
         </section>
-        <!--end::Form-->
-        {# End stripe checkout form #}
-
       </div>
       <div class="modal-footer">
-        <button type="button" data-toggle="tooltip" data-dismiss="modal" class="btn btn-danger ml-auto"
-          style="width: 100px;">
-          <span class="d-inline-block position-relative" style="top: 0px;">
-            Cancel
-          </span>
-          <!-- <i class="icon-md text-white font-weight-bolder flaticon-close"></i> -->
-        </button>
-
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
 </div>
+{# End modal #}
