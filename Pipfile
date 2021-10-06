@@ -56,6 +56,10 @@ django-cleanup = "*"
 google-auth = "*"
 sqlparse = "*"
 pip = "*"
+pytz = "*"
+google-api-core = "*"
+charset-normalizer = "*"
+cachetools = "*"
 
 [dev-packages]
 
