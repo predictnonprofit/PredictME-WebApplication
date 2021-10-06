@@ -853,6 +853,10 @@
         {# Start Crash modal #}
         {% include 'crash_reporting/segments/crash_modal.html' %}
         {# End Crash modal #}
+        
+        {# Start New Credit Card #}
+        {% include 'membership/segments/new_credit_card_form_modal.html' %}
+        {# End New Credit Card #}
         <script>
             var HOST_URL = "https://keenthemes.com/metronic/tools/preview";
         </script>
@@ -933,6 +937,7 @@
         <script src="{% static 'assets/js/custom/djangocookie.js' %}" type="text/javascript"></script>
         <script src="{% static 'assets/js/custom/general/helpers.js' %}"></script>
         <script src="{% static 'assets/js/custom/general/utils.js' %}"></script>
+        <script src="{% static 'assets/js/custom/membership/create_new_credit_card.js' %}"></script>
         <script src="{% static 'assets/js/pages/crud/forms/widgets/autosize.js' %}"></script>
         <script src="{% static 'assets/js/pages/features/miscellaneous/bootstrap-notify.js' %}"></script>
         <script src="{% static 'assets/js/pages/widgets.js' %}"></script>
