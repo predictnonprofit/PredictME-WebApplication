@@ -1,4 +1,8 @@
 import traceback
+import time
+import datetime
+from prettyprinter import cpprint
+
 from .models import (Invoice, Transactions)
 from django.views.generic import (TemplateView, View)
 from django.http import HttpResponse, JsonResponse
@@ -12,6 +16,7 @@ from django.db import IntegrityError
 from django.shortcuts import (reverse, redirect, render)
 from django.contrib.auth.mixins import (LoginRequiredMixin, UserPassesTestMixin)
 import stripe
+from membership.helpers import PredictMEStripeProcesses
 
 from predict_me.my_logger import log_exception
 
@@ -28,16 +33,20 @@ class GrabMemberInvoices(APIView):
     def post(self, request, format=None):
 
         try:
-            import time
-            import datetime
+
             request_data = request.POST
             member = request.user
             member_subscription = member.subscription.get()
+            stripe_processes_obj = PredictMEStripeProcesses(member_subscription)
             start_date = request_data.get("startDate")
             end_date = request_data.get("endDate")
             invoices_count = 0
             all_invoices = list()
-
+            # django.http.request.QueryDict({
+            #     'startDate': '09/06/2021',
+            #     'endDate': '10/07/2021'
+            # })
+            # cpprint(request.POST, end="\n")
             # validate if start date or end date are empty
             if (start_date == "") and (end_date == ''):
                 return JsonResponse(data={"msg": "Start Date and End date are Empty!", 'status': "Error"}, status=200)
@@ -48,10 +57,9 @@ class GrabMemberInvoices(APIView):
                 # cprint(len(stripe_invoices), 'blue')
                 start_time = time.mktime(datetime.datetime.strptime(start_date, "%m/%d/%Y").timetuple())
                 end_time = time.mktime(datetime.datetime.strptime(end_date, "%m/%d/%Y").timetuple())
-                stripe_invoices = stripe.Invoice.list(customer=member_subscription.stripe_customer_id, created={
-                    'gte': int(start_time),
-                    "lte": int(end_time)
-                })
+                # cprint(f"start_time ->  {start_time}", 'cyan')
+                # cprint(f"end_time ->  {end_time}", 'magenta')
+                stripe_invoices = stripe_processes_obj.stripe_retrieve_invoices(start_time, end_time)
                 # cprint(stripe_invoices, 'red')
                 cprint(len(stripe_invoices), 'blue')
                 invoices_count = len(stripe_invoices)
@@ -65,6 +73,7 @@ class GrabMemberInvoices(APIView):
                         invoice_obj.invoice_pdf_url = invoice.get("invoice_pdf")
                         invoice_obj.save()
                     except IntegrityError as ier:
+                        # TODO Fix this condition better way
                         # check if the unique constraint
                         if "UNIQUE constraint" in ier.args[0]:
                             pass
@@ -103,11 +112,11 @@ class GrabMemberTransactions(APIView):
     def post(self, request, format=None):
 
         try:
-            import time
-            import datetime
+
             request_data = request.POST
             member = request.user
             member_subscription = member.subscription.get()
+            stripe_processes_obj = PredictMEStripeProcesses(member_subscription)
             start_date = request_data.get("startDate")
             end_date = request_data.get("endDate")
             trans_count = 0
@@ -119,9 +128,9 @@ class GrabMemberTransactions(APIView):
             else:
                 start_time = time.mktime(datetime.datetime.strptime(start_date, "%m/%d/%Y").timetuple())
                 end_time = time.mktime(datetime.datetime.strptime(end_date, "%m/%d/%Y").timetuple())
-                stripe_trans = stripe.Charge.list(customer=member_subscription.stripe_customer_id)
+                stripe_trans = stripe_processes_obj.stripe_retrieve_transactions(member_subscription.stripe_customer_id)
                 # cprint(stripe_trans, 'red')
-                cprint(len(stripe_trans['data']), 'blue')
+                # cprint(len(stripe_trans['data']), 'blue')
                 trans_count = len(stripe_trans)
 
                 for trans in stripe_trans['data']:
@@ -144,8 +153,10 @@ class GrabMemberTransactions(APIView):
                         "customer": request.user.full_name,
                         'created': datetime.datetime.fromtimestamp(trans.get("created")).strftime('%m/%d/%Y'),
                         "paid": trans.get("paid"),
+                        # "card": trans.get("payment_method_details").get("card").get(
+                        #     "network") + " - " + "************" + trans.get("payment_method_details").get("card").get(
+                        #     "last4"),
                         "card": trans.get("payment_method_details").get("card").get(
-                            "network") + " - " + "************" + trans.get("payment_method_details").get("card").get(
                             "last4"),
                         'captured': trans.get('captured'),
                         'amount': trans.get("amount"),
