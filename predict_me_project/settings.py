@@ -376,7 +376,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'unique-snowflake',
+        'LOCATION': 'unique-predictme',
+        # 'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
     }
 }
 # CACHE_MIDDLEWARE_ALIAS = 'default'  # which cache alias to use
