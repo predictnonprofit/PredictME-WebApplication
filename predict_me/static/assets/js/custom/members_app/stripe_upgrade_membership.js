@@ -1,3 +1,4 @@
+'use strict';
 $(function () {
   // Create a Stripe client.
   const stripe = Stripe('pk_test_g5z1xvZJJ04QG9uzwR9u0Df600SMC4ANGr', {
@@ -27,7 +28,8 @@ $(function () {
 
   // Create an instance of the card Element.
   const card = elements.create('card', {
-    style: style
+    style: style,
+    hidePostalCode: true,
   });
 
   // Add an instance of the card Element into the `card-element` <div>.
