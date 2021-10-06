@@ -3,6 +3,7 @@
 */
 
 var webSiteUrl = window.location.origin;
+const disableAndWaitCursorCssClasses = new Array("disabled", "wait-cursor");
 
 function swAlert(alertTitle, alertMsg, alertType) {
   swal.fire(`${alertTitle}`, `${alertMsg}`, `${alertType}`);
