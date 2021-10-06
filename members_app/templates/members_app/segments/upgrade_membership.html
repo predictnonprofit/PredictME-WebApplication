@@ -17,8 +17,9 @@
               <input type="text" value="{{ stripe_name }}" name="full_name" class="form-control"
                 placeholder="Full Name">
             </div>
-            <span class="form-text text-muted">The customer’s full name or
-              business name on stripe.</span>
+            <span class="form-text text-muted">
+              The customer’s business full name
+            </span>
           </div>
           {% else %}
           <div class="form-group">
@@ -31,7 +32,7 @@
                 class="form-control not-allowed-cursor bg-gray-100" placeholder="Full Name" />
             </div>
             <span class="form-text text-muted">
-              The customer’s business name on stripe.
+              The customer’s business name
             </span>
           </div>
           {% endif %}
@@ -50,7 +51,7 @@
                   ************{{ last4 }}
                 </span>
                 <!-- Used to display form errors. -->
-                <div id="card-errors" role="alert"></div>
+                <div id="card-errors" class="text-danger" role="alert"></div>
               </div>
               <!-- <div class="separator separator-solid mb-5"></div> -->
             </div>
@@ -93,7 +94,7 @@
   <div class="row">
     {# Start Memberships Table #}
     <div class="col-12 form-1-box wow fadeInUp">
-      <form method="POST" id="upgrade-membership-form" action="{% url 'api-upgrade-membership-only' %}">
+      <form method="POST" id="upgrade-membership-form">
         {% csrf_token %}
         <fieldset class="form-group border p-3">
           <legend class="w-auto px-2">Upgrade membership</legend>
