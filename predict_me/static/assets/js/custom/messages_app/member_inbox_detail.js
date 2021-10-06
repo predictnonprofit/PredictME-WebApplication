@@ -125,7 +125,7 @@ composeForm.addEventListener('submit', async (event) => {
             memberMsgEditor.enable();
             memberMsgEditor.setText("");
             attachmentFileName.innerText = "";
-            emptyValuesNodelist(memberMsgComposeBoxControl);
+            emptyValuesNodeList(memberMsgComposeBoxControl);
             otherSubjectInput.classList.add("d-none");
             setTimeout(() => {location.reload();}, 1000);
         }
