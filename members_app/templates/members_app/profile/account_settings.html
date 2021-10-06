@@ -1,5 +1,6 @@
 {% extends 'members_app/inc/master.html' %}
 {% load static %}
+{% load general_tags %}
 {% load data_handler_tags %}
 
 {% block title %}
@@ -504,6 +505,7 @@ Account Settings
                                         <!-- Start Upgrade Membership block -->
                                         {% include "members_app/segments/upgrade_membership.html" %}
                                         <!-- End Upgrade Membership block -->
+                                    {# End new credit card form #}
 
                                 </div>
                                 <!--end: Wizard Step 3-->
